@@ -4,7 +4,7 @@ name          := "minimal-scala-lib-seed"
 organization  := "com.github.yeghishe"
 version       := "0.0.1"
 scalaVersion  := "2.11.6"
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
+scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
 libraryDependencies ++= {
   val scalazV          = "7.2.0-M1"
