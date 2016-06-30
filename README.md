@@ -1,8 +1,10 @@
-minimal-scala-lib-seed
+htwg-scala-seed
 =========================
 
-This is a seed project which creates a basic build for a general scala library projects.
+This is a seed project to create a basic scala project as used in the
+class Software Engineering at the University of Applied Science HTWG Konstanz
 
-* Has *Scalaz*, *ScalaTest* and *ScalaMock* at their latest versions as dependencies.
+* Has a folder structure prepared for a MVC-style application
+* Has *ScalaTest* and *ScalaMock* at their latest versions as dependencies.
 * Has *sbt-scalariform*, *sbt-scapegoat*, *scalastyle-sbt-plugin* and *sbt-scoverage* sbt plugins
-* Test and it folders are setup.
+* Has .gitignore defaults
