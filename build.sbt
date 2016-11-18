@@ -14,3 +14,5 @@ libraryDependencies ++= {
     "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV       % "test"
   )
 }
+
+libraryDependencies += "junit" % "junit" % "4.8" % "test"
