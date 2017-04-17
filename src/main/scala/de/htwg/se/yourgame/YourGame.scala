@@ -1,10 +1,10 @@
 package de.htwg.se.yourgame
 
-import de.htwg.se.yourgame.model.Student
+import de.htwg.se.yourgame.model.Player
 
-object Hello {
+object YourGame {
   def main(args: Array[String]): Unit = {
-    val student = Student("Your Name")
+    val student = Player("Your Name")
     println("Hello, " + student.name)
   }
 }

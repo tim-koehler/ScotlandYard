@@ -7,7 +7,7 @@ scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf
 resolvers += Resolver.jcenterRepo
 
 libraryDependencies ++= {
-  val scalaTestV       = "3.0.0-M15"
+  val scalaTestV       = "3.0.1"
   val scalaMockV       = "3.2.2"
   Seq(
     "org.scalatest" %% "scalatest"                   % scalaTestV       % "test",
