@@ -1,6 +1,6 @@
 package de.htwg.se.yourgame.model
 
 case class Player(name: String) {
-  def f(x: Int) : Int = x + 1
+   override def toString:String = name
 }
 
