@@ -1,35 +1,5 @@
-# Htwg Scala Seed Project 
+# Scotland Yard (board game)
 =====================================================
-## the easiest way to start a project for the lecture SE
+## Project build as part of the SE lecture at the HTWG Konstanz
 
-
-This is a seed project to create a basic scala project as used in the
-class Software Engineering at the University of Applied Science HTWG Konstanz.
-
-It requires Java 8 on your local platform.
-The project has
-* a folder structure prepared for a MVC-style application
-* *ScalaTest* and as dependency aswell as dependencies to other libraries in the build.sbt (commented out at start).
-* *scalastyle-sbt-plugin* and *sbt-scoverage* sbt plugins
-* .gitignore defaults
-
-The easiest way to create your own project from this seed is
-* create an account on github
-* navigate to this project on github (https://github.com/markoboger/htwg-scala-seed)
-* fork this project on github (button on top right "Fork")
-* copy the URL to your fork
-* clone the forked project from your local git (git clone <URL>) or IDE (IDEA: File > New > Import from Version Controll > github)
-
-After that, please rename
-* the Project name from htwg-scala-seed to <your game name>
-* the the package structure from de.htwg.se.yourgame to de.htwg.se.<your game name>
-* the name of the project in the build.sbt file from htwg-scala-seed to <your game name>
-* the main Class YourGame to <YourGameName>
-
-Then
-* push to git
-* add team partner to your project on github (Settings > Collaborators)
-* clone on partners account
-* push and pull back and forth
-
-
+Scotland Yard is a board game in which a team of players, as police, cooperate to track down a player controlling a criminal around a board representing the streets of London, first published in 1983. It is named after Scotland Yard, the headquarters of London's Metropolitan Police Service. Scotland Yard is an asymmetric board game, with the detective players cooperatively solving a variant of the pursuit-evasion problem. The game is published by Ravensburger in most of Europe and Canada and by Milton Bradley in the United States. It received the Spiel des Jahres (Game of the Year) award in 1983.
