@@ -1,6 +1,6 @@
-package de.htwg.se.yourgame
+package de.htwg.se.scotlandyard
 
-import de.htwg.se.yourgame.model.Player
+import de.htwg.se.scotlandyard.model.Player
 
 object YourGame {
   def main(args: Array[String]): Unit = {

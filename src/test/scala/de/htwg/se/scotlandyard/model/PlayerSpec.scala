@@ -1,4 +1,4 @@
-package de.htwg.se.yourgame.model
+package de.htwg.se.scotlandyard.model
 
 import org.scalatest._
 import org.junit.runner.RunWith
