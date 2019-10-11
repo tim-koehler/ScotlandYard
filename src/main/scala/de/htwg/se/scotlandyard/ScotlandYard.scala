@@ -1,10 +1,13 @@
 package de.htwg.se.scotlandyard
 
 import de.htwg.se.scotlandyard.model.Player
+import javax.swing.JLayeredPane
 
 object ScotlandYard {
   def main(args: Array[String]): Unit = {
-    val student = Player("Your Name")
-    println("Hello, " + student.name)
+    val player1 = Player("Tim")
+    val player2 = Player("Roli")
+    println("Hello, " + player1.name)
+    println("Hello, " + player2.name)
   }
 }
