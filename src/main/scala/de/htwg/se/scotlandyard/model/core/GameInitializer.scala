@@ -1,5 +1,7 @@
 package de.htwg.se.scotlandyard.model.core
 
+import de.htwg.se.scotlandyard.model.map.{Station, StationType}
+
 object GameInitializer {
 
     val allPositions = List(13, 26, 29, 34, 50, 53, 91, 94, 103, 112)
@@ -13,9 +15,16 @@ object GameInitializer {
   }
 
   def drawMisterXPosition(): Int = {
-    val MAX_STATION_NUMBER = 200
     val r = scala.util.Random
-    r.nextInt(MAX_STATION_NUMBER) + 1
+    r.nextInt(allPositions.length)
+  }
+
+  def LoadMapFromFile(): String = {
+    ""
+  }
+
+  def InitStations(): List[Station] = {
+    List(Station(1, StationType.Underground))
   }
 
 }
