@@ -1,5 +1,7 @@
 package de.htwg.se.scotlandyard.model.core
 
+import de.htwg.se.scotlandyard.model.map.{Station, StationType}
+
 object GameInitializer {
 
   // echte Anfangspositionen
@@ -21,6 +23,14 @@ object GameInitializer {
   def drawMisterXPosition(): Int = {
     val startPosIndex = r.nextInt(MAX_MISTERX_LIST_INDEX)
     misterXStartPositions(startPosIndex)
+  }
+
+  def loadMapFromFile(): String = {
+    ""
+  }
+
+  def initStations(): List[Station] = {
+    List(Station(1, StationType.Underground))
   }
 
 }

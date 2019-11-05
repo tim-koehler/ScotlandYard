@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.model.map.GameMap
+import de.htwg.se.scotlandyard.model.map.Map
 
 import scala.io.Source
 
@@ -80,7 +80,7 @@ class Tui {
         }
       }
     } else if(tuiMode == TUIMODE_RUNNING) {
-      outputString = GameMap.toString
+      outputString = Map.toString
     }
     outputString
   }

@@ -5,8 +5,13 @@ import org.scalatest._
 
 class StationSpec extends WordSpec with Matchers {
   "A Station" when {
+
+    //"new with empty ctor" should {
+
+    //}
+
     "new" should {
-      val station = Station(4, StationType.Bus)
+      val station = new Station(4, StationType.Bus)
       "have a number" in {
         station.number should be(4)
       }
