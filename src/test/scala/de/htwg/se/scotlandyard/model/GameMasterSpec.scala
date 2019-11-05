@@ -5,7 +5,7 @@ import org.scalatest._
 class GameMasterSpec extends WordSpec with Matchers {
   "GameMaster" should {
     "return true" in {
-      GameMaster.StartGame() should be (true)
+      GameMaster.startGame() should be (true)
     }
   }
 

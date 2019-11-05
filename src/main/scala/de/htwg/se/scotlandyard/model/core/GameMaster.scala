@@ -1,8 +1,14 @@
 package de.htwg.se.scotlandyard.model.core
 
+import scala.io.StdIn.readLine
+
 object GameMaster {
-  def StartGame(): Boolean = {
-    if(!GameInitializer.Initialize()) {
+  var numberOfPlayer = 2
+
+  def startGame(): Boolean = {
+
+
+    if(!GameInitializer.initialize()) {
       false
     }
     true

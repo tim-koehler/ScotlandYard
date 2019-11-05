@@ -10,3 +10,15 @@ val field1 = Field(Array.ofDim[Cell](1))
 field1.cells(0)=cell1
 field1.cells(0).x
 field1.cells(0).y
+
+val menuEntries: List[String] = List("Start Game", "Settings", "End Game")
+
+val firstString = "uff"
+val secondString = "lol"
+
+val anotherString2 = String.valueOf(firstString)
+
+
+val thirdString = firstString + secondString
+thirdString
+
