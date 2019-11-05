@@ -81,7 +81,6 @@ class Tui {
       }
     } else if(tuiMode == TUIMODE_RUNNING) {
       outputString = GameMap.toString
-      outputString = outputString +
     }
     outputString
   }
