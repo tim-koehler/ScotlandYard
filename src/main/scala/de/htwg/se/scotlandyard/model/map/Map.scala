@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.model.map
 
 object Map {
-  val stations = List()
+  val stations = Set[Station]()
   var playerPositions = List()
 
   override def toString: String = {
