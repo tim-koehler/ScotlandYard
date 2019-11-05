@@ -8,7 +8,7 @@ class MrX(station: Station) extends Player {
   }
 
   override def toString(): String = {
-    name + ": " + station.number + " " + station.sType.toString.toUpperCase + " TICKETS-> T: " + taxiTickets + " B: " + busTickets + " U: " + undergroundTickets
+    name + ": " + station.number + " " + station.sType.toString.toUpperCase + " TICKETS-> T: " + taxiTickets + ", B: " + busTickets + ", U: " + undergroundTickets
   }
 
 }

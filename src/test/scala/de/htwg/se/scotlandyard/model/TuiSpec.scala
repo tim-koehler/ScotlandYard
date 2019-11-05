@@ -11,10 +11,19 @@ class TuiSpec extends WordSpec with Matchers {
         //tui.getMainMenuString() shouldBe a[String]
       }
 
-      "return 1" in {
-        tui.evaluateInput(0.toString) should be (99)
-        tui.evaluateInput(1.toString) should be (99)
-        tui.evaluateInput(2.toString) should be (99)
+      "should return 0 in MainMenuMode" in {
+        tui.tuiMode = tui.TUIMODE_MAINMENU
+        tui.evaluateInput(1.toString) should be (0)
+      }
+
+      "should return 2 in MainMenuMode" in {
+        tui.tuiMode = tui.TUIMODE_MAINMENU
+        tui.evaluateInput(2.toString) should be (2)
+      }
+
+      "should return -1 in MainMenuMode" in {
+        tui.tuiMode = tui.TUIMODE_MAINMENU
+        tui.evaluateInput(3.toString) should be (-1)
       }
 
     }

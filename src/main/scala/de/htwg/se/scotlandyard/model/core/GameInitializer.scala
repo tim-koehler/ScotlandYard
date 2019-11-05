@@ -13,10 +13,10 @@ object GameInitializer {
   val r = scala.util.Random
 
   def initialize(): Boolean = {
-    var st = new Station(drawMisterXPosition(), StationType.Bus)
+    var st = new Station(drawMisterXPosition(), StationType.Bus, null, null, null)
     var playerList: List[Player] = List(new MrX(st))
-    for(i <- 1 to GameMaster.numberOfPlayer) {
-      st = new Station(drawDetectivePosition(), StationType.Taxi)
+    for(i <- 1 to GameMaster.numberOfPlayer - 1) {
+      st = new Station(drawDetectivePosition(), StationType.Taxi, null, null, null)
       playerList = new Detective(st, "Detective" + i.toString) :: playerList
     }
     GameMaster.players = playerList.reverse
@@ -38,7 +38,8 @@ object GameInitializer {
   }
 
   def initStations(): List[Station] = {
-    List(Station(1, StationType.Underground))
+    //List(Station(1, StationType.Underground))
+    null
   }
 
 }
