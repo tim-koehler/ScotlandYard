@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.model.map.{Station, StationType}
+import de.htwg.se.scotlandyard.model.player.{Detective, MrX, Player}
 
 object GameInitializer {
 
@@ -12,6 +13,13 @@ object GameInitializer {
   val r = scala.util.Random
 
   def initialize(): Boolean = {
+    var st = new Station(drawMisterXPosition(), StationType.Bus)
+    var playerList: List[Player] = List(new MrX(st))
+    for(i <- 1 to GameMaster.numberOfPlayer) {
+      st = new Station(drawDetectivePosition(), StationType.Taxi)
+      playerList = new Detective(st, "Detective" + i.toString) :: playerList
+    }
+    GameMaster.players = playerList.reverse
     true
   }
 

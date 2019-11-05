@@ -43,8 +43,10 @@ class Tui {
     } else if(input == 2) {
       tuiMode = TUIMODE_SETTINGS
       tuiMode
-    } else {
+    } else if(input == 3) {
       TUIMODE_QUIT
+    } else {
+      -99
     }
   }
 
@@ -81,6 +83,9 @@ class Tui {
       }
     } else if(tuiMode == TUIMODE_RUNNING) {
       outputString = Map.toString
+      for(p <- GameMaster.players) {
+        outputString = outputString + p.toString + "\n"
+      }
     }
     outputString
   }

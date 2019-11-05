@@ -16,8 +16,11 @@ val menuEntries: List[String] = List("Start Game", "Settings", "End Game")
 val firstString = "uff"
 val secondString = "lol"
 
-val anotherString2 = String.valueOf(firstString)
+var myList = List("Uff")
 
+val otherList = "moin" :: myList
+
+val anotherString2 = String.valueOf(firstString)
 
 val thirdString = firstString + secondString
 thirdString
