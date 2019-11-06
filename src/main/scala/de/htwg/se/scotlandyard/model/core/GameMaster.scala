@@ -6,7 +6,7 @@ import de.htwg.se.scotlandyard.model.player._
 import scala.io.StdIn.readLine
 
 object GameMaster {
-  var numberOfPlayer = 2
+  var numberOfPlayers = 2
   var players: List[Player] = List()
 
 
