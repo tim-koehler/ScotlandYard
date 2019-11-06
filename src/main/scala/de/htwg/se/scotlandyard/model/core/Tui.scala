@@ -23,7 +23,7 @@ class Tui {
       bufferedSource = Source.fromFile("src\\main\\scala\\de\\htwg\\se\\scotlandyard\\titleBanner.txt")
     } catch {
       case e: FileNotFoundException => bufferedSource = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
-      case _: Throwable => // do stuff
+      case _: Throwable =>
     }
 
     val titleBanner = bufferedSource.mkString
@@ -43,9 +43,13 @@ class Tui {
   def evaluateRunning(input: Int): Int = {
 
     if(input == 7)
-      MapRenderer.updateX(-10)
-    if(input == 8)
-      MapRenderer.updateX(10)
+      MapRenderer.updateX(-5)
+    else if(input == 8)
+      MapRenderer.updateX(5)
+    else if(input == 5)
+      MapRenderer.updateY(-5)
+    else if(input == 6)
+      MapRenderer.updateY(5)
     99
   }
 
