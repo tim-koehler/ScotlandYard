@@ -5,6 +5,7 @@ import java.io.FileNotFoundException
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.Map
 
+import scala.io.StdIn.readLine
 import scala.io.{BufferedSource, Source}
 
 class Tui {
@@ -87,7 +88,27 @@ class Tui {
   }
 
   def evaluateChooseName(inputStr: String): Int = {
-    9
+    var input = 0
+    var inputName = ""
+    try {
+      input = inputStr.toInt
+    } catch {
+      case e: NumberFormatException => -99
+    }
+    if(input == 1) {
+      inputName = readLine()
+      GameMaster.players(1).name = inputName
+    } else if((input == 2) && GameMaster.numberOfPlayers == 3) {
+      inputName = readLine()
+      GameMaster.players(2).name = inputName
+    } else if((input == 2) && GameMaster.numberOfPlayers == 4) {
+      inputName = readLine()
+      GameMaster.players(3).name = inputName
+    } else if(input == GameMaster.numberOfPlayers) {
+      GameMaster.startGame()
+      tuiMode = TUIMODE_RUNNING
+    }
+    tuiMode
   }
 
   override def toString() : String = {
