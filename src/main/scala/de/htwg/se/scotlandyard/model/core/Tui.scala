@@ -1,9 +1,11 @@
 package de.htwg.se.scotlandyard.model.core
 
+import java.io.FileNotFoundException
+
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.Map
 
-import scala.io.Source
+import scala.io.{BufferedSource, Source}
 
 class Tui {
   val menuTitles: List[String] = List("->Main Menu<-", "->Number of Players<-", "->Choose Names<-")
@@ -18,7 +20,14 @@ class Tui {
   var tuiMode = TUIMODE_MAINMENU
 
   private def getTitleBanner(): String = {
-    val bufferedSource = Source.fromFile("src\\main\\scala\\de\\htwg\\se\\scotlandyard\\titleBanner.txt")
+    var bufferedSource: BufferedSource = null
+    try {
+      bufferedSource = Source.fromFile("src\\main\\scala\\de\\htwg\\se\\scotlandyard\\titleBanner.txt")
+    } catch {
+      case e: FileNotFoundException => bufferedSource = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
+      case _: Throwable => // do stuff
+    }
+
     val titleBanner = bufferedSource.mkString
     bufferedSource.close
     titleBanner
