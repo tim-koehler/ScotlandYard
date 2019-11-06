@@ -41,6 +41,11 @@ class Tui {
   }
 
   def evaluateRunning(input: Int): Int = {
+
+    if(input == 7)
+      MapRenderer.updateX(-10)
+    if(input == 8)
+      MapRenderer.updateX(10)
     99
   }
 
@@ -91,12 +96,11 @@ class Tui {
         }
       }
     } else if(tuiMode == TUIMODE_RUNNING) {
-      outputString = Map.toString
+      outputString = MapRenderer.renderMap()
       for(p <- GameMaster.players) {
         outputString = outputString + p.toString + "\n"
       }
     }
     outputString
   }
-
 }
