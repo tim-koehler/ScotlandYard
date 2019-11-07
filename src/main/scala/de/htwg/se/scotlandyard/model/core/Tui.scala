@@ -61,14 +61,15 @@ class Tui {
    * @return tuiMode or a number not -1
    */
   def evaluateRunning(input: String): Int = {
-    if(input == 7)
-      MapRenderer.updateX(-5)
-    else if(input == 8)
-      MapRenderer.updateX(5)
-    else if(input == 5)
-      MapRenderer.updateY(-5)
-    else if(input == 6)
-      MapRenderer.updateY(5)
+    if(input.matches("(a|A)+")) {
+      MapRenderer.updateX(input.length * -5)
+    } else if(input.matches("(d|D)+")) {
+      MapRenderer.updateX(input.length * 5)
+    } else if(input.matches("(w|W)+")) {
+      MapRenderer.updateY(input.length * -5)
+    } else if(input.matches("(s|S)+")) {
+      MapRenderer.updateY(input.length * 5)
+    }
     99
   }
 
