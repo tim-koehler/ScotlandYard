@@ -8,7 +8,7 @@ import scala.io.StdIn.readLine
 object GameMaster {
   var numberOfPlayers = 2
   var players: List[Player] = List()
-  var playerNames: List[String] = List("MrX", "Detective1", "Detective2", "Detective3")
+  var playerNames: List[String] = List("MrX", "Dt1", "Dt2", "Dt3")
 
   def startGame(): Boolean = {
 

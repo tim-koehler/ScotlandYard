@@ -1,18 +1,18 @@
 package de.htwg.se.scotlandyard.model.core
 
-import java.io.FileNotFoundException
-
-import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.Map
 
 import scala.io.StdIn.readLine
 import scala.io.{BufferedSource, Source}
+
+import java.io.FileNotFoundException
 
 class Tui {
   val menuTitles: List[String] = List("->Main Menu<-", "->Number of Players<-", "->Choose Names<-")
   val mainMenuEntries: List[String] = List("Start Game", "Settings", "End Game")
   val settingsMenuEntries: List[String] = List("2 Players", "3 Players", "4 Players")
   val chooseNameMenuEntries: List[String] = List("Detective1", "Detective2", "Detective3", "Start")
+  val titleBanner = getTitleBanner()
   // Depending on which Mode the tui is set to, different evaluation
   // Methods will be called
   val TUIMODE_QUIT: Int = -1
@@ -20,6 +20,7 @@ class Tui {
   val TUIMODE_MAINMENU: Int = 1
   val TUIMODE_SETTINGS: Int = 2
   val TUIMODE_CHOOSENAME: Int = 3
+  val INVALID_INPUT = -99
   var tuiMode = TUIMODE_MAINMENU
 
   /**
@@ -73,7 +74,7 @@ class Tui {
     try {
       input = inputStr.toInt
     } catch {
-      case e: NumberFormatException => -99
+      case e: NumberFormatException => INVALID_INPUT
     }
     if(input == 1) {
       tuiMode = TUIMODE_CHOOSENAME
@@ -84,7 +85,7 @@ class Tui {
     } else if(input == 3) {
       TUIMODE_QUIT
     } else {
-      -99
+      INVALID_INPUT
     }
   }
 
@@ -98,7 +99,7 @@ class Tui {
     try {
       input = inputStr.toInt
     } catch {
-      case e: NumberFormatException => -99
+      case e: NumberFormatException => INVALID_INPUT
     }
     if(input == 3) {
       GameMaster.numberOfPlayers = 3
@@ -117,27 +118,57 @@ class Tui {
   def evaluateChooseName(inputStr: String): Int = {
     var input = 0
     var inputName = ""
-    var playerNamesBuffer = GameMaster.playerNames.toBuffer
     try {
       input = inputStr.toInt
     } catch {
-      case e: NumberFormatException => -99
+      case e: NumberFormatException => INVALID_INPUT
     }
     if(input == 1) {
       inputName = readLine()
-      playerNamesBuffer(1) = inputName
+      setName(inputName, 1)
     } else if((input == 2) && (GameMaster.numberOfPlayers == 3 || GameMaster.numberOfPlayers == 4)) {
       inputName = readLine()
-      playerNamesBuffer(2) = inputName
+      setName(inputName, 2)
     } else if((input == 3) && GameMaster.numberOfPlayers == 4) {
       inputName = readLine()
-      playerNamesBuffer(3) = inputName
+      setName(inputName, 3)
     } else if(input == GameMaster.numberOfPlayers) {
       GameMaster.startGame()
       tuiMode = TUIMODE_RUNNING
     }
-    GameMaster.playerNames = playerNamesBuffer.toList
     tuiMode
+  }
+
+  /**
+   * Sets the name in the players list in GameMaster
+   * @param inputName is the raw input
+   * @param index is the index of the current Player
+   * @return true if the default name was changed
+   */
+  def setName(inputName: String, index: Int): Boolean = {
+    if(adjustName(inputName).equals("")) {
+      false
+    } else {
+      val playerNamesBuffer = GameMaster.playerNames.toBuffer
+      playerNamesBuffer(index) = adjustName(inputName)
+      GameMaster.playerNames = playerNamesBuffer.toList
+      true
+    }
+  }
+
+  /**
+   * Adjust the names length to 0 < name.length < 4
+   * @param inputName raw input
+   * @return the name with fixed length or empty String
+   */
+  def adjustName(inputName: String): String = {
+    if(inputName.length == 0) {
+      ""
+    } else if(inputName.length > 3) {
+      inputName.substring(0, 3)
+    } else {
+      inputName
+    }
   }
 
   /**
@@ -148,7 +179,6 @@ class Tui {
     var outputString = ""
 
     if(tuiMode >= 1) {
-      val titleBanner = getTitleBanner()
       outputString = outputString + titleBanner + "\n\n"
       if (tuiMode == TUIMODE_MAINMENU) {
         outputString = outputString + menuTitles(0) + "\n"
