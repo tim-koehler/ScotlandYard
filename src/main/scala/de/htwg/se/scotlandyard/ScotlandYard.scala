@@ -9,8 +9,10 @@ object ScotlandYard {
   val tui = new Tui()
 
   def main(args: Array[String]): Unit = {
-    var input: String = ""
 
+    MapRenderer.init()
+
+    var input: String = ""
     do {
       println(tui.toString())
       input = readLine()

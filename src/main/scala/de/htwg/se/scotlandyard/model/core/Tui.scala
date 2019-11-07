@@ -33,7 +33,7 @@ class Tui {
       bufferedSource = Source.fromFile("src\\main\\scala\\de\\htwg\\se\\scotlandyard\\titleBanner.txt")
     } catch {
       case e: FileNotFoundException => bufferedSource = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
-      case _: Throwable => // do stuff
+      case _: Throwable =>
     }
 
     val titleBanner = bufferedSource.mkString
@@ -61,6 +61,14 @@ class Tui {
    * @return tuiMode or a number not -1
    */
   def evaluateRunning(input: String): Int = {
+    if(input == 7)
+      MapRenderer.updateX(-5)
+    else if(input == 8)
+      MapRenderer.updateX(5)
+    else if(input == 5)
+      MapRenderer.updateY(-5)
+    else if(input == 6)
+      MapRenderer.updateY(5)
     99
   }
 
@@ -204,7 +212,7 @@ class Tui {
         outputString = outputString + index.toString + ": " + chooseNameMenuEntries(3) + "\n"
       }
     } else if(tuiMode == TUIMODE_RUNNING) {
-      outputString = Map.toString
+      outputString = MapRenderer.renderMap()
       for(p <- GameMaster.players) {
         outputString = outputString + p.toString + "\n"
       }

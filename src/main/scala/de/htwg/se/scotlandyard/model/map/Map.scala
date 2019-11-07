@@ -1,15 +1,15 @@
 package de.htwg.se.scotlandyard.model.map
 
+import de.htwg.se.scotlandyard.model.core.MapRenderer
+
 object Map {
-  val stations = Set[Station]()
+  var map: List[String] = List()
+  val stations: Set[Station] = Set()
   var playerPositions = List()
 
+
+
   override def toString: String = {
-    var map: String = ""
-    // just a place holder for the real Map
-    for(i <- 0 to 8) {
-      map = map + "MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP MAP\n"
-    }
-    map
+    MapRenderer.renderMap()
   }
 }
