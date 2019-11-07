@@ -8,7 +8,11 @@ class MapRendererSpec extends WordSpec with Matchers {
     "return a positive offset" in {
       MapRenderer.offsetX = 10
       MapRenderer.offsetY = 10
-      MapRenderer.keepInBoundsX() shouldBe > (0)
+      MapRenderer.keepInBoundsX() shouldBe >(0)
+    }
+
+    "return true in MapRenderer.init()" in {
+      MapRenderer.init() should be(true)
     }
   }
 }
