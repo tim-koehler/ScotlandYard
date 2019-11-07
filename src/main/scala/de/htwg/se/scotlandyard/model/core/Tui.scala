@@ -133,13 +133,13 @@ class Tui {
     }
     if(input == 1) {
       inputName = readLine()
-      setName(inputName, 1)
+      setPlayerName(inputName, 1)
     } else if((input == 2) && (GameMaster.numberOfPlayers == 3 || GameMaster.numberOfPlayers == 4)) {
       inputName = readLine()
-      setName(inputName, 2)
+      setPlayerName(inputName, 2)
     } else if((input == 3) && GameMaster.numberOfPlayers == 4) {
       inputName = readLine()
-      setName(inputName, 3)
+      setPlayerName(inputName, 3)
     } else if(input == GameMaster.numberOfPlayers) {
       GameMaster.startGame()
       tuiMode = TUIMODE_RUNNING
@@ -153,12 +153,12 @@ class Tui {
    * @param index is the index of the current Player
    * @return true if the default name was changed
    */
-  def setName(inputName: String, index: Int): Boolean = {
-    if(adjustName(inputName).equals("")) {
+  def setPlayerName(inputName: String, index: Int): Boolean = {
+    if(checkAndAdjustPlayerName(inputName).equals("")) {
       false
     } else {
       val playerNamesBuffer = GameMaster.playerNames.toBuffer
-      playerNamesBuffer(index) = adjustName(inputName)
+      playerNamesBuffer(index) = checkAndAdjustPlayerName(inputName)
       GameMaster.playerNames = playerNamesBuffer.toList
       true
     }
@@ -169,13 +169,11 @@ class Tui {
    * @param inputName raw input
    * @return the name with fixed length or empty String
    */
-  def adjustName(inputName: String): String = {
-    if(inputName.length == 0) {
+  def checkAndAdjustPlayerName(inputName: String): String = {
+    if(inputName.length < 3) {
       ""
-    } else if(inputName.length > 3) {
-      inputName.substring(0, 3)
     } else {
-      inputName
+      inputName.substring(0, 3)
     }
   }
 
