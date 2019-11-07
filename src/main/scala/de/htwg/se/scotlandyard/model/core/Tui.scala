@@ -13,6 +13,8 @@ class Tui {
   val mainMenuEntries: List[String] = List("Start Game", "Settings", "End Game")
   val settingsMenuEntries: List[String] = List("2 Players", "3 Players", "4 Players")
   val chooseNameMenuEntries: List[String] = List("Detective1", "Detective2", "Detective3", "Start")
+  // Depending on which Mode the tui is set to, different evaluation
+  // Methods will be called
   val TUIMODE_QUIT: Int = -1
   val TUIMODE_RUNNING: Int = 0
   val TUIMODE_MAINMENU: Int = 1
@@ -20,6 +22,10 @@ class Tui {
   val TUIMODE_CHOOSENAME: Int = 3
   var tuiMode = TUIMODE_MAINMENU
 
+  /**
+   * Reads the fancy "Scotland Yard" Banner from a file
+   * @return titleBanner
+   */
   private def getTitleBanner(): String = {
     var bufferedSource: BufferedSource = null
     try {
@@ -34,6 +40,11 @@ class Tui {
     titleBanner
   }
 
+  /**
+   * Evaluates the input depending on the current tuiMode
+   * @param input input String read from console
+   * @return current tuiMode
+   */
   def evaluateInput(input: String): Int = {
     tuiMode match {
       case TUIMODE_RUNNING => evaluateRunning(input)
@@ -43,10 +54,20 @@ class Tui {
     }
   }
 
+  /**
+   * Evaluates the input while the game is running
+   * @param input String from the console
+   * @return tuiMode or a number not -1
+   */
   def evaluateRunning(input: String): Int = {
     99
   }
 
+  /**
+   * Evaluates the input while the game is in the main menu
+   * @param inputStr String read from console
+   * @return tuiMode
+   */
   def evaluateMainMenu(inputStr: String): Int = {
     var input = 0
     try {
@@ -56,10 +77,6 @@ class Tui {
     }
     if(input == 1) {
       tuiMode = TUIMODE_CHOOSENAME
-      //GameMaster.startGame()
-      //tuiMode = TUIMODE_RUNNING
-      // wird hier aufgerufen, weil die players List schon gefüllt sein muss, um die Namen einzutragen
-      GameInitializer.initPlayers() //!!!!!!!!!!!!!
       tuiMode
     } else if(input == 2) {
       tuiMode = TUIMODE_SETTINGS
@@ -71,6 +88,11 @@ class Tui {
     }
   }
 
+  /**
+   * Evaluates the input while the game is in the settings menu
+   * @param inputStr String read from console
+   * @return tuiMode
+   */
   def evaluateSettings(inputStr: String): Int = {
     var input = 0
     try {
@@ -84,12 +106,18 @@ class Tui {
       GameMaster.numberOfPlayers = 4
     }
     tuiMode = TUIMODE_MAINMENU
-    TUIMODE_SETTINGS
+    tuiMode
   }
 
+  /**
+   * Evaluates the input while the game is in the choose name menu
+   * @param inputStr String read from console
+   * @return tuiMode
+   */
   def evaluateChooseName(inputStr: String): Int = {
     var input = 0
     var inputName = ""
+    var playerNamesBuffer = GameMaster.playerNames.toBuffer
     try {
       input = inputStr.toInt
     } catch {
@@ -97,20 +125,25 @@ class Tui {
     }
     if(input == 1) {
       inputName = readLine()
-      GameMaster.players(1).name = inputName
-    } else if((input == 2) && GameMaster.numberOfPlayers == 3) {
+      playerNamesBuffer(1) = inputName
+    } else if((input == 2) && (GameMaster.numberOfPlayers == 3 || GameMaster.numberOfPlayers == 4)) {
       inputName = readLine()
-      GameMaster.players(2).name = inputName
-    } else if((input == 2) && GameMaster.numberOfPlayers == 4) {
+      playerNamesBuffer(2) = inputName
+    } else if((input == 3) && GameMaster.numberOfPlayers == 4) {
       inputName = readLine()
-      GameMaster.players(3).name = inputName
+      playerNamesBuffer(3) = inputName
     } else if(input == GameMaster.numberOfPlayers) {
       GameMaster.startGame()
       tuiMode = TUIMODE_RUNNING
     }
+    GameMaster.playerNames = playerNamesBuffer.toList
     tuiMode
   }
 
+  /**
+   * Builds the tui String depending on the current tui mode
+   * @return the whole tui String
+   */
   override def toString() : String = {
     var outputString = ""
 
@@ -135,7 +168,7 @@ class Tui {
         var index = 1
         outputString = outputString + menuTitles(2) + "\n"
         for (x <- 0 until (GameMaster.numberOfPlayers - 1)) {
-          outputString = outputString + index.toString + ": " + chooseNameMenuEntries(x) + ": " + GameMaster.players(index).name.toString + "\n"
+          outputString = outputString + index.toString + ": " + chooseNameMenuEntries(x) + ": " + GameMaster.playerNames(index).toString + "\n"
           index += 1
         }
         outputString = outputString + index.toString + ": " + chooseNameMenuEntries(3) + "\n"
