@@ -132,6 +132,8 @@ class Tui {
     } catch {
       case e: NumberFormatException => INVALID_INPUT
     }
+
+    
     if(input == 1) {
       inputName = readLine()
       setPlayerName(inputName, 1)

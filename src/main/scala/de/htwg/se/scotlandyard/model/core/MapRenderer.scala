@@ -80,8 +80,6 @@ object MapRenderer {
         }
         str += "\n"
       }
-      println("OffsetX: " + offsetX)
-      println("OffsetY: " + offsetY)
       str + "\n"
     }
 }
