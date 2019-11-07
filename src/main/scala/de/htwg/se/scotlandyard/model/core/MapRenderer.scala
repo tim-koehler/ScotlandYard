@@ -13,6 +13,8 @@ object MapRenderer {
 
   val mapMoveOffset = 5;
 
+
+
   def init() : Boolean = {
     val source = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt")
     for (line <- source.getLines()) {
@@ -50,10 +52,10 @@ object MapRenderer {
 
   def updateY(moveMultiplicator: Int, positive: Boolean ): Int = {
     if(positive) {
-      offsetX += moveMultiplicator * mapMoveOffset;
+      offsetY += moveMultiplicator * mapMoveOffset;
     }
-    else{
-      offsetX -= moveMultiplicator * mapMoveOffset;
+    else {
+      offsetY -= moveMultiplicator * mapMoveOffset;
     }
     keepInBoundsY()
   }
@@ -80,8 +82,6 @@ object MapRenderer {
         }
         str += "\n"
       }
-      println("OffsetX: " + offsetX)
-      println("OffsetY: " + offsetY)
       str + "\n"
     }
 }
