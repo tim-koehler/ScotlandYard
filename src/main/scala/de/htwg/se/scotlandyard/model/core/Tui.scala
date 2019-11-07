@@ -70,7 +70,8 @@ class Tui {
     } else if(input.matches("(s|S)+")) {
       MapRenderer.updateY(input.length, positive = true)
     }
-    99
+    tuiMode = TUIMODE_RUNNING
+    tuiMode
   }
 
   /**
@@ -133,7 +134,6 @@ class Tui {
       case e: NumberFormatException => INVALID_INPUT
     }
 
-    
     if(input == 1) {
       inputName = readLine()
       setPlayerName(inputName, 1)
