@@ -62,13 +62,13 @@ class Tui {
    */
   def evaluateRunning(input: String): Int = {
     if(input.matches("(a|A)+")) {
-      MapRenderer.updateX(input.length * -5)
+      MapRenderer.updateX(input.length, positive = false)
     } else if(input.matches("(d|D)+")) {
-      MapRenderer.updateX(input.length * 5)
+      MapRenderer.updateX(input.length , positive = true)
     } else if(input.matches("(w|W)+")) {
-      MapRenderer.updateY(input.length * -5)
+      MapRenderer.updateY(input.length, positive = false)
     } else if(input.matches("(s|S)+")) {
-      MapRenderer.updateY(input.length * 5)
+      MapRenderer.updateY(input.length, positive = true)
     }
     99
   }
