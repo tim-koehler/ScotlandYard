@@ -7,12 +7,16 @@ import org.scalatest._
 class MrXSpec extends WordSpec with Matchers {
   "MrX" when {
     "new" should {
-      //val MrX = new MrX(new Station(12, StationType.Taxi))
+      var st = new Station(12, StationType.Taxi, null, null, null)
+      var MrX = new MrX(st, "MrX")
       "have a station number" in {
-        //MrX.GetPosition().number should be (12)
+        MrX.getPosition().number should be (12)
       }
       "have a station Type" in {
-        //MrX.GetPosition().sType should be (StationType.Taxi)
+        MrX.getPosition().sType should be (StationType.Taxi)
+      }
+      "return String from toString method" in {
+        MrX.toString() shouldBe a [String]
       }
     }
   }

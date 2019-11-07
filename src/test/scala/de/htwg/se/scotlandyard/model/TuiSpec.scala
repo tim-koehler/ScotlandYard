@@ -13,7 +13,7 @@ class TuiSpec extends WordSpec with Matchers {
 
       "should return 0 in MainMenuMode" in {
         tui.tuiMode = tui.TUIMODE_MAINMENU
-        tui.evaluateInput(1.toString) should be (0)
+        tui.evaluateInput(1.toString) should be (3)
       }
 
       "should return 2 in MainMenuMode" in {
@@ -21,7 +21,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.evaluateInput(2.toString) should be (2)
       }
 
-      "should return -1 in MainMenuMode" in {
+      "should return 3 in MainMenuMode" in {
         tui.tuiMode = tui.TUIMODE_MAINMENU
         tui.evaluateInput(3.toString) should be (-1)
       }
