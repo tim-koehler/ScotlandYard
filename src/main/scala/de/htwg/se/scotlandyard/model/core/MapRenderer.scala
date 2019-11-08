@@ -13,21 +13,26 @@ object MapRenderer {
 
   val mapMoveOffset = 5;
 
-
+  val mapFilePath = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt"
 
   def init() : Boolean = {
-    val source = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt")
-    for (line <- source.getLines()) {
-      Map.map = line + "\n" :: Map.map
-    }
-    source.close()
 
-    Map.map = Map.map.reverse
+    Map.map = readMapFromFile()
 
     if(Map.map == null) {
       return false
     }
     true
+  }
+
+  def readMapFromFile(): List[String] = {
+    val source = Source.fromFile(mapFilePath)
+    for (line <- source.getLines()) {
+      Map.map = line + "\n" :: Map.map
+    }
+    source.close()
+
+    Map.map.reverse
   }
 
   def updateX(moveMultiplicator: Int, positive: Boolean ): Int = {
