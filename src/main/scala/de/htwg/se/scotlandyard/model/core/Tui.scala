@@ -69,8 +69,12 @@ class Tui {
       MapRenderer.updateY(input.length, positive = false)
     } else if(input.matches("(s|S)+")) {
       MapRenderer.updateY(input.length, positive = true)
+    } else if(input.equalsIgnoreCase("exit")) {
+      tuiMode = TUIMODE_QUIT
     }
-    tuiMode = TUIMODE_RUNNING
+    else {
+      tuiMode = TUIMODE_RUNNING
+    }
     tuiMode
   }
 
