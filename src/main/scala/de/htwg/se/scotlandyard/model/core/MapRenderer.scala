@@ -9,7 +9,7 @@ object MapRenderer {
   var offsetY: Int = 0
 
   val renderDimensionX = 200;
-  val renderDimensionY = 33;
+  val renderDimensionY = 30;
   val mapBorderOffset = 1;
 
   val mapMoveOffset = 5;
@@ -79,6 +79,9 @@ object MapRenderer {
       {
         if(y != offsetY) {
             str += "\u2551"
+        }
+        else{
+            str += "\n\u2551"
         }
         for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX))
         {
