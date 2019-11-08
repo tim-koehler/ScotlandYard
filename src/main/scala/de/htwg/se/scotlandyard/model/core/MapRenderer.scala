@@ -10,6 +10,7 @@ object MapRenderer {
 
   val renderDimensionX = 200;
   val renderDimensionY = 33;
+  val mapBorderOffset = 1;
 
   val mapMoveOffset = 5;
 
@@ -73,10 +74,13 @@ object MapRenderer {
   }
 
   def renderMap(): String = {
-      var str = ""
-      for (y <- offsetY until (renderDimensionY + offsetY))
+    var str = renderTopBorder()
+      for (y <- offsetY until ((renderDimensionY - mapBorderOffset) + offsetY))
       {
-        for(x <- offsetX until (renderDimensionX + offsetX))
+        if(y != offsetY) {
+            str += "\u2551"
+        }
+        for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX))
         {
           try {
             str += Map.map(y).charAt(x)
@@ -85,8 +89,37 @@ object MapRenderer {
             case e: Exception => str += " "
           }
         }
-        str += "\n"
+        str += "\u2551" + "\n"
       }
+      str += renderBottomBorder()
       str + "\n"
     }
+
+  def renderTopBorder(): String = {
+    val builder = new StringBuilder()
+    builder.append("\u2554")
+
+    renderLine(builder)
+
+    builder.append("\u2557")
+    builder.toString()
+  }
+
+  def renderBottomBorder(): String = {
+    val builder = new StringBuilder()
+    builder.append("\u255A")
+
+    renderLine(builder)
+
+    builder.append("\u255D")
+    builder.toString()
+  }
+
+  def renderLine(builder: StringBuilder): StringBuilder = {
+    for(_ <- 1 to renderDimensionX - mapBorderOffset) {
+      builder.append("\u2550")
+    }
+    builder
+  }
+
 }
