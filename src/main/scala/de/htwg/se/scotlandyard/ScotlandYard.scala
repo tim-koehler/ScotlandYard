@@ -1,13 +1,24 @@
 package de.htwg.se.scotlandyard
 
-import de.htwg.se.scotlandyard.model.Player
-import javax.swing.JLayeredPane
+import util.control.Breaks._
+import de.htwg.se.scotlandyard.model.core._
+
+import scala.io.StdIn.readLine
 
 object ScotlandYard {
+  val tui = new Tui()
+
   def main(args: Array[String]): Unit = {
-    val player1 = Player("Tim")
-    val player2 = Player("Roli")
-    println("Hello, " + player1.name + "How are you doing?")
-    println("Hello, " + player2.name + "How are you doing?")
+
+    MapRenderer.init()
+
+    var input: String = ""
+    do {
+      println(tui.toString())
+      input = readLine()
+    } while (tui.evaluateInput(input) != -1)
+
+    println("Spiel beendet")
   }
+
 }
