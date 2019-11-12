@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard
 
-import util.control.Breaks._
+import de.htwg.se.scotlandyard.aview.Tui
 import de.htwg.se.scotlandyard.model.core._
 
 import scala.io.StdIn.readLine

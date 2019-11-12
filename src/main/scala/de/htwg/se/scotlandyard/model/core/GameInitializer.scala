@@ -52,18 +52,21 @@ object GameInitializer {
   }
 
   def distributeTicketsToMrX(): Boolean = {
-    GameMaster.players(0).taxiTickets = 99
-    GameMaster.players(0).busTickets = 99
-    GameMaster.players(0).undergroundTickets = 99
-    true
+    distributeTickets(0, 99, 99, 99)
   }
 
   def distributeTicketsToDetectives(): Boolean = {
+    var success = false
     for(i <- 1 to GameMaster.numberOfPlayers - 1) {
-      GameMaster.players(i).taxiTickets = numberOfTaxiTickets
-      GameMaster.players(i).busTickets = numberOfBusTickets
-      GameMaster.players(i).undergroundTickets = numberOfUndergroundTickets
+      success = distributeTickets(i, numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets)
     }
+    success
+  }
+
+  def distributeTickets(index: Int, nTaxi: Int, nBus: Int, nUnder: Int): Boolean = {
+    GameMaster.players(index).taxiTickets = nTaxi
+    GameMaster.players(index).busTickets = nBus
+    GameMaster.players(index).undergroundTickets = nUnder
     true
   }
 
