@@ -1,11 +1,11 @@
-package de.htwg.se.scotlandyard.aview
+package de.htwg.se.scotlandyard.model.core
 
-import java.io.FileNotFoundException
-
-import de.htwg.se.scotlandyard.model.core.{GameMaster, MapRenderer}
+import de.htwg.se.scotlandyard.model.map.Map
 
 import scala.io.StdIn.readLine
 import scala.io.{BufferedSource, Source}
+
+import java.io.FileNotFoundException
 
 class Tui {
   val menuTitles: List[String] = List("->Main Menu<-", "->Number of Players<-", "->Choose Names<-")
@@ -139,22 +139,19 @@ class Tui {
     }
 
     if(input == 1) {
-      readAndSetPlayerName(1)
+      inputName = readLine()
+      setPlayerName(inputName, 1)
     } else if((input == 2) && (GameMaster.numberOfPlayers == 3 || GameMaster.numberOfPlayers == 4)) {
-      readAndSetPlayerName(2)
+      inputName = readLine()
+      setPlayerName(inputName, 2)
     } else if((input == 3) && GameMaster.numberOfPlayers == 4) {
-      readAndSetPlayerName(3)
+      inputName = readLine()
+      setPlayerName(inputName, 3)
     } else if(input == GameMaster.numberOfPlayers) {
       GameMaster.startGame()
       tuiMode = TUIMODE_RUNNING
     }
     tuiMode
-  }
-
-  def readAndSetPlayerName(index: Int): Unit = {
-    var inputName = ""
-    inputName = readLine()
-    setPlayerName(inputName, index)
   }
 
   /**
@@ -192,86 +189,38 @@ class Tui {
    * @return the whole tui String
    */
   override def toString() : String = {
+    var outputString = ""
+
     if(tuiMode >= 1) {
-      buildOutputStringForMenus()
-    } else {
-      buildOutputStringForRunningGame()
-    }
-  }
-
-  /**
-   * Builds the String for all menus
-   * @return menu String
-   */
-  def buildOutputStringForMenus(): String = {
-    var outputString = ""
-    outputString = outputString + titleBanner + "\n\n"
-    if (tuiMode == TUIMODE_MAINMENU) {
-      buildOutputStringForMainMenu(outputString)
-    } else if (tuiMode == TUIMODE_SETTINGS) {
-      buildOutputStringForSettingsMenu(outputString)
-    } else if(tuiMode == TUIMODE_CHOOSENAME) {
-      buildOutputStringForChooseNameMenu(outputString)
-    } else {
-      outputString
-    }
-  }
-
-  /**
-   * Builds the String specific for main menu
-   * @param banner
-   * @return String for main menu
-   */
-  def buildOutputStringForMainMenu(banner: String): String = {
-    var outputString = banner + menuTitles(0) + "\n"
-    var index = 1
-    for (x <- mainMenuEntries) {
-      outputString = outputString + index.toString + ": " + x + "\n"
-      index += 1
-    }
-    outputString
-  }
-
-  /**
-   * Builds the String specific for settings menu
-   * @param banner
-   * @return String for settings
-   */
-  def buildOutputStringForSettingsMenu(banner: String): String = {
-    var outputString = banner + menuTitles(1) + "\n"
-    var index = 2
-    for (x <- settingsMenuEntries) {
-      outputString = outputString + index.toString + ": " + x + "\n"
-      index += 1
-    }
-    outputString
-  }
-
-  /**
-   * Builds the String specific for choose name menu
-   * @param banner
-   * @return String for choose name menu
-   */
-  def buildOutputStringForChooseNameMenu(banner: String): String = {
-    var index = 1
-    var outputString = banner + menuTitles(2) + "\n"
-    for (x <- 0 until (GameMaster.numberOfPlayers - 1)) {
-      outputString = outputString + index.toString + ": " + chooseNameMenuEntries(x) + ": " + GameMaster.playerNames(index).toString + "\n"
-      index += 1
-    }
-    outputString = outputString + index.toString + ": " + chooseNameMenuEntries(3) + "\n"
-    outputString
-  }
-
-  /**
-   * Builds the String for the running game including the map
-   * @return String for the running game
-   */
-  def buildOutputStringForRunningGame(): String = {
-    var outputString = ""
-    outputString = MapRenderer.renderMap()
-    for(p <- GameMaster.players) {
-      outputString = outputString + p.toString + "\n"
+      outputString = outputString + titleBanner + "\n\n"
+      if (tuiMode == TUIMODE_MAINMENU) {
+        outputString = outputString + menuTitles(0) + "\n"
+        var index = 1
+        for (x <- mainMenuEntries) {
+          outputString = outputString + index.toString + ": " + x + "\n"
+          index += 1
+        }
+      } else if (tuiMode == TUIMODE_SETTINGS) {
+        outputString = outputString + menuTitles(1) + "\n"
+        var index = 2
+        for (x <- settingsMenuEntries) {
+          outputString = outputString + index.toString + ": " + x + "\n"
+          index += 1
+        }
+      } else if(tuiMode == TUIMODE_CHOOSENAME) {
+        var index = 1
+        outputString = outputString + menuTitles(2) + "\n"
+        for (x <- 0 until (GameMaster.numberOfPlayers - 1)) {
+          outputString = outputString + index.toString + ": " + chooseNameMenuEntries(x) + ": " + GameMaster.playerNames(index).toString + "\n"
+          index += 1
+        }
+        outputString = outputString + index.toString + ": " + chooseNameMenuEntries(3) + "\n"
+      }
+    } else if(tuiMode == TUIMODE_RUNNING) {
+      outputString = MapRenderer.renderMap()
+      for(p <- GameMaster.players) {
+        outputString = outputString + p.toString + "\n"
+      }
     }
     outputString
   }

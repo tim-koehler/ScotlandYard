@@ -11,7 +11,7 @@ object Map {
   //TODO: CLEANUP!!
   def initStations(): Int = {
 
-    //stations = new Station(1) :: stations
+    stations = new Station(1) :: stations
     stations(1)
     1
   }
