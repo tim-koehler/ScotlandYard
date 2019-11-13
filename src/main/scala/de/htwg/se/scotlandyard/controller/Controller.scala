@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.model.core.GameMaster
-import de.htwg.se.scotlandyard.model.player.Detective
+import de.htwg.se.scotlandyard.model.player.{Detective, Player}
 import de.htwg.se.scotlandyard.util.Observable
 
 class Controller extends Observable {
@@ -16,6 +16,10 @@ class Controller extends Observable {
     GameMaster.players.updated(index, playerWithNewName)
     notifyObservers
     true
+  }
+
+  def getPlayersList(): List[Player] = {
+    GameMaster.players
   }
 
   def setPlayerNumber(nPlayer: Int): Unit = {

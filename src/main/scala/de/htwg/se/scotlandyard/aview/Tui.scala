@@ -1,9 +1,10 @@
 package de.htwg.se.scotlandyard.aview
 
 import java.io.FileNotFoundException
-import de.htwg.se.scotlandyard.controller.Controller
 
+import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.{GameMaster, MapRenderer}
+import de.htwg.se.scotlandyard.model.player.Player
 import de.htwg.se.scotlandyard.util.Observer
 
 import scala.io.StdIn.readLine
@@ -149,7 +150,7 @@ class Tui(controller: Controller) extends Observer{
       case e: NumberFormatException => INVALID_INPUT
     }
 
-    if(input == GameMaster.players.length) {
+    if(input == controller.getPlayersList().length) {
       GameMaster.startGame()
       tuiMode = TUIMODE_RUNNING
     } else {
@@ -259,14 +260,13 @@ class Tui(controller: Controller) extends Observer{
    * @return String for choose name menu
    */
   def buildOutputStringForChooseNameMenu(banner: String): String = {
-    var index = 1
     var outputString = banner + menuTitles(2) + "\n"
-    GameMaster.players = GameMaster.players.reverse
-    for (x <- 0 until (GameMaster.players.length - 1)) {
-      outputString = outputString + index.toString + ": " + chooseNameMenuEntries(x) + ": " + GameMaster.players(index).name + "\n"
-      index += 1
+
+    for((x,i) <- controller.getPlayersList().reverse.drop(1).view.zipWithIndex) {
+      outputString = outputString + (i + 1).toString + ": " + chooseNameMenuEntries(i) + ": " + x.name + "\n"
     }
-    outputString = outputString + index.toString + ": " + chooseNameMenuEntries(6) + "\n"
+
+    outputString = outputString + "LastNumber" + ": " + chooseNameMenuEntries(6) + "\n"
     outputString
   }
 
@@ -277,7 +277,8 @@ class Tui(controller: Controller) extends Observer{
   def buildOutputStringForRunningGame(): String = {
     var outputString = ""
     outputString = MapRenderer.renderMap()
-    for(p <- GameMaster.players) {
+    for(p <- controller.getPlayersList()) {
+      printf("Debug order: " + p.toString())
       outputString = outputString + p.toString + "\n"
     }
     outputString
