@@ -160,13 +160,13 @@ class Tui(controller: Controller) extends Observer{
     if(input == 1) {
       tuiMode = TUIMODE_RUNNING
       updateScreen()
-    } else {
-      readAndSetPlayerName(input - 1) // -1 because 1 is Start and 2 is the first Detective
+    } else if(!readAndSetPlayerName(input - 1)) { // -1 because 1 is Start and 2 is the first Detective
+      tuiMode = TUIMODE_CHOOSENAME
     }
     tuiMode
   }
 
-  def readAndSetPlayerName(index: Int): Unit = {
+  def readAndSetPlayerName(index: Int): Boolean = {
     var inputName = ""
     inputName = readLine()
     setPlayerName(inputName, index)

@@ -3,23 +3,11 @@ package de.htwg.se.scotlandyard.model.core
 import de.htwg.se.scotlandyard.model.map._
 import de.htwg.se.scotlandyard.model.player._
 
-
 object GameMaster {
   val defaultStation = new Station(0, StationType.Taxi, null, null, null)
   val stations: List[Station] = List()
   var players: List[Player] = List()
   var round = 1
-
-  /*
-  def addDefaultPlayers(n: Int): Unit = {
-    players =  List(player1)
-    for(i <- 1 to (n - 1)) {
-      players = new Detective(defaultStation, "Dt" + i.toString) :: players
-    }
-    players = players.reverse
-  }
-  */
-
 
   def startGame(): Boolean = {
     if(!GameInitializer.initialize()) {
@@ -29,14 +17,15 @@ object GameMaster {
   }
 
   def getCurrentPlayer(): Player = {
-    players(getCurrentPlayerIndex())
+    players(getCurrentPlayerIndex() - 1)
   }
 
   def getCurrentPlayerIndex(): Int = {
-    if(round == players.length) {
-      return (players.length - 1)
+    if(round % players.length == 0) {
+      players.length
+    } else {
+      round % players.length
     }
-    (round % players.length) - 1
   }
 
   def nextRound(): Unit = {
