@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.model
 
-import de.htwg.se.scotlandyard.model.core.Tui
+import de.htwg.se.scotlandyard.aview.Tui
 import org.scalatest._
 
 class TuiSpec extends WordSpec with Matchers {
@@ -25,7 +25,6 @@ class TuiSpec extends WordSpec with Matchers {
         tui.tuiMode = tui.TUIMODE_MAINMENU
         tui.evaluateInput(3.toString) should be (-1)
       }
-
     }
   }
 }

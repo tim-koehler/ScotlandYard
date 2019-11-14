@@ -1,5 +1,7 @@
 package de.htwg.se.scotlandyard.model.core
 
+import de.htwg.se.scotlandyard.ScotlandYard
+
 import scala.io.{Source, StdIn}
 import de.htwg.se.scotlandyard.model.map.Map
 
@@ -15,10 +17,14 @@ object MapRenderer {
   val mapMoveOffset = 5;
 
   val mapFilePath = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt"
+  val tinyMapFilePath = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMapTiny.txt"
 
-  def init() : Boolean = {
-
-    Map.map = readMapFromFile()
+  def init(): Boolean = {
+    if(ScotlandYard.isDebugMode) {
+      Map.map = readMapFromFile(tinyMapFilePath)
+    } else {
+      Map.map = readMapFromFile(mapFilePath)
+    }
 
     if(Map.map == null) {
       return false
@@ -26,8 +32,8 @@ object MapRenderer {
     true
   }
 
-  def readMapFromFile(): List[String] = {
-    val source = Source.fromFile(mapFilePath)
+  def readMapFromFile(path: String): List[String] = {
+    val source = Source.fromFile(path)
     for (line <- source.getLines()) {
       Map.map = line + "\n" :: Map.map
     }

@@ -9,10 +9,11 @@ object Map {
   var playerPositions: Map[Player, Int] = scala.collection.immutable.Map()
 
   //TODO: CLEANUP!!
-  def initStations(): Int = {
+  def initStationsDebugMode(): Int = {
+    1
+  }
 
-    //stations = new Station(1) :: stations
-    stations(1)
+  def initStations(): Int = {
     1
   }
 

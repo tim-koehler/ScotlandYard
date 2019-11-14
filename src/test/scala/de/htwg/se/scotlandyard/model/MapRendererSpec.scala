@@ -27,7 +27,7 @@ class MapRendererSpec extends WordSpec with Matchers {
   }
   "MapRenderer readFromFile" should {
     "return a non empty String" in {
-      MapRenderer.readMapFromFile() should not be("")
+      MapRenderer.readMapFromFile(MapRenderer.mapFilePath) should not be("")
     }
   }
   "MapRenderer init()" should {
