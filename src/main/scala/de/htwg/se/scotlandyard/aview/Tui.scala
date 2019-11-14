@@ -13,9 +13,9 @@ import scala.io.{BufferedSource, Source}
 class Tui(controller: Controller) extends Observer{
   controller.add(this)
   val menuTitles: List[String] = List("->Main Menu<-", "->Number of Players<-", "->Choose Names<-")
-  val mainMenuEntries: List[String] = List("Start Game", "Settings", "End Game")
+  val mainMenuEntries: List[String] = List("Start Game", "End Game")
   val settingsMenuEntries: List[String] = List("2 Players", "3 Players", "4 Players", "5 Players", "6 Players", "7 Players")
-  val chooseNameMenuEntries: List[String] = List("Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6", "Start")
+  val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
   val titleBanner = getTitleBanner()
   // Depending on which Mode the tui is set to, different evaluation
   // Methods will be called
@@ -82,8 +82,9 @@ class Tui(controller: Controller) extends Observer{
     } else if(input.matches("(s|S)+")) {
       MapRenderer.updateY(input.length, positive = true)
     } else if(input.equalsIgnoreCase("exit")) {
-      tuiMode = TUIMODE_QUIT
+      return TUIMODE_QUIT
     }
+    updateScreen()
     tuiMode
   }
 
@@ -105,15 +106,12 @@ class Tui(controller: Controller) extends Observer{
       case e: NumberFormatException => INVALID_INPUT
     }
     if(input == 1) {
-      tuiMode = TUIMODE_CHOOSENAME
-      updateScreen()
-      tuiMode
-    } else if(input == 2) {
       tuiMode = TUIMODE_SETTINGS
       updateScreen()
       tuiMode
-    } else if(input == 3) {
-      TUIMODE_QUIT
+    } else if(input == 2) {
+      tuiMode = TUIMODE_QUIT
+      tuiMode
     } else {
       INVALID_INPUT
     }
@@ -132,7 +130,7 @@ class Tui(controller: Controller) extends Observer{
       case e: NumberFormatException => INVALID_INPUT
     }
 
-    tuiMode = TUIMODE_MAINMENU
+    tuiMode = TUIMODE_CHOOSENAME
     input match {
       case 2 => controller.setPlayerNumber(2)
       case 3 => controller.setPlayerNumber(3)
@@ -268,10 +266,10 @@ class Tui(controller: Controller) extends Observer{
    */
   def buildOutputStringForChooseNameMenu(banner: String): String = {
     var outputString = banner + menuTitles(2) + "\n"
-    outputString = outputString + "1" + ": " + chooseNameMenuEntries(6) + "\n"
+    outputString = outputString + "1" + ": " + chooseNameMenuEntries(0) + "\n"
 
     for((x,i) <- controller.getPlayersList().drop(1).view.zipWithIndex) {
-      outputString = outputString + (i + 2).toString + ": " + chooseNameMenuEntries(i) + ": " + x.name + "\n"
+      outputString = outputString + (i + 2).toString + ": " + chooseNameMenuEntries(i + 1) + ": " + x.name + "\n"
     }
 
     outputString
@@ -287,7 +285,7 @@ class Tui(controller: Controller) extends Observer{
     for(p <- controller.getPlayersList()) {
       outputString = outputString + p.toString + "\n"
     }
-    outputString = outputString + "Player" + " " + controller.getCurrentPlayer().name + " " + "Enter your next Station:"
+    outputString = outputString + "\n" + "Player" + " " + controller.getCurrentPlayer().name + " " + "Enter your next Station:"
     outputString
   }
 

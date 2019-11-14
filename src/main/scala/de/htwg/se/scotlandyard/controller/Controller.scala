@@ -25,8 +25,6 @@ class Controller extends Observable {
   def setPlayerNumber(nPlayer: Int): Unit = {
     if(nPlayer < GameMaster.players.length) {
       reducePlayerNumber(nPlayer)
-    } else if(nPlayer > GameMaster.players.length) {
-      increasePlayerNumber(nPlayer)
     }
     notifyObservers
   }
@@ -48,10 +46,6 @@ class Controller extends Observable {
     }
     notifyObservers
     false
-  }
-
-  private def increasePlayerNumber(nPlayer: Int): Unit = {
-    GameMaster.addDefaultPlayers(nPlayer)
   }
 
   private def reducePlayerNumber(nPlayer: Int): Unit = {

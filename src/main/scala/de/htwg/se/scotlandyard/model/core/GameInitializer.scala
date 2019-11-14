@@ -17,6 +17,7 @@ object GameInitializer {
   val numberOfBusTickets = 8
   val numberOfUndergroundTickets = 4
   val r = scala.util.Random
+  val maxPlayerNumber = 7
 
   def initialize(): Boolean = {
     MapRenderer.init()
@@ -29,10 +30,10 @@ object GameInitializer {
 
   def initPlayers(): Boolean = {
     var st = new Station(drawMisterXPosition(), StationType.Bus, null, null, null)
-  GameMaster.players(0).station = st
-    for(i <- 1 to (GameMaster.players.length - 1)) {
+  GameMaster.players = List[Player](new MrX(st))
+    for(i <- 1 to (maxPlayerNumber - 1)) {
       st = new Station(drawDetectivePosition(), StationType.Taxi, null, null, null)
-      GameMaster.players(i).station = st
+      GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i))
     }
     drawnPositions = List()
     true

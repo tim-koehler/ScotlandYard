@@ -7,11 +7,10 @@ import de.htwg.se.scotlandyard.model.player._
 object GameMaster {
   val defaultStation = new Station(0, StationType.Taxi, null, null, null)
   val stations: List[Station] = List()
-  var player1 = new MrX(defaultStation)
-  var player2 = new Detective(defaultStation)
-  var players: List[Player] = List(player1, player2)
+  var players: List[Player] = List()
   var round = 1
 
+  /*
   def addDefaultPlayers(n: Int): Unit = {
     players =  List(player1)
     for(i <- 1 to (n - 1)) {
@@ -19,6 +18,8 @@ object GameMaster {
     }
     players = players.reverse
   }
+  */
+
 
   def startGame(): Boolean = {
     if(!GameInitializer.initialize()) {
