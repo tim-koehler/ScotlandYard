@@ -16,6 +16,7 @@ object GameMaster {
     for(i <- 1 to (n - 1)) {
       players = new Detective(defaultStation, "Dt" + i.toString) :: players
     }
+    players = players.reverse
   }
 
   def startGame(): Boolean = {

@@ -150,11 +150,11 @@ class Tui(controller: Controller) extends Observer{
       case e: NumberFormatException => INVALID_INPUT
     }
 
-    if(input == controller.getPlayersList().length) {
+    if(input == 1) {
       GameMaster.startGame()
       tuiMode = TUIMODE_RUNNING
     } else {
-      readAndSetPlayerName(input)
+      readAndSetPlayerName(input - 1) // -1 because 1 is Start and 2 is the first Detective
     }
     controller.notifyObservers
 
@@ -261,12 +261,12 @@ class Tui(controller: Controller) extends Observer{
    */
   def buildOutputStringForChooseNameMenu(banner: String): String = {
     var outputString = banner + menuTitles(2) + "\n"
+    outputString = outputString + "1" + ": " + chooseNameMenuEntries(6) + "\n"
 
-    for((x,i) <- controller.getPlayersList().reverse.drop(1).view.zipWithIndex) {
-      outputString = outputString + (i + 1).toString + ": " + chooseNameMenuEntries(i) + ": " + x.name + "\n"
+    for((x,i) <- controller.getPlayersList().drop(1).view.zipWithIndex) {
+      outputString = outputString + (i + 2).toString + ": " + chooseNameMenuEntries(i) + ": " + x.name + "\n"
     }
 
-    outputString = outputString + "LastNumber" + ": " + chooseNameMenuEntries(6) + "\n"
     outputString
   }
 
