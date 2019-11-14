@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.model.core
 
+import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.{Station, StationType}
 import de.htwg.se.scotlandyard.model.player.{Detective, MrX, Player}
 
@@ -21,6 +22,7 @@ object GameInitializer {
     initPlayers()
     distributeTicketsToMrX()
     distributeTicketsToDetectives()
+    initStations()
     true
   }
 
@@ -70,12 +72,12 @@ object GameInitializer {
     true
   }
 
-  def loadMapFromFile(): String = {
-    ""
-  }
-
   def initStations(): List[Station] = {
-    //List(Station(1, StationType.Underground))
+    if(ScotlandYard.isDebugMode) {
+      de.htwg.se.scotlandyard.model.map.Map.initStationsDebugMode()
+    } else {
+      de.htwg.se.scotlandyard.model.map.Map.initStations()
+    }
     null
   }
 

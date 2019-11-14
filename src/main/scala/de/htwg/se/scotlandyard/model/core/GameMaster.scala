@@ -11,12 +11,9 @@ object GameMaster {
   var playerNames: List[String] = List("MrX", "Dt1", "Dt2", "Dt3")
 
   def startGame(): Boolean = {
-
-
     if(!GameInitializer.initialize()) {
       false
     }
     true
   }
-
 }

@@ -8,6 +8,8 @@ import scala.io.StdIn.readLine
 object ScotlandYard {
   val tui = new Tui()
 
+  val isDebugMode = true
+
   def main(args: Array[String]): Unit = {
 
     MapRenderer.init()
