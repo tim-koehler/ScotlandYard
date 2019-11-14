@@ -75,6 +75,7 @@ class Tui(controller: Controller) extends Observer{
       MapRenderer.updateY(input.length, positive = true)
     } else if(input.equalsIgnoreCase("exit")) {
       tuiMode = TUIMODE_QUIT
+      return tuiMode
     }
     else {
       tuiMode = TUIMODE_RUNNING
@@ -278,7 +279,6 @@ class Tui(controller: Controller) extends Observer{
     var outputString = ""
     outputString = MapRenderer.renderMap()
     for(p <- controller.getPlayersList()) {
-      printf("Debug order: " + p.toString())
       outputString = outputString + p.toString + "\n"
     }
     outputString
