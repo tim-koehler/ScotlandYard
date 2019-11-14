@@ -28,7 +28,7 @@ class Controller extends Observable {
     } else if(nPlayer > GameMaster.players.length) {
       increasePlayerNumber(nPlayer)
     }
-    //notifyObservers
+    notifyObservers
   }
 
   def getCurrentPlayer(): Player = {
@@ -43,10 +43,10 @@ class Controller extends Observable {
     if (GameMaster.validateMove(newPosition)) {
       GameMaster.updatePlayerPosition(newPosition)
       nextRound()
-      //notifyObservers
+      notifyObservers
       return true
     }
-    //notifyObservers
+    notifyObservers
     false
   }
 

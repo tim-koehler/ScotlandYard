@@ -65,6 +65,14 @@ class Tui(controller: Controller) extends Observer{
    * @return tuiMode or a number not -1
    */
   def evaluateRunning(input: String): Int = {
+    if(input.matches("[0-9]+")) {
+      evaluateNumberInput(input.toInt)
+    } else {
+      evaluateStringInput(input)
+    }
+  }
+
+  def evaluateStringInput(input: String): Int = {
     if(input.matches("(a|A)+")) {
       MapRenderer.updateX(input.length, positive = false)
     } else if(input.matches("(d|D)+")) {
@@ -75,12 +83,12 @@ class Tui(controller: Controller) extends Observer{
       MapRenderer.updateY(input.length, positive = true)
     } else if(input.equalsIgnoreCase("exit")) {
       tuiMode = TUIMODE_QUIT
-      return tuiMode
-    } else {
-      controller.validateAndMove(input.toInt)
-      tuiMode = TUIMODE_RUNNING
     }
-    controller.notifyObservers
+    tuiMode
+  }
+
+  def evaluateNumberInput(input: Int): Int = {
+    controller.validateAndMove(input.toInt)
     tuiMode
   }
 
@@ -98,11 +106,11 @@ class Tui(controller: Controller) extends Observer{
     }
     if(input == 1) {
       tuiMode = TUIMODE_CHOOSENAME
-      controller.notifyObservers
+      updateScreen()
       tuiMode
     } else if(input == 2) {
       tuiMode = TUIMODE_SETTINGS
-      controller.notifyObservers
+      updateScreen()
       tuiMode
     } else if(input == 3) {
       TUIMODE_QUIT
@@ -134,7 +142,6 @@ class Tui(controller: Controller) extends Observer{
       case 7 => controller.setPlayerNumber(7)
       case _ => tuiMode = TUIMODE_SETTINGS
     }
-    controller.notifyObservers
     tuiMode
   }
 
@@ -154,11 +161,10 @@ class Tui(controller: Controller) extends Observer{
 
     if(input == 1) {
       tuiMode = TUIMODE_RUNNING
+      updateScreen()
     } else {
       readAndSetPlayerName(input - 1) // -1 because 1 is Start and 2 is the first Detective
     }
-    controller.notifyObservers
-
     tuiMode
   }
 
@@ -285,7 +291,11 @@ class Tui(controller: Controller) extends Observer{
     outputString
   }
 
-  override def update: Unit = {
+  def updateScreen(): Unit = {
     println(toString())
+  }
+
+  override def update: Unit = {
+    updateScreen()
   }
 }
