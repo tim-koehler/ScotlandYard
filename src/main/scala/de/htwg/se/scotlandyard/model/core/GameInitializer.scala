@@ -28,12 +28,11 @@ object GameInitializer {
 
   def initPlayers(): Boolean = {
     var st = new Station(drawMisterXPosition(), StationType.Bus, null, null, null)
-    var playerList: List[Player] = List(new MrX(st, GameMaster.playerNames(0)))
-    for(i <- 1 to GameMaster.numberOfPlayers - 1) {
+  GameMaster.players(0).station = st
+    for(i <- 1 to (GameMaster.players.length - 1)) {
       st = new Station(drawDetectivePosition(), StationType.Taxi, null, null, null)
-      playerList = new Detective(st, GameMaster.playerNames(i)) :: playerList
+      GameMaster.players(i).station = st
     }
-    GameMaster.players = playerList.reverse
     drawnPositions = List()
     true
   }
@@ -59,7 +58,7 @@ object GameInitializer {
 
   def distributeTicketsToDetectives(): Boolean = {
     var success = false
-    for(i <- 1 to GameMaster.numberOfPlayers - 1) {
+    for(i <- 1 to (GameMaster.players.length - 1)) {
       success = distributeTickets(i, numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets)
     }
     success
