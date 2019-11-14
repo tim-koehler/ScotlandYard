@@ -76,8 +76,8 @@ class Tui(controller: Controller) extends Observer{
     } else if(input.equalsIgnoreCase("exit")) {
       tuiMode = TUIMODE_QUIT
       return tuiMode
-    }
-    else {
+    } else {
+      controller.validateAndDoMove(input.toInt)
       tuiMode = TUIMODE_RUNNING
     }
     controller.notifyObservers
@@ -126,6 +126,7 @@ class Tui(controller: Controller) extends Observer{
 
     tuiMode = TUIMODE_MAINMENU
     input match {
+      case 2 => controller.setPlayerNumber(2)
       case 3 => controller.setPlayerNumber(3)
       case 4 => controller.setPlayerNumber(4)
       case 5 => controller.setPlayerNumber(5)
@@ -281,6 +282,7 @@ class Tui(controller: Controller) extends Observer{
     for(p <- controller.getPlayersList()) {
       outputString = outputString + p.toString + "\n"
     }
+    outputString = outputString + "Player" + " " + controller.getCurrentPlayer().name + " " + "Enter your next Station:"
     outputString
   }
 
