@@ -6,6 +6,7 @@ import de.htwg.se.scotlandyard.model.player._
 
 object GameMaster {
   val defaultStation = new Station(0, StationType.Taxi, null, null, null)
+  val stations: List[Station] = List()
   var player1 = new MrX(defaultStation)
   var player2 = new Detective(defaultStation)
   var players: List[Player] = List(player1, player2)
@@ -21,7 +22,7 @@ object GameMaster {
 
   def startGame(): Boolean = {
     if(!GameInitializer.initialize()) {
-      false
+      return false
     }
     true
   }
@@ -47,7 +48,7 @@ object GameMaster {
   }
 
   def updatePlayerPosition(newPosition: Int): Unit = {
-    //TODO: getCurrentPlayer().station = Map.stations(newPosition)
+    //TODO: getCurrentPlayer().station = GameMap.stations(newPosition)
     getCurrentPlayer().station.number = newPosition
   }
 

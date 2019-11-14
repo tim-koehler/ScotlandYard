@@ -39,7 +39,7 @@ class Controller extends Observable {
     GameMaster.nextRound()
   }
 
-  def validateAndDoMove(newPosition: Int): Boolean = {
+  def validateAndMove(newPosition: Int): Boolean = {
     if (GameMaster.validateMove(newPosition)) {
       GameMaster.updatePlayerPosition(newPosition)
       nextRound()

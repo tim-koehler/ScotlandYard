@@ -77,7 +77,7 @@ class Tui(controller: Controller) extends Observer{
       tuiMode = TUIMODE_QUIT
       return tuiMode
     } else {
-      controller.validateAndDoMove(input.toInt)
+      controller.validateAndMove(input.toInt)
       tuiMode = TUIMODE_RUNNING
     }
     controller.notifyObservers
@@ -153,7 +153,6 @@ class Tui(controller: Controller) extends Observer{
     }
 
     if(input == 1) {
-      GameMaster.startGame()
       tuiMode = TUIMODE_RUNNING
     } else {
       readAndSetPlayerName(input - 1) // -1 because 1 is Start and 2 is the first Detective

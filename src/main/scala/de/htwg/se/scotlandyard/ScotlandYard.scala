@@ -15,7 +15,7 @@ object ScotlandYard {
 
   def main(args: Array[String]): Unit = {
 
-    MapRenderer.init()
+    GameMaster.startGame()
 
     var input: String = ""
     do {

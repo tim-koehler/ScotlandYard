@@ -1,12 +1,13 @@
 package de.htwg.se.scotlandyard.model
 
 import de.htwg.se.scotlandyard.aview.Tui
+import de.htwg.se.scotlandyard.controller.Controller
 import org.scalatest._
 
 class TuiSpec extends WordSpec with Matchers {
   "Tui" when {
     "new" should {
-      val tui = new Tui()
+      val tui = new Tui(new Controller())
       "return a String" in {
         //tui.getMainMenuString() shouldBe a[String]
       }

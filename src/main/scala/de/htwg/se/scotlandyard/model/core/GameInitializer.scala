@@ -19,6 +19,7 @@ object GameInitializer {
   val r = scala.util.Random
 
   def initialize(): Boolean = {
+    MapRenderer.init()
     initPlayers()
     distributeTicketsToMrX()
     distributeTicketsToDetectives()
@@ -73,9 +74,9 @@ object GameInitializer {
 
   def initStations(): List[Station] = {
     if(ScotlandYard.isDebugMode) {
-      de.htwg.se.scotlandyard.model.map.Map.initStationsDebugMode()
+      de.htwg.se.scotlandyard.model.map.GameMap.initStationsDebugMode()
     } else {
-      de.htwg.se.scotlandyard.model.map.Map.initStations()
+      de.htwg.se.scotlandyard.model.map.GameMap.initStations()
     }
     null
   }

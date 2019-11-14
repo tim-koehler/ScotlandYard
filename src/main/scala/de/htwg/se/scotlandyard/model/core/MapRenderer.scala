@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.model.core
 import de.htwg.se.scotlandyard.ScotlandYard
 
 import scala.io.{Source, StdIn}
-import de.htwg.se.scotlandyard.model.map.Map
+import de.htwg.se.scotlandyard.model.map.GameMap
 
 object MapRenderer {
 
@@ -21,12 +21,12 @@ object MapRenderer {
 
   def init(): Boolean = {
     if(ScotlandYard.isDebugMode) {
-      Map.map = readMapFromFile(tinyMapFilePath)
+      GameMap.map = readMapFromFile(tinyMapFilePath)
     } else {
-      Map.map = readMapFromFile(mapFilePath)
+      GameMap.map = readMapFromFile(mapFilePath)
     }
 
-    if(Map.map == null) {
+    if(GameMap.map == null) {
       return false
     }
     true
@@ -35,11 +35,11 @@ object MapRenderer {
   def readMapFromFile(path: String): List[String] = {
     val source = Source.fromFile(path)
     for (line <- source.getLines()) {
-      Map.map = line + "\n" :: Map.map
+      GameMap.map = line + "\n" :: GameMap.map
     }
     source.close()
 
-    Map.map.reverse
+    GameMap.map.reverse
   }
 
   def updateX(moveMultiplicator: Int, positive: Boolean ): Int = {
@@ -92,7 +92,7 @@ object MapRenderer {
         for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX))
         {
           try {
-            str += Map.map(y).charAt(x)
+            str += GameMap.map(y).charAt(x)
           }
           catch  {
             case e: Exception => str += " "

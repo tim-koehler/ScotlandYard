@@ -3,10 +3,10 @@ package de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.model.map._
 import org.scalatest._
 
-class MapSpec extends WordSpec with Matchers {
-  "A Map" when {
+class GameMapSpec extends WordSpec with Matchers {
+  "A GameMap" when {
     "new" should {
-      val map = Map
+      val map = GameMap
       "have an empty PLayerPositions List" in {
         //map.playerPositions.length should be(0)
       }

@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.model.core.MapRenderer
 import org.scalatest._
 
-class MapRendererSpec extends WordSpec with Matchers {
+class GameMapRendererSpec extends WordSpec with Matchers {
   "MapRenderer.updateX" should {
     "return a positive offset" in {
       MapRenderer.offsetX = 10
