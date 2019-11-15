@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.model.core.MapRenderer
 import org.scalatest._
 
-class MapRendererSpec extends WordSpec with Matchers {
+class GameMapRendererSpec extends WordSpec with Matchers {
   "MapRenderer.updateX" should {
     "return a positive offset" in {
       MapRenderer.offsetX = 10
@@ -27,7 +27,7 @@ class MapRendererSpec extends WordSpec with Matchers {
   }
   "MapRenderer readFromFile" should {
     "return a non empty String" in {
-      MapRenderer.readMapFromFile() should not be("")
+      MapRenderer.readMapFromFile(MapRenderer.mapFilePath) should not be("")
     }
   }
   "MapRenderer init()" should {

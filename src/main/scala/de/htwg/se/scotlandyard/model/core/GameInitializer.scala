@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.model.core
 
+import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.{Station, StationType}
 import de.htwg.se.scotlandyard.model.player.{Detective, MrX, Player}
 
@@ -16,22 +17,24 @@ object GameInitializer {
   val numberOfBusTickets = 8
   val numberOfUndergroundTickets = 4
   val r = scala.util.Random
+  val maxPlayerNumber = 7
 
   def initialize(): Boolean = {
+    MapRenderer.init()
     initPlayers()
     distributeTicketsToMrX()
     distributeTicketsToDetectives()
+    initStations()
     true
   }
 
   def initPlayers(): Boolean = {
     var st = new Station(drawMisterXPosition(), StationType.Bus, null, null, null)
-    var playerList: List[Player] = List(new MrX(st, GameMaster.playerNames(0)))
-    for(i <- 1 to GameMaster.numberOfPlayers - 1) {
+  GameMaster.players = List[Player](new MrX(st))
+    for(i <- 1 to (maxPlayerNumber - 1)) {
       st = new Station(drawDetectivePosition(), StationType.Taxi, null, null, null)
-      playerList = new Detective(st, GameMaster.playerNames(i)) :: playerList
+      GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i))
     }
-    GameMaster.players = playerList.reverse
     drawnPositions = List()
     true
   }
@@ -52,27 +55,30 @@ object GameInitializer {
   }
 
   def distributeTicketsToMrX(): Boolean = {
-    GameMaster.players(0).taxiTickets = 99
-    GameMaster.players(0).busTickets = 99
-    GameMaster.players(0).undergroundTickets = 99
-    true
+    distributeTickets(0, 99, 99, 99)
   }
 
   def distributeTicketsToDetectives(): Boolean = {
-    for(i <- 1 to GameMaster.numberOfPlayers - 1) {
-      GameMaster.players(i).taxiTickets = numberOfTaxiTickets
-      GameMaster.players(i).busTickets = numberOfBusTickets
-      GameMaster.players(i).undergroundTickets = numberOfUndergroundTickets
+    var success = false
+    for(i <- 1 to (GameMaster.players.length - 1)) {
+      success = distributeTickets(i, numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets)
     }
+    success
+  }
+
+  def distributeTickets(index: Int, nTaxi: Int, nBus: Int, nUnder: Int): Boolean = {
+    GameMaster.players(index).taxiTickets = nTaxi
+    GameMaster.players(index).busTickets = nBus
+    GameMaster.players(index).undergroundTickets = nUnder
     true
   }
 
-  def loadMapFromFile(): String = {
-    ""
-  }
-
   def initStations(): List[Station] = {
-    //List(Station(1, StationType.Underground))
+    if(ScotlandYard.isDebugMode) {
+      de.htwg.se.scotlandyard.model.map.GameMap.initStationsDebugMode()
+    } else {
+      de.htwg.se.scotlandyard.model.map.GameMap.initStations()
+    }
     null
   }
 

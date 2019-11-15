@@ -1,7 +1,9 @@
 package de.htwg.se.scotlandyard.model.core
 
+import de.htwg.se.scotlandyard.ScotlandYard
+
 import scala.io.{Source, StdIn}
-import de.htwg.se.scotlandyard.model.map.Map
+import de.htwg.se.scotlandyard.model.map.GameMap
 
 object MapRenderer {
 
@@ -15,25 +17,29 @@ object MapRenderer {
   val mapMoveOffset = 5;
 
   val mapFilePath = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt"
+  val tinyMapFilePath = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMapTiny.txt"
 
-  def init() : Boolean = {
+  def init(): Boolean = {
+    if(ScotlandYard.isDebugMode) {
+      GameMap.map = readMapFromFile(tinyMapFilePath)
+    } else {
+      GameMap.map = readMapFromFile(mapFilePath)
+    }
 
-    Map.map = readMapFromFile()
-
-    if(Map.map == null) {
+    if(GameMap.map == null) {
       return false
     }
     true
   }
 
-  def readMapFromFile(): List[String] = {
-    val source = Source.fromFile(mapFilePath)
+  def readMapFromFile(path: String): List[String] = {
+    val source = Source.fromFile(path)
     for (line <- source.getLines()) {
-      Map.map = line + "\n" :: Map.map
+      GameMap.map = line + "\n" :: GameMap.map
     }
     source.close()
 
-    Map.map.reverse
+    GameMap.map.reverse
   }
 
   def updateX(moveMultiplicator: Int, positive: Boolean ): Int = {
@@ -86,7 +92,7 @@ object MapRenderer {
         for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX))
         {
           try {
-            str += Map.map(y).charAt(x)
+            str += GameMap.map(y).charAt(x)
           }
           catch  {
             case e: Exception => str += " "

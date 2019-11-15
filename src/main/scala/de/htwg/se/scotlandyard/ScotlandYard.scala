@@ -1,20 +1,24 @@
 package de.htwg.se.scotlandyard
 
-import util.control.Breaks._
+import de.htwg.se.scotlandyard.aview.Tui
+import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core._
 
 import scala.io.StdIn.readLine
 
 object ScotlandYard {
-  val tui = new Tui()
+  val controller = new Controller
+  val tui = new Tui(controller)
+  controller.notifyObservers
+
+  val isDebugMode = true
 
   def main(args: Array[String]): Unit = {
 
-    MapRenderer.init()
+    GameMaster.startGame()
 
     var input: String = ""
     do {
-      println(tui.toString())
       input = readLine()
     } while (tui.evaluateInput(input) != -1)
 
