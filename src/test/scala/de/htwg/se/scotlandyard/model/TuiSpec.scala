@@ -8,23 +8,18 @@ class TuiSpec extends WordSpec with Matchers {
   "Tui" when {
     "new" should {
       val tui = new Tui(new Controller())
-      "return a String" in {
-        //tui.getMainMenuString() shouldBe a[String]
+      "return 3 in settingsmode when a number >= 2 && <= 7 is selected" in {
+        tui.evaluateSettings(2.toString) should be (3)
       }
 
-      "should return 0 in MainMenuMode" in {
+      "should return 2 in MainMenuMode when 1 is selected" in {
         tui.tuiMode = tui.TUIMODE_MAINMENU
-        tui.evaluateInput(1.toString) should be (3)
+        tui.evaluateInput(1.toString) should be (2)
       }
 
-      "should return 2 in MainMenuMode" in {
+      "should return -1 in MainMenuMode when 2 is selected" in {
         tui.tuiMode = tui.TUIMODE_MAINMENU
-        tui.evaluateInput(2.toString) should be (2)
-      }
-
-      "should return 3 in MainMenuMode" in {
-        tui.tuiMode = tui.TUIMODE_MAINMENU
-        tui.evaluateInput(3.toString) should be (-1)
+        tui.evaluateInput(2.toString) should be (-1)
       }
     }
   }
