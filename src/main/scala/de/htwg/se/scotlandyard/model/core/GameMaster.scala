@@ -5,7 +5,7 @@ import de.htwg.se.scotlandyard.model.player._
 
 object GameMaster {
   val defaultStation = new Station(0, StationType.Taxi, null, null, null)
-  val stations: List[Station] = List()
+  var stations: List[Station] = List()
   var players: List[Player] = List()
   var round = 1
 

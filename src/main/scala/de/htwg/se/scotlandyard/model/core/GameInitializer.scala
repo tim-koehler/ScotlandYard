@@ -4,6 +4,8 @@ import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.{Station, StationType}
 import de.htwg.se.scotlandyard.model.player.{Detective, MrX, Player}
 
+import scala.collection.mutable.ListBuffer
+
 object GameInitializer {
 
   // real starting positions
@@ -24,7 +26,13 @@ object GameInitializer {
     initPlayers()
     distributeTicketsToMrX()
     distributeTicketsToDetectives()
-    initStations()
+    if(ScotlandYard.isDebugMode){
+      GameMaster.stations = initDebugStations()
+    }
+    else {
+      GameMaster.stations = initStations()
+    }
+
     true
   }
 
@@ -73,13 +81,45 @@ object GameInitializer {
     true
   }
 
-  def initStations(): List[Station] = {
-    if(ScotlandYard.isDebugMode) {
-      de.htwg.se.scotlandyard.model.map.GameMap.initStationsDebugMode()
-    } else {
-      de.htwg.se.scotlandyard.model.map.GameMap.initStations()
+  def initDebugStations(): List[Station] = {
+
+    def createStations(): List[Station] = {
+      var stationsBuffer = new ListBuffer[Station]()
+
+      // Zero index Station
+      stationsBuffer += new Station(0, StationType.Taxi, null, null, null)
+
+      stationsBuffer += new Station(1, StationType.Bus, null, null, null)
+      stationsBuffer += new Station(2, StationType.Underground, null, null, null)
+      stationsBuffer += new Station(3, StationType.Underground, null, null, null)
+
+      stationsBuffer.toList
     }
-    null
+
+    val stations = createStations()
+
+    def setNeighbours(): Int = {
+      stations(1).setNeighbourTaxis(Set(stations(2), stations(3)))
+      stations(1).setNeighbourBuses(Set(stations(2), stations(3)))
+
+      stations(2).setNeighbourTaxis(Set(stations(1)))
+      stations(2).setNeighbourBuses(Set(stations(1), stations(3)))
+      stations(2).setNeighbourUndergrounds(Set(stations(3)))
+
+      stations(3).setNeighbourTaxis(Set(stations(1)))
+      stations(3).setNeighbourBuses(Set(stations(1), stations(2)))
+      stations(3).setNeighbourUndergrounds(Set(stations(2)))
+
+      stations.size
+    }
+
+    setNeighbours()
+
+    stations
   }
 
+  def initStations(): List[Station] = {
+
+    null
+  }
 }
