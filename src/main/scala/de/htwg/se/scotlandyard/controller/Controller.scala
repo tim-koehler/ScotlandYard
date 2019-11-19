@@ -37,8 +37,8 @@ class Controller extends Observable {
     GameMaster.nextRound()
   }
 
-  def validateAndMove(newPosition: Int): Boolean = {
-    if (GameMaster.validateMove(newPosition)) {
+  def validateAndMove(newPosition: Int, c: Char): Boolean = {
+    if (GameMaster.validateMove(newPosition, c)) {
       GameMaster.updatePlayerPosition(newPosition)
       nextRound()
       notifyObservers
