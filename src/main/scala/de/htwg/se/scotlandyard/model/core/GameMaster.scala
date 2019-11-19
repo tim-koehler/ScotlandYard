@@ -43,7 +43,7 @@ object GameMaster {
   }
 
   def setMrXVisibility(): Boolean = {
-    println(totalRound)
+    println("Total Round: " + totalRound)
     val playerMrX = players(0)
     playerMrX.asInstanceOf[MrX].hidden = checkMrXVisibility()
     if(!playerMrX.asInstanceOf[MrX].hidden) {
@@ -54,13 +54,13 @@ object GameMaster {
 
   def checkMrXVisibility(): Boolean = {
     totalRound match {
-      case 3 => return true
-      case 8 => return true
-      case 13 => return true
-      case 18 => return true
-      case 24 => return true
+      case 3 => true
+      case 8 => true
+      case 13 => true
+      case 18 => true
+      case 24 => true
+      case _ => false
     }
-    return false
   }
 
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
