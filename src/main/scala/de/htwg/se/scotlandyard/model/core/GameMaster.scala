@@ -2,6 +2,7 @@ package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.model.map._
 import de.htwg.se.scotlandyard.model.player._
+import de.htwg.se.scotlandyard.model.player.TicketType
 
 object GameMaster {
   val defaultStation = new Station(0, StationType.Taxi, null, null, null)
@@ -32,14 +33,44 @@ object GameMaster {
     round += 1
   }
 
-  def validateMove(newPosition: Int): Boolean = {
-    //TODO: check if player move is valid
+  def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
+
+    if(ticketType.equals(TicketType.Taxi)) {
+      if(getCurrentPlayer().taxiTickets <= 0) {
+        return false
+      }
+      if(!getCurrentPlayer().getPosition().neighbourTaxis.contains(stations(newPosition))){
+        return false
+      }
+    } else if(ticketType.equals(TicketType.Bus)) {
+      if(getCurrentPlayer().busTickets <= 0) {
+        return false
+      }
+      if(!getCurrentPlayer().getPosition().neighbourBuses.contains(stations(newPosition))){
+        return false
+      }
+    } else {
+      if(getCurrentPlayer().undergroundTickets <= 0) {
+        return false
+      }
+      if(!getCurrentPlayer().getPosition().neighbourUndergrounds.contains(stations(newPosition))){
+        return false
+      }
+    }
     true
   }
 
-  def updatePlayerPosition(newPosition: Int): Unit = {
-    //TODO: getCurrentPlayer().station = GameMap.stations(newPosition)
-    getCurrentPlayer().station.number = newPosition
+  def updatePlayerPosition(newPosition: Int, ticketType: TicketType): Station = {
+
+    if(ticketType.equals(TicketType.Taxi)) {
+      getCurrentPlayer().taxiTickets -= 1
+    } else if(ticketType.equals(TicketType.Bus)){
+      getCurrentPlayer().busTickets -= 1
+    } else {
+      getCurrentPlayer().undergroundTickets -= 1
+    }
+    getCurrentPlayer().station = stations(newPosition)
+    getCurrentPlayer().station
   }
 
 }
