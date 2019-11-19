@@ -12,7 +12,7 @@ import scala.io.{BufferedSource, Source}
 
 class Tui(controller: Controller) extends Observer{
   controller.add(this)
-  val menuTitles: List[String] = List("->Main Menu<-", "->Number of Players<-", "->Choose Names<-")
+  val menuTitles: List[String] = List("->Main Menu<-", "->Number of Players<-", "->Choose Names<-", "->START<-")
   val mainMenuEntries: List[String] = List("Start Game", "End Game")
   val settingsMenuEntries: List[String] = List("2 Players", "3 Players", "4 Players", "5 Players", "6 Players", "7 Players")
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
@@ -24,6 +24,7 @@ class Tui(controller: Controller) extends Observer{
   val TUIMODE_MAINMENU: Int = 1
   val TUIMODE_SETTINGS: Int = 2
   val TUIMODE_CHOOSENAME: Int = 3
+  val TUIMODE_DISPMRX: Int = 4
   val INVALID_INPUT = -99
   var tuiMode = TUIMODE_MAINMENU
 
@@ -56,7 +57,15 @@ class Tui(controller: Controller) extends Observer{
       case TUIMODE_MAINMENU => evaluateMainMenu(input)
       case TUIMODE_SETTINGS => evaluateSettings(input)
       case TUIMODE_CHOOSENAME => evaluateChooseName(input)
+      case TUIMODE_DISPMRX => evaluateDispMr(input)
     }
+  }
+
+  def evaluateDispMr(input: String): Int = {
+    //TODO: println entfernen
+    println("Station: " + controller.getCurrentPlayer().getPosition().number)
+    tuiMode = TUIMODE_RUNNING
+    tuiMode
   }
 
   /**
@@ -66,13 +75,13 @@ class Tui(controller: Controller) extends Observer{
    */
   def evaluateRunning(input: String): Int = {
     if(input.matches("[0-9]{1,3} ((T|t)|(B|b)|(U|u))")) {
-      evaluateNumberInput(input)
+      evaluateNextPositionInput(input)
     } else {
-      evaluateStringInput(input)
+      evaluateMoveMapInput(input)
     }
   }
 
-  def evaluateStringInput(input: String): Int = {
+  def evaluateMoveMapInput(input: String): Int = {
     if(input.matches("(a|A)+")) {
       MapRenderer.updateX(input.length, positive = false)
     } else if(input.matches("(d|D)+")) {
@@ -88,7 +97,7 @@ class Tui(controller: Controller) extends Observer{
     tuiMode
   }
 
-  def evaluateNumberInput(input: String): Int = {
+  def evaluateNextPositionInput(input: String): Int = {
     val index = input.indexOf(" ")
     val newStation = input.substring(0, index).toInt
     val transport = input.substring(index + 1).toCharArray.head.toLower
@@ -96,6 +105,10 @@ class Tui(controller: Controller) extends Observer{
 
     if(transport.equals('t')) {
       controller.validateAndMove(newStation, TicketType.Taxi)
+    } else if (transport.equals('b')) {
+      controller.validateAndMove(newStation, TicketType.Bus)
+    } else if (transport.equals('u')) {
+      controller.validateAndMove(newStation, TicketType.Underground)
     }
 
     tuiMode
@@ -158,7 +171,6 @@ class Tui(controller: Controller) extends Observer{
    */
   def evaluateChooseName(inputStr: String): Int = {
     var input = 0
-    var inputName = ""
     try {
       input = inputStr.toInt
     } catch {
@@ -166,7 +178,7 @@ class Tui(controller: Controller) extends Observer{
     }
 
     if(input == 1) {
-      tuiMode = TUIMODE_RUNNING
+      tuiMode = TUIMODE_DISPMRX
       updateScreen()
     } else if(!readAndSetPlayerName(input - 1)) { // -1 because 1 is Start and 2 is the first Detective
       tuiMode = TUIMODE_CHOOSENAME
@@ -232,9 +244,17 @@ class Tui(controller: Controller) extends Observer{
       buildOutputStringForSettingsMenu(outputString)
     } else if(tuiMode == TUIMODE_CHOOSENAME) {
       buildOutputStringForChooseNameMenu(outputString)
+    } else if(tuiMode == TUIMODE_DISPMRX) {
+      buildOutputStringForDispMrX(outputString)
     } else {
       outputString
     }
+  }
+
+  def buildOutputStringForDispMrX(banner: String): String = {
+    var outputString = banner + menuTitles(3) + "\n"
+    outputString = outputString + "Reveal MrX starting Position: (Enter any Key to continue...)"
+    outputString
   }
 
   /**

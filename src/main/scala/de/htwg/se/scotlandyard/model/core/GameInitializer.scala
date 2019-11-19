@@ -23,24 +23,23 @@ object GameInitializer {
 
   def initialize(): Boolean = {
     MapRenderer.init()
-    initPlayers()
-    distributeTicketsToMrX()
-    distributeTicketsToDetectives()
-    if(ScotlandYard.isDebugMode){
+    if(ScotlandYard.isDebugMode) {
       GameMaster.stations = initDebugStations()
     }
     else {
       GameMaster.stations = initStations()
     }
-
+    initPlayers()
+    distributeTicketsToMrX()
+    distributeTicketsToDetectives()
     true
   }
 
   def initPlayers(): Boolean = {
-    var st = new Station(drawMisterXPosition(), StationType.Bus, null, null, null)
-  GameMaster.players = List[Player](new MrX(st))
+    var st = GameMaster.stations(drawMisterXPosition())
+    GameMaster.players = List[Player](new MrX(st))
     for(i <- 1 to (maxPlayerNumber - 1)) {
-      st = new Station(drawDetectivePosition(), StationType.Taxi, null, null, null)
+      st = GameMaster.stations(drawDetectivePosition())
       GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i))
     }
     drawnPositions = List()
@@ -48,6 +47,9 @@ object GameInitializer {
   }
 
   def drawDetectivePosition(): Int = {
+    if(ScotlandYard.isDebugMode) {
+      return 2
+    }
     var startPosIndex = 0
     do {
       startPosIndex = r.nextInt(MAX_DETECTIVE_LIST_INDEX)
@@ -58,6 +60,9 @@ object GameInitializer {
   }
 
   def drawMisterXPosition(): Int = {
+    if(ScotlandYard.isDebugMode) {
+      return 1
+    }
     val startPosIndex = r.nextInt(MAX_MISTERX_LIST_INDEX)
     misterXStartPositions(startPosIndex)
   }
@@ -101,14 +106,15 @@ object GameInitializer {
     def setNeighbours(): Int = {
       stations(1).setNeighbourTaxis(Set(stations(2), stations(3)))
       stations(1).setNeighbourBuses(Set(stations(2), stations(3)))
+      stations(1).setNeighbourUndergrounds(Set(stations(2), stations(3)))
 
       stations(2).setNeighbourTaxis(Set(stations(1)))
       stations(2).setNeighbourBuses(Set(stations(1), stations(3)))
-      stations(2).setNeighbourUndergrounds(Set(stations(3)))
+      stations(2).setNeighbourUndergrounds(Set(stations(1)))
 
       stations(3).setNeighbourTaxis(Set(stations(1)))
       stations(3).setNeighbourBuses(Set(stations(1), stations(2)))
-      stations(3).setNeighbourUndergrounds(Set(stations(2)))
+      stations(3).setNeighbourUndergrounds(Set(stations(1)))
 
       stations.size
     }

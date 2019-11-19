@@ -35,7 +35,7 @@ object GameMaster {
   }
 
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
-
+  //TODO: check if another player stands on the station
     if(ticketType.equals(TicketType.Taxi)) {
       if(getCurrentPlayer().taxiTickets <= 0) {
         return false
