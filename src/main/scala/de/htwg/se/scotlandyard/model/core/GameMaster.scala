@@ -3,6 +3,7 @@ package de.htwg.se.scotlandyard.model.core
 import de.htwg.se.scotlandyard.model.map._
 import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.model.player.TicketType
+import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 
 object GameMaster {
   val defaultStation = new Station(0, StationType.Taxi, null, null, null)

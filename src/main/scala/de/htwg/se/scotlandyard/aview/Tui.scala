@@ -4,7 +4,7 @@ import java.io.FileNotFoundException
 
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.{GameMaster, MapRenderer}
-import de.htwg.se.scotlandyard.model.player.Player
+import de.htwg.se.scotlandyard.model.player.{Player, TicketType}
 import de.htwg.se.scotlandyard.util.Observer
 
 import scala.io.StdIn.readLine
@@ -90,10 +90,14 @@ class Tui(controller: Controller) extends Observer{
 
   def evaluateNumberInput(input: String): Int = {
     val index = input.indexOf(" ")
-    val newStation = input.substring(0, index - 1).toInt
-    val transport = input.substring(index + 1).toCharArray
+    val newStation = input.substring(0, index).toInt
+    val transport = input.substring(index + 1).toCharArray.head.toLower
 
-    controller.validateAndMove(newStation, transport(0))
+
+    if(transport.equals('t')) {
+      controller.validateAndMove(newStation, TicketType.Taxi)
+    }
+
     tuiMode
   }
 

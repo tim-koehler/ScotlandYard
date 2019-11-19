@@ -1,7 +1,8 @@
 package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.model.core.GameMaster
-import de.htwg.se.scotlandyard.model.player.{Detective, Player}
+import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.util.Observable
 
 class Controller extends Observable {
@@ -37,9 +38,9 @@ class Controller extends Observable {
     GameMaster.nextRound()
   }
 
-  def validateAndMove(newPosition: Int, c: Char): Boolean = {
-    if (GameMaster.validateMove(newPosition, c)) {
-      GameMaster.updatePlayerPosition(newPosition)
+  def validateAndMove(newPosition: Int, ticketType: TicketType): Boolean = {
+    if (GameMaster.validateMove(newPosition, ticketType)) {
+      GameMaster.updatePlayerPosition(newPosition, ticketType)
       nextRound()
       notifyObservers
       return true
