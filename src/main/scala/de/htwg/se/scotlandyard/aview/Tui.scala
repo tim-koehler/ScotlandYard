@@ -65,8 +65,8 @@ class Tui(controller: Controller) extends Observer{
    * @return tuiMode or a number not -1
    */
   def evaluateRunning(input: String): Int = {
-    if(input.matches("[0-9]+")) {
-      evaluateNumberInput(input.toInt)
+    if(input.matches("[0-9]{1,3} ((T|t)|(B|b)|(U|u))")) {
+      evaluateNumberInput(input)
     } else {
       evaluateStringInput(input)
     }
@@ -88,8 +88,12 @@ class Tui(controller: Controller) extends Observer{
     tuiMode
   }
 
-  def evaluateNumberInput(input: Int): Int = {
-    controller.validateAndMove(input.toInt)
+  def evaluateNumberInput(input: String): Int = {
+    val index = input.indexOf(" ")
+    val newStation = input.substring(0, index - 1).toInt
+    val transport = input.substring(index + 1).toCharArray
+
+    controller.validateAndMove(newStation, transport(0))
     tuiMode
   }
 

@@ -32,7 +32,7 @@ object GameMaster {
     round += 1
   }
 
-  def validateMove(newPosition: Int): Boolean = {
+  def validateMove(newPosition: Int, c: Char): Boolean = {
     //TODO: check if player move is valid
     true
   }
