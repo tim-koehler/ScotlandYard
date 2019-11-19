@@ -104,11 +104,20 @@ class Tui(controller: Controller) extends Observer{
 
 
     if(transport.equals('t')) {
-      controller.validateAndMove(newStation, TicketType.Taxi)
+      if(controller.validateAndMove(newStation, TicketType.Taxi)) {
+        controller.updateTotalRound()
+        controller.setMrXVisibility()
+      }
     } else if (transport.equals('b')) {
-      controller.validateAndMove(newStation, TicketType.Bus)
+      if(controller.validateAndMove(newStation, TicketType.Bus)) {
+        controller.updateTotalRound()
+        controller.setMrXVisibility()
+      }
     } else if (transport.equals('u')) {
-      controller.validateAndMove(newStation, TicketType.Underground)
+      if(controller.validateAndMove(newStation, TicketType.Underground)) {
+        controller.updateTotalRound()
+        controller.setMrXVisibility()
+      }
     }
 
     tuiMode

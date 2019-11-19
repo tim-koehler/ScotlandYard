@@ -34,7 +34,7 @@ class Controller extends Observable {
     GameMaster.getCurrentPlayer()
   }
 
-  def nextRound(): Unit = {
+  def nextRound(): Int = {
     GameMaster.nextRound()
   }
 
@@ -47,6 +47,14 @@ class Controller extends Observable {
     }
     notifyObservers
     false
+  }
+
+  def updateTotalRound(): Int = {
+    GameMaster.updateTotalRound()
+  }
+
+  def setMrXVisibility(): Boolean = {
+    GameMaster.setMrXVisibility()
   }
 
   private def reducePlayerNumber(nPlayer: Int): Unit = {

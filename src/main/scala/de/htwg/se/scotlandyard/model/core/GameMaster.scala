@@ -2,6 +2,7 @@ package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.model.map._
 import de.htwg.se.scotlandyard.model.player._
+import de.htwg.se.scotlandyard.model.player.MrX
 import de.htwg.se.scotlandyard.model.player.TicketType
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 
@@ -10,6 +11,7 @@ object GameMaster {
   var stations: List[Station] = List()
   var players: List[Player] = List()
   var round = 1
+  var totalRound = 1
 
   def startGame(): Boolean = {
     if(!GameInitializer.initialize()) {
@@ -30,8 +32,35 @@ object GameMaster {
     }
   }
 
-  def nextRound(): Unit = {
+  def nextRound(): Int = {
     round += 1
+    round
+  }
+
+  def updateTotalRound(): Int = {
+    totalRound = (round / players.length).floor.toInt
+    totalRound
+  }
+
+  def setMrXVisibility(): Boolean = {
+    println(totalRound)
+    val playerMrX = players(0)
+    playerMrX.asInstanceOf[MrX].hidden = checkMrXVisibility()
+    if(!playerMrX.asInstanceOf[MrX].hidden) {
+      playerMrX.asInstanceOf[MrX].lastSeen = getCurrentPlayer().getPosition().number.toString
+    }
+    playerMrX.asInstanceOf[MrX].hidden
+  }
+
+  def checkMrXVisibility(): Boolean = {
+    totalRound match {
+      case 3 => return true
+      case 8 => return true
+      case 13 => return true
+      case 18 => return true
+      case 24 => return true
+    }
+    return false
   }
 
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
