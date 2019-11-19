@@ -1,7 +1,5 @@
 # Scotland Yard (board game)
 
-## Current build and coverage status
-
 [![Build Status](https://travis-ci.org/tim-koehler/ScotlandYard.svg?branch=master)](https://travis-ci.org/tim-koehler/ScotlandYard)
 [![Coverage Status](https://coveralls.io/repos/github/tim-koehler/ScotlandYard/badge.svg?branch=master)](https://coveralls.io/github/tim-koehler/ScotlandYard?branch=master)
 
