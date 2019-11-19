@@ -28,8 +28,9 @@ object GameMaster {
     }
   }
 
-  def nextRound(): Unit = {
+  def nextRound(): Int = {
     round += 1
+    round
   }
 
   def validateMove(newPosition: Int): Boolean = {
