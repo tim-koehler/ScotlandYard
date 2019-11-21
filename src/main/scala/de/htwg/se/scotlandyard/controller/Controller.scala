@@ -49,12 +49,8 @@ class Controller extends Observable {
     false
   }
 
-  def updateTotalRound(): Int = {
-    GameMaster.updateTotalRound()
-  }
-
-  def setMrXVisibility(): Boolean = {
-    GameMaster.setMrXVisibility()
+  def updateMrXVisibility(): Boolean = {
+    GameMaster.updateMrXVisibility()
   }
 
   private def reducePlayerNumber(nPlayer: Int): Unit = {

@@ -104,20 +104,11 @@ class Tui(controller: Controller) extends Observer{
 
 
     if(transport.equals('t')) {
-      if(controller.validateAndMove(newStation, TicketType.Taxi)) {
-        controller.updateTotalRound()
-        controller.setMrXVisibility()
-      }
+      controller.validateAndMove(newStation, TicketType.Taxi)
     } else if (transport.equals('b')) {
-      if(controller.validateAndMove(newStation, TicketType.Bus)) {
-        controller.updateTotalRound()
-        controller.setMrXVisibility()
-      }
+      controller.validateAndMove(newStation, TicketType.Bus)
     } else if (transport.equals('u')) {
-      if(controller.validateAndMove(newStation, TicketType.Underground)) {
-        controller.updateTotalRound()
-        controller.setMrXVisibility()
-      }
+      controller.validateAndMove(newStation, TicketType.Underground)
     }
 
     tuiMode
@@ -323,6 +314,8 @@ class Tui(controller: Controller) extends Observer{
       outputString = outputString + p.toString + "\n"
     }
     outputString = outputString + "\n" + "Player" + " " + controller.getCurrentPlayer().name + " " + "Enter your next Station:"
+    //TODO: remove debug
+    outputString = outputString + "\nTotal Round: " + GameMaster.totalRound // DEBUG
     outputString
   }
 

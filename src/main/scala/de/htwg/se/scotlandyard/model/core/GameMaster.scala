@@ -7,7 +7,6 @@ import de.htwg.se.scotlandyard.model.player.TicketType
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 
 object GameMaster {
-  val defaultStation = new Station(0, StationType.Taxi, null, null, null)
   var stations: List[Station] = List()
   var players: List[Player] = List()
   var round = 1
@@ -21,46 +20,50 @@ object GameMaster {
   }
 
   def getCurrentPlayer(): Player = {
-    players(getCurrentPlayerIndex() - 1)
+    players(getCurrentPlayerIndex())
   }
 
   def getCurrentPlayerIndex(): Int = {
     if(round % players.length == 0) {
-      players.length
+      (players.length - 1)
     } else {
-      round % players.length
+      ((round % players.length) - 1)
     }
   }
 
   def nextRound(): Int = {
     round += 1
+    updateTotalRound()
+    updateMrXVisibility()
     round
   }
 
   def updateTotalRound(): Int = {
-    totalRound = (round / players.length).floor.toInt
+    totalRound = (round.toDouble / players.length.toDouble).ceil.toInt
     totalRound
   }
 
-  def setMrXVisibility(): Boolean = {
-    println("Total Round: " + totalRound)
+  def updateMrXVisibility(): Boolean = {
     val playerMrX = players(0)
-    playerMrX.asInstanceOf[MrX].hidden = checkMrXVisibility()
-    if(!playerMrX.asInstanceOf[MrX].hidden) {
-      playerMrX.asInstanceOf[MrX].lastSeen = getCurrentPlayer().getPosition().number.toString
+    playerMrX.asInstanceOf[MrX].isVisible = checkMrXVisibility()
+    if(playerMrX.asInstanceOf[MrX].isVisible) {
+      playerMrX.asInstanceOf[MrX].lastSeen = players(0).getPosition().number.toString
     }
-    playerMrX.asInstanceOf[MrX].hidden
+    playerMrX.asInstanceOf[MrX].isVisible
   }
 
   def checkMrXVisibility(): Boolean = {
-    totalRound match {
-      case 3 => true
-      case 8 => true
-      case 13 => true
-      case 18 => true
-      case 24 => true
-      case _ => false
+    if(getCurrentPlayerIndex() >= 1) {
+      totalRound match {
+        case 3 => return true
+        case 8 => return true
+        case 13 => return true
+        case 18 => return true
+        case 24 => return true
+        case _ => return false
+      }
     }
+    false
   }
 
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
