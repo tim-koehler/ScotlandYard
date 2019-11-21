@@ -4,7 +4,7 @@ import de.htwg.se.scotlandyard.model.map.StationType.StationType
 import de.htwg.se.scotlandyard.model.player.Player
 
 class Station(var number: Integer, var sType: StationType,
-                   var neighbourTaxis: Set[Station], var neighbourBuses: Set[Station], var neighbourUndergrounds: Set[Station]) {
+                   var neighbourTaxis: Set[Station], var neighbourBuses: Set[Station], var neighbourUndergrounds: Set[Station], val coords: (Int, Int)) {
 
   def setNeighbourTaxis(neighbourTaxis: Set[Station]): Int = {
     this.neighbourTaxis = neighbourTaxis

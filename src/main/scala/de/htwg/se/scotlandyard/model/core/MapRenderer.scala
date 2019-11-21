@@ -80,6 +80,9 @@ object MapRenderer {
   }
 
   def renderMap(): String = {
+
+    GameMap.updatePlayerPositions()
+
     var str = renderTopBorder()
       for (y <- offsetY until ((renderDimensionY - mapBorderOffset) + offsetY))
       {
