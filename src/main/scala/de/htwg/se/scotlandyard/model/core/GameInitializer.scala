@@ -4,6 +4,8 @@ import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.{Station, StationType}
 import de.htwg.se.scotlandyard.model.player.{Detective, MrX, Player}
 
+import scala.collection.mutable.ListBuffer
+
 object GameInitializer {
 
   // real starting positions
@@ -21,18 +23,23 @@ object GameInitializer {
 
   def initialize(): Boolean = {
     MapRenderer.init()
+    if(ScotlandYard.isDebugMode) {
+      GameMaster.stations = initDebugStations()
+    }
+    else {
+      GameMaster.stations = initStations()
+    }
     initPlayers()
     distributeTicketsToMrX()
     distributeTicketsToDetectives()
-    initStations()
     true
   }
 
   def initPlayers(): Boolean = {
-    var st = new Station(drawMisterXPosition(), StationType.Bus, null, null, null)
-  GameMaster.players = List[Player](new MrX(st))
+    var st = GameMaster.stations(drawMisterXPosition())
+    GameMaster.players = List[Player](new MrX(st))
     for(i <- 1 to (maxPlayerNumber - 1)) {
-      st = new Station(drawDetectivePosition(), StationType.Taxi, null, null, null)
+      st = GameMaster.stations(drawDetectivePosition())
       GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i))
     }
     drawnPositions = List()
@@ -40,6 +47,9 @@ object GameInitializer {
   }
 
   def drawDetectivePosition(): Int = {
+    if(ScotlandYard.isDebugMode) {
+      return 2
+    }
     var startPosIndex = 0
     do {
       startPosIndex = r.nextInt(MAX_DETECTIVE_LIST_INDEX)
@@ -50,6 +60,9 @@ object GameInitializer {
   }
 
   def drawMisterXPosition(): Int = {
+    if(ScotlandYard.isDebugMode) {
+      return 1
+    }
     val startPosIndex = r.nextInt(MAX_MISTERX_LIST_INDEX)
     misterXStartPositions(startPosIndex)
   }
@@ -73,13 +86,46 @@ object GameInitializer {
     true
   }
 
-  def initStations(): List[Station] = {
-    if(ScotlandYard.isDebugMode) {
-      de.htwg.se.scotlandyard.model.map.GameMap.initStationsDebugMode()
-    } else {
-      de.htwg.se.scotlandyard.model.map.GameMap.initStations()
+  def initDebugStations(): List[Station] = {
+
+    def createStations(): List[Station] = {
+      var stationsBuffer = new ListBuffer[Station]()
+
+      // Zero index Station
+      stationsBuffer += new Station(0, StationType.Taxi, null, null, null)
+
+      stationsBuffer += new Station(1, StationType.Bus, null, null, null)
+      stationsBuffer += new Station(2, StationType.Underground, null, null, null)
+      stationsBuffer += new Station(3, StationType.Underground, null, null, null)
+
+      stationsBuffer.toList
     }
-    null
+
+    val stations = createStations()
+
+    def setNeighbours(): Int = {
+      stations(1).setNeighbourTaxis(Set(stations(2), stations(3)))
+      stations(1).setNeighbourBuses(Set(stations(2), stations(3)))
+      stations(1).setNeighbourUndergrounds(Set(stations(2), stations(3)))
+
+      stations(2).setNeighbourTaxis(Set(stations(1)))
+      stations(2).setNeighbourBuses(Set(stations(1), stations(3)))
+      stations(2).setNeighbourUndergrounds(Set(stations(1)))
+
+      stations(3).setNeighbourTaxis(Set(stations(1)))
+      stations(3).setNeighbourBuses(Set(stations(1), stations(2)))
+      stations(3).setNeighbourUndergrounds(Set(stations(1)))
+
+      stations.size
+    }
+
+    setNeighbours()
+
+    stations
   }
 
+  def initStations(): List[Station] = {
+
+    null
+  }
 }
