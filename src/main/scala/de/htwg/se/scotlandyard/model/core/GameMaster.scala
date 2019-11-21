@@ -66,8 +66,23 @@ object GameMaster {
     false
   }
 
+  // TODO: Method needs a lof of refactoring!
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
-    //TODO: check if another player stands on the station or station out of bounds
+    if(newPosition >= GameMaster.stations.size) {
+      return false
+    }
+
+    // TODO: Refactoring with numbers behind enums
+    if(GameMaster.getCurrentPlayer().getPosition().sType.equals(StationType.Taxi)) {
+      if(ticketType != TicketType.Taxi){
+        return false
+      }
+    } else if(GameMaster.getCurrentPlayer().getPosition().sType.equals(StationType.Bus)) {
+      if(ticketType == TicketType.Underground){
+        return false
+      }
+    }
+
     if(ticketType.equals(TicketType.Taxi)) {
       if(getCurrentPlayer().taxiTickets <= 0) {
         return false
@@ -88,6 +103,16 @@ object GameMaster {
       }
       if(!getCurrentPlayer().getPosition().neighbourUndergrounds.contains(stations(newPosition))){
         return false
+      }
+    }
+    // TODO: Does index 0 mean MrX ?
+    if(GameMaster.getCurrentPlayerIndex() != 0) {
+      for(p <- GameMaster.players){
+        if(!p.name.equals("MrX")) {
+          if(p.getPosition().number == newPosition){
+            return false
+          }
+        }
       }
     }
     true
