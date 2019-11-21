@@ -7,7 +7,7 @@ import org.scalatest._
 class DetectiveSpec extends WordSpec with Matchers {
   "Detective" when {
     "new" should {
-      val st = new Station(2, StationType.Taxi, Set(), Set(), Set())
+      val st = new Station(2, StationType.Taxi, Set(), Set(), Set(), (1, 1))
       val dt1 = new Detective(st, "Dt1")
 
       "have a station number" in {

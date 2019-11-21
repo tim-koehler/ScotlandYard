@@ -8,7 +8,7 @@ import org.scalatest._
 class MrXSpec extends WordSpec with Matchers {
   "MrX" when {
     "new" should {
-      val st = new Station(1, StationType.Taxi, Set(), Set(), Set())
+      val st = new Station(1, StationType.Taxi, Set(), Set(), Set(), (1, 1))
       val mrX = new MrX(st, "MrX")
       "have a station number" in {
         mrX.getPosition().number should be (1)
