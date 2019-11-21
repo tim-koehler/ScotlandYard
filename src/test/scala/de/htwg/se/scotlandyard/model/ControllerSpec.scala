@@ -15,9 +15,12 @@ class ControllerSpec extends WordSpec with Matchers {
       "should return true from setPlayerNames when index is correct" in {
         controller.setPlayerNames("Tim", 5) shouldBe true
       }
-      "should return true from setPlayerNames when index is correct" in {
+      "should 2 from nextRound Method" in {
         GameMaster.round = 1
         controller.nextRound() shouldBe(2)
+      }
+      "should return the correct player from setPlayerNumber" in {
+        controller.setPlayerNumber(3) shouldBe (3)
       }
     }
   }

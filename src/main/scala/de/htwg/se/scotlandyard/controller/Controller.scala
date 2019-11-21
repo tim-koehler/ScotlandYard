@@ -23,11 +23,12 @@ class Controller extends Observable {
     GameMaster.players
   }
 
-  def setPlayerNumber(nPlayer: Int): Unit = {
+  def setPlayerNumber(nPlayer: Int): Int = {
     if(nPlayer < GameMaster.players.length) {
       reducePlayerNumber(nPlayer)
     }
     notifyObservers
+    GameMaster.players.length
   }
 
   def getCurrentPlayer(): Player = {
