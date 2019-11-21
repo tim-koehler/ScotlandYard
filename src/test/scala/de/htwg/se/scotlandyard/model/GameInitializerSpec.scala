@@ -12,5 +12,4 @@ class GameInitializerSpec extends WordSpec with Matchers {
       GameInitializer.drawDetectivePosition() shouldBe <= (174)
     }
   }
-
 }

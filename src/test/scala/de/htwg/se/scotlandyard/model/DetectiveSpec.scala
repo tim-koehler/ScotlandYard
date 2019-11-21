@@ -5,18 +5,19 @@ import de.htwg.se.scotlandyard.model.player.Detective
 import org.scalatest._
 
 class DetectiveSpec extends WordSpec with Matchers {
-  "MrX" when {
+  "Detective" when {
     "new" should {
-      var st = new Station(12, StationType.Taxi, null, null, null)
-      var detective = new Detective(st, "Dt1")
+      val st = new Station(2, StationType.Taxi, Set(), Set(), Set())
+      val dt1 = new Detective(st, "Dt1")
+
       "have a station number" in {
-        detective.getPosition().number should be (12)
+        dt1.getPosition().number should be (2)
       }
       "have a station Type" in {
-        detective.getPosition().sType should be (StationType.Taxi)
+        dt1.getPosition().sType should be (StationType.Taxi)
       }
-      "return String from toString method" in {
-        detective.toString() shouldBe a [String]
+      "should have a nice String representation" in {
+        dt1.toString() shouldBe ("Dt1: 2 (TAXI)  TICKETS-> T: 0, B: 0, U: 0")
       }
     }
   }
