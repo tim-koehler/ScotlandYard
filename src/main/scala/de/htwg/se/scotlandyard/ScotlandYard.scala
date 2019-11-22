@@ -24,5 +24,4 @@ object ScotlandYard {
 
     println("Spiel beendet")
   }
-
 }

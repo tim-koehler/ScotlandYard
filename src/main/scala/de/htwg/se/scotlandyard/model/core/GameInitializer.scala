@@ -125,7 +125,6 @@ object GameInitializer {
   }
 
   def initStations(): List[Station] = {
-
     null
   }
 }

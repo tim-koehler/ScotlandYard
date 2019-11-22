@@ -68,9 +68,8 @@ object GameMaster {
 
   // TODO: Method needs a lof of refactoring!
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
-    if(newPosition >= GameMaster.stations.size) {
-      return false
-    }
+
+    if(!isTargetStationInBounds(newPosition)) return false
 
     // TODO: Refactoring with numbers behind enums
     if(GameMaster.getCurrentPlayer().getPosition().sType.equals(StationType.Taxi)) {
@@ -84,27 +83,42 @@ object GameMaster {
     }
 
     if(ticketType.equals(TicketType.Taxi)) {
-      if(getCurrentPlayer().taxiTickets <= 0) {
-        return false
-      }
-      if(!getCurrentPlayer().getPosition().neighbourTaxis.contains(stations(newPosition))){
-        return false
-      }
+      if(!isTaxiMoveValid(newPosition)) return false
     } else if(ticketType.equals(TicketType.Bus)) {
-      if(getCurrentPlayer().busTickets <= 0) {
-        return false
-      }
-      if(!getCurrentPlayer().getPosition().neighbourBuses.contains(stations(newPosition))){
-        return false
-      }
+      if(!isBusMoveValid(newPosition)) return false
     } else {
-      if(getCurrentPlayer().undergroundTickets <= 0) {
-        return false
-      }
-      if(!getCurrentPlayer().getPosition().neighbourUndergrounds.contains(stations(newPosition))){
-        return false
-      }
+      if(!isUndergroundMoveValid(newPosition)) return false
     }
+
+    if(!isMrxMoveValid(newPosition)) return false
+
+    true
+  }
+
+  private def isTargetStationInBounds(newPosition: Int): Boolean ={
+    if(newPosition >= GameMaster.stations.size) return false
+    true
+  }
+
+  private def isTaxiMoveValid(newPosition: Int): Boolean = {
+    if(getCurrentPlayer().taxiTickets <= 0) return false
+    if(!getCurrentPlayer().getPosition().neighbourTaxis.contains(stations(newPosition))) return false
+    true
+  }
+
+  private def isBusMoveValid(newPosition: Int): Boolean = {
+    if(getCurrentPlayer().busTickets <= 0) return false
+    if(!getCurrentPlayer().getPosition().neighbourBuses.contains(stations(newPosition))) return false
+    true
+  }
+
+  private def isUndergroundMoveValid(newPosition: Int): Boolean = {
+    if(getCurrentPlayer().undergroundTickets <= 0) return false
+    if(!getCurrentPlayer().getPosition().neighbourUndergrounds.contains(stations(newPosition))) return false
+    true
+  }
+
+  private def isMrxMoveValid(newPosition: Integer): Boolean = {
     // TODO: Does index 0 mean MrX ?
     if(GameMaster.getCurrentPlayerIndex() != 0) {
       for(p <- GameMaster.players){

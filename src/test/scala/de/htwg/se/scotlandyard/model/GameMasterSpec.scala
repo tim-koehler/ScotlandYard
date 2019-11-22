@@ -12,12 +12,12 @@ class GameMasterSpec extends WordSpec with Matchers {
       "the current player should be MrX" in {
         GameMaster.getCurrentPlayer().isInstanceOf[MrX]
       }
-      // TODO: @Roland da richtig machen!
+      // TODO: @Roland fix here!
       "the current player Index should be 0" in {
         GameMaster.getCurrentPlayerIndex() shouldBe(1)
       }
       "the next round should be 2" in {
-        // TODO: @Roland da richtig machen!!
+        // TODO: @Roland fix here!!
         GameMaster.nextRound() shouldBe(3)
         GameMaster.totalRound shouldBe(1)
       }
