@@ -106,14 +106,13 @@ object GameInitializer {
 
     def setNeighbours(): Int = {
       stations(1).setNeighbourTaxis(Set(stations(2), stations(3)))
-      stations(1).setNeighbourBuses(Set(stations(2), stations(3)))
 
       stations(2).setNeighbourTaxis(Set(stations(1)))
-      stations(2).setNeighbourBuses(Set(stations(1), stations(3)))
+      stations(2).setNeighbourBuses(Set(stations(3)))
       stations(2).setNeighbourUndergrounds(Set(stations(3)))
 
       stations(3).setNeighbourTaxis(Set(stations(1)))
-      stations(3).setNeighbourBuses(Set(stations(1), stations(2)))
+      stations(3).setNeighbourBuses(Set(stations(2)))
       stations(3).setNeighbourUndergrounds(Set(stations(2)))
 
       stations.size
