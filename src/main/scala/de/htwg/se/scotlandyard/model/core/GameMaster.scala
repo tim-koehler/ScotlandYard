@@ -71,26 +71,18 @@ object GameMaster {
 
     if(!isTargetStationInBounds(newPosition)) return false
 
-    // TODO: Refactoring with numbers behind enums
-    if(GameMaster.getCurrentPlayer().getPosition().sType.equals(StationType.Taxi)) {
-      if(ticketType != TicketType.Taxi){
-        return false
-      }
-    } else if(GameMaster.getCurrentPlayer().getPosition().sType.equals(StationType.Bus)) {
-      if(ticketType == TicketType.Underground){
-        return false
-      }
-    }
-
     if(ticketType.equals(TicketType.Taxi)) {
       if(!isTaxiMoveValid(newPosition)) return false
     } else if(ticketType.equals(TicketType.Bus)) {
+      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Bus) return false
       if(!isBusMoveValid(newPosition)) return false
     } else {
+      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Underground) return false
       if(!isUndergroundMoveValid(newPosition)) return false
     }
 
-    if(!isMrxMoveValid(newPosition)) return false
+    //TODO: Insert win here
+    if(!isTargetStationEmpty(newPosition)) return false
 
     true
   }
@@ -118,17 +110,8 @@ object GameMaster {
     true
   }
 
-  private def isMrxMoveValid(newPosition: Integer): Boolean = {
-    // TODO: Does index 0 mean MrX ?
-    if(GameMaster.getCurrentPlayerIndex() != 0) {
-      for(p <- GameMaster.players){
-        if(!p.name.equals("MrX")) {
-          if(p.getPosition().number == newPosition){
-            return false
-          }
-        }
-      }
-    }
+  private def isTargetStationEmpty(newPosition: Integer): Boolean = {
+    for(p <- GameMaster.players) if(p.getPosition().number == newPosition) return false
     true
   }
 
@@ -141,8 +124,11 @@ object GameMaster {
     } else {
       getCurrentPlayer().undergroundTickets -= 1
     }
+    setPlayerPosition(newPosition)
+  }
+
+  private def setPlayerPosition(newPosition: Int): Station = {
     getCurrentPlayer().station = stations(newPosition)
     getCurrentPlayer().station
   }
-
 }
