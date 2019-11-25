@@ -2,6 +2,8 @@ package de.htwg.se.scotlandyard.model.player
 
 import de.htwg.se.scotlandyard.model.map.Station
 
+import scala.io.StdIn.readLine
+
 trait Player {
    var station: Station
    var name: String
@@ -11,6 +13,15 @@ trait Player {
 
    def getPosition(): Station = {
       station
+   }
+
+   def setPlayerName(newName: String): Boolean = {
+      if(newName.length < 3) {
+         false
+      } else {
+         name = newName.substring(0, 3)
+         true
+      }
    }
 
    override def toString(): String = {

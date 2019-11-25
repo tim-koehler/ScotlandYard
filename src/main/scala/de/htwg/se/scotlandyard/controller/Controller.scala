@@ -8,15 +8,12 @@ import de.htwg.se.scotlandyard.util.Observable
 class Controller extends Observable {
 
   def setPlayerNames(inputName: String, index: Int): Boolean = {
-    if(index > GameMaster.players.length) {
-      notifyObservers
-      return false
+    var returnValue: Boolean = false
+    if(index < GameMaster.players.length) {
+      returnValue = GameMaster.players(index).setPlayerName(inputName)
     }
-    val playerWithNewName = GameMaster.players(index)
-    playerWithNewName.name = inputName
-    GameMaster.players.updated(index, playerWithNewName)
     notifyObservers
-    true
+    returnValue
   }
 
   def getPlayersList(): List[Player] = {
@@ -33,6 +30,10 @@ class Controller extends Observable {
 
   def getCurrentPlayer(): Player = {
     GameMaster.getCurrentPlayer()
+  }
+
+  def getTotalRound(): Int = {
+    GameMaster.totalRound
   }
 
   def nextRound(): Int = {
