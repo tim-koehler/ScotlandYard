@@ -32,6 +32,10 @@ class Controller extends Observable {
     GameMaster.getCurrentPlayer()
   }
 
+  def getTotalRound(): Int = {
+    GameMaster.totalRound
+  }
+
   def nextRound(): Int = {
     GameMaster.nextRound()
   }
