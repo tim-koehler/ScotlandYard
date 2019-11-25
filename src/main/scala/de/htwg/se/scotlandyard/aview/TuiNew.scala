@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.aview
 import java.io.FileNotFoundException
 
 import de.htwg.se.scotlandyard.controller.Controller
-import de.htwg.se.scotlandyard.model.core.{GameMaster, MapRenderer}
+import de.htwg.se.scotlandyard.model.core.MapRenderer
 import de.htwg.se.scotlandyard.model.player.TicketType
 import de.htwg.se.scotlandyard.util.Observer
 
@@ -30,13 +30,7 @@ class TuiNew(controller: Controller) extends Observer{
   var menuCounter = 0 // 0 is main Menu, 1 is settings, 2 is choose name, 3 is Reaveal MrX start postition, 4 is MrX start position
 
   private def getTitleBanner(): String = {
-    var bufferedSource: BufferedSource = null
-    try {
-      bufferedSource = Source.fromFile("src\\main\\scala\\de\\htwg\\se\\scotlandyard\\titleBanner.txt")
-    } catch {
-      case e: FileNotFoundException => bufferedSource = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
-      case _: Throwable =>
-    }
+    val bufferedSource = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
     val titleBanner = bufferedSource.mkString
     bufferedSource.close
     titleBanner
@@ -91,16 +85,16 @@ class TuiNew(controller: Controller) extends Observer{
   def evaluateMenu(inputStr: String): Int = {
     if(inputStr forall Character.isDigit) {
       menuCounter match {
-        case 0 => evalMainMenu(inputStr.toInt)
-        case 1 => evalSetPlayerNumber(inputStr.toInt)
-        case 2 => evalNameMenu(inputStr.toInt)
-        case 3 => dispMrXstartingPostition(inputStr)
+        case 0 => evaluateMainMenu(inputStr.toInt)
+        case 1 => evaluateSettings(inputStr.toInt)
+        case 2 => evaluateNameMenu(inputStr.toInt)
+        case 3 => dispMrXstartingPosition(inputStr)
       }
     }
     tuiMode
   }
 
-  def evalMainMenu(input: Int): Int = {
+  def evaluateMainMenu(input: Int): Int = {
     if(input == 1) {
       menuCounter += 1
       updateScreen()
@@ -112,25 +106,24 @@ class TuiNew(controller: Controller) extends Observer{
     }
   }
 
-  def evalSetPlayerNumber(input: Int): Int = {
+  def evaluateSettings(input: Int): Int = {
     menuCounter += 1
     controller.setPlayerNumber(input)
     menuCounter
   }
 
-  def evalNameMenu(input: Int): Int = {
+  def evaluateNameMenu(input: Int): Int = {
     if(input == 1) {
       menuCounter += 1
       updateScreen()
     } else if(input > 1) { // -1 because 1 is Start and 2 is the first Detective
-      var inputName = ""
-      inputName = readLine()
+      val inputName = readLine()
       controller.setPlayerNames(inputName, input - 1)
     }
       menuCounter
   }
 
-  def dispMrXstartingPostition(input: String): Int = {
+  def dispMrXstartingPosition(input: String): Int = {
     menuCounter += 1
     updateScreen()
     tuiMode = TUIMODE_RUNNING
@@ -138,8 +131,7 @@ class TuiNew(controller: Controller) extends Observer{
   }
 
   def buildOutputStringForRunningGame(): String = {
-    var outputString = ""
-    outputString = MapRenderer.renderMap()
+    var outputString = MapRenderer.renderMap()
     outputString = outputString + "Round: " + controller.getTotalRound() + "\n"
     for(p <- controller.getPlayersList()) {
       outputString = outputString + p.toString + "\n"
