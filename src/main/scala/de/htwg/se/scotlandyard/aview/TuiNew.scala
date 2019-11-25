@@ -7,8 +7,9 @@ import de.htwg.se.scotlandyard.model.core.{GameMaster, MapRenderer}
 import de.htwg.se.scotlandyard.model.player.TicketType
 import de.htwg.se.scotlandyard.util.Observer
 
+import scala.io.StdIn.readLine
 import scala.io.{BufferedSource, Source}
-
+//67 lines are comments in the old Tui class
 class TuiNew(controller: Controller) extends Observer{
   controller.add(this)
 
@@ -92,9 +93,9 @@ class TuiNew(controller: Controller) extends Observer{
 
   def evaluateMenu(input: String): Int = {
     menuCounter match {
-      case 0 => evalMainMenu()
+      case 0 => evalMainMenu(input)
       case 1 => controller.setPlayerNumber(input.toInt)
-      case 2 =>
+      case 2 =>evalNameMenu(input)
     }
   }
 
@@ -107,25 +108,55 @@ class TuiNew(controller: Controller) extends Observer{
     }
   }
 
-  def evalSettingsMenu(input: String): Int = {
-
-  }
-
-  def evalNameMenu(input: String): Int = {
+  def evalNameMenu(inputStr: String): Int = {
     var input = 0
     try {
       input = inputStr.toInt
     } catch {
-      case e: NumberFormatException => INVALID_INPUT
+      case e: NumberFormatException => -99
     }
 
     if(input == 1) {
-      tuiMode = TUIMODE_DISPMRX
+      //TODO: display MrX
       updateScreen()
     } else if(!readAndSetPlayerName(input - 1)) { // -1 because 1 is Start and 2 is the first Detective
-      tuiMode = TUIMODE_CHOOSENAME
+      menuCounter
     }
-    tuiMode
+      mode
+  }
+
+  def readAndSetPlayerName(index: Int): Boolean = {
+    var inputName = ""
+    inputName = readLine()
+    setPlayerName(inputName, index)
+  }
+
+  /**
+   * Sets the name in the players list in GameMaster
+   * @param inputName is the raw input
+   * @param index is the index of the current Player
+   * @return true if the default name was changed
+   */
+  def setPlayerName(inputName: String, index: Int): Boolean = {
+    if(checkAndAdjustPlayerName(inputName).equals("")) {
+      false
+    } else {
+      controller.setPlayerNames(checkAndAdjustPlayerName(inputName), index)
+      true
+    }
+  }
+
+  /**
+   * Adjust the names length to 0 < name.length < 4
+   * @param inputName raw input
+   * @return the name with fixed length or empty String
+   */
+  def checkAndAdjustPlayerName(inputName: String): String = {
+    if(inputName.length < 3) {
+      ""
+    } else {
+      inputName.substring(0, 3)
+    }
   }
 
   override def toString() : String = {
