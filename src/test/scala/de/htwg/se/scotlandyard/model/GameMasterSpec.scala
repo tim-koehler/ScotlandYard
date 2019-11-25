@@ -9,6 +9,7 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameMaster Object" when {
     "startGame() is called should" should {
       "return true" in {
+        GameInitializer.initialize()
         GameMaster.startGame() should be (true)
       }
       "and the current player should be MrX" in {
@@ -16,10 +17,12 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
       }
       // TODO: @Roland fix here!
       "and the current player Index should be 0" in {
+        GameMaster.round = 1
         GameMaster.getCurrentPlayerIndex() shouldBe(0)
       }
       "and the next round should be 2" in {
         // TODO: @Roland fix here!!
+        GameMaster.round = 1
         GameMaster.nextRound() shouldBe(2)
         GameMaster.totalRound shouldBe(1)
       }
