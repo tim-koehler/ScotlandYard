@@ -13,22 +13,21 @@ import scala.io.{BufferedSource, Source}
 class TuiNew(controller: Controller) extends Observer{
   controller.add(this)
 
-  val menuTitles: List[String] = List("->Main Menu<-", "->Number of Players<-", "->Choose Names<-", "->START<-")
-  val mainMenuEntries: List[String] = List("Start Game", "End Game")
-  val settingsMenuEntries: List[String] = List("2 Players", "3 Players", "4 Players", "5 Players", "6 Players", "7 Players")
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
   val titleBanner = getTitleBanner()
 
-  var mainMenuString = titleBanner + "\n\n" + "->Main Menu<-" + "\n" + "1: Start Game\n" + "2: End Game"
-  var SettingsString = titleBanner + "\n\n" + "->Number of Players<-" + "\n" + "2: 2 Players\n" +
+  val mainMenuString = titleBanner + "\n\n" + "->Main Menu<-" + "\n" + "1: Start Game\n" + "2: End Game"
+  val settingsString = titleBanner + "\n\n" + "->Number of Players<-" + "\n" + "2: 2 Players\n" +
     "3: 3 Players\n" + "4: 4 Players\n" + "5: 5 Players\n" + "6: 6 Players\n" + "7: 7 Players"
+  val chooseNameMenuString = titleBanner + "\n\n" + "->Choose Names<-" + "\n"
+  val dispMrXstartPositionString = titleBanner + "\n\n" + "->Start<-" + "\n" + "Reveal MrX starting Position: (Enter any Key to continue...)"
 
-  val MODE_QUIT: Int = -1
-  val MODE_RUNNING: Int = 0
-  val MODE_MENU: Int = 1
-  var mode = MODE_MENU
+  val TUIMODE_QUIT: Int = -1
+  val TUIMODE_RUNNING: Int = 0
+  val TUIMODE_MENU: Int = 1
+  var tuiMode = TUIMODE_MENU
 
-  var menuCounter = 0 // 0 is main Menu, 1 is settings, 2 is choose name, ....
+  var menuCounter = 0 // 0 is main Menu, 1 is settings, 2 is choose name, 3 is Reaveal MrX start postition, 4 is MrX start position
 
   private def getTitleBanner(): String = {
     var bufferedSource: BufferedSource = null
@@ -45,9 +44,9 @@ class TuiNew(controller: Controller) extends Observer{
   }
 
   def evaluateInput(input: String): Int = {
-    mode match {
-      case MODE_RUNNING => evaluateRunning(input)
-      case MODE_MENU => evaluateMenu(input)
+    tuiMode match {
+      case TUIMODE_RUNNING => evaluateRunning(input)
+      case TUIMODE_MENU => evaluateMenu(input)
     }
   }
 
@@ -69,10 +68,10 @@ class TuiNew(controller: Controller) extends Observer{
     } else if(input.matches("(s|S)+")) {
       MapRenderer.updateY(input.length, positive = true)
     } else if(input.equalsIgnoreCase("exit")) {
-      return MODE_QUIT
+      return TUIMODE_QUIT
     }
     updateScreen()
-    mode
+    tuiMode
   }
 
   def evaluateNextPositionInput(input: String): Int = {
@@ -87,25 +86,34 @@ class TuiNew(controller: Controller) extends Observer{
     } else if (transport.equals('u')) {
       controller.validateAndMove(newStation, TicketType.Underground)
     }
-
-    mode
+    tuiMode
   }
 
   def evaluateMenu(input: String): Int = {
     menuCounter match {
       case 0 => evalMainMenu(input)
-      case 1 => controller.setPlayerNumber(input.toInt)
-      case 2 =>evalNameMenu(input)
+      case 1 => evalSetPlayerNumber(input)
+      case 2 => evalNameMenu(input)
+      case 3 => dispMrXstartingPostition(input)
+      case 4 => tuiMode
     }
   }
 
   def evalMainMenu(input: String): Int = {
     if(input.toInt == 1) {
       menuCounter += 1
+      updateScreen()
       menuCounter
     } else {
-      MODE_QUIT
+      TUIMODE_QUIT
     }
+  }
+
+  def evalSetPlayerNumber(input: String): Int = {
+    controller.setPlayerNumber(input.toInt)
+    menuCounter += 1
+    updateScreen()
+    menuCounter
   }
 
   def evalNameMenu(inputStr: String): Int = {
@@ -117,54 +125,21 @@ class TuiNew(controller: Controller) extends Observer{
     }
 
     if(input == 1) {
-      //TODO: display MrX
+      menuCounter += 1
       updateScreen()
-    } else if(!readAndSetPlayerName(input - 1)) { // -1 because 1 is Start and 2 is the first Detective
+    } else if(input > 1) { // -1 because 1 is Start and 2 is the first Detective
+      var inputName = ""
+      inputName = readLine()
+      controller.setPlayerNames(inputName, input - 1)
+    }
       menuCounter
-    }
-      mode
   }
 
-  def readAndSetPlayerName(index: Int): Boolean = {
-    var inputName = ""
-    inputName = readLine()
-    setPlayerName(inputName, index)
-  }
-
-  /**
-   * Sets the name in the players list in GameMaster
-   * @param inputName is the raw input
-   * @param index is the index of the current Player
-   * @return true if the default name was changed
-   */
-  def setPlayerName(inputName: String, index: Int): Boolean = {
-    if(checkAndAdjustPlayerName(inputName).equals("")) {
-      false
-    } else {
-      controller.setPlayerNames(checkAndAdjustPlayerName(inputName), index)
-      true
-    }
-  }
-
-  /**
-   * Adjust the names length to 0 < name.length < 4
-   * @param inputName raw input
-   * @return the name with fixed length or empty String
-   */
-  def checkAndAdjustPlayerName(inputName: String): String = {
-    if(inputName.length < 3) {
-      ""
-    } else {
-      inputName.substring(0, 3)
-    }
-  }
-
-  override def toString() : String = {
-    if(mode == 1) {
-      buildOutputStringForMenu()
-    } else {
-      buildOutputStringForRunningGame()
-    }
+  def dispMrXstartingPostition(input: String): Int = {
+    menuCounter += 1
+    updateScreen()
+    tuiMode = TUIMODE_RUNNING
+    menuCounter
   }
 
   def buildOutputStringForRunningGame(): String = {
@@ -179,9 +154,36 @@ class TuiNew(controller: Controller) extends Observer{
     outputString
   }
 
-  def buildOutputStringForMenu(): String = {
-    mainMenuString
+  def buildOutputStringForMenus(): String = {
+    if(menuCounter == 0) {
+      mainMenuString
+    } else if(menuCounter == 1) {
+      settingsString
+    } else if(menuCounter == 2) {
+      buildOutputStringForChooseNameMenu()
+    } else if(menuCounter == 3) {
+      dispMrXstartPositionString
+    } else {
+      "Station: " + controller.getCurrentPlayer().getPosition().number
+    }
+  }
 
+  def buildOutputStringForChooseNameMenu(): String = {
+    var outputString = chooseNameMenuString
+    outputString = outputString + "1" + ": " + chooseNameMenuEntries(0) + "\n"
+
+    for((x,i) <- controller.getPlayersList().drop(1).view.zipWithIndex) {
+      outputString = outputString + (i + 2).toString + ": " + chooseNameMenuEntries(i + 1) + ": " + x.name + "\n"
+    }
+    outputString
+  }
+
+  override def toString() : String = {
+    if(tuiMode == 1) {
+      buildOutputStringForMenus()
+    } else {
+      buildOutputStringForRunningGame()
+    }
   }
 
   def updateScreen(): Unit = {

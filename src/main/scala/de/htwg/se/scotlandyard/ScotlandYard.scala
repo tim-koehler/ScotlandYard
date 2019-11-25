@@ -8,8 +8,8 @@ import scala.io.StdIn.readLine
 
 object ScotlandYard {
   val controller = new Controller
-  val tui = new Tui(controller)
-  //val tui2 = new TuiNew(controller)
+  //val tui = new Tui(controller)
+  val tui2 = new TuiNew(controller)
   controller.notifyObservers
 
   val isDebugMode = true
@@ -21,7 +21,7 @@ object ScotlandYard {
     var input: String = ""
     do {
       input = readLine()
-    } while (tui.evaluateInput(input) != -1)
+    } while (tui2.evaluateInput(input) != -1)
 
     println("Spiel beendet")
   }
