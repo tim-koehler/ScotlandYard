@@ -9,6 +9,7 @@ import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 object GameMaster {
   var stations: List[Station] = List()
   var players: List[Player] = List()
+  //TODO: @Roland english please...
   var round = 1 // insgesamte Anzahl an Zuegen (wird um 1 erhoeht, wenn ein Spieler gezogen hat)
   var totalRound = 1 // Anzahl an Runden (wird um 1 erhoeht, wenn alle Spieler einmal dran waren)
 
@@ -66,7 +67,7 @@ object GameMaster {
     false
   }
 
-  // TODO: Method needs a lof of refactoring!
+  // TODO: Method needs a refactoring!
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
 
     if(!isTargetStationInBounds(newPosition)) return false

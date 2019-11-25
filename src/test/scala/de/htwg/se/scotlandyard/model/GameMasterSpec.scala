@@ -89,6 +89,17 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationInBounds"))(1) should be(true)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationInBounds"))(1000) should be(false)
       }
+      "and validateMove() should return true" in {
+        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("setPlayerPosition"))(1)
+        GameMaster.validateMove(2, TicketType.Taxi) should be(true)
+        GameMaster.validateMove(3, TicketType.Bus) should be(false)
+        GameMaster.validateMove(2, TicketType.Underground) should be(false)
+        GameMaster.validateMove(1, TicketType.Bus) should be(false)
+
+        GameMaster.validateMove(1, TicketType.Underground) should be(false)
+        GameMaster.validateMove(2, TicketType.Bus) should be(false)
+        GameMaster.validateMove(1, TicketType.Taxi) should be(false)
+      }
     }
   }
 }

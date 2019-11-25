@@ -19,14 +19,16 @@ object GameInitializer {
   val numberOfBusTickets = 8
   val numberOfUndergroundTickets = 4
   val r = scala.util.Random
-  val maxPlayerNumber = 7
+  var maxPlayerNumber = 0
 
   def initialize(): Boolean = {
     MapRenderer.init()
     if(ScotlandYard.isDebugMode) {
+      maxPlayerNumber = 2
       GameMaster.stations = initDebugStations()
     }
     else {
+      maxPlayerNumber = 7
       GameMaster.stations = initStations()
     }
     initPlayers()
