@@ -16,11 +16,11 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
       }
       // TODO: @Roland fix here!
       "and the current player Index should be 0" in {
-        GameMaster.getCurrentPlayerIndex() shouldBe(1)
+        GameMaster.getCurrentPlayerIndex() shouldBe(0)
       }
       "and the next round should be 2" in {
         // TODO: @Roland fix here!!
-        GameMaster.nextRound() shouldBe(3)
+        GameMaster.nextRound() shouldBe(2)
         GameMaster.totalRound shouldBe(1)
       }
       "and MrX should also be hidden" in {

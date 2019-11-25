@@ -2,6 +2,7 @@ package de.htwg.se.scotlandyard.model
 
 import de.htwg.se.scotlandyard.aview.Tui
 import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.model.core.GameMaster
 import org.scalatest._
 
 class TuiSpec extends WordSpec with Matchers {
@@ -25,7 +26,8 @@ class TuiSpec extends WordSpec with Matchers {
       //TODO: @Roland why exception!?
       "should return state RUNNING when 'a', 'w', 's' or 'd' is pressed is pressed" in {
         tui.tuiMode = tui.TUIMODE_RUNNING
-        //tui.evaluateMoveMapInput("a") should be (tui.TUIMODE_RUNNING)
+        GameMaster.startGame()
+        tui.evaluateMoveMapInput("a") should be (tui.TUIMODE_RUNNING)
       }
       "should return state QUIT when 'exit' is inserted" in {
         tui.tuiMode = tui.TUIMODE_RUNNING
