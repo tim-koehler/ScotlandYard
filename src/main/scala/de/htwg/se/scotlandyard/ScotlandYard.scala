@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard
 
-import de.htwg.se.scotlandyard.aview.{TuiOld, Tui}
+import de.htwg.se.scotlandyard.aview.Tui
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core._
 
