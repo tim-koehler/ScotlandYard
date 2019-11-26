@@ -1,7 +1,5 @@
-package de.htwg.se.scotlandyard.model
+package de.htwg.se.scotlandyard.model.player
 
-import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
-import de.htwg.se.scotlandyard.model.player.MrX
 import de.htwg.se.scotlandyard.model.map._
 import org.scalatest._
 

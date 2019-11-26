@@ -1,7 +1,6 @@
-package de.htwg.se.scotlandyard.model
+package de.htwg.se.scotlandyard.model.player
 
 import de.htwg.se.scotlandyard.model.map.{Station, StationType}
-import de.htwg.se.scotlandyard.model.player.Detective
 import org.scalatest._
 
 class DetectiveSpec extends WordSpec with Matchers {

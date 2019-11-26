@@ -19,33 +19,28 @@ object GameInitializer {
   val numberOfBusTickets = 8
   val numberOfUndergroundTickets = 4
   val r = scala.util.Random
-  var maxPlayerNumber = 0
 
   def initialize(): Boolean = {
     MapRenderer.init()
     if(ScotlandYard.isDebugMode) {
-      maxPlayerNumber = 2
       GameMaster.stations = initDebugStations()
     }
     else {
-      maxPlayerNumber = 7
       GameMaster.stations = initStations()
     }
-    initPlayers()
-    distributeTicketsToMrX()
-    distributeTicketsToDetectives()
-    GameMap.updatePlayerPositions()
     true
   }
 
-  def initPlayers(): Boolean = {
+  def initPlayers(nPlayer: Int): Boolean = {
     var st = GameMaster.stations(drawMisterXPosition())
     GameMaster.players = List[Player](new MrX(st))
-    for(i <- 1 to (maxPlayerNumber - 1)) {
+    for(i <- 1 to (nPlayer - 1)) {
       st = GameMaster.stations(drawDetectivePosition())
       GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i))
     }
-    drawnPositions = List()
+    distributeTicketsToMrX()
+    distributeTicketsToDetectives()
+    GameMap.updatePlayerPositions()
     true
   }
 

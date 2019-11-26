@@ -1,7 +1,5 @@
 package de.htwg.se.scotlandyard.model.core
 
-import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.model.map.Station
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import org.scalatest._
 

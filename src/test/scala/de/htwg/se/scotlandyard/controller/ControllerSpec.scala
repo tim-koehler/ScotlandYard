@@ -1,7 +1,6 @@
-package de.htwg.se.scotlandyard.model
+package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.GameMaster
 import org.scalatest._
 
@@ -22,7 +21,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.nextRound() shouldBe(2)
       }
       "should return the correct player from setPlayerNumber" in {
-        controller.setPlayerNumber(2) shouldBe (2)
+        controller.initPlayers(2) shouldBe (2)
       }
     }
   }

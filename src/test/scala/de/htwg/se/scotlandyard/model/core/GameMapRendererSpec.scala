@@ -1,6 +1,5 @@
-package de.htwg.se.scotlandyard.model
+package de.htwg.se.scotlandyard.model.core
 
-import de.htwg.se.scotlandyard.model.core.MapRenderer
 import org.scalatest._
 
 class GameMapRendererSpec extends WordSpec with Matchers {

@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard
 
-import de.htwg.se.scotlandyard.aview.{Tui, TuiNew}
+import de.htwg.se.scotlandyard.aview.{TuiOld, Tui}
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core._
 
@@ -8,8 +8,7 @@ import scala.io.StdIn.readLine
 
 object ScotlandYard {
   val controller = new Controller
-  //val tui = new Tui(controller)
-  val tui2 = new TuiNew(controller)
+  val tui = new Tui(controller)
   controller.notifyObservers
 
   val isDebugMode = true
@@ -21,7 +20,7 @@ object ScotlandYard {
     var input: String = ""
     do {
       input = readLine()
-    } while (tui2.evaluateInput(input) != -1)
+    } while (tui.evaluateInput(input) != -1)
 
     println("Spiel beendet")
   }

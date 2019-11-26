@@ -9,9 +9,8 @@ import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 object GameMaster {
   var stations: List[Station] = List()
   var players: List[Player] = List()
-  //TODO: @Roland english please...
-  var round = 1 // insgesamte Anzahl an Zuegen (wird um 1 erhoeht, wenn ein Spieler gezogen hat)
-  var totalRound = 1 // Anzahl an Runden (wird um 1 erhoeht, wenn alle Spieler einmal dran waren)
+  var round = 1 // counter of moves (increases by 1 when a player moved)
+  var totalRound = 1 // number of total rounds (increases by 1 when every player has moved once)
 
   def startGame(): Boolean = {
     if(!GameInitializer.initialize()) {

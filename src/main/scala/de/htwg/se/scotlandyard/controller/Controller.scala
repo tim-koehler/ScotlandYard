@@ -1,9 +1,10 @@
 package de.htwg.se.scotlandyard.controller
 
-import de.htwg.se.scotlandyard.model.core.GameMaster
+import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.util.Observable
+import sun.java2d.loops.ProcessPath
 
 class Controller extends Observable {
 
@@ -20,10 +21,8 @@ class Controller extends Observable {
     GameMaster.players
   }
 
-  def setPlayerNumber(nPlayer: Int): Int = {
-    if(nPlayer < GameMaster.players.length) {
-      reducePlayerNumber(nPlayer)
-    }
+  def initPlayers(nPlayer: Int): Int = {
+    GameInitializer.initPlayers(nPlayer)
     notifyObservers
     GameMaster.players.length
   }
