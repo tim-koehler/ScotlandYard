@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.model.player
 
-import de.htwg.se.scotlandyard.model.map.Station
+import de.htwg.se.scotlandyard.model.map.station.Station
 
 import scala.io.StdIn.readLine
 

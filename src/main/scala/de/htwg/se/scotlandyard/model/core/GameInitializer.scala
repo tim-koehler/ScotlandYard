@@ -1,7 +1,8 @@
 package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.model.map.{GameMap, Station, StationType}
+import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.map.{GameMap, StationType}
 import de.htwg.se.scotlandyard.model.player.{Detective, MrX, Player}
 
 import scala.collection.mutable.ListBuffer
@@ -90,6 +91,7 @@ object GameInitializer {
       var stationsBuffer = new ListBuffer[Station]()
 
       // Zero index Station
+      stationsBuffer += new Station(0, StationType.Taxi, null, null, null, (1, 1))
       stationsBuffer += new Station(0, StationType.Taxi, null, null, null, (1, 1))
 
       stationsBuffer += new Station(1, StationType.Taxi, null, null, null, (5, 20))

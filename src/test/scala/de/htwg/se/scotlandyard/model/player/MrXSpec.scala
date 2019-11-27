@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.model.player
 
 import de.htwg.se.scotlandyard.model.map._
+import de.htwg.se.scotlandyard.model.map.station.Station
 import org.scalatest._
 
 class MrXSpec extends WordSpec with Matchers {
