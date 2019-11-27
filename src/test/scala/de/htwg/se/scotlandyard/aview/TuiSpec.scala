@@ -43,7 +43,7 @@ class TuiSpec extends WordSpec with Matchers {
       }
 
       "evaluateSettings should return false" in {
-        tui.evaluateSettings(2) shouldBe(false)
+        tui.evaluateSettings(2) shouldBe(2)
       }
     }
   }
