@@ -74,7 +74,7 @@ object GameMaster {
     if(ticketType.equals(TicketType.Taxi)) {
       if(!isTaxiMoveValid(newPosition)) return false
     } else if(ticketType.equals(TicketType.Bus)) {
-      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Bus) return false
+      if(GameMaster.getCurrentPlayer().getPosition().sType >= StationType.Bus) return false
       if(!isBusMoveValid(newPosition)) return false
     } else {
       if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Underground) return false

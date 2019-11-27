@@ -2,13 +2,14 @@ package de.htwg.se.scotlandyard.aview
 
 import java.io.FileNotFoundException
 
+import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.MapRenderer
 import de.htwg.se.scotlandyard.model.player.TicketType
 import de.htwg.se.scotlandyard.util.Observer
 
 import scala.io.StdIn.readLine
-import scala.io.{BufferedSource, Source}
+import scala.io.Source
 //67 lines are comments in the old Tui class
 class Tui(controller: Controller) extends Observer{
   controller.add(this)
@@ -38,7 +39,7 @@ class Tui(controller: Controller) extends Observer{
 
   def evaluateInput(input: String): Int = {
     tuiMode match {
-      case TUIMODE_RUNNING => evaluateRunning(input); if(tuiMode != TUIMODE_QUIT) updateScreen()
+      case TUIMODE_RUNNING => evaluateRunning(input)
       case TUIMODE_MENU => if(evaluateMenu(input)) updateScreen()
     }
     tuiMode
@@ -65,6 +66,9 @@ class Tui(controller: Controller) extends Observer{
     } else if(input.equalsIgnoreCase("exit")) {
       tuiMode = TUIMODE_QUIT
     }
+    if(tuiMode != TUIMODE_QUIT) {
+      updateScreen()
+    }
     tuiMode
   }
 
@@ -87,7 +91,7 @@ class Tui(controller: Controller) extends Observer{
     if(inputStr forall Character.isDigit) {
       menuCounter match {
         case 0 => evaluateMainMenu(inputStr.toInt)
-        case 1 => evaluateSettings(inputStr.toInt)
+        case 1 => evaluateSettings(inputStr.toInt); false
         case 2 => evaluateNameMenu(inputStr.toInt)
         case 3 => dispMrXstartingPosition(inputStr)
       }
@@ -99,6 +103,11 @@ class Tui(controller: Controller) extends Observer{
   def evaluateMainMenu(input: Int): Boolean = {
     if(input == 1) {
       menuCounter += 1
+      if(ScotlandYard.isDebugMode) {
+        menuCounter += 1
+        controller.initPlayers(2)
+        return false
+      }
       true
     } else if (input == 2) {
       tuiMode = TUIMODE_QUIT
@@ -108,10 +117,9 @@ class Tui(controller: Controller) extends Observer{
     }
   }
 
-  def evaluateSettings(input: Int): Boolean = {
+  def evaluateSettings(input: Int): Int = {
     menuCounter += 1
     controller.initPlayers(input)
-    false
   }
 
   def evaluateNameMenu(input: Int): Boolean = {
