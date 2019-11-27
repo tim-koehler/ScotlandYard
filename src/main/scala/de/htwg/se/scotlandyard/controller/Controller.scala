@@ -4,7 +4,6 @@ import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.util.Observable
-import sun.java2d.loops.ProcessPath
 
 class Controller extends Observable {
 

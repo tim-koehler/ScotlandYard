@@ -38,9 +38,10 @@ class Tui(controller: Controller) extends Observer{
 
   def evaluateInput(input: String): Int = {
     tuiMode match {
-      case TUIMODE_RUNNING => evaluateRunning(input)
-      case TUIMODE_MENU => evaluateMenu(input)
+      case TUIMODE_RUNNING => evaluateRunning(input); if(tuiMode != TUIMODE_QUIT) updateScreen()
+      case TUIMODE_MENU => if(evaluateMenu(input)) updateScreen()
     }
+    tuiMode
   }
 
   def evaluateRunning(input: String): Int = {
@@ -49,6 +50,7 @@ class Tui(controller: Controller) extends Observer{
     } else {
       evaluateMoveMapInput(input)
     }
+    tuiMode
   }
 
   def evaluateMoveMapInput(input: String): Int = {
@@ -61,9 +63,8 @@ class Tui(controller: Controller) extends Observer{
     } else if(input.matches("(s|S)+")) {
       MapRenderer.updateY(input.length, positive = true)
     } else if(input.equalsIgnoreCase("exit")) {
-      return TUIMODE_QUIT
+      tuiMode = TUIMODE_QUIT
     }
-    updateScreen()
     tuiMode
   }
 
@@ -82,7 +83,7 @@ class Tui(controller: Controller) extends Observer{
     tuiMode
   }
 
-  def evaluateMenu(inputStr: String): Int = {
+  def evaluateMenu(inputStr: String): Boolean = {
     if(inputStr forall Character.isDigit) {
       menuCounter match {
         case 0 => evaluateMainMenu(inputStr.toInt)
@@ -90,44 +91,47 @@ class Tui(controller: Controller) extends Observer{
         case 2 => evaluateNameMenu(inputStr.toInt)
         case 3 => dispMrXstartingPosition(inputStr)
       }
+    } else {
+      true
     }
-    tuiMode
   }
 
-  def evaluateMainMenu(input: Int): Int = {
+  def evaluateMainMenu(input: Int): Boolean = {
     if(input == 1) {
       menuCounter += 1
-      updateScreen()
-      menuCounter
+      true
     } else if (input == 2) {
-      TUIMODE_QUIT
+      tuiMode = TUIMODE_QUIT
+      false
     } else {
-      TUIMODE_MENU
+      true
     }
   }
 
-  def evaluateSettings(input: Int): Int = {
+  def evaluateSettings(input: Int): Boolean = {
     menuCounter += 1
     controller.initPlayers(input)
-    menuCounter
+    false
   }
 
-  def evaluateNameMenu(input: Int): Int = {
+  def evaluateNameMenu(input: Int): Boolean = {
     if(input == 1) {
       menuCounter += 1
-      updateScreen()
+      true
     } else if(input > 1) { // -1 because 1 is Start and 2 is the first Detective
       val inputName = readLine()
       controller.setPlayerNames(inputName, input - 1)
+      false
+    } else {
+      true
     }
-      menuCounter
   }
 
-  def dispMrXstartingPosition(input: String): Int = {
+  def dispMrXstartingPosition(input: String): Boolean = {
     menuCounter += 1
     updateScreen()
     tuiMode = TUIMODE_RUNNING
-    menuCounter
+    false
   }
 
   def buildOutputStringForRunningGame(): String = {
