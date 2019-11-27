@@ -2,9 +2,10 @@ package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.model.player.TicketType
 import org.scalatest._
 
-class ControllerSpec extends WordSpec with Matchers {
+class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "Controller" when {
     "new" should {
       GameMaster.startGame()
@@ -22,6 +23,15 @@ class ControllerSpec extends WordSpec with Matchers {
       }
       "should return the correct player from setPlayerNumber" in {
         controller.initPlayers(2) shouldBe (2)
+      }
+      "should validateAndMove" in {
+        GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)
+        GameMaster.players(0).station = GameMaster.stations(3)
+
+        controller.validateAndMove(2, TicketType.Taxi) should be(true)
+      }
+      "and updateMrXVisibility" in {
+        controller.updateMrXVisibility() should be (false)
       }
     }
   }

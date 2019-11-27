@@ -52,10 +52,4 @@ class Controller extends Observable {
   def updateMrXVisibility(): Boolean = {
     GameMaster.updateMrXVisibility()
   }
-
-  private def reducePlayerNumber(nPlayer: Int): Unit = {
-    val len = GameMaster.players.length
-    GameMaster.players = GameMaster.players.dropRight(len - nPlayer)
-  }
-
 }
