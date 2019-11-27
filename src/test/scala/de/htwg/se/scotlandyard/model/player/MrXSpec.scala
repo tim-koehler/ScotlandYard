@@ -1,13 +1,14 @@
 package de.htwg.se.scotlandyard.model.player
 
 import de.htwg.se.scotlandyard.model.map._
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
 import org.scalatest._
 
 class MrXSpec extends WordSpec with Matchers {
   "MrX" when {
     "new" should {
-      val st = new Station(1, StationType.Taxi, Set(), Set(), Set(), (1, 1))
+      StationFactory.createZeroIndexStation()
+      val st = StationFactory.createTaxiStation(1, 1)
       val mrX = new MrX(st, "MrX")
       "have a station number" in {
         mrX.getPosition().number should be (1)

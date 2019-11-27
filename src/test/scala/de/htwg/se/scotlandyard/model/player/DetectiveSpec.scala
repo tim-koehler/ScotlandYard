@@ -1,13 +1,13 @@
 package de.htwg.se.scotlandyard.model.player
 
 import de.htwg.se.scotlandyard.model.map.StationType
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
 import org.scalatest._
 
 class DetectiveSpec extends WordSpec with Matchers {
   "Detective" when {
     "new" should {
-      val st = new Station(2, StationType.Taxi, Set(), Set(), Set(), (1, 1))
+      val st = StationFactory.createTaxiStation(1, 1)
       val dt1 = new Detective(st, "Dt1")
 
       "have a station number" in {

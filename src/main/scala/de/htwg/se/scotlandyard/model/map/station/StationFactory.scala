@@ -1,22 +1,29 @@
 package de.htwg.se.scotlandyard.model.map.station
 
 object StationFactory {
-  private var taxiStationCounter = 0
-  private var busStationCounter = 0
-  private var undergroundStationCounter = 0
+  private var stationCounter: Integer = 0
+
+  def createZeroIndexStation(): Station = {
+    new TaxiStation(0, (1, 1))
+  }
 
   def createTaxiStation(tuiCoords: (Integer, Integer)): Station = {
-    taxiStationCounter += 1
-    new TaxiStation(taxiStationCounter, tuiCoords)
+    stationCounter += 1
+    new TaxiStation(stationCounter, tuiCoords)
   }
 
   def createBusStation(tuiCoords: (Integer, Integer)): Station = {
-    busStationCounter += 1
-    new BusStation(busStationCounter, tuiCoords)
+    stationCounter += 1
+    new BusStation(stationCounter, tuiCoords)
   }
 
   def createUndergroundStation(tuiCoords: (Integer, Integer)): Station = {
-    undergroundStationCounter += 1
-    new UndergroundStation(undergroundStationCounter, tuiCoords)
+    stationCounter += 1
+    new UndergroundStation(stationCounter, tuiCoords)
+  }
+
+  def resetCounter(): Integer = {
+    this.stationCounter = 0
+    this.stationCounter
   }
 }
