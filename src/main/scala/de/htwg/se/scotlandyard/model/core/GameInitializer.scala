@@ -1,7 +1,8 @@
 package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.model.map.{GameMap, Station, StationType}
+import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
+import de.htwg.se.scotlandyard.model.map.{GameMap, StationType}
 import de.htwg.se.scotlandyard.model.player.{Detective, MrX, Player}
 
 import scala.collection.mutable.ListBuffer
@@ -22,6 +23,7 @@ object GameInitializer {
 
   def initialize(): Boolean = {
     MapRenderer.init()
+    StationFactory.resetCounter()
     if(ScotlandYard.isDebugMode) {
       GameMaster.stations = initDebugStations()
     }
@@ -86,38 +88,36 @@ object GameInitializer {
 
   def initDebugStations(): List[Station] = {
 
-    def createStations(): List[Station] = {
-      var stationsBuffer = new ListBuffer[Station]()
-
-      // Zero index Station
-      stationsBuffer += new Station(0, StationType.Taxi, null, null, null, (1, 1))
-
-      stationsBuffer += new Station(1, StationType.Taxi, null, null, null, (5, 20))
-      stationsBuffer += new Station(2, StationType.Underground, null, null, null, (23, 25))
-      stationsBuffer += new Station(3, StationType.Underground, null, null, null, (20, 7))
-
-      stationsBuffer.toList
-    }
-
     val stations = createStations()
-
-    def setNeighbours(): Int = {
-      stations(1).setNeighbourTaxis(Set(stations(2), stations(3)))
-
-      stations(2).setNeighbourTaxis(Set(stations(1)))
-      stations(2).setNeighbourBuses(Set(stations(3)))
-      stations(2).setNeighbourUndergrounds(Set(stations(3)))
-
-      stations(3).setNeighbourTaxis(Set(stations(1)))
-      stations(3).setNeighbourBuses(Set(stations(2)))
-      stations(3).setNeighbourUndergrounds(Set(stations(2)))
-
-      stations.size
-    }
-
-    setNeighbours()
+    setNeighbours(stations)
 
     stations
+  }
+
+  def createStations(): List[Station] = {
+    var stationsBuffer = new ListBuffer[Station]()
+
+    stationsBuffer += StationFactory.createZeroIndexStation()
+
+    stationsBuffer += StationFactory.createTaxiStation(5,20)
+    stationsBuffer += StationFactory.createUndergroundStation(23, 25)
+    stationsBuffer += StationFactory.createUndergroundStation(20, 7)
+
+    stationsBuffer.toList
+  }
+
+  private def setNeighbours(stations: List[Station]): Int = {
+    stations(1).setNeighbourTaxis(Set(stations(2), stations(3)))
+
+    stations(2).setNeighbourTaxis(Set(stations(1)))
+    stations(2).setNeighbourBuses(Set(stations(3)))
+    stations(2).setNeighbourUndergrounds(Set(stations(3)))
+
+    stations(3).setNeighbourTaxis(Set(stations(1)))
+    stations(3).setNeighbourBuses(Set(stations(2)))
+    stations(3).setNeighbourUndergrounds(Set(stations(2)))
+
+    stations.size
   }
 
   def initStations(): List[Station] = {

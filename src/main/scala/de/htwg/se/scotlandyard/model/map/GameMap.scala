@@ -25,16 +25,16 @@ object GameMap {
   private def updateMapString(): List[String] ={
 
     for(s <- GameMaster.stations){
-      map = map.updated(s.coords._2 - 1, map(s.coords._2 - 1).updated(s.coords._1 - 1, ' '))
-      map = map.updated(s.coords._2 - 1, map(s.coords._2 - 1).updated(s.coords._1, ' '))
-      map = map.updated(s.coords._2 - 1, map(s.coords._2 - 1).updated(s.coords._1 + 1, ' '))
+      map = map.updated(s.tuiCoords._2 - 1, map(s.tuiCoords._2 - 1).updated(s.tuiCoords._1 - 1, ' '))
+      map = map.updated(s.tuiCoords._2 - 1, map(s.tuiCoords._2 - 1).updated(s.tuiCoords._1, ' '))
+      map = map.updated(s.tuiCoords._2 - 1, map(s.tuiCoords._2 - 1).updated(s.tuiCoords._1 + 1, ' '))
     }
 
     for(p <- GameMaster.players) {
       if(!p.name.equals("MrX") || GameMaster.checkMrXVisibility()) {
-        map = map.updated(p.getPosition().coords._2 - 1, map(p.getPosition().coords._2 - 1).updated(p.getPosition().coords._1 - 1, p.name(0)))
-        map = map.updated(p.getPosition().coords._2 - 1, map(p.getPosition().coords._2 - 1).updated(p.getPosition().coords._1, p.name(1)))
-        map = map.updated(p.getPosition().coords._2 - 1, map(p.getPosition().coords._2 - 1).updated(p.getPosition().coords._1 + 1, p.name(2)))
+        map = map.updated(p.getPosition().tuiCoords._2 - 1, map(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1 - 1, p.name(0)))
+        map = map.updated(p.getPosition().tuiCoords._2 - 1, map(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1, p.name(1)))
+        map = map.updated(p.getPosition().tuiCoords._2 - 1, map(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1 + 1, p.name(2)))
       }
     }
     map

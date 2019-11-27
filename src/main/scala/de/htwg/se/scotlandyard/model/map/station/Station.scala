@@ -1,10 +1,14 @@
-package de.htwg.se.scotlandyard.model.map
+package de.htwg.se.scotlandyard.model.map.station
 
 import de.htwg.se.scotlandyard.model.map.StationType.StationType
-import de.htwg.se.scotlandyard.model.player.Player
 
-class Station(var number: Integer, var sType: StationType,
-                   var neighbourTaxis: Set[Station], var neighbourBuses: Set[Station], var neighbourUndergrounds: Set[Station], val coords: (Int, Int)) {
+trait Station {
+  val number: Integer
+  var sType: StationType
+  var neighbourTaxis: Set[Station]
+  var neighbourBuses: Set[Station]
+  var neighbourUndergrounds: Set[Station]
+  var tuiCoords: (Integer, Integer)
 
   def setNeighbourTaxis(neighbourTaxis: Set[Station]): Int = {
     this.neighbourTaxis = neighbourTaxis

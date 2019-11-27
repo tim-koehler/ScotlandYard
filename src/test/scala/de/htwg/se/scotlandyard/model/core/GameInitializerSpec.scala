@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.ScotlandYard
+import de.htwg.se.scotlandyard.model.map.station.StationFactory
 import org.scalatest._
 
 class GameInitializerSpec extends WordSpec with Matchers {
@@ -19,6 +20,26 @@ class GameInitializerSpec extends WordSpec with Matchers {
         GameInitializer.drawDetectivePosition() shouldBe >= (1)
         GameInitializer.drawDetectivePosition() shouldBe <= (3)
       }
+    }
+    "try to create and init all Station types" in {
+      StationFactory.createZeroIndexStation()
+
+      var station = StationFactory.createTaxiStation(1, 1)
+      station.setNeighbourTaxis(Set())
+      station.setNeighbourBuses(Set())
+      station.setNeighbourUndergrounds(Set())
+
+      station = StationFactory.createBusStation(1, 1)
+      station.setNeighbourTaxis(Set())
+      station.setNeighbourBuses(Set())
+      station.setNeighbourUndergrounds(Set())
+
+      station = StationFactory.createUndergroundStation(1,1)
+      station.setNeighbourTaxis(Set())
+      station.setNeighbourBuses(Set())
+      station.setNeighbourUndergrounds(Set())
+
+      StationFactory.resetCounter()
     }
   }
 }

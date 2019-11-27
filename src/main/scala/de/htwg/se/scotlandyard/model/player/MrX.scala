@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.model.player
-import de.htwg.se.scotlandyard.model.map.{Station, StationType}
+import de.htwg.se.scotlandyard.model.map.StationType
+import de.htwg.se.scotlandyard.model.map.station.Station
 
 class MrX(var station: Station, var name: String = "MrX") extends Player {
   var blackTickets: Int = 5 // default: 5
