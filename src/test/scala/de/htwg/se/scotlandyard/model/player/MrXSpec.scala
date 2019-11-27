@@ -7,6 +7,7 @@ import org.scalatest._
 class MrXSpec extends WordSpec with Matchers {
   "MrX" when {
     "new" should {
+      StationFactory.resetCounter()
       StationFactory.createZeroIndexStation()
       val st = StationFactory.createTaxiStation(1, 1)
       val mrX = new MrX(st, "MrX")
