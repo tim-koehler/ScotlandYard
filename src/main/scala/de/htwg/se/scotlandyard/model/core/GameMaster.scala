@@ -71,51 +71,62 @@ object GameMaster {
     if(!isTargetStationInBounds(newPosition)) return false
 
     if(ticketType.equals(TicketType.Taxi)) {
-      if(!isTaxiMoveValid(newPosition)) return false
+      if(!isTaxiMoveValid(newPosition))
+        return false
     } else if(ticketType.equals(TicketType.Bus)) {
-      if(GameMaster.getCurrentPlayer().getPosition().sType == StationType.Taxi) return false
-      if(!isBusMoveValid(newPosition)) return false
+      if(GameMaster.getCurrentPlayer().getPosition().sType == StationType.Taxi)
+        return false
+      if(!isBusMoveValid(newPosition))
+        return false
     } else {
-      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Underground) return false
-      if(!isUndergroundMoveValid(newPosition)) return false
+      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Underground)
+        return false
+      if(!isUndergroundMoveValid(newPosition))
+        return false
     }
 
     //TODO: Insert win here
-    if(!isTargetStationEmpty(newPosition)) return false
-
+    if(!isTargetStationEmpty(newPosition))
+      return false
     true
   }
 
   private def isTargetStationInBounds(newPosition: Int): Boolean ={
-    if(newPosition >= GameMaster.stations.size) return false
+    if(newPosition >= GameMaster.stations.size)
+      return false
     true
   }
 
   private def isTaxiMoveValid(newPosition: Int): Boolean = {
-    if(getCurrentPlayer().taxiTickets <= 0) return false
-    if(!getCurrentPlayer().getPosition().neighbourTaxis.contains(stations(newPosition))) return false
+    if(getCurrentPlayer().taxiTickets <= 0)
+      return false
+    if(!getCurrentPlayer().getPosition().neighbourTaxis.contains(stations(newPosition)))
+      return false
     true
   }
 
   private def isBusMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().busTickets <= 0) return false
-    if(!getCurrentPlayer().getPosition().neighbourBuses.contains(stations(newPosition))) return false
+    if(!getCurrentPlayer().getPosition().neighbourBuses.contains(stations(newPosition)))
+      return false
     true
   }
 
   private def isUndergroundMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().undergroundTickets <= 0) return false
-    if(!getCurrentPlayer().getPosition().neighbourUndergrounds.contains(stations(newPosition))) return false
+    if(!getCurrentPlayer().getPosition().neighbourUndergrounds.contains(stations(newPosition)))
+      return false
     true
   }
 
   private def isTargetStationEmpty(newPosition: Integer): Boolean = {
-    for(p <- GameMaster.players) if(p.getPosition().number == newPosition) return false
+    for(p <- GameMaster.players)
+      if(p.getPosition().number == newPosition)
+        return false
     true
   }
 
   def updatePlayerPosition(newPosition: Int, ticketType: TicketType): Station = {
-
     if(ticketType.equals(TicketType.Taxi)) {
       getCurrentPlayer().taxiTickets -= 1
     } else if(ticketType.equals(TicketType.Bus)){
@@ -123,10 +134,6 @@ object GameMaster {
     } else {
       getCurrentPlayer().undergroundTickets -= 1
     }
-    setPlayerPosition(newPosition)
-  }
-
-  private def setPlayerPosition(newPosition: Int): Station = {
     getCurrentPlayer().station = stations(newPosition)
     getCurrentPlayer().station
   }
