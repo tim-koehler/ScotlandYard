@@ -41,5 +41,13 @@ class GameInitializerSpec extends WordSpec with Matchers {
 
       StationFactory.resetCounter()
     }
+    "and test drawing player positions" in {
+      GameInitializer.drawDetectivePosition(true) should be (2)
+      GameInitializer.drawDetectivePosition(false) should not be (0)
+    }
+    "and drawing MrX position should" in {
+      GameInitializer.drawMisterXPosition(true) should be(1)
+      GameInitializer.drawMisterXPosition(false) should not be(0)
+    }
   }
 }

@@ -46,8 +46,8 @@ object GameInitializer {
     true
   }
 
-  def drawDetectivePosition(): Int = {
-    if(ScotlandYard.isDebugMode) {
+  def drawDetectivePosition(isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
+    if(isDebugMode) {
       return 2
     }
     var startPosIndex = 0
@@ -59,8 +59,8 @@ object GameInitializer {
     detectiveStartPositions(startPosIndex)
   }
 
-  def drawMisterXPosition(): Int = {
-    if(ScotlandYard.isDebugMode) {
+  def drawMisterXPosition(isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
+    if(isDebugMode) {
       return 1
     }
     val startPosIndex = r.nextInt(MAX_MISTERX_LIST_INDEX)
