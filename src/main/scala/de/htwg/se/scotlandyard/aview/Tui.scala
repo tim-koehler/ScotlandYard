@@ -13,22 +13,21 @@ import scala.io.Source
 //67 lines are comments in the old Tui class
 class Tui(controller: Controller) extends Observer{
   controller.add(this)
+  var state: State = new MainMenuState(this)
 
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
   val titleBanner = getTitleBanner()
-
-  val mainMenuString = titleBanner + "\n\n" + "->Main Menu<-" + "\n" + "1: Start Game\n" + "2: End Game"
-  val settingsString = titleBanner + "\n\n" + "->Number of Players<-" + "\n" + "2: 2 Players\n" +
-    "3: 3 Players\n" + "4: 4 Players\n" + "5: 5 Players\n" + "6: 6 Players\n" + "7: 7 Players"
   val chooseNameMenuString = titleBanner + "\n\n" + "->Choose Names<-" + "\n"
-  val dispMrXstartPositionString = titleBanner + "\n\n" + "->Start<-" + "\n" + "Reveal MrX starting Position: (Press Enter to continue...)"
 
   val TUIMODE_QUIT: Int = -1
   val TUIMODE_RUNNING: Int = 0
-  val TUIMODE_MENU: Int = 1
-  var tuiMode = TUIMODE_MENU
+  var tuiMode = 1
 
-  var menuCounter = 0 // 0 is main Menu, 1 is settings, 2 is choose name, 3 is Reaveal MrX start postition, 4 is MrX start position
+  var indexOfPlayerWhichNameToChange = 1
+
+  def changeState(state: State): Unit = {
+    this.state = state
+  }
 
   private def getTitleBanner(): String = {
     val bufferedSource = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
@@ -38,20 +37,7 @@ class Tui(controller: Controller) extends Observer{
   }
 
   def evaluateInput(input: String): Int = {
-    tuiMode match {
-      case TUIMODE_RUNNING => evaluateRunning(input)
-      case TUIMODE_MENU => if(evaluateMenu(input)) updateScreen()
-    }
-    tuiMode
-  }
-
-  def evaluateRunning(input: String): Int = {
-    if(input.matches("[0-9]{1,3} ((T|t)|(B|b)|(U|u))")) {
-      evaluateNextPositionInput(input)
-    } else {
-      evaluateMoveMapInput(input)
-    }
-    tuiMode
+    state.evaluateInput(input)
   }
 
   def evaluateMoveMapInput(input: String): Int = {
@@ -87,59 +73,67 @@ class Tui(controller: Controller) extends Observer{
     tuiMode
   }
 
-  def evaluateMenu(inputStr: String): Boolean = {
-    if(inputStr forall Character.isDigit) {
-      menuCounter match {
-        case 0 => evaluateMainMenu(inputStr.toInt)
-        case 1 => evaluateSettings(inputStr.toInt); false
-        case 2 => evaluateNameMenu(inputStr.toInt)
-        case 3 => dispMrXstartingPosition(inputStr)
+  def evaluateMainMenu(input: String): Int = {
+    if(input.isEmpty) {updateScreen(); return TUIMODE_RUNNING}
+    if(stringIsNumber(input)) {
+      if(input.toInt == 1) {
+        if(ScotlandYard.isDebugMode) {
+          changeState(new ChooseNameMenuState(this))
+          controller.initPlayers(2)
+        } else {
+          changeState(new SelectNumberOfPlayerMenuState(this))
+          updateScreen()
+          TUIMODE_RUNNING
+        }
+      } else if(input.toInt == 2) {
+          return TUIMODE_QUIT
+      } else {
+        updateScreen()
+         TUIMODE_RUNNING
       }
     } else {
-      true
+      updateScreen()
+      TUIMODE_RUNNING
     }
   }
 
-  def evaluateMainMenu(input: Int): Boolean = {
-    if(input == 1) {
-      menuCounter += 1
-      if(ScotlandYard.isDebugMode) {
-        menuCounter += 1
-        controller.initPlayers(2)
-        return false
-      }
-      true
-    } else if (input == 2) {
-      tuiMode = TUIMODE_QUIT
-      false
-    } else {
-      true
+  def stringIsNumber(input: String): Boolean = {
+    if(input forall Character.isDigit) true else false
+  }
+
+  def evaluateSettings(input: String): Int = {
+    if(input.isEmpty) {updateScreen(); return TUIMODE_RUNNING}
+    controller.initPlayers(input.toInt)
+  }
+
+  def evaluateNameMenu(input: String): String = {
+    if(!stringIsNumber(input)) return input
+    if (input.toInt == 1) {
+      changeState(new RevealMrX1State(this))
+      updateScreen()
+    } else if (input.toInt > 1) {
+      changeState(new EnterNameState(this))
+      updateScreen()
+      indexOfPlayerWhichNameToChange = input.toInt - 1 // -1 because 1 is Start and 2 is the first Detective
     }
+    input
   }
 
-  def evaluateSettings(input: Int): Int = {
-    menuCounter += 1
-    controller.initPlayers(input)
+  def evaluateEnterName(input: String): Boolean = {
+    changeState(new ChooseNameMenuState(this))
+    controller.setPlayerNames(input, indexOfPlayerWhichNameToChange)
   }
 
-  def evaluateNameMenu(input: Int): Boolean = {
-    if(input == 1) {
-      menuCounter += 1
-      true
-    } else if(input > 1) { // -1 because 1 is Start and 2 is the first Detective
-      val inputName = readLine()
-      controller.setPlayerNames(inputName, input - 1)
-      false
-    } else {
-      true
-    }
-  }
-
-  def dispMrXstartingPosition(input: String): Boolean = {
-    menuCounter += 1
+  def revealMrX1(): Int = {
+    changeState(new RevealMrX2State(this))
     updateScreen()
-    tuiMode = TUIMODE_RUNNING
-    false
+    TUIMODE_RUNNING
+  }
+
+  def revealMrX2(): Int = {
+    changeState(new RunningState(this))
+    updateScreen()
+    TUIMODE_RUNNING
   }
 
   def buildOutputStringForRunningGame(): String = {
@@ -152,18 +146,9 @@ class Tui(controller: Controller) extends Observer{
     outputString
   }
 
-  def buildOutputStringForMenus(): String = {
-    if(menuCounter == 0) {
-      mainMenuString
-    } else if(menuCounter == 1) {
-      settingsString
-    } else if(menuCounter == 2) {
-      buildOutputStringForChooseNameMenu()
-    } else if(menuCounter == 3) {
-      dispMrXstartPositionString
-    } else {
-      "MrX is at Station: " + controller.getCurrentPlayer().getPosition().number
-    }
+  def getMrXStartingPositionString(): String = {
+    changeState(new RunningState(this))
+    "MrX is at Station: " + controller.getCurrentPlayer().getPosition().number
   }
 
   def buildOutputStringForChooseNameMenu(): String = {
@@ -177,11 +162,7 @@ class Tui(controller: Controller) extends Observer{
   }
 
   override def toString() : String = {
-    if(tuiMode == 1) {
-      buildOutputStringForMenus()
-    } else {
-      buildOutputStringForRunningGame()
-    }
+    state.toString()
   }
 
   def updateScreen(): Unit = {
