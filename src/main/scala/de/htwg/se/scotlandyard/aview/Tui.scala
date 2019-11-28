@@ -21,7 +21,6 @@ class Tui(controller: Controller) extends Observer{
 
   val TUIMODE_QUIT: Int = -1
   val TUIMODE_RUNNING: Int = 0
-  var tuiMode = 1
 
   var indexOfPlayerWhichNameToChange = 1
 
@@ -50,12 +49,10 @@ class Tui(controller: Controller) extends Observer{
     } else if(input.matches("(s|S)+")) {
       MapRenderer.updateY(input.length, positive = true)
     } else if(input.equalsIgnoreCase("exit")) {
-      tuiMode = TUIMODE_QUIT
+      return TUIMODE_QUIT
     }
-    if(tuiMode != TUIMODE_QUIT) {
-      updateScreen()
-    }
-    tuiMode
+    updateScreen()
+    TUIMODE_RUNNING
   }
 
   def evaluateNextPositionInput(input: String): Int = {
@@ -70,9 +67,10 @@ class Tui(controller: Controller) extends Observer{
     } else if (transport.equals('u')) {
       controller.validateAndMove(newStation, TicketType.Underground)
     }
-    tuiMode
+    TUIMODE_RUNNING
   }
 
+  //TODO: This Method needs to be refactored
   def evaluateMainMenu(input: String): Int = {
     if(input.isEmpty) {updateScreen(); return TUIMODE_RUNNING}
     if(stringIsNumber(input)) {
@@ -83,17 +81,17 @@ class Tui(controller: Controller) extends Observer{
         } else {
           changeState(new SelectNumberOfPlayerMenuState(this))
           updateScreen()
-          TUIMODE_RUNNING
+          return TUIMODE_RUNNING
         }
       } else if(input.toInt == 2) {
           return TUIMODE_QUIT
       } else {
         updateScreen()
-         TUIMODE_RUNNING
+         return TUIMODE_RUNNING
       }
     } else {
       updateScreen()
-      TUIMODE_RUNNING
+      return TUIMODE_RUNNING
     }
   }
 

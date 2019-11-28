@@ -16,7 +16,6 @@ class TuiSpec extends WordSpec with Matchers {
       "evaluate Running should return TUIMODE_RUNNING (0)" in {
         GameInitializer.initialize()
         GameInitializer.initPlayers(2)
-        tui.tuiMode = tui.TUIMODE_RUNNING
         //tui.evaluateRunning("1 b") shouldBe(tui.TUIMODE_RUNNING)
       }
       "should return -1 in MainMenuMode when 2 is selected" in {
@@ -24,18 +23,17 @@ class TuiSpec extends WordSpec with Matchers {
         //tui.menuCounter = 0
         //tui.evaluateInput(2.toString) should be (-1)
       }
-      "evaluateInput should return 0" in {
+      "evaluateInput should return -1 when exit game is selected" in {
         GameInitializer.initialize()
         GameInitializer.initPlayers(2)
-        tui.evaluateInput("1") shouldBe(tui.TUIMODE_RUNNING)
+        tui.changeState(new MainMenuState(tui))
+        tui.evaluateInput("2") shouldBe(tui.TUIMODE_QUIT)
       }
       "should return state RUNNING when 'a', 'w', 's' or 'd' is pressed is pressed" in {
-        tui.tuiMode = tui.TUIMODE_RUNNING
         GameMaster.startGame()
         tui.evaluateMoveMapInput("a") should be (tui.TUIMODE_RUNNING)
       }
       "should return state QUIT when 'exit' is inserted" in {
-        tui.tuiMode = tui.TUIMODE_RUNNING
         tui.evaluateMoveMapInput("exit") should be (tui.TUIMODE_QUIT)
       }
       "evaluateSettings should return the player number or 0" in {
@@ -44,11 +42,11 @@ class TuiSpec extends WordSpec with Matchers {
       }
 
       "should return true when revealMrx1 is called" in {
-        tui.revealMrX1() shouldBe(true)
+        tui.revealMrX1() shouldBe(0)
       }
 
       "should return true when revealMrx2 is called" in {
-        tui.revealMrX2() shouldBe(true)
+        tui.revealMrX2() shouldBe(0)
       }
 
       "should return true when evaluateEnterName is called" in {
