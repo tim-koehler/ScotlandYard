@@ -9,4 +9,9 @@ class BusStation(num: Integer, tCoords: (Integer, Integer)) extends Station {
   override var neighbourBuses: Set[Station] = _
   override var neighbourUndergrounds: Set[Station] = _
   override var tuiCoords: (Integer, Integer) = tCoords
+
+  override def setNeighbourBuses(neighbourBuses: Set[Station]): Integer = {
+    this.neighbourBuses = neighbourBuses
+    neighbourBuses.size
+  }
 }

@@ -26,13 +26,10 @@ class GameInitializerSpec extends WordSpec with Matchers {
 
       var station = StationFactory.createTaxiStation(1, 1)
       station.setNeighbourTaxis(Set())
-      station.setNeighbourBuses(Set())
-      station.setNeighbourUndergrounds(Set())
 
       station = StationFactory.createBusStation(1, 1)
       station.setNeighbourTaxis(Set())
       station.setNeighbourBuses(Set())
-      station.setNeighbourUndergrounds(Set())
 
       station = StationFactory.createUndergroundStation(1,1)
       station.setNeighbourTaxis(Set())
