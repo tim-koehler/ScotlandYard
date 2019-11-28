@@ -10,4 +10,14 @@ class UndergroundStation(num: Integer, tCoords: (Integer, Integer)) extends Stat
   override var neighbourBuses: Set[Station] = _
   override var neighbourUndergrounds: Set[Station] = _
   override var tuiCoords: (Integer, Integer) = tCoords
+
+  override def setNeighbourBuses(neighbourBuses: Set[Station]): Integer = {
+    this.neighbourBuses = neighbourBuses
+    neighbourBuses.size
+  }
+
+  override def setNeighbourUndergrounds(neighbourUndergrounds: Set[Station]): Integer = {
+    this.neighbourUndergrounds = neighbourUndergrounds
+    neighbourUndergrounds.size
+  }
 }

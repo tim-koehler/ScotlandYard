@@ -10,18 +10,16 @@ trait Station {
   var neighbourUndergrounds: Set[Station]
   var tuiCoords: (Integer, Integer)
 
-  def setNeighbourTaxis(neighbourTaxis: Set[Station]): Int = {
+  def setNeighbourTaxis(neighbourTaxis: Set[Station]): Integer = {
     this.neighbourTaxis = neighbourTaxis
     neighbourTaxis.size
   }
 
-  def setNeighbourBuses(neighbourBuses: Set[Station]): Int = {
-    this.neighbourBuses = neighbourBuses
-    neighbourBuses.size
+  def setNeighbourBuses(neighbourBuses: Set[Station]): Integer = {
+    throw new Exception("Station doesn't have Bus neighbours!")
   }
 
-  def setNeighbourUndergrounds(neighbourUndergrounds: Set[Station]): Int = {
-    this.neighbourUndergrounds = neighbourUndergrounds
-    neighbourUndergrounds.size
+  def setNeighbourUndergrounds(neighbourUndergrounds: Set[Station]): Integer = {
+    throw new Exception("Station doesn't have Underground neighbours!")
   }
 }
