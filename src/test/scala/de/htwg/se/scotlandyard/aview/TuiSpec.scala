@@ -8,6 +8,7 @@ import org.scalatest._
 class TuiSpec extends WordSpec with Matchers {
   "Tui" when {
     "new" should {
+      GameMaster.startGame()
       val tui = new Tui(new Controller())
       "should bring you to player settings menu when input is 1" in {
         tui.evaluateInput(1.toString) shouldBe(tui.TUIMODE_MENU)

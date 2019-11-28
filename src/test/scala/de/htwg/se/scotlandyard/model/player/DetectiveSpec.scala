@@ -1,23 +1,25 @@
 package de.htwg.se.scotlandyard.model.player
 
+import de.htwg.se.scotlandyard.model.core.GameMaster
 import de.htwg.se.scotlandyard.model.map.StationType
 import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
 import org.scalatest._
 
 class DetectiveSpec extends WordSpec with Matchers {
   "Detective" when {
+    GameMaster.startGame()
     "new" should {
       val st = StationFactory.createTaxiStation(1, 1)
       val dt1 = new Detective(st, "Dt1")
 
       "have a station number" in {
-        dt1.getPosition().number should be (2)
+        dt1.getPosition().number should be (4)
       }
       "have a station Type" in {
         dt1.getPosition().sType should be (StationType.Taxi)
       }
       "should have a nice String representation" in {
-        dt1.toString() shouldBe ("Dt1: 2 (TAXI)  TICKETS-> T: 0, B: 0, U: 0")
+        dt1.toString() shouldBe ("Dt1: 4 (TAXI)  TICKETS-> T: 0, B: 0, U: 0")
       }
     }
   }
