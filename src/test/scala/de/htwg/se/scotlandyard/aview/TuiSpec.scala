@@ -15,16 +15,6 @@ class TuiSpec extends WordSpec with Matchers {
       "evaluateInput should return -1 when exit game is selected" in {
         tui.evaluateInput("2") shouldBe(tui.TUIMODE_QUIT)
       }
-      "evaluate Running should return TUIMODE_RUNNING (0)" in {
-        GameInitializer.initialize()
-        GameInitializer.initPlayers(2)
-        tui.tuiMode = tui.TUIMODE_RUNNING
-        tui.evaluateRunning("1 t") shouldBe(tui.TUIMODE_RUNNING)
-        tui.evaluateRunning("1 b") shouldBe(tui.TUIMODE_RUNNING)
-        tui.evaluateRunning("1 u") shouldBe(tui.TUIMODE_RUNNING)
-        tui.evaluateRunning("a") shouldBe(tui.TUIMODE_RUNNING)
-      }
-
       "change the number of player or refresh the screen" in {
         GameMaster.startGame()
         tui.changeState(new SelectNumberOfPlayerMenuState(tui))
