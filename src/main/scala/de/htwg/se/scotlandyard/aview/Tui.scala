@@ -55,7 +55,6 @@ class Tui(controller: Controller) extends Observer{
     val index = input.indexOf(" ")
     val newStation = input.substring(0, index).toInt
     val transport = input.substring(index + 1).toCharArray.head.toLower
-
     if(transport.equals('t')) {
       controller.validateAndMove(newStation, TicketType.Taxi)
     } else if (transport.equals('b')) {
@@ -66,9 +65,9 @@ class Tui(controller: Controller) extends Observer{
     TUIMODE_RUNNING
   }
 
-  def evaluateMainMenu(input: Int): Int = {
+  def evaluateMainMenu(input: Int, isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
     if(input == 1) {
-      if(ScotlandYard.isDebugMode) {
+      if(isDebugMode) {
         changeState(new ChooseNameMenuState(this))
         controller.initPlayers(2)
       } else {
