@@ -1,45 +1,46 @@
 package de.htwg.se.scotlandyard.controller
 
-import de.htwg.se.scotlandyard.model.core.GameMaster
-import de.htwg.se.scotlandyard.model.player.{Detective, Player}
+import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.util.Observable
 
 class Controller extends Observable {
 
   def setPlayerNames(inputName: String, index: Int): Boolean = {
-    if(index > GameMaster.players.length) {
-      notifyObservers
-      return false
+    var returnValue: Boolean = false
+    if(index < GameMaster.players.length || inputName.equals("")) {
+      returnValue = GameMaster.players(index).setPlayerName(inputName)
     }
-    val playerWithNewName = GameMaster.players(index)
-    playerWithNewName.name = inputName
-    GameMaster.players.updated(index, playerWithNewName)
     notifyObservers
-    true
+    returnValue
   }
 
   def getPlayersList(): List[Player] = {
     GameMaster.players
   }
 
-  def setPlayerNumber(nPlayer: Int): Unit = {
-    if(nPlayer < GameMaster.players.length) {
-      reducePlayerNumber(nPlayer)
-    }
+  def initPlayers(nPlayer: Int): Int = {
+    GameInitializer.initPlayers(nPlayer)
     notifyObservers
+    GameMaster.players.length
   }
 
   def getCurrentPlayer(): Player = {
     GameMaster.getCurrentPlayer()
   }
 
-  def nextRound(): Unit = {
+  def getTotalRound(): Int = {
+    GameMaster.totalRound
+  }
+
+  def nextRound(): Int = {
     GameMaster.nextRound()
   }
 
-  def validateAndMove(newPosition: Int): Boolean = {
-    if (GameMaster.validateMove(newPosition)) {
-      GameMaster.updatePlayerPosition(newPosition)
+  def validateAndMove(newPosition: Int, ticketType: TicketType): Boolean = {
+    if (GameMaster.validateMove(newPosition, ticketType)) {
+      GameMaster.updatePlayerPosition(newPosition, ticketType)
       nextRound()
       notifyObservers
       return true
@@ -48,9 +49,7 @@ class Controller extends Observable {
     false
   }
 
-  private def reducePlayerNumber(nPlayer: Int): Unit = {
-    val len = GameMaster.players.length
-    GameMaster.players = GameMaster.players.dropRight(len - nPlayer)
+  def updateMrXVisibility(): Boolean = {
+    GameMaster.updateMrXVisibility()
   }
-
 }
