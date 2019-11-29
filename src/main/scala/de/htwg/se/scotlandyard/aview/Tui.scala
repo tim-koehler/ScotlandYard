@@ -1,16 +1,12 @@
 package de.htwg.se.scotlandyard.aview
 
-import java.io.FileNotFoundException
-
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.MapRenderer
 import de.htwg.se.scotlandyard.model.player.TicketType
 import de.htwg.se.scotlandyard.util.Observer
 
-import scala.io.StdIn.readLine
 import scala.io.Source
-//67 lines are comments in the old Tui class
 class Tui(controller: Controller) extends Observer{
   controller.add(this)
   var state: State = new MainMenuState(this)
@@ -70,42 +66,26 @@ class Tui(controller: Controller) extends Observer{
     TUIMODE_RUNNING
   }
 
-  //TODO: This Method needs to be refactored
-  def evaluateMainMenu(input: String): Int = {
-    if(input.isEmpty) {updateScreen(); return TUIMODE_RUNNING}
-    if(stringIsNumber(input)) {
-      if(input.toInt == 1) {
-        if(ScotlandYard.isDebugMode) {
-          changeState(new ChooseNameMenuState(this))
-          controller.initPlayers(2)
-        } else {
-          changeState(new SelectNumberOfPlayerMenuState(this))
-          updateScreen()
-          return TUIMODE_RUNNING
-        }
-      } else if(input.toInt == 2) {
-          return TUIMODE_QUIT
+  def evaluateMainMenu(input: Int): Int = {
+    if(input == 1) {
+      if(ScotlandYard.isDebugMode) {
+        changeState(new ChooseNameMenuState(this))
+        controller.initPlayers(2)
       } else {
+        changeState(new SelectNumberOfPlayerMenuState(this))
         updateScreen()
-         return TUIMODE_RUNNING
+        TUIMODE_RUNNING
       }
     } else {
-      updateScreen()
-      return TUIMODE_RUNNING
+      TUIMODE_QUIT
     }
   }
 
-  def stringIsNumber(input: String): Boolean = {
-    if(input forall Character.isDigit) true else false
-  }
-
   def evaluateSettings(input: String): Int = {
-    if(input.isEmpty) {updateScreen(); return TUIMODE_RUNNING}
     controller.initPlayers(input.toInt)
   }
 
-  def evaluateNameMenu(input: String): String = {
-    if(!stringIsNumber(input)) return input
+  def evaluateNameMenu(input: String): Int = {
     if (input.toInt == 1) {
       changeState(new RevealMrX1State(this))
       updateScreen()
@@ -114,12 +94,19 @@ class Tui(controller: Controller) extends Observer{
       updateScreen()
       indexOfPlayerWhichNameToChange = input.toInt - 1 // -1 because 1 is Start and 2 is the first Detective
     }
-    input
+    input.toInt
   }
 
   def evaluateEnterName(input: String): Boolean = {
-    changeState(new ChooseNameMenuState(this))
-    controller.setPlayerNames(input, indexOfPlayerWhichNameToChange)
+    if(controller.setPlayerNames(input, indexOfPlayerWhichNameToChange)) {
+      changeState(new ChooseNameMenuState(this))
+      updateScreen()
+      true
+    } else {
+      changeState(new ChooseNameMenuState(this))
+      updateScreen()
+      false
+    }
   }
 
   def revealMrX1(): Int = {

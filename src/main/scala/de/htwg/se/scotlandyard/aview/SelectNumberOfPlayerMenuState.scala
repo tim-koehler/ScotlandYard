@@ -2,7 +2,21 @@ package de.htwg.se.scotlandyard.aview
 
 class SelectNumberOfPlayerMenuState(tui: Tui) extends State(tui: Tui) {
   override def evaluateInput(input: String): Int = {
-    tui.evaluateSettings(input)
+    if(isSelectNumberOfPlayerInputCorrect(input)) {
+      tui.evaluateSettings(input)
+    } else {
+      tui.updateScreen()
+      tui.TUIMODE_RUNNING
+    }
+  }
+
+  def isSelectNumberOfPlayerInputCorrect(input: String): Boolean = {
+    if(isInputNumberAndNotEmpty(input)) {
+      if(input.toInt >= 2 || input.toInt <= 7) {
+        return true
+      }
+    }
+    false
   }
 
   override def toString: String = {
