@@ -1,17 +1,19 @@
 package de.htwg.se.scotlandyard.aview
 
-import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import org.scalatest._
 
 class TuiSpec extends WordSpec with Matchers {
   "Tui" when {
-    "new" should {
+    "created" should {
       GameMaster.startGame()
       val tui = new Tui(new Controller())
-      "should bring you to player settings menu when input is 1" in {
-        tui.evaluateInput(1.toString) shouldBe(tui.TUIMODE_MENU)
+      "refresh the screen when input is invalid in mainMenu and not refresh" in {
+        tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
+      }
+      "evaluateInput should return -1 when exit game is selected" in {
+        tui.evaluateInput("2") shouldBe(tui.TUIMODE_QUIT)
       }
       "evaluate Running should return TUIMODE_RUNNING (0)" in {
         GameInitializer.initialize()
@@ -22,18 +24,26 @@ class TuiSpec extends WordSpec with Matchers {
         tui.evaluateRunning("1 u") shouldBe(tui.TUIMODE_RUNNING)
         tui.evaluateRunning("a") shouldBe(tui.TUIMODE_RUNNING)
       }
-      "should return -1 in MainMenuMode when 2 is selected" in {
-        tui.tuiMode = tui.TUIMODE_MENU
-        tui.menuCounter = 0
-        tui.evaluateInput(2.toString) should be (-1)
+
+      "change the number of player or refresh the screen" in {
+        GameMaster.startGame()
+        tui.changeState(new SelectNumberOfPlayerMenuState(tui))
+        tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
+        tui.evaluateInput("2") shouldBe (2)
       }
-      "dispMrXstartingPosition should always return false" in {
-        GameInitializer.initialize()
-        GameInitializer.initPlayers(2)
-        tui.dispMrXstartingPosition("") shouldBe(false)
+
+      "should display all players and their names" in {
+        tui.changeState(new ChooseNameMenuState(tui))
+        tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
+        tui.evaluateInput("2") shouldBe (2)
       }
+
+      "should take input for a player name and go back to chooseNameMenu" in {
+        tui.changeState(new EnterNameState(tui))
+        tui.evaluateInput("Uff") shouldBe (1)
+      }
+
       "should return state RUNNING when 'a', 'w', 's' or 'd' is pressed is pressed" in {
-        tui.tuiMode = tui.TUIMODE_RUNNING
         GameMaster.startGame()
         tui.evaluateMoveMapInput("a") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("w") should be (tui.TUIMODE_RUNNING)
@@ -41,31 +51,11 @@ class TuiSpec extends WordSpec with Matchers {
         tui.evaluateMoveMapInput("d") should be (tui.TUIMODE_RUNNING)
       }
       "should return state QUIT when 'exit' is inserted" in {
-        tui.tuiMode = tui.TUIMODE_RUNNING
         tui.evaluateMoveMapInput("exit") should be (tui.TUIMODE_QUIT)
       }
-      "evaluateSettings should return false" in {
-        tui.evaluateSettings(2) shouldBe(2)
-      }
-      "evaluateMenu" in {
-        tui.evaluateMenu("1")  should be(true)
-        tui.evaluateMenu("2")  should be(false)
-        tui.evaluateMenu("xxx")  should be(true)
-      }
-      "evaluateNameMenu" in {
-        tui.evaluateNameMenu(1) should be(true)
-        //tui.evaluateNameMenu(2) should be(false)
-        tui.evaluateNameMenu(0) should be(true)
-      }
-      "buildOutputStringForMenus" in {
-        tui.menuCounter = 0;
-        tui.buildOutputStringForMenus() should not be("")
-        tui.menuCounter = 1;
-        tui.buildOutputStringForMenus() should not be("")
-        tui.menuCounter = 2;
-        tui.buildOutputStringForMenus() should not be("")
-        tui.menuCounter = 3;
-        tui.buildOutputStringForMenus() should not be("")
+
+      "should return true when revealMrx1 is called" in {
+        tui.revealMrX1() shouldBe(0)
       }
     }
   }

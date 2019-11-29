@@ -9,7 +9,7 @@ class Controller extends Observable {
 
   def setPlayerNames(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
-    if(index < GameMaster.players.length) {
+    if(index < GameMaster.players.length || inputName.equals("")) {
       returnValue = GameMaster.players(index).setPlayerName(inputName)
     }
     notifyObservers
