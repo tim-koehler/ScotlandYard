@@ -14,7 +14,7 @@ class UndoManager {
 
   def undoStep(): Station  = {
     undoStack match {
-      case  Nil => GameMaster.stations(0)
+      case  Nil => GameMaster.stations.head
       case head::stack => {
         val station = head.undoStep
         undoStack=stack
@@ -26,7 +26,7 @@ class UndoManager {
 
   def redoStep(): Station = {
     redoStack match {
-      case Nil => GameMaster.stations(0)
+      case Nil => GameMaster.stations.head
       case head::stack => {
         val station = head.redoStep
         redoStack=stack

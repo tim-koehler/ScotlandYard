@@ -25,6 +25,9 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         controller.initPlayers(2) shouldBe (2)
       }
       "should validateAndMove" in {
+        controller.undoValidateAndMove() should be(GameMaster.stations.head)
+        controller.redoValidateAndMove() should be(GameMaster.stations.head)
+
         GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)
         GameMaster.players.head.station = GameMaster.stations(3)
 
