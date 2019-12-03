@@ -40,6 +40,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.evaluateInput("1 B") shouldBe(tui.TUIMODE_RUNNING)
         tui.evaluateInput("1 U") shouldBe(tui.TUIMODE_RUNNING)
         tui.evaluateInput("WW") shouldBe(tui.TUIMODE_RUNNING)
+        tui.evaluateUndo() shouldBe(tui.TUIMODE_RUNNING)
       }
       "should just update screen to show that MrX will be revealed" in {
         tui.changeState(new RevealMrX1State(tui))

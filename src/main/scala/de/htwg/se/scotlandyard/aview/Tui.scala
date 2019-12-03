@@ -56,12 +56,17 @@ class Tui(controller: Controller) extends Observer{
     val newStation = input.substring(0, index).toInt
     val transport = input.substring(index + 1).toCharArray.head.toLower
     if(transport.equals('t')) {
-      controller.validateAndMove(newStation, TicketType.Taxi)
+      controller.doValidateAndMove(newStation, TicketType.Taxi)
     } else if (transport.equals('b')) {
-      controller.validateAndMove(newStation, TicketType.Bus)
+      controller.doValidateAndMove(newStation, TicketType.Bus)
     } else if (transport.equals('u')) {
-      controller.validateAndMove(newStation, TicketType.Underground)
+      controller.doValidateAndMove(newStation, TicketType.Underground)
     }
+    TUIMODE_RUNNING
+  }
+
+  def evaluateUndo(): Int = {
+    controller.undoValidateAndMove()
     TUIMODE_RUNNING
   }
 

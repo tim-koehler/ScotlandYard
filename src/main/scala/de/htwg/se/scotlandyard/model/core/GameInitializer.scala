@@ -28,7 +28,7 @@ object GameInitializer {
       GameMaster.stations = initDebugStations()
     }
     else {
-      GameMaster.stations = initStations()
+      //GameMaster.stations = initStations()
     }
     true
   }
@@ -120,7 +120,7 @@ object GameInitializer {
     stations.size
   }
 
-  def initStations(): List[Station] = {
-    null
-  }
+  //def initStations(): List[Station] = {
+  //  null
+  //}
 }

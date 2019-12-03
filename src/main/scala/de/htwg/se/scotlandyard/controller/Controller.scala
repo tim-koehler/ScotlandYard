@@ -1,11 +1,15 @@
 package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.util.Observable
+import de.htwg.se.scotlandyard.util.UndoManager
 
 class Controller extends Observable {
+
+  private val undoManager = new UndoManager()
 
   def setPlayerNames(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
@@ -20,7 +24,7 @@ class Controller extends Observable {
     GameMaster.players
   }
 
-  def initPlayers(nPlayer: Int): Int = {
+  def initPlayers(nPlayer: Int): Integer = {
     GameInitializer.initPlayers(nPlayer)
     notifyObservers
     GameMaster.players.length
@@ -30,23 +34,37 @@ class Controller extends Observable {
     GameMaster.getCurrentPlayer()
   }
 
-  def getTotalRound(): Int = {
+  def getTotalRound(): Integer = {
     GameMaster.totalRound
   }
 
-  def nextRound(): Int = {
+  def nextRound(): Integer = {
     GameMaster.nextRound()
   }
 
-  def validateAndMove(newPosition: Int, ticketType: TicketType): Boolean = {
+  def previousRound(): Integer = {
+    GameMaster.previousRound()
+  }
+
+  def doValidateAndMove(newPosition: Int, ticketType: TicketType): Station = {
     if (GameMaster.validateMove(newPosition, ticketType)) {
-      GameMaster.updatePlayerPosition(newPosition, ticketType)
-      nextRound()
+      val newStation = undoManager.doStep(new ValidateAndMoveCommand(this, getCurrentPlayer().getPosition().number, newPosition, ticketType))
       notifyObservers
-      return true
+      return newStation
     }
+    getCurrentPlayer().getPosition()
+  }
+
+  def undoValidateAndMove(): Station = {
+    val newStation = undoManager.undoStep()
     notifyObservers
-    false
+    newStation
+  }
+
+  def redoValidateAndMove(): Station = {
+    val newStation = undoManager.redoStep()
+    notifyObservers
+    newStation
   }
 
   def updateMrXVisibility(): Boolean = {

@@ -24,7 +24,7 @@ object GameMaster {
     players(getCurrentPlayerIndex())
   }
 
-  def getCurrentPlayerIndex(): Int = {
+  def getCurrentPlayerIndex(): Integer = {
     if(round % players.length == 0) {
       (players.length - 1)
     } else {
@@ -32,14 +32,21 @@ object GameMaster {
     }
   }
 
-  def nextRound(): Int = {
+  def nextRound(): Integer = {
     round += 1
     updateTotalRound()
     updateMrXVisibility()
     round
   }
 
-  def updateTotalRound(): Int = {
+  def previousRound(): Integer = {
+    round -= 1
+    updateTotalRound()
+    updateMrXVisibility()
+    round
+  }
+
+  def updateTotalRound(): Integer = {
     totalRound = (round.toDouble / players.length.toDouble).ceil.toInt
     totalRound
   }
@@ -127,15 +134,34 @@ object GameMaster {
     true
   }
 
-  def updatePlayerPosition(newPosition: Int, ticketType: TicketType): Station = {
-    if(ticketType.equals(TicketType.Taxi)) {
-      getCurrentPlayer().taxiTickets -= 1
-    } else if(ticketType.equals(TicketType.Bus)){
-      getCurrentPlayer().busTickets -= 1
-    } else {
-      getCurrentPlayer().undergroundTickets -= 1
-    }
+  def updatePlayerPosition(newPosition: Int): Station = {
     getCurrentPlayer().station = stations(newPosition)
     getCurrentPlayer().station
+  }
+
+  def decreaseTickets(ticketType: TicketType): Integer = {
+    if(ticketType.equals(TicketType.Taxi)) {
+      getCurrentPlayer().taxiTickets -= 1
+      getCurrentPlayer().taxiTickets
+    } else if(ticketType.equals(TicketType.Bus)){
+      getCurrentPlayer().busTickets -= 1
+      getCurrentPlayer().busTickets
+    } else {
+      getCurrentPlayer().undergroundTickets -= 1
+      getCurrentPlayer().undergroundTickets
+    }
+  }
+
+  def increaseTickets(ticketType: TicketType): Integer = {
+    if(ticketType.equals(TicketType.Taxi)) {
+      getCurrentPlayer().taxiTickets += 1
+      getCurrentPlayer().taxiTickets
+    } else if(ticketType.equals(TicketType.Bus)){
+      getCurrentPlayer().busTickets += 1
+      getCurrentPlayer().busTickets
+    } else {
+      getCurrentPlayer().undergroundTickets += 1
+      getCurrentPlayer().undergroundTickets
+    }
   }
 }
