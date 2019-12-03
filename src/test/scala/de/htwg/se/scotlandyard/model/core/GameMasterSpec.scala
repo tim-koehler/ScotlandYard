@@ -44,9 +44,9 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("never")
       }
       "and updatePlayerPosition() should return new Station" in {
-        GameMaster.updatePlayerPosition(2, TicketType.Taxi) should be(GameMaster.stations(2))
-        GameMaster.updatePlayerPosition(3, TicketType.Bus) should be(GameMaster.stations(3))
-        GameMaster.updatePlayerPosition(2, TicketType.Underground) should be(GameMaster.stations(2))
+        GameMaster.updatePlayerPosition(2) should be(GameMaster.stations(2))
+        GameMaster.updatePlayerPosition(3) should be(GameMaster.stations(3))
+        GameMaster.updatePlayerPosition(2) should be(GameMaster.stations(2))
       }
       "and target Station should be empty" in {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(3) should be(true)

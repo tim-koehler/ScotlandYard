@@ -4,8 +4,11 @@ import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.util.Observable
+import de.htwg.se.scotlandyard.util.UndoManager
 
 class Controller extends Observable {
+
+  val undoManager = new UndoManager()
 
   def setPlayerNames(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
@@ -20,7 +23,7 @@ class Controller extends Observable {
     GameMaster.players
   }
 
-  def initPlayers(nPlayer: Int): Int = {
+  def initPlayers(nPlayer: Int): Integer = {
     GameInitializer.initPlayers(nPlayer)
     notifyObservers
     GameMaster.players.length
@@ -30,23 +33,20 @@ class Controller extends Observable {
     GameMaster.getCurrentPlayer()
   }
 
-  def getTotalRound(): Int = {
+  def getTotalRound(): Integer = {
     GameMaster.totalRound
   }
 
-  def nextRound(): Int = {
+  def nextRound(): Integer = {
     GameMaster.nextRound()
   }
 
+  def previousRound(): Integer = {
+    GameMaster.previousRound()
+  }
+
   def validateAndMove(newPosition: Int, ticketType: TicketType): Boolean = {
-    if (GameMaster.validateMove(newPosition, ticketType)) {
-      GameMaster.updatePlayerPosition(newPosition, ticketType)
-      nextRound()
-      notifyObservers
-      return true
-    }
-    notifyObservers
-    false
+    undoManager.doStep(new ValidateAndMoveCommand(this, newPosition, ticketType))
   }
 
   def updateMrXVisibility(): Boolean = {
