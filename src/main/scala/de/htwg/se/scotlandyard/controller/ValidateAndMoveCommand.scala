@@ -4,25 +4,19 @@ import de.htwg.se.scotlandyard.model.core.GameMaster
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.Command
 
-class ValidateAndMoveCommand(controller: Controller, newPosition: Int, ticketType: TicketType) extends Command{
+class ValidateAndMoveCommand(controller: Controller, currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command{
 
   override def doStep(): Boolean = {
-    if (GameMaster.validateMove(newPosition, ticketType)) {
-      GameMaster.updatePlayerPosition(newPosition)
-      GameMaster.decreaseTickets(ticketType)
-      controller.nextRound()
-      controller.notifyObservers
-      return true
-    }
-    controller.notifyObservers
-    false
+    GameMaster.updatePlayerPosition(newPosition)
+    GameMaster.decreaseTickets(ticketType)
+    controller.nextRound()
+    true
   }
 
   override def undoStep(): Boolean = {
-    GameMaster.updatePlayerPosition(newPosition)
-    GameMaster.increaseTickets(ticketType)
     controller.previousRound()
-    controller.notifyObservers
+    GameMaster.updatePlayerPosition(currentPosition)
+    GameMaster.increaseTickets(ticketType)
     true
     }
 
@@ -30,7 +24,6 @@ class ValidateAndMoveCommand(controller: Controller, newPosition: Int, ticketTyp
     GameMaster.updatePlayerPosition(newPosition)
     GameMaster.decreaseTickets(ticketType)
     controller.nextRound()
-    controller.notifyObservers
     true
   }
 }

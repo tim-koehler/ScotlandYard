@@ -8,7 +8,7 @@ import de.htwg.se.scotlandyard.util.UndoManager
 
 class Controller extends Observable {
 
-  val undoManager = new UndoManager()
+  private val undoManager = new UndoManager()
 
   def setPlayerNames(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
@@ -45,8 +45,25 @@ class Controller extends Observable {
     GameMaster.previousRound()
   }
 
-  def validateAndMove(newPosition: Int, ticketType: TicketType): Boolean = {
-    undoManager.doStep(new ValidateAndMoveCommand(this, newPosition, ticketType))
+  def doValidateAndMove(newPosition: Int, ticketType: TicketType): Boolean = {
+    if (GameMaster.validateMove(newPosition, ticketType)) {
+      undoManager.doStep(new ValidateAndMoveCommand(this, getCurrentPlayer().getPosition().number, newPosition, ticketType))
+      notifyObservers
+      return true
+    }
+    false
+  }
+
+  def undoValidateAndMove(): Boolean = {
+    undoManager.undoStep()
+    notifyObservers
+    true
+  }
+
+  def redoValidateAndMove(): Boolean = {
+    undoManager.redoStep()
+    notifyObservers
+    true
   }
 
   def updateMrXVisibility(): Boolean = {

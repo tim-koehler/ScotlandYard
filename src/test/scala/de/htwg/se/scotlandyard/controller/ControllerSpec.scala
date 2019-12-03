@@ -28,7 +28,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)
         GameMaster.players(0).station = GameMaster.stations(3)
 
-        controller.validateAndMove(2, TicketType.Taxi) should be(true)
+        controller.doValidateAndMove(2, TicketType.Taxi) should be(true)
       }
       "and updateMrXVisibility" in {
         controller.updateMrXVisibility() should be (false)
