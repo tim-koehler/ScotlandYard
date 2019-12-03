@@ -1,10 +1,12 @@
 package de.htwg.se.scotlandyard.model.core
 
+import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import org.scalatest._
 
 class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameMaster Object" when {
+    val controller = new Controller
     "startGame() is called should" should {
       "return true" in {
         GameInitializer.initialize()
@@ -42,11 +44,6 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
 
         GameMaster.totalRound = rounds
         GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("never")
-      }
-      "and updatePlayerPosition() should return new Station" in {
-        GameMaster.updatePlayerPosition(2) should be(GameMaster.stations(2))
-        GameMaster.updatePlayerPosition(3) should be(GameMaster.stations(3))
-        GameMaster.updatePlayerPosition(2) should be(GameMaster.stations(2))
       }
       "and target Station should be empty" in {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(3) should be(true)

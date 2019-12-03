@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.util.Observable
@@ -45,25 +46,25 @@ class Controller extends Observable {
     GameMaster.previousRound()
   }
 
-  def doValidateAndMove(newPosition: Int, ticketType: TicketType): Boolean = {
+  def doValidateAndMove(newPosition: Int, ticketType: TicketType): Station = {
     if (GameMaster.validateMove(newPosition, ticketType)) {
-      undoManager.doStep(new ValidateAndMoveCommand(this, getCurrentPlayer().getPosition().number, newPosition, ticketType))
+      val newStation = undoManager.doStep(new ValidateAndMoveCommand(this, getCurrentPlayer().getPosition().number, newPosition, ticketType))
       notifyObservers
-      return true
+      return newStation
     }
-    false
+    getCurrentPlayer().getPosition()
   }
 
-  def undoValidateAndMove(): Boolean = {
-    undoManager.undoStep()
+  def undoValidateAndMove(): Station = {
+    val newStation = undoManager.undoStep()
     notifyObservers
-    true
+    newStation
   }
 
-  def redoValidateAndMove(): Boolean = {
-    undoManager.redoStep()
+  def redoValidateAndMove(): Station = {
+    val newStation = undoManager.redoStep()
     notifyObservers
-    true
+    newStation
   }
 
   def updateMrXVisibility(): Boolean = {
