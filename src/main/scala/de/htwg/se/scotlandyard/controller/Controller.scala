@@ -48,10 +48,11 @@ class Controller extends Observable {
 
   def doValidateAndMove(newPosition: Int, ticketType: TicketType): Station = {
     if (GameMaster.validateMove(newPosition, ticketType)) {
-      val newStation = undoManager.doStep(new ValidateAndMoveCommand(this, getCurrentPlayer().getPosition().number, newPosition, ticketType))
+      val newStation = undoManager.doStep(new MoveCommand(getCurrentPlayer().getPosition().number, newPosition, ticketType))
       notifyObservers
       return newStation
     }
+    notifyObservers
     getCurrentPlayer().getPosition()
   }
 

@@ -5,18 +5,18 @@ import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.Command
 
-class ValidateAndMoveCommand(controller: Controller, currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command{
+class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command{
 
   override def doStep(): Station = {
     GameMaster.updatePlayerPosition(newPosition)
     GameMaster.decreaseTickets(ticketType)
     val station = GameMaster.getCurrentPlayer().getPosition()
-    controller.nextRound()
+    GameMaster.nextRound()
     station
   }
 
   override def undoStep(): Station = {
-    controller.previousRound()
+    GameMaster.previousRound()
     GameMaster.updatePlayerPosition(currentPosition)
     GameMaster.increaseTickets(ticketType)
     GameMaster.getCurrentPlayer().getPosition()
@@ -26,7 +26,7 @@ class ValidateAndMoveCommand(controller: Controller, currentPosition: Int, newPo
     GameMaster.updatePlayerPosition(newPosition)
     GameMaster.decreaseTickets(ticketType)
     val station = GameMaster.getCurrentPlayer().getPosition()
-    controller.nextRound()
+    GameMaster.nextRound()
     station
   }
 }

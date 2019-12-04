@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.model.core
 
+import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import org.scalatest._
@@ -28,7 +29,11 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.totalRound shouldBe(1)
       }
       "and MrX should also be hidden" in {
-        GameMaster.checkMrXVisibility() shouldBe (false)
+        if(ScotlandYard.isDebugMode) {
+          GameMaster.checkMrXVisibility() shouldBe (true)
+        } else {
+          GameMaster.checkMrXVisibility() shouldBe (false)
+        }
 
         val rounds = GameMaster.totalRound
         GameMaster.totalRound = 3
@@ -43,7 +48,11 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.checkMrXVisibility() shouldBe (true)
 
         GameMaster.totalRound = rounds
-        GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("never")
+        if(!ScotlandYard.isDebugMode) {
+          GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("never")
+        } else {
+          GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("1")
+        }
       }
       "and target Station should be empty" in {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(3) should be(true)

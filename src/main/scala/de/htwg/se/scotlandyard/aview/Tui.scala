@@ -70,6 +70,11 @@ class Tui(controller: Controller) extends Observer{
     TUIMODE_RUNNING
   }
 
+  def evaluateRedo(): Int = {
+    controller.redoValidateAndMove()
+    TUIMODE_RUNNING
+  }
+
   def evaluateMainMenu(input: Int, isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
     if(input == 1) {
       if(isDebugMode) {
@@ -127,6 +132,9 @@ class Tui(controller: Controller) extends Observer{
 
   def buildOutputStringForRunningGame(): String = {
     var outputString = MapRenderer.renderMap()
+    if(ScotlandYard.isDebugMode) {
+      outputString = outputString + "DEBUG MODE\n"
+    }
     outputString = outputString + "Round: " + controller.getTotalRound() + "\n"
     for(p <- controller.getPlayersList()) {
       outputString = outputString + p.toString + "\n"

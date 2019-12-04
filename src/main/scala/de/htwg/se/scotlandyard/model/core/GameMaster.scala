@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.model.core
 
+import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map._
 import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.player._
@@ -60,7 +61,9 @@ object GameMaster {
     playerMrX.asInstanceOf[MrX].isVisible
   }
 
-  def checkMrXVisibility(): Boolean = {
+  def checkMrXVisibility(isDebugMode: Boolean = ScotlandYard.isDebugMode): Boolean = {
+    if(isDebugMode)
+      return true
     if(getCurrentPlayerIndex() >= 1) {
       totalRound match {
         case 3 => return true
