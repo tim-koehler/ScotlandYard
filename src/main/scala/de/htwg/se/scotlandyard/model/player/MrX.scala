@@ -10,10 +10,11 @@ class MrX(var station: Station, var name: String = "MrX") extends Player {
   var lastSeen: String = "never"
 
   override def toString(): String = {
+    var tickets = " - BLACKTICKETS: " + blackTickets + ", DOUBLETURNS: " + doubleTurns
     if(isVisible) {
-      name + " is at " + station.number
+      name + " is at " + station.number + tickets
     } else {
-      name + " (hidden) was" + " Last seen: " + lastSeen
+      name + " (hidden) was" + " Last seen: " + lastSeen + tickets
     }
   }
 }
