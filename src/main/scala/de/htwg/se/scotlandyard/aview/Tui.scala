@@ -142,7 +142,7 @@ class Tui(controller: Controller) extends Observer{
 
   def evaluateWinning(input: String): Int = {
     changeState(new MainMenuState(this))
-    updateScreen()
+    controller.setWinning(false)
     TUIMODE_RUNNING
   }
 
@@ -173,7 +173,7 @@ class Tui(controller: Controller) extends Observer{
 
   def getMrXStartingPositionString(): String = {
     changeState(new RunningState(this))
-    "MrX is at Station: " + controller.getCurrentPlayer().getPosition().number
+    "MrX is at Station: " + controller.getCurrentPlayer().getPosition().number + "\n\n\n\n\n"
   }
 
   def buildOutputStringForChooseNameMenu(): String = {

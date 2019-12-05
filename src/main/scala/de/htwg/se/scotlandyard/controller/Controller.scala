@@ -24,6 +24,13 @@ class Controller extends Observable {
     GameMaster.winningPlayer
   }
 
+  def setWinning(win: Boolean): Boolean = {
+    var oldWin = GameMaster.win
+    GameMaster.win = win
+    notifyObservers
+    oldWin
+  }
+
   def getPlayersList(): List[Player] = {
     GameMaster.players
   }
