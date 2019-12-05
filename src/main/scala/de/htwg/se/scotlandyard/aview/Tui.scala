@@ -186,18 +186,18 @@ class Tui(controller: Controller) extends Observer{
     outputString
   }
 
-  def buildOutputStringDetectiveWin(): String = {
-    detectiveWinningBanner + "\n\n" +
-      controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name +
-      " at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
-      "Enter any key to go back to Main Menu..."
-  }
-
-  def buildOutputStringMrXWin(): String = {
-    mrXWinningBanner + "\n\n" +
-      controller.getPlayersList()(0).name +
-      " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
-      "Enter any key to go back to Main Menu..."
+  def buildOutputStringWin(): String = {
+    if(controller.getWinningPlayer().name.equals("MrX")) {
+      mrXWinningBanner + "\n\n" +
+        controller.getPlayersList()(0).name +
+        " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
+        "Enter any key to go back to Main Menu..."
+    } else {
+      detectiveWinningBanner + "\n\n" +
+        controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name +
+        " at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
+        "Enter any key to go back to Main Menu..."
+    }
   }
 
   override def toString() : String = {

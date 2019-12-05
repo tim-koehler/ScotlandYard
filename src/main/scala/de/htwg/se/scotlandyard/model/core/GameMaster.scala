@@ -15,7 +15,7 @@ object GameMaster {
   var totalRound = 1 // number of total rounds (increases by 1 when every player has moved once)
   var win = false
   var winningPlayer: Player = _
-  val winningRound = 24
+  val winningRound = 24 //24
 
   def startGame(): Boolean = {
     if(!GameInitializer.initialize()) {

@@ -12,7 +12,6 @@ class WinningState(tui: Tui) extends State(tui: Tui) {
   }
 
   override def toString: String = {
-    tui.buildOutputStringMrXWin()
+    tui.buildOutputStringWin()
   }
-
 }
