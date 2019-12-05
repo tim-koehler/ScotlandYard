@@ -7,6 +7,7 @@ class ChooseNameMenuState(tui: Tui) extends State(tui: Tui) {
     if(isChooseNameInputCorrect(input)) {
       tui.evaluateNameMenu(input)
     } else {
+      tui.updateScreen()
       tui.TUIMODE_RUNNING
     }
   }

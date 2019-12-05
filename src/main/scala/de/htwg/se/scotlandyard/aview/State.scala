@@ -1,14 +1,14 @@
 package de.htwg.se.scotlandyard.aview
 
+import scala.util.{Failure, Success, Try}
+
 abstract class State(tui: Tui) {
   def evaluateInput(input: String): Int
 
   def isInputNumberAndNotEmpty(input: String): Boolean = {
-    if(!input.isEmpty) {
-      if(input forall Character.isDigit) {
-        return true
-      }
+    Try(input.toInt) match {
+      case Success(v) => true
+      case Failure(e) => false
     }
-    false
   }
 }
