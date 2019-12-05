@@ -13,6 +13,8 @@ object GameMaster {
   var players: List[Player] = List()
   var round = 1 // counter of moves (increases by 1 when a player moved)
   var totalRound = 1 // number of total rounds (increases by 1 when every player has moved once)
+  var win = false
+  var winningPlayerIndex = 1
 
   def startGame(): Boolean = {
     if(!GameInitializer.initialize()) {
@@ -98,7 +100,13 @@ object GameMaster {
 
     //TODO: Insert win here
     if(!isTargetStationEmpty(newPosition))
-      return false
+      if(getCurrentPlayerIndex() == 0) {
+        return false
+      } else {
+        winningPlayerIndex = getCurrentPlayerIndex()
+        win = true
+        return true
+      }
     true
   }
 

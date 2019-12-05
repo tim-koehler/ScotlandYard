@@ -1,12 +1,20 @@
 package de.htwg.se.scotlandyard.aview
 
+import de.htwg.se.scotlandyard.model.core.GameMaster
+
 class WinningState(tui: Tui) extends State(tui: Tui) {
   override def evaluateInput(input: String): Int = {
-    tui.TUIMODE_RUNNING
+    if(input.equals("undo")) {
+      tui.evaluateUndo()
+    } else if(input.equals("redo")) {
+      tui.evaluateRedo()
+    } else {
+      tui.evaluateWinning(input)
+    }
   }
 
   override def toString: String = {
-    "Win\nPress any key to go back to Main Menu"
+    tui.buildOutputStringForWinning()
   }
 
 }

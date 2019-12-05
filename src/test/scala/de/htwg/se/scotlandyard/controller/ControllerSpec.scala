@@ -31,7 +31,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)
         GameMaster.players.head.station = GameMaster.stations(3)
 
-        controller.doValidateAndMove(2, TicketType.Taxi) should be(GameMaster.stations(2))
+        controller.doMove(2, TicketType.Taxi) should be(GameMaster.stations(2))
         controller.undoValidateAndMove() should be(GameMaster.stations(1))
         controller.redoValidateAndMove() should be(GameMaster.stations(2))
 
@@ -40,10 +40,10 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         }
         GameMaster.getCurrentPlayer().station = GameMaster.stations(2)
 
-        controller.doValidateAndMove(3, TicketType.Bus) should be(GameMaster.stations(3))
+        controller.doMove(3, TicketType.Bus) should be(GameMaster.stations(3))
         controller.undoValidateAndMove() should be(GameMaster.stations(2))
 
-        controller.doValidateAndMove(3, TicketType.Underground) should be(GameMaster.stations(3))
+        controller.doMove(3, TicketType.Underground) should be(GameMaster.stations(3))
         controller.undoValidateAndMove() should be(GameMaster.stations(2))
       }
       "and updateMrXVisibility" in {

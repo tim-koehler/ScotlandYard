@@ -20,6 +20,10 @@ class Controller extends Observable {
     returnValue
   }
 
+  def getWinningPlayer(): Player = {
+    GameMaster.players(GameMaster.winningPlayerIndex)
+  }
+
   def getPlayersList(): List[Player] = {
     GameMaster.players
   }
@@ -46,14 +50,14 @@ class Controller extends Observable {
     GameMaster.previousRound()
   }
 
-  def doValidateAndMove(newPosition: Int, ticketType: TicketType): Station = {
-    if (GameMaster.validateMove(newPosition, ticketType)) {
-      val newStation = undoManager.doStep(new MoveCommand(getCurrentPlayer().getPosition().number, newPosition, ticketType))
-      notifyObservers
-      return newStation
-    }
+  def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
+    GameMaster.validateMove(newPosition, ticketType)
+  }
+
+  def doMove(newPosition: Int, ticketType: TicketType): Station = {
+    val newStation = undoManager.doStep(new MoveCommand(getCurrentPlayer().getPosition().number, newPosition, ticketType))
     notifyObservers
-    getCurrentPlayer().getPosition()
+    newStation
   }
 
   def undoValidateAndMove(): Station = {
@@ -70,5 +74,9 @@ class Controller extends Observable {
 
   def updateMrXVisibility(): Boolean = {
     GameMaster.updateMrXVisibility()
+  }
+
+  def getWin(): Boolean = {
+    GameMaster.win
   }
 }
