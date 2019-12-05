@@ -1,18 +1,23 @@
 package de.htwg.se.scotlandyard.aview
 
+import java.io.BufferedReader
+
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.MapRenderer
 import de.htwg.se.scotlandyard.model.player.TicketType
 import de.htwg.se.scotlandyard.util.Observer
 
-import scala.io.Source
+import scala.io.{BufferedSource, Source}
+import scala.util.{Failure, Success, Try}
 class Tui(controller: Controller) extends Observer{
   controller.add(this)
   var state: State = new MainMenuState(this)
 
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
-  val titleBanner = getTitleBanner()
+  val titleBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
+  var detectiveWinningBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/detectiveWinBanner.txt")
+  var mrXWinningBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/mrXWinBanner.txt")
   val chooseNameMenuString = titleBanner + "\n\n" + "->Choose Names<-" + "\n"
 
   val TUIMODE_QUIT: Int = -1
@@ -24,11 +29,13 @@ class Tui(controller: Controller) extends Observer{
     this.state = state
   }
 
-  private def getTitleBanner(): String = {
-    val bufferedSource = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
-    val titleBanner = bufferedSource.mkString
-    bufferedSource.close
-    titleBanner
+  private def getBanner(path: String): String = {
+    var banner = ""
+    Try(Source.fromFile(path)) match {
+      case Success(v) => banner = v.asInstanceOf[BufferedSource].mkString; v.asInstanceOf[BufferedSource].close()
+      case Failure(e) => banner = "<Error while reading from " + "\"" + path + "\">"
+    }
+    banner
   }
 
   def evaluateInput(input: String): Int = {
@@ -179,13 +186,17 @@ class Tui(controller: Controller) extends Observer{
     outputString
   }
 
-  def buildOutputStringForWinning(): String = {
-    val bufferedSource = Source.fromFile("./src/main/scala/de/htwg/se/scotlandyard/detectiveWinBanner1.txt")
-    val detectiveWinBanner = bufferedSource.mkString
-    bufferedSource.close
-    detectiveWinBanner + "\n\n" +
+  def buildOutputStringDetectiveWin(): String = {
+    detectiveWinningBanner + "\n\n" +
       controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name +
       " at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
+      "Enter any key to go back to Main Menu..."
+  }
+
+  def buildOutputStringMrXWin(): String = {
+    mrXWinningBanner + "\n\n" +
+      controller.getPlayersList()(0).name +
+      " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
       "Enter any key to go back to Main Menu..."
   }
 

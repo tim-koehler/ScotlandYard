@@ -14,7 +14,8 @@ object GameMaster {
   var round = 1 // counter of moves (increases by 1 when a player moved)
   var totalRound = 1 // number of total rounds (increases by 1 when every player has moved once)
   var win = false
-  var winningPlayerIndex = 1
+  var winningPlayer: Player = _
+  val winningRound = 24
 
   def startGame(): Boolean = {
     if(!GameInitializer.initialize()) {
@@ -39,7 +40,18 @@ object GameMaster {
     round += 1
     updateTotalRound()
     updateMrXVisibility()
+    checkMrXWin()
     round
+  }
+
+  def checkMrXWin(): Boolean = {
+    if(round == winningRound * players.length) {
+      win = true
+      winningPlayer = players(0)
+      true
+    } else {
+      false
+    }
   }
 
   def previousRound(): Integer = {
@@ -103,7 +115,7 @@ object GameMaster {
       if(getCurrentPlayerIndex() == 0) {
         return false
       } else {
-        winningPlayerIndex = getCurrentPlayerIndex()
+        winningPlayer = getCurrentPlayer()
         win = true
         return true
       }

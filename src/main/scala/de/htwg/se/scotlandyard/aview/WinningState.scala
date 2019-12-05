@@ -1,7 +1,5 @@
 package de.htwg.se.scotlandyard.aview
 
-import de.htwg.se.scotlandyard.model.core.GameMaster
-
 class WinningState(tui: Tui) extends State(tui: Tui) {
   override def evaluateInput(input: String): Int = {
     if(input.equals("undo")) {
@@ -14,7 +12,7 @@ class WinningState(tui: Tui) extends State(tui: Tui) {
   }
 
   override def toString: String = {
-    tui.buildOutputStringForWinning()
+    tui.buildOutputStringMrXWin()
   }
 
 }

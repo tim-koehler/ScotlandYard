@@ -21,7 +21,7 @@ class Controller extends Observable {
   }
 
   def getWinningPlayer(): Player = {
-    GameMaster.players(GameMaster.winningPlayerIndex)
+    GameMaster.winningPlayer
   }
 
   def getPlayersList(): List[Player] = {
