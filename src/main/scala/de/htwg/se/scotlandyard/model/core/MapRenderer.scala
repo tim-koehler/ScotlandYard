@@ -5,6 +5,8 @@ import de.htwg.se.scotlandyard.ScotlandYard
 import scala.io.{Source, StdIn}
 import de.htwg.se.scotlandyard.model.map.GameMap
 
+import scala.util.{Failure, Success, Try}
+
 object MapRenderer {
 
   var offsetX: Int = 0
@@ -92,15 +94,12 @@ object MapRenderer {
         else{
             str += "\n\u2551"
         }
-        for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX))
-        {
-          try {
-            str += GameMap.map(y).charAt(x)
-          }
-          catch  {
-            case e: Exception => str += " "
-          }
+
+        Try(for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX)) str += GameMap.map(y).charAt(x)) match {
+          case Success(v) => ;
+          case Failure(e) => str += " "
         }
+
         str += "\u2551" + "\n"
       }
       str += renderBottomBorder()
