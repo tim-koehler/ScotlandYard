@@ -1,7 +1,5 @@
 package de.htwg.se.scotlandyard.aview
 
-import java.io.BufferedReader
-
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.MapRenderer
@@ -88,9 +86,6 @@ class Tui(controller: Controller) extends Observer{
   }
 
   def evaluateUndo(): Int = {
-    if(controller.getWin()) {
-      changeState(new RunningState(this))
-    }
     controller.undoValidateAndMove()
     TUIMODE_RUNNING
   }
@@ -190,7 +185,7 @@ class Tui(controller: Controller) extends Observer{
   }
 
   def buildOutputStringWin(): String = {
-    if(controller.getWinningPlayer().name.equals("MrX")) {
+    if (controller.getWinningPlayer().name.equals("MrX")) {
       mrXWinningBanner + "\n\n" +
         controller.getPlayersList()(0).name +
         " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +

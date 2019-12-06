@@ -110,7 +110,6 @@ object GameMaster {
         return false
     }
 
-    //TODO: Insert win here
     if(!isTargetStationEmpty(newPosition))
       if(getCurrentPlayerIndex() == 0) {
         return false

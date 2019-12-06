@@ -2,6 +2,7 @@ package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.model.core.GameMaster.{players, round, winningRound}
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import org.scalatest._
 
@@ -17,13 +18,11 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
       "and the current player should be MrX" in {
         GameMaster.getCurrentPlayer().isInstanceOf[MrX]
       }
-      // TODO: @Roland fix here!
       "and the current player Index should be 0" in {
         GameMaster.round = 1
         GameMaster.getCurrentPlayerIndex() shouldBe(0)
       }
       "and the next round should be 2" in {
-        // TODO: @Roland fix here!!
         GameMaster.round = 1
         GameMaster.nextRound() shouldBe(2)
         GameMaster.totalRound shouldBe(1)
@@ -36,16 +35,18 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         }
 
         val rounds = GameMaster.totalRound
+        GameMaster.totalRound = 1
+        GameMaster.checkMrXVisibility(false) shouldBe (false)
         GameMaster.totalRound = 3
-        GameMaster.checkMrXVisibility() shouldBe (true)
+        GameMaster.checkMrXVisibility(false) shouldBe (true)
         GameMaster.totalRound = 8
-        GameMaster.checkMrXVisibility() shouldBe (true)
+        GameMaster.checkMrXVisibility(false) shouldBe (true)
         GameMaster.totalRound = 13
-        GameMaster.checkMrXVisibility() shouldBe (true)
+        GameMaster.checkMrXVisibility(false) shouldBe (true)
         GameMaster.totalRound = 18
-        GameMaster.checkMrXVisibility() shouldBe (true)
+        GameMaster.checkMrXVisibility(false) shouldBe (true)
         GameMaster.totalRound = 24
-        GameMaster.checkMrXVisibility() shouldBe (true)
+        GameMaster.checkMrXVisibility(false) shouldBe (true)
 
         GameMaster.totalRound = rounds
         if(!ScotlandYard.isDebugMode) {
@@ -105,7 +106,7 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.players(0).station = GameMaster.stations(1)
         GameMaster.getCurrentPlayer().station = GameMaster.stations(3)
 
-        GameMaster.validateMove(1, TicketType.Taxi) should be(false)
+        GameMaster.validateMove(1, TicketType.Taxi) should be(true)
         GameMaster.validateMove(2, TicketType.Underground) should be(true)
 
         GameMaster.getCurrentPlayer().station = GameMaster.stations(2)
@@ -120,6 +121,10 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.validateMove(2, TicketType.Underground) should be(false)
         GameMaster.validateMove(2, TicketType.Bus) should be(false)
         GameMaster.validateMove(1, TicketType.Taxi) should be(false)
+      }
+      "mrx should win in round 24" in {
+        GameMaster.round = winningRound * players.length
+        GameMaster.checkMrXWin() shouldBe(true)
       }
     }
   }
