@@ -19,9 +19,6 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     GameMaster.previousRound()
     GameMaster.updatePlayerPosition(currentPosition)
     GameMaster.increaseTickets(ticketType)
-    if(GameMaster.win) {
-      GameMaster.win = false
-    }
     GameMaster.getCurrentPlayer().getPosition()
     }
 
