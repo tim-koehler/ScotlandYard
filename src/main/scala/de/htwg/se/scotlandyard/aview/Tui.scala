@@ -88,6 +88,9 @@ class Tui(controller: Controller) extends Observer{
   }
 
   def evaluateUndo(): Int = {
+    if(controller.getWin()) {
+      changeState(new RunningState(this))
+    }
     controller.undoValidateAndMove()
     TUIMODE_RUNNING
   }
