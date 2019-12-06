@@ -14,6 +14,8 @@ class Tui(controller: Controller) extends Observer{
 
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
   val titleBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
+  var detectiveWinningBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/detectiveWinBanner.txt")
+  var mrXWinningBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/mrXWinBanner.txt")
   val chooseNameMenuString = titleBanner + "\n\n" + "->Choose Names<-" + "\n"
 
   val TUIMODE_QUIT: Int = -1
@@ -59,11 +61,26 @@ class Tui(controller: Controller) extends Observer{
     val newStation = input.substring(0, index).toInt
     val transport = input.substring(index + 1).toCharArray.head.toLower
     if(transport.equals('t')) {
-      controller.doValidateAndMove(newStation, TicketType.Taxi)
+      if(controller.validateMove(newStation, TicketType.Taxi)) {
+        if(controller.getWin()) changeState(new WinningState(this))
+        controller.doMove(newStation, TicketType.Taxi)
+      } else {
+        updateScreen()
+      }
     } else if (transport.equals('b')) {
-      controller.doValidateAndMove(newStation, TicketType.Bus)
+      if(controller.validateMove(newStation, TicketType.Bus)) {
+        if (controller.getWin()) changeState(new WinningState(this))
+        controller.doMove(newStation, TicketType.Bus)
+      } else {
+        updateScreen()
+      }
     } else if (transport.equals('u')) {
-      controller.doValidateAndMove(newStation, TicketType.Underground)
+      if(controller.validateMove(newStation, TicketType.Underground)) {
+        if (controller.getWin()) changeState(new WinningState(this))
+        controller.doMove(newStation, TicketType.Underground)
+      } else {
+        updateScreen()
+      }
     }
     TUIMODE_RUNNING
   }
@@ -121,6 +138,12 @@ class Tui(controller: Controller) extends Observer{
     }
   }
 
+  def evaluateWinning(input: String): Int = {
+    changeState(new MainMenuState(this))
+    controller.setWinning(false)
+    TUIMODE_RUNNING
+  }
+
   def revealMrX1(): Int = {
     changeState(new RevealMrX2State(this))
     updateScreen()
@@ -148,7 +171,7 @@ class Tui(controller: Controller) extends Observer{
 
   def getMrXStartingPositionString(): String = {
     changeState(new RunningState(this))
-    "MrX is at Station: " + controller.getCurrentPlayer().getPosition().number
+    "MrX is at Station: " + controller.getCurrentPlayer().getPosition().number + "\n\n\n\n\n"
   }
 
   def buildOutputStringForChooseNameMenu(): String = {
@@ -159,6 +182,20 @@ class Tui(controller: Controller) extends Observer{
       outputString = outputString + (i + 2).toString + ": " + chooseNameMenuEntries(i + 1) + ": " + x.name + "\n"
     }
     outputString
+  }
+
+  def buildOutputStringWin(): String = {
+    if (controller.getWinningPlayer().name.equals("MrX")) {
+      mrXWinningBanner + "\n\n" +
+        controller.getPlayersList()(0).name +
+        " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
+        "Enter any key to go back to Main Menu..."
+    } else {
+      detectiveWinningBanner + "\n\n" +
+        controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name +
+        " at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
+        "Enter any key to go back to Main Menu..."
+    }
   }
 
   override def toString() : String = {

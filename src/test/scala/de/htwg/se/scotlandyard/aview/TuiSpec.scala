@@ -73,8 +73,20 @@ class TuiSpec extends WordSpec with Matchers {
       "should return RUNNING when 'undo' is inserted" in {
         the [Exception] thrownBy  tui.evaluateNextPositionInput("undo")  should not have message("")
       }
-      "should return true when revealMrx1 is called" in {
-        tui.revealMrX1() shouldBe(0)
+      "should return 0 when a revealMrx method is called" in {
+        tui.revealMrX1() shouldBe(tui.TUIMODE_RUNNING)
+        tui.revealMrX2() shouldBe(tui.TUIMODE_RUNNING)
+      }
+      "should have a winning output String when a player wins" in {
+        GameInitializer.initDebugStations()
+        GameInitializer.initPlayers(2)
+        GameMaster.winningPlayer = GameMaster.players(0)
+        tui.buildOutputStringWin() shouldNot be (null)
+        GameMaster.winningPlayer = GameMaster.players(1)
+        tui.buildOutputStringWin() shouldNot be (null)
+      }
+      "should return 0 when evaluateWinningMethod is called" in {
+        tui.evaluateWinning("") shouldBe (tui.TUIMODE_RUNNING)
       }
     }
   }

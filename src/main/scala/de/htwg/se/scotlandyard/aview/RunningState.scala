@@ -6,8 +6,6 @@ class RunningState(tui: Tui) extends State(tui: Tui) {
       tui.evaluateNextPositionInput(input)
     } else if(input.equals("undo")) {
       tui.evaluateUndo()
-    } else if(input.equals("redo")) {
-      tui.evaluateRedo()
     } else {
       tui.evaluateMoveMapInput(input)
     }
