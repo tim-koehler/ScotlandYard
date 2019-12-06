@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.ScotlandYard
 
-import scala.io.{Source, StdIn}
+import scala.io.{BufferedSource, Source, StdIn}
 import de.htwg.se.scotlandyard.model.map.GameMap
 
 import scala.util.{Failure, Success, Try}
@@ -28,20 +28,21 @@ object MapRenderer {
       GameMap.map = readMapFromFile(mapFilePath)
     }
 
-    if(GameMap.map == null) {
-      return false
+    GameMap.map match {
+      case Some(t) => return true
+      case None => return false
     }
-    true
   }
 
-  def readMapFromFile(path: String): List[String] = {
-    val source = Source.fromFile(path)
-    for (line <- source.getLines()) {
-      GameMap.map = line + "\n" :: GameMap.map
+  def readMapFromFile(path: String): Option[List[String]] = {
+    Try(Source.fromFile(path)) match {
+      case Success(v) => for (line <- v.getLines()) {
+        GameMap.map = Some(line + "\n" :: GameMap.map.get)
+      }; v.close()
+      case Failure(e) => None
     }
-    source.close()
 
-    GameMap.map.reverse
+    Some(GameMap.map.get.reverse)
   }
 
   def updateX(moveMultiplicator: Int, positive: Boolean ): Int = {
@@ -95,7 +96,7 @@ object MapRenderer {
             str += "\n\u2551"
         }
 
-        Try(for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX)) str += GameMap.map(y).charAt(x)) match {
+        Try(for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX)) str += GameMap.map.get(y).charAt(x)) match {
           case Success(v) => ;
           case Failure(e) => str += " "
         }
