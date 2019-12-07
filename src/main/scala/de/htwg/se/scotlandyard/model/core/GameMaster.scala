@@ -91,24 +91,13 @@ object GameMaster {
     false
   }
 
-  def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
+  def validateMove(newPosition: Integer, ticketType: TicketType): Boolean = {
 
-    if(!isTargetStationInBounds(newPosition)) return false
+    if(!isTargetStationInBounds(newPosition))
+      return false
 
-    if(ticketType.equals(TicketType.Taxi)) {
-      if(!isTaxiMoveValid(newPosition))
-        return false
-    } else if(ticketType.equals(TicketType.Bus)) {
-      if(GameMaster.getCurrentPlayer().getPosition().sType == StationType.Taxi)
-        return false
-      if(!isBusMoveValid(newPosition))
-        return false
-    } else {
-      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Underground)
-        return false
-      if(!isUndergroundMoveValid(newPosition))
-        return false
-    }
+    if(!isMeanOfTransportValid(newPosition, ticketType))
+      return false
 
     if(!isTargetStationEmpty(newPosition))
       if(getCurrentPlayerIndex() == 0) {
@@ -124,6 +113,24 @@ object GameMaster {
   private def isTargetStationInBounds(newPosition: Int): Boolean ={
     if(newPosition >= GameMaster.stations.size)
       return false
+    true
+  }
+
+  private def isMeanOfTransportValid(newPosition: Integer, ticketType: TicketType): Boolean = {
+    if(ticketType.equals(TicketType.Taxi)) {
+      if(!isTaxiMoveValid(newPosition))
+        return false
+    } else if(ticketType.equals(TicketType.Bus)) {
+      if(GameMaster.getCurrentPlayer().getPosition().sType == StationType.Taxi)
+        return false
+      if(!isBusMoveValid(newPosition))
+        return false
+    } else {
+      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Underground)
+        return false
+      if(!isUndergroundMoveValid(newPosition))
+        return false
+    }
     true
   }
 
