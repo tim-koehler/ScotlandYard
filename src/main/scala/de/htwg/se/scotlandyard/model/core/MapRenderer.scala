@@ -29,8 +29,8 @@ object MapRenderer {
     }
 
     GameMap.map match {
-      case Some(t) => return true
-      case None => return false
+      case Some(t) => true
+      case None => false
     }
   }
 
