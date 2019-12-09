@@ -24,7 +24,7 @@ class StationInitializer {
 
     stationsBuffer += StationFactory.createZeroIndexStation()
 
-    val stationPositionsList = parseStationPostionsFromMapFile()
+    val stationPositionsList = parseStationsFromMapFile()
 
     for (line <- stationPositionsList) {
       stationsBuffer += parseCreateStationLine(line)
@@ -83,13 +83,13 @@ class StationInitializer {
     }
   }
 
-  private def parseStationPostionsFromMapFile(): List[String] = {
+  private def parseStationsFromMapFile(): List[String] = {
 
     var path = ""
     if(ScotlandYard.isDebugMode)
       path = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMapTiny.txt"
     else
-      path = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYarddMap.txt"
+      path = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt"
 
     Try(Source.fromFile(path)) match {
       case Success(v) =>
@@ -118,7 +118,7 @@ class StationInitializer {
 
   private def parseStationType(content: List[String], value: Integer, i: Integer): Char = {
     if(content(i-2).substring(value+1, value+4).contains("U")) 'u'
-    else if(content(i-1).substring(value+1, value+4).contains("B")) 'b'
+    else if(content(i-2).substring(value+1, value+4).contains("B")) 'b'
     else 't'
   }
 
