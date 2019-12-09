@@ -78,7 +78,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.revealMrX2() shouldBe(tui.TUIMODE_RUNNING)
       }
       "should have a winning output String when a player wins" in {
-        GameInitializer.initStations()
+        //GameInitializer.initStations()
         GameInitializer.initPlayers(2)
         GameMaster.winningPlayer = GameMaster.players(0)
         tui.buildOutputStringWin() shouldNot be (null)

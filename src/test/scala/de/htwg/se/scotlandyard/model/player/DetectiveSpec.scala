@@ -9,7 +9,7 @@ class DetectiveSpec extends WordSpec with Matchers {
   "Detective" when {
     GameMaster.startGame()
     "new" should {
-      val st = StationFactory.createTaxiStation(1, 1)
+      val st = StationFactory.createTaxiStation(0, (1, 1))
       val dt1 = new Detective(st, "Dt1")
 
       "have a station number" in {

@@ -24,19 +24,17 @@ class GameInitializerSpec extends WordSpec with Matchers {
     "try to create and init all Station types" in {
       StationFactory.createZeroIndexStation()
 
-      var station = StationFactory.createTaxiStation(1, 1)
+      var station = StationFactory.createTaxiStation(1, (1, 1))
       station.setNeighbourTaxis(Set())
 
-      station = StationFactory.createBusStation(1, 1)
+      station = StationFactory.createBusStation(2, (1, 1))
       station.setNeighbourTaxis(Set())
       station.setNeighbourBuses(Set())
 
-      station = StationFactory.createUndergroundStation(1,1)
+      station = StationFactory.createUndergroundStation(3,(1,1))
       station.setNeighbourTaxis(Set())
       station.setNeighbourBuses(Set())
       station.setNeighbourUndergrounds(Set())
-
-      StationFactory.resetCounter()
     }
     "and test drawing player positions" in {
       GameInitializer.drawDetectivePosition(true) should be (2)
