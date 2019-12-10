@@ -8,6 +8,7 @@ import de.htwg.se.scotlandyard.util.Observer
 
 import scala.io.{BufferedSource, Source}
 import scala.util.{Failure, Success, Try}
+
 class Tui(controller: Controller) extends Observer{
   controller.add(this)
   var state: State = new MainMenuState(this)

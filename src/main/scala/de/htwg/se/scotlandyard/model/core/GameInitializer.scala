@@ -26,11 +26,12 @@ object GameInitializer {
   def initialize(): Boolean = {
     MapRenderer.init()
     GameMaster.stations = new StationInitializer().initStations()
-
+    initPlayers(3)
     true
   }
 
   def initPlayers(nPlayer: Int): Boolean = {
+    GameMaster.players = List()
     var st = GameMaster.stations(drawMisterXPosition())
     GameMaster.players = List[Player](new MrX(st))
     for(i <- 1 to (nPlayer - 1)) {
@@ -40,6 +41,7 @@ object GameInitializer {
     distributeTicketsToMrX()
     distributeTicketsToDetectives()
     GameMap.updatePlayerPositions()
+    drawnPositions = List()
     true
   }
 
