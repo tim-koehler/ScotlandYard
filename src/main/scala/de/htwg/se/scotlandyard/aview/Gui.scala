@@ -2,21 +2,23 @@ package de.htwg.se.scotlandyard.aview
 
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
-import javafx.geometry.Insets
+import javafx.geometry.{Insets, Rectangle2D}
 import javafx.scene.control.Menu
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.event.ActionEvent
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, Label, ListView, MenuBar, RadioButton, TextField, ToggleGroup}
-import scalafx.scene.layout.{Background, BorderPane, HBox, VBox}
+import scalafx.scene.control.{Button, Label, ListView, MenuBar, MenuItem, RadioButton, ScrollPane, TextField, ToggleGroup}
+import scalafx.scene.layout.{AnchorPane, Background, BorderPane, HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.Includes._
 import scalafx.geometry.Pos
 import scalafx.scene.AccessibleRole.TextField
 import scalafx.scene.image.{Image, ImageView}
+import java.io.{File, FileInputStream}
 
-import java.io.{ File, FileInputStream }
+import javafx.event.EventHandler
+import scalafx.scene.input.{MouseDragEvent, MouseEvent, TransferMode}
 
 object Gui extends JFXApp{
   val controller = new Controller
@@ -30,19 +32,18 @@ object Gui extends JFXApp{
 
   //============================================================== GUI
 
-  //val map = new Image(new File("."+ File.separator +"src" + File.separator + "main" + File.separator + "scala" + File.separator + "de" + File.separator + "htwg" + File.separator + "se" + File.separator + "scotlandyard" + File.separator + "map_large.png").toURI().toString)
   val map = new Image(new File("./src/main/scala/de/htwg/se/scotlandyard/map_large.png").toURI().toString)
   var scene2: Scene = _
   var scene4: Scene = _
 
-  val frameWidth = 600
-  val frameHeight = 400
+  val frameWidth = 1000
+  val frameHeight = 800
 
   val buttonWidth = 200
   val buttonHeight = 30
 
-  val spacing = 10
-  val vBoxHeight = 2 * buttonHeight + spacing
+  val defSpacing = 20
+  val vBoxHeight = 2 * buttonHeight + defSpacing
   val vBoxWidth = buttonWidth
 
   stage = new PrimaryStage {
@@ -51,8 +52,11 @@ object Gui extends JFXApp{
     height = frameHeight
     resizable = true
     scene = new Scene {
+      //this.getStylesheets.add(Gui.getClass.getResource("styles.css").toExternalForm())
+      stylesheets = List(getClass.getResource("styles.css").toExternalForm)
       fill = Color.LightBlue
       var button1 = new Button("Start Game") {
+        id = "big-yellow"
         prefWidth = buttonWidth
         prefHeight = buttonHeight
         onAction = (event: ActionEvent) => {
@@ -60,6 +64,7 @@ object Gui extends JFXApp{
         }
       }
       var button2 = new Button("End Game") {
+        id = "big-yellow"
         prefWidth = buttonWidth
         prefHeight = buttonHeight
         onAction = (event: ActionEvent) => {
@@ -71,10 +76,8 @@ object Gui extends JFXApp{
       val vbox = new VBox()
 
       vbox.setPadding(new Insets(frameHeight/2 - vBoxHeight/2, 0, 0, frameWidth/2 - vBoxWidth/2))
-      vbox.setSpacing(spacing)
+      vbox.setSpacing(defSpacing)
       vbox.getChildren.addAll(button1, button2)
-
-      rootPane.setStyle("-fx-background-colour: #00F88F")
 
       rootPane.setCenter(vbox)
       content = rootPane
@@ -118,68 +121,81 @@ object Gui extends JFXApp{
       }
     }
 
-    var buttonContinue = new Button("Continue") {
-      onAction = (event: ActionEvent) => {
-        controller.initPlayers(nPlayer)
-        stage.scene = new Scene {
-          fill = Color.LightBlue
-
-          var playerList = new ListView[String](List("Dt1", "Dt2", "Dt3", "Dt4", "Dt5", "Dt6"))
-          var label = new Label("Change Name:")
-          var textField = new TextField()
-          var button = new Button("Change")
-          var button2 = new Button("Start") {
-            onAction = (event: ActionEvent) => {
-              stage.scene = scene4
-            }
-          }
-
-          var listPane = new BorderPane()
-          listPane.setCenter(playerList)
-
-          listPane.setMaxHeight(200)
-          listPane.setPadding(new Insets(20, 20, 20, 20))
-
-          var hbox = new HBox()
-
-          hbox.setPadding(new Insets(20, 20, 20, 20))
-          hbox.setSpacing(spacing)
-          hbox.getChildren.addAll(label, textField, button)
-
-          var bottomPane = new BorderPane()
-          var buttonPane = new BorderPane()
-          buttonPane.setPadding(new Insets(20, 20, 20, 20))
-          buttonPane.setCenter(button2)
-          bottomPane.setLeft(hbox)
-          bottomPane.setRight(buttonPane)
-          bottomPane.alignmentInParent = Pos.BottomCenter
-
-
-          var borderPane = new BorderPane()
-          borderPane.setLeft(listPane)
-          borderPane.setBottom(bottomPane)
-
-          content = borderPane
-        }
-      }
-    }
-
     val radioGroup = new ToggleGroup()
     radioGroup.toggles = List(rb1, rb2, rb3, rb4, rb5, rb6)
 
-    val border = new BorderPane()
-    val buttonPane = new BorderPane()
-    val vbox = new VBox()
+    var setNumberButton = new Button("Set Number") {
+      onAction = (event: ActionEvent) => {
+        controller.initPlayers(nPlayer)
+        changeNameButton.disable = false
 
-    vbox.setPadding(new Insets(frameHeight/2 - vBoxHeight, 0, 0, frameWidth/2 - vBoxWidth/2))
-    vbox.setSpacing(spacing)
+
+        var list: List[String] = List()
+        for((x,i) <- controller.getPlayersList().drop(1).view.zipWithIndex) {
+          x.name :: list
+        }
+
+        playerList = new ListView[String](list)
+        vboxList.getChildren.update(1, playerList)
+
+      }
+    }
+
+    var changeNameButton = new Button("Change") {
+      disable = true
+    }
+
+    var startButton = new Button("Start") {
+      onAction = (event: ActionEvent) => {
+        stage.scene = scene4
+      }
+    }
+    var startButtonPane = new BorderPane()
+    startButtonPane.setPadding(new Insets(20, 20, 20, 20))
+    startButtonPane.setCenter(startButton)
+
+    var setNumberPane = new BorderPane()
+    setNumberPane.setPadding(new Insets(20, 20, 20, 20))
+    setNumberPane.setCenter(setNumberButton)
+
+    var playerList = new ListView[String](List("Dt1", "Dt2", "Dt3", "Dt4", "Dt5", "Dt6"))
+    var changeNamelabel = new Label("Change Name:")
+    var playerNamesLabel = new Label("Player Names:")
+    var textField = new TextField()
+    val vbox = new VBox()
+    var hbox = new HBox()
+
+    hbox.setPadding(new Insets(20, 20, 20, 20))
+    hbox.setSpacing(defSpacing)
+    hbox.getChildren.addAll(changeNamelabel, textField, changeNameButton)
+
+    vbox.setPadding(new Insets(20, 20, 20, 20))
+    vbox.setSpacing(defSpacing)
     vbox.getChildren.addAll(label, rb1, rb2, rb3, rb4, rb5, rb6)
 
-    buttonPane.setBottom(buttonContinue)
 
-    border.setCenter(vbox)
-    border.setRight(buttonPane)
-    content = border
+    var listPane = new BorderPane()
+    var vboxList = new HBox()
+    vboxList.setSpacing(defSpacing)
+    vboxList.getChildren.addAll(playerNamesLabel, playerList)
+    listPane.setRight(vboxList)
+
+    listPane.setMaxHeight(200)
+    listPane.setPadding(new Insets(20, 20, 20, 20))
+
+    var bottomPane = new BorderPane()
+
+    val contentPane = new BorderPane()
+
+    bottomPane.setCenter(hbox)
+    bottomPane.setRight(startButtonPane)
+    bottomPane.setLeft(setNumberButton)
+    bottomPane.alignmentInParent = Pos.BottomCenter
+
+    contentPane.setRight(listPane)
+    contentPane.setLeft(vbox)
+    contentPane.setBottom(bottomPane)
+    content = contentPane
   }
 
   scene4 = new Scene() {
@@ -187,13 +203,46 @@ object Gui extends JFXApp{
     var menuBar = new MenuBar()
     var fileMenu = new Menu("File")
     var optionMenu = new Menu("Options")
+    var undoMenuItem = new MenuItem("Undo")
+    var redoMenuItem = new MenuItem("Redo")
+    optionMenu.items = List(undoMenuItem, redoMenuItem)
     var helpMenu = new Menu("Help")
+
+
+    var currentPlayerLabel = new Label("Dt1")
+    var taxiButton = new Button("T = 11")
+    var busButton = new Button("B = 8")
+    var underButton = new Button("U = 4")
+    var currentRoundLabel = new Label(("Round: 3/24"))
 
     menuBar.menus = List(fileMenu, optionMenu, helpMenu)
 
     var image = new ImageView(map)
+    var scroll = new ScrollPane() {
+      content = image
+      fitToHeight = true
+    }
 
-    rootPane.center = image
+    var bottomBar = new BorderPane {
+      left = new HBox {
+        children.addAll(currentPlayerLabel, taxiButton, busButton, underButton)
+        spacing = defSpacing
+        padding = new Insets(20, 20, 20, 20)
+      }
+
+      right = new BorderPane {
+        center = currentRoundLabel
+        padding = new Insets(20, 20, 20, 20)
+      }
+
+    }
+
+
+
+
+
+    rootPane.center = scroll
+    rootPane.bottom = bottomBar
     rootPane.top = menuBar
     root = rootPane
 
