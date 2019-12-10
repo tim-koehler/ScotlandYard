@@ -43,9 +43,9 @@ object GameInitializer {
     true
   }
 
-  def drawDetectivePosition(isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
-    if(isDebugMode) {
-      return 2
+  def drawDetectivePosition(nonRandomPosition: Integer = -1): Int = {
+    if(nonRandomPosition != -1) {
+      return nonRandomPosition
     }
     var startPosIndex = 0
     do {
@@ -56,9 +56,9 @@ object GameInitializer {
     detectiveStartPositions(startPosIndex)
   }
 
-  def drawMisterXPosition(isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
-    if(isDebugMode) {
-      return 1
+  def drawMisterXPosition(nonRandomPosition: Integer = -1): Int = {
+    if(nonRandomPosition != -1) {
+      return nonRandomPosition
     }
     val startPosIndex = r.nextInt(MAX_MISTERX_LIST_INDEX)
     misterXStartPositions(startPosIndex)

@@ -46,11 +46,7 @@ class StationInitializer {
 
   private def setNeighbours(stations: List[Station]): Integer = {
 
-    var path = ""
-    if(ScotlandYard.isDebugMode)
-      path = "./src/main/scala/de/htwg/se/scotlandyard/neighbours_debug.dat"
-    else
-      path = "./src/main/scala/de/htwg/se/scotlandyard/neighbours.dat"
+    val path = "./src/main/scala/de/htwg/se/scotlandyard/neighbours.dat"
 
     Try(Source.fromFile(path)) match {
       case Success(v) =>
@@ -85,11 +81,7 @@ class StationInitializer {
 
   private def parseStationsFromMapFile(): List[String] = {
 
-    var path = ""
-    if(ScotlandYard.isDebugMode)
-      path = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMapTiny.txt"
-    else
-      path = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt"
+    val path = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt"
 
     Try(Source.fromFile(path)) match {
       case Success(v) =>

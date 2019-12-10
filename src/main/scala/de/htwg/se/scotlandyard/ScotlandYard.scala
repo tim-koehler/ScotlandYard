@@ -11,8 +11,6 @@ object ScotlandYard {
   val tui = new Tui(controller)
   controller.notifyObservers
 
-  val isDebugMode = false
-
   def main(args: Array[String]): Unit = {
 
     GameMaster.startGame()

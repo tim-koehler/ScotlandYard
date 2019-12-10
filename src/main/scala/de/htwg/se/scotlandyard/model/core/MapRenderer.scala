@@ -22,11 +22,7 @@ object MapRenderer {
   val tinyMapFilePath = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMapTiny.txt"
 
   def init(): Boolean = {
-    if(ScotlandYard.isDebugMode) {
-      GameMap.map = readMapFromFile(tinyMapFilePath)
-    } else {
-      GameMap.map = readMapFromFile(mapFilePath)
-    }
+    GameMap.map = readMapFromFile(mapFilePath)
 
     GameMap.map match {
       case Some(t) => true
