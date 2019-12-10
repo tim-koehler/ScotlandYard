@@ -95,22 +95,18 @@ class Tui(controller: Controller) extends Observer{
     TUIMODE_RUNNING
   }
 
-  def evaluateMainMenu(input: Int, isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
+  def evaluateMainMenu(input: Int): Int = {
     if(input == 1) {
-      if(isDebugMode) {
-        changeState(new ChooseNameMenuState(this))
-        controller.initPlayers(2)
-      } else {
         changeState(new SelectNumberOfPlayerMenuState(this))
         updateScreen()
         TUIMODE_RUNNING
-      }
     } else {
       TUIMODE_QUIT
     }
   }
 
   def evaluateSettings(input: String): Int = {
+    changeState(new ChooseNameMenuState(this))
     controller.initPlayers(input.toInt)
   }
 
@@ -158,9 +154,6 @@ class Tui(controller: Controller) extends Observer{
 
   def buildOutputStringForRunningGame(): String = {
     var outputString = MapRenderer.renderMap()
-    if(ScotlandYard.isDebugMode) {
-      outputString = outputString + "DEBUG MODE\n"
-    }
     outputString = outputString + "Round: " + controller.getTotalRound() + "\n"
     for(p <- controller.getPlayersList()) {
       outputString = outputString + p.toString + "\n"

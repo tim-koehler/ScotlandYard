@@ -28,32 +28,24 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.totalRound shouldBe(1)
       }
       "and MrX should also be hidden" in {
-        if(ScotlandYard.isDebugMode) {
-          GameMaster.checkMrXVisibility() shouldBe (true)
-        } else {
-          GameMaster.checkMrXVisibility() shouldBe (false)
-        }
+        GameMaster.checkMrXVisibility() shouldBe (false)
 
         val rounds = GameMaster.totalRound
         GameMaster.totalRound = 1
-        GameMaster.checkMrXVisibility(false) shouldBe (false)
+        GameMaster.checkMrXVisibility() shouldBe (false)
         GameMaster.totalRound = 3
-        GameMaster.checkMrXVisibility(false) shouldBe (true)
+        GameMaster.checkMrXVisibility() shouldBe (true)
         GameMaster.totalRound = 8
-        GameMaster.checkMrXVisibility(false) shouldBe (true)
+        GameMaster.checkMrXVisibility() shouldBe (true)
         GameMaster.totalRound = 13
-        GameMaster.checkMrXVisibility(false) shouldBe (true)
+        GameMaster.checkMrXVisibility() shouldBe (true)
         GameMaster.totalRound = 18
-        GameMaster.checkMrXVisibility(false) shouldBe (true)
+        GameMaster.checkMrXVisibility() shouldBe (true)
         GameMaster.totalRound = 24
-        GameMaster.checkMrXVisibility(false) shouldBe (true)
+        GameMaster.checkMrXVisibility() shouldBe (true)
 
         GameMaster.totalRound = rounds
-        if(!ScotlandYard.isDebugMode) {
-          GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("never")
-        } else {
-          GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("1")
-        }
+        GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("never")
       }
       "and target Station should be empty" in {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(3) should be(true)
@@ -62,9 +54,9 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(3) should be(false)
       }
       "and Taxi move should be valid" in {
-        GameMaster.getCurrentPlayer().station = GameMaster.stations(3)
-        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTaxiMoveValid"))(1) should be(true)
-        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTaxiMoveValid"))(2) should be(false)
+        GameMaster.getCurrentPlayer().station = GameMaster.stations(153)
+        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTaxiMoveValid"))(152) should be(true)
+        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTaxiMoveValid"))(183) should be(false)
 
         val tickets = GameMaster.getCurrentPlayer().taxiTickets
         GameMaster.getCurrentPlayer().taxiTickets = 0
@@ -72,9 +64,9 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.getCurrentPlayer().taxiTickets = tickets
       }
       "and Bus move should be valid" in {
-        GameMaster.getCurrentPlayer().station = GameMaster.stations(3)
-        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isBusMoveValid"))(2) should be(true)
-        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isBusMoveValid"))(1) should be(false)
+        GameMaster.getCurrentPlayer().station = GameMaster.stations(153)
+        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isBusMoveValid"))(124) should be(true)
+        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isBusMoveValid"))(138) should be(false)
 
         val tickets = GameMaster.getCurrentPlayer().busTickets
         GameMaster.getCurrentPlayer().busTickets = 0
@@ -82,9 +74,9 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.getCurrentPlayer().busTickets = tickets
       }
       "and Underground move should be valid" in {
-        GameMaster.getCurrentPlayer().station = GameMaster.stations(2)
-        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isUndergroundMoveValid"))(3) should be(true)
-        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isUndergroundMoveValid"))(1) should be(false)
+        GameMaster.getCurrentPlayer().station = GameMaster.stations(153)
+        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isUndergroundMoveValid"))(140) should be(true)
+        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isUndergroundMoveValid"))(124) should be(false)
 
         val tickets = GameMaster.getCurrentPlayer().undergroundTickets
         GameMaster.getCurrentPlayer().undergroundTickets = 0
@@ -96,31 +88,30 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationInBounds"))(1000) should be(false)
       }
       "and validateMove() should return true" in {
-        GameMaster.getCurrentPlayer().station = GameMaster.stations(1)
-        GameMaster.players(0).station = GameMaster.stations(2)
+        GameMaster.getCurrentPlayer().station = GameMaster.stations(153)
+        GameMaster.players(0).station = GameMaster.stations(180)
 
-        GameMaster.validateMove(3, TicketType.Taxi) should be(true)
-        GameMaster.validateMove(1, TicketType.Bus) should be(false)
+        GameMaster.validateMove(166, TicketType.Taxi) should be(true)
+        GameMaster.validateMove(165, TicketType.Bus) should be(false)
         GameMaster.validateMove(1, TicketType.Underground) should be(false)
 
-        GameMaster.players(0).station = GameMaster.stations(1)
-        GameMaster.getCurrentPlayer().station = GameMaster.stations(3)
+        GameMaster.players(0).station = GameMaster.stations(55)
+        GameMaster.getCurrentPlayer().station = GameMaster.stations(89)
 
-        GameMaster.validateMove(1, TicketType.Taxi) should be(true)
-        GameMaster.validateMove(2, TicketType.Underground) should be(true)
+        GameMaster.validateMove(71, TicketType.Taxi) should be(true)
+        GameMaster.validateMove(128, TicketType.Underground) should be(true)
 
-        GameMaster.getCurrentPlayer().station = GameMaster.stations(2)
-        GameMaster.validateMove(3, TicketType.Bus) should be(true)
-
-        GameMaster.validateMove(2, TicketType.Taxi) should be(false)
+        GameMaster.getCurrentPlayer().station = GameMaster.stations(89)
+        GameMaster.validateMove(105, TicketType.Bus) should be(true)
+        GameMaster.validateMove(90, TicketType.Taxi) should be(false)
 
         GameMaster.getCurrentPlayer().taxiTickets = 0;
         GameMaster.getCurrentPlayer().busTickets= 0;
         GameMaster.getCurrentPlayer().undergroundTickets = 0;
 
-        GameMaster.validateMove(2, TicketType.Underground) should be(false)
-        GameMaster.validateMove(2, TicketType.Bus) should be(false)
-        GameMaster.validateMove(1, TicketType.Taxi) should be(false)
+        GameMaster.validateMove(128, TicketType.Underground) should be(false)
+        GameMaster.validateMove(55, TicketType.Bus) should be(false)
+        GameMaster.validateMove(88, TicketType.Taxi) should be(false)
       }
       "mrx should win in round 24" in {
         GameMaster.round = winningRound * players.length

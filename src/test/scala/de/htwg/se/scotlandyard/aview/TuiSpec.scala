@@ -54,11 +54,11 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "evaluateMainMenuMethod should return number of players, running or -1" in {
         tui.changeState(new MainMenuState(tui))
-        tui.evaluateMainMenu(1, true) shouldBe(2)
+        tui.evaluateMainMenu(1) shouldBe(0)
         tui.changeState(new MainMenuState(tui))
-        tui.evaluateMainMenu(2, true) shouldBe(tui.TUIMODE_QUIT)
+        tui.evaluateMainMenu(2) shouldBe(tui.TUIMODE_QUIT)
         tui.changeState(new MainMenuState(tui))
-        tui.evaluateMainMenu(1, false) shouldBe(tui.TUIMODE_RUNNING)
+        tui.evaluateMainMenu(1) shouldBe(tui.TUIMODE_RUNNING)
       }
       "should return state RUNNING when 'a', 'w', 's' or 'd' is pressed is pressed" in {
         GameMaster.startGame()
@@ -78,7 +78,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.revealMrX2() shouldBe(tui.TUIMODE_RUNNING)
       }
       "should have a winning output String when a player wins" in {
-        GameInitializer.initStations()
+        //GameInitializer.initStations()
         GameInitializer.initPlayers(2)
         GameMaster.winningPlayer = GameMaster.players(0)
         tui.buildOutputStringWin() shouldNot be (null)
