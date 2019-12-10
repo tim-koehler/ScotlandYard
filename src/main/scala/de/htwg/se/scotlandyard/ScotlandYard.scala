@@ -7,9 +7,7 @@ import de.htwg.se.scotlandyard.model.core._
 import scala.io.StdIn.readLine
 
 object ScotlandYard {
-  val isDebugMode = true
-
-
+  
   def run(controller: Controller): Unit = {
     val tui = new Tui(controller)
     controller.notifyObservers

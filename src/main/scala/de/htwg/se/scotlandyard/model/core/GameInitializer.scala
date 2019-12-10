@@ -25,8 +25,7 @@ object GameInitializer {
 
   def initialize(): Boolean = {
     MapRenderer.init()
-    StationFactory.resetCounter()
-    GameMaster.stations = initStations()
+    GameMaster.stations = new StationInitializer().initStations()
 
     true
   }
@@ -44,9 +43,9 @@ object GameInitializer {
     true
   }
 
-  def drawDetectivePosition(isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
-    if(isDebugMode) {
-      return 2
+  def drawDetectivePosition(nonRandomPosition: Integer = -1): Int = {
+    if(nonRandomPosition != -1) {
+      return nonRandomPosition
     }
     var startPosIndex = 0
     do {
@@ -57,9 +56,9 @@ object GameInitializer {
     detectiveStartPositions(startPosIndex)
   }
 
-  def drawMisterXPosition(isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
-    if(isDebugMode) {
-      return 1
+  def drawMisterXPosition(nonRandomPosition: Integer = -1): Int = {
+    if(nonRandomPosition != -1) {
+      return nonRandomPosition
     }
     val startPosIndex = r.nextInt(MAX_MISTERX_LIST_INDEX)
     misterXStartPositions(startPosIndex)
@@ -83,87 +82,4 @@ object GameInitializer {
     GameMaster.players(index).undergroundTickets = nUnder
     true
   }
-
-  def initStations(): List[Station] = {
-
-    val stations = createStations()
-    setNeighbours(stations)
-
-    stations
-  }
-
-  def createStations(): List[Station] = {
-    var stationsBuffer = new ListBuffer[Station]()
-
-    stationsBuffer += StationFactory.createZeroIndexStation()
-
-    var path = ""
-    if(ScotlandYard.isDebugMode)
-      path = "./src/main/scala/de/htwg/se/scotlandyard/stations_debug.dat"
-    else
-      path = "./src/main/scala/de/htwg/se/scotlandyard/stations.dat"
-
-    Try(Source.fromFile(path)) match {
-      case Success(v) =>
-        for (line <- v.getLines()) {
-          stationsBuffer += parseCreateStationLine(line)
-        }
-        v.close()
-      case Failure(e) => None
-    }
-
-    stationsBuffer.toList
-  }
-
-  private def parseCreateStationLine(line: String): Station = {
-    val args = splitLine(line)
-
-    if(args(1).equalsIgnoreCase("t"))
-      StationFactory.createTaxiStation(args(3).toInt, args(2).toInt)
-    else if(args(1).equalsIgnoreCase("b"))
-      StationFactory.createBusStation(args(3).toInt, args(2).toInt)
-    else
-      StationFactory.createUndergroundStation(args(3).toInt, args(2).toInt)
-  }
-
-  private def setNeighbours(stations: List[Station]): Integer = {
-
-    var path = ""
-    if(ScotlandYard.isDebugMode)
-      path = "./src/main/scala/de/htwg/se/scotlandyard/neighbours_debug.dat"
-    else
-      path = "./src/main/scala/de/htwg/se/scotlandyard/neighbours.dat"
-
-    Try(Source.fromFile(path)) match {
-      case Success(v) =>
-        for (line <- v.getLines()) {
-          parseNeighbourStationLine(stations, line)
-        }
-        v.close()
-      case Failure(e) => None
-    }
-
-    stations.size
-  }
-
-  private def parseNeighbourStationLine(stations: List[Station], line: String): Set[Station] = {
-    val args = splitLine(line)
-    var buffer = new ListBuffer[Station]()
-
-    for(i <- 2 to (args.length - 1))
-      buffer += stations(args(i).toInt)
-
-    if(args(1).toLowerCase().equalsIgnoreCase("t")) {
-      stations(args(0).toInt).setNeighbourTaxis(buffer.toSet)
-      stations(args(0).toInt).neighbourUndergrounds
-    } else if (args(1).toLowerCase().equalsIgnoreCase("b")) {
-      stations(args(0).toInt).setNeighbourBuses(buffer.toSet)
-      stations(args(0).toInt).neighbourUndergrounds
-    } else {
-      stations(args(0).toInt).setNeighbourUndergrounds(buffer.toSet)
-      stations(args(0).toInt).neighbourUndergrounds
-    }
-  }
-
-  private def splitLine(line: String) = line.split("\\s").filter(_.nonEmpty)
 }
