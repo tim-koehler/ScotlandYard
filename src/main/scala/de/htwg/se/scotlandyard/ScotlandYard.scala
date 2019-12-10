@@ -12,7 +12,6 @@ object ScotlandYard {
   controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
-
     GameMaster.startGame()
 
     var input: String = ""
