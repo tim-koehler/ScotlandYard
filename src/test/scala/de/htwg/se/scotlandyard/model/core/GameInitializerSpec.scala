@@ -7,19 +7,11 @@ import org.scalatest._
 class GameInitializerSpec extends WordSpec with Matchers {
   "GameInitializer" should {
     "not draw a starting position out of bounds" in {
-      if(!ScotlandYard.isDebugMode) {
-        GameInitializer.drawMisterXPosition() shouldBe >= (35)
-        GameInitializer.drawMisterXPosition() shouldBe <= (172)
+      GameInitializer.drawMisterXPosition() shouldBe >= (35)
+      GameInitializer.drawMisterXPosition() shouldBe <= (172)
 
-        GameInitializer.drawDetectivePosition() shouldBe >= (13)
-        GameInitializer.drawDetectivePosition() shouldBe <= (174)
-      } else {
-        GameInitializer.drawMisterXPosition() shouldBe >= (1)
-        GameInitializer.drawMisterXPosition() shouldBe <= (3)
-
-        GameInitializer.drawDetectivePosition() shouldBe >= (1)
-        GameInitializer.drawDetectivePosition() shouldBe <= (3)
-      }
+      GameInitializer.drawDetectivePosition() shouldBe >= (13)
+      GameInitializer.drawDetectivePosition() shouldBe <= (174)
     }
     "try to create and init all Station types" in {
       StationFactory.createZeroIndexStation()
@@ -37,12 +29,12 @@ class GameInitializerSpec extends WordSpec with Matchers {
       station.setNeighbourUndergrounds(Set())
     }
     "and test drawing player positions" in {
-      GameInitializer.drawDetectivePosition(true) should be (2)
-      GameInitializer.drawDetectivePosition(false) should not be (0)
+      GameInitializer.drawDetectivePosition(2) should be (2)
+      GameInitializer.drawDetectivePosition() should not be (0)
     }
     "and drawing MrX position should" in {
-      GameInitializer.drawMisterXPosition(true) should be(1)
-      GameInitializer.drawMisterXPosition(false) should not be(0)
+      GameInitializer.drawMisterXPosition(1) should be(1)
+      GameInitializer.drawMisterXPosition() should not be(0)
     }
   }
 }

@@ -75,9 +75,7 @@ object GameMaster {
     playerMrX.asInstanceOf[MrX].isVisible
   }
 
-  def checkMrXVisibility(isDebugMode: Boolean = ScotlandYard.isDebugMode): Boolean = {
-    if(isDebugMode)
-      return true
+  def checkMrXVisibility(): Boolean = {
     if(getCurrentPlayerIndex() >= 1) {
       totalRound match {
         case 3 => return true

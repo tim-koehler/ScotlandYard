@@ -11,7 +11,7 @@ class MrXSpec extends WordSpec with Matchers {
       val st = StationFactory.createTaxiStation(0, (1,1))
       val mrX = new MrX(st, "MrX")
       "have a station number" in {
-        mrX.getPosition().number should be (1)
+        mrX.getPosition().number should be (0)
       }
       "have a station Type" in {
         mrX.getPosition().sType should be (StationType.Taxi)

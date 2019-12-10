@@ -47,11 +47,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         controller.undoValidateAndMove() should be(GameMaster.stations(2))
       }
       "and updateMrXVisibility" in {
-        if(ScotlandYard.isDebugMode) {
-          controller.updateMrXVisibility() should be (true)
-        } else {
           controller.updateMrXVisibility() should be(false)
-        }
       }
     }
   }
