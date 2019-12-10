@@ -111,6 +111,7 @@ class Tui(controller: Controller) extends Observer{
   }
 
   def evaluateSettings(input: String): Int = {
+    changeState(new ChooseNameMenuState(this))
     controller.initPlayers(input.toInt)
   }
 
