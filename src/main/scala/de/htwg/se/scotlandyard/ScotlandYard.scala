@@ -1,20 +1,18 @@
 package de.htwg.se.scotlandyard
 
-import de.htwg.se.scotlandyard.aview.Tui
+import de.htwg.se.scotlandyard.aview.{Gui, Tui}
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core._
 
 import scala.io.StdIn.readLine
 
 object ScotlandYard {
-  val controller = new Controller
-  val tui = new Tui(controller)
-  controller.notifyObservers
-
-
   val isDebugMode = true
 
-  def main(args: Array[String]): Unit = {
+
+  def run(controller: Controller): Unit = {
+    val tui = new Tui(controller)
+    controller.notifyObservers
 
     GameMaster.startGame()
 
@@ -24,5 +22,6 @@ object ScotlandYard {
     } while (tui.evaluateInput(input) != -1)
 
     println("Spiel beendet")
+    System.exit(0)
   }
 }
