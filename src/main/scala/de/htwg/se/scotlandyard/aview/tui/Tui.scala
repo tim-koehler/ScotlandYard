@@ -1,6 +1,5 @@
-package de.htwg.se.scotlandyard.aview
+package de.htwg.se.scotlandyard.aview.tui
 
-import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.MapRenderer
 import de.htwg.se.scotlandyard.model.player.TicketType

@@ -1,6 +1,4 @@
-package de.htwg.se.scotlandyard.aview
-
-import de.htwg.se.scotlandyard.model.core.GameMaster
+package de.htwg.se.scotlandyard.aview.tui
 
 class ChooseNameMenuState(tui: Tui) extends State(tui: Tui) {
   override def evaluateInput(input: String): Int = {

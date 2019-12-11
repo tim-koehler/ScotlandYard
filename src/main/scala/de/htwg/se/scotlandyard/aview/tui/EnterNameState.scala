@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.aview
+package de.htwg.se.scotlandyard.aview.tui
 
 class EnterNameState(tui: Tui) extends State(tui: Tui) {
   override def evaluateInput(input: String): Int = {
