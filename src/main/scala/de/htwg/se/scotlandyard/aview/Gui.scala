@@ -127,22 +127,33 @@ class Gui(controller: Controller) extends Frame {
 
   var nameTextBox = new TextField()
 
+  var selelctedListIndex = 1
+
   val buttonChangeName = Button("Change Name") {
+    controller.setPlayerNames(nameTextBox.text, selelctedListIndex)
+    update()
+    /*
     listenTo(this)
     reactions += {
       case e: ButtonClicked => controller.setPlayerNames(nameTextBox.text, selelctedListIndex)
         update()
     }
+    */
+
   }
 
   var panelPlayerList = buildPanelPlayerList()
 
-  var selelctedListIndex = 1
 
   def buildPanelPlayerList(): FlowPanel = {
     new FlowPanel(new ScrollPane(new ListView(controller.getPlayersList().drop(1)) {
-      selectIndices(0)
+      //selectIndices(0)
       renderer = Renderer(_.name)
+      listenTo(this)
+      reactions += {
+        case e: ComponentEvent => selelctedListIndex = this.peer.getSelectedIndex
+          println(this.peer.getSelectedIndex)
+      }
     }))
   }
 
