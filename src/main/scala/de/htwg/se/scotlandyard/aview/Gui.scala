@@ -9,7 +9,7 @@ import scalafx.application.JFXApp.PrimaryStage
 import scalafx.event.ActionEvent
 import scalafx.scene.Scene
 import scalafx.scene.control.{Button, Label, ListView, MenuBar, MenuItem, RadioButton, ScrollPane, TextField, ToggleGroup}
-import scalafx.scene.layout.{AnchorPane, Background, BorderPane, HBox, VBox}
+import scalafx.scene.layout.{AnchorPane, Background, BackgroundImage, BorderPane, HBox, Pane, VBox}
 import scalafx.scene.paint.Color
 import scalafx.Includes._
 import scalafx.geometry.Pos
@@ -18,7 +18,9 @@ import scalafx.scene.image.{Image, ImageView}
 import java.io.{File, FileInputStream}
 
 import javafx.event.EventHandler
+import scalafx.scene.canvas.{Canvas, GraphicsContext}
 import scalafx.scene.input.{MouseDragEvent, MouseEvent, TransferMode}
+import scalafx.scene.shape.Circle
 
 object Gui extends JFXApp{
   val controller = new Controller
@@ -52,7 +54,6 @@ object Gui extends JFXApp{
     height = frameHeight
     resizable = true
     scene = new Scene {
-      //this.getStylesheets.add(Gui.getClass.getResource("styles.css").toExternalForm())
       stylesheets = List(getClass.getResource("styles.css").toExternalForm)
       fill = Color.LightBlue
       var button1 = new Button("Start Game") {
@@ -71,6 +72,11 @@ object Gui extends JFXApp{
           System.exit(0)
         }
       }
+      var titlePane = new BorderPane() {
+        center = new Label("Scotland Yard") {
+          id = "title"
+        }
+      }
 
       val rootPane = new BorderPane()
       val vbox = new VBox()
@@ -79,6 +85,7 @@ object Gui extends JFXApp{
       vbox.setSpacing(defSpacing)
       vbox.getChildren.addAll(button1, button2)
 
+      rootPane.setTop(titlePane)
       rootPane.setCenter(vbox)
       content = rootPane
     }
@@ -199,6 +206,7 @@ object Gui extends JFXApp{
   }
 
   scene4 = new Scene() {
+    stylesheets = List(getClass.getResource("styles.css").toExternalForm)
     var rootPane = new BorderPane()
     var menuBar = new MenuBar()
     var fileMenu = new Menu("File")
@@ -210,18 +218,30 @@ object Gui extends JFXApp{
 
 
     var currentPlayerLabel = new Label("Dt1")
-    var taxiButton = new Button("T = 11")
-    var busButton = new Button("B = 8")
-    var underButton = new Button("U = 4")
+    var taxiButton = new Button("T = 11") {
+      onAction = (event: ActionEvent) => {
+          
+        }
+      id = "defaultButton"
+    }
+    var busButton = new Button("B = 8") {
+      id = "defaultButton"
+    }
+    var underButton = new Button("U = 4") {
+      id = "defaultButton"
+    }
     var currentRoundLabel = new Label(("Round: 3/24"))
 
     menuBar.menus = List(fileMenu, optionMenu, helpMenu)
 
-    var image = new ImageView(map)
+
     var scroll = new ScrollPane() {
-      content = image
+      content = new ImageView {
+        image = map
+      }
       fitToHeight = true
     }
+
 
     var bottomBar = new BorderPane {
       left = new HBox {
@@ -236,9 +256,6 @@ object Gui extends JFXApp{
       }
 
     }
-
-
-
 
 
     rootPane.center = scroll
