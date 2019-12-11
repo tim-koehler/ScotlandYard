@@ -5,7 +5,7 @@ import de.htwg.se.scotlandyard.controller.Controller
 
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
-import scala.swing.{Action, BorderPanel, BoxPanel, Button, ButtonGroup, FlowPanel, Frame, Label, ListView, Orientation, RadioButton, ScrollPane, TextField}
+import scala.swing.{Action, BorderPanel, BoxPanel, Button, ButtonGroup, Dialog, Dimension, FlowPanel, Label, ListView, Orientation, RadioButton, ScrollPane, TextField}
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 
 class GuiSettingsBuilder(controller: Controller, gui: Gui) {
@@ -15,12 +15,14 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
 
   def buildPanelPlayerList(): FlowPanel = {
     new FlowPanel(new ScrollPane(new ListView(controller.getPlayersList().drop(1)) {
+      preferredSize = new Dimension(80, 80)
       renderer = Renderer(_.name)
       listenTo(this.selection)
       reactions += {
-        case e: SelectionChanged => println(this.peer.getSelectedIndex)
-          selelctedListIndex = this.peer.getSelectedIndex + 1
-      }}))
+        case e: SelectionChanged => selelctedListIndex = this.peer.getSelectedIndex + 1
+      }})) {
+      border = TitledBorder(EmptyBorder(5, 5, 5, 5), "Player Names:")
+    }
   }
 
   var rb1 = new RadioButton("2 Player") {
@@ -34,7 +36,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   }
 
   var rb2 = new RadioButton("3 Player") {
-    selected = true
+    //selected = true
     action = new Action("3 Player") {
       override def apply(): Unit = {
         controller.initPlayers(3)
@@ -89,8 +91,10 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   }
 
   def rbBox = new BoxPanel(Orientation.Vertical) {
-    border = CompoundBorder(TitledBorder(EtchedBorder, "Number of Player"), EmptyBorder(5,5,5,5))
+    preferredSize = new Dimension(140, 50)
+    maximumSize = new Dimension(150, 50)
     contents ++= List(rb1, rb2, rb3, rb4, rb5, rb6)
+    border = CompoundBorder(TitledBorder(EtchedBorder, "Number of Player"), EmptyBorder(10, 10, 10, 10))
   }
 
   var textField = new TextField()
@@ -108,11 +112,13 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   }
 
   def bottomPanel = new BorderPanel {
+    border = EmptyBorder(10, 10, 10, 10)
     add(chooseNameBox, BorderPanel.Position.Center)
     add(new Button("Start") {
       listenTo(this)
       reactions += {
         case e: ButtonClicked => gui.changeToGamePanel()
+          Dialog.showMessage(null, "MrX is at Station: " + controller.getCurrentPlayer().station.number, "MrX Position")
       }
     }, BorderPanel.Position.East)
   }

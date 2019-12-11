@@ -8,7 +8,7 @@ import de.htwg.se.scotlandyard.aview.gui.{GuiMainBuilder, GuiSettingsBuilder}
 class Gui(controller: Controller) extends Frame {
   val EXIT_ON_CLOSE = 3
   title = "Scotland Yard"
-  preferredSize = new Dimension(500, 300)
+  preferredSize = new Dimension(600, 400)
   centerOnScreen()
   peer.setDefaultCloseOperation(EXIT_ON_CLOSE)
 
@@ -24,6 +24,11 @@ class Gui(controller: Controller) extends Frame {
 
   def updateSettings(): Unit = {
     contents = settingsPanel
+    this.repaint()
+  }
+
+  def updateGame(): Unit = {
+    contents = gamePanel()
     this.repaint()
   }
 

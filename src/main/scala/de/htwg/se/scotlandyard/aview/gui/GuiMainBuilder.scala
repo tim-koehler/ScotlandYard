@@ -16,6 +16,8 @@ class GuiMainBuilder (controller: Controller) {
 
   val image: BufferedImage = ImageIO.read(new File("./src/main/scala/de/htwg/se/scotlandyard/map_large.png"))
 
+  var circleX = 0
+  var circleY = 0
 
   def getPanel(): BorderPanel = {
 
@@ -63,16 +65,16 @@ class GuiMainBuilder (controller: Controller) {
 
   def buildBottomPanel(): FlowPanel = {
     new FlowPanel() {
-      contents += new Label(GameMaster.getCurrentPlayer().name)
-      contents += new Button("Taxi") {
+      contents += new Label(controller.getCurrentPlayer().name)
+      contents += new Button("Taxi: " + controller.getCurrentPlayer().taxiTickets) {
         verticalTextPosition = Alignment.Bottom
         horizontalTextPosition = Alignment.Center
       }
-      contents += new Button("Bus") {
+      contents += new Button("Bus: " + controller.getCurrentPlayer().busTickets) {
         verticalTextPosition = Alignment.Bottom
         horizontalTextPosition = Alignment.Center
       }
-      contents += new Button("Underground") {
+      contents += new Button("Underground: " + controller.getCurrentPlayer().undergroundTickets) {
         verticalTextPosition = Alignment.Bottom
         horizontalTextPosition = Alignment.Center
       }
@@ -87,12 +89,15 @@ class GuiMainBuilder (controller: Controller) {
       listenTo(mouse.clicks)
       reactions += {
         case e: MouseClicked =>
+          circleX = e.point.x
+          circleY = e.point.y
+          repaint()
           println("Mouse clicked at " + e.point)
       }
       override protected def paintComponent(g: Graphics2D): Unit = {
         super.paintComponent(g)
         g.drawImage(image, 0, 0, null)
-        drawCenteredCircle(g, 272, 245, 50)
+        drawCenteredCircle(g, circleX, circleY, 50)
       }
     }
     new ScrollPane(panel)
@@ -100,7 +105,7 @@ class GuiMainBuilder (controller: Controller) {
 
   def drawCenteredCircle(g: Graphics2D, x: Int, y: Int, r: Int): Unit = {
     g.setStroke(new BasicStroke(7.0f))
-    g.setColor(Color.GREEN)
+    g.setColor(Color.BLUE)
     g.drawOval(x - (r / 2), y - (r / 2), r, r)
   }
 }
