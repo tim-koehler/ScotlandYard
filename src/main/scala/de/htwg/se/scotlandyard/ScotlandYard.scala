@@ -7,10 +7,13 @@ import de.htwg.se.scotlandyard.model.core._
 import scala.io.StdIn.readLine
 
 object ScotlandYard {
-  
-  def run(controller: Controller): Unit = {
-    val tui = new Tui(controller)
-    controller.notifyObservers
+  val controller = new Controller
+  val tui = new Tui(controller)
+  val gui = new Gui(controller)
+
+  controller.notifyObservers
+
+  def main(args: Array[String]): Unit = {
 
     GameMaster.startGame()
 
