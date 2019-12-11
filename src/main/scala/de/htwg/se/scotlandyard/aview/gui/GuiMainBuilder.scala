@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color}
 import java.io.File
 
+import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.GameMaster
 import javax.imageio.ImageIO
 
@@ -11,7 +12,7 @@ import scala.swing.ListView.Renderer
 import scala.swing.{Action, Alignment, BorderPanel, Button, Dialog, Dimension, FlowPanel, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, ScrollPane}
 import scala.swing.event.MouseClicked
 
-class GuiMainBuilder {
+class GuiMainBuilder (controller: Controller) {
 
   val image: BufferedImage = ImageIO.read(new File("./src/main/scala/de/htwg/se/scotlandyard/map_large.png"))
 

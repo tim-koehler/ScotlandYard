@@ -1,38 +1,17 @@
 package de.htwg.se.scotlandyard.aview.gui
 
+import de.htwg.se.scotlandyard.aview.Gui
+import de.htwg.se.scotlandyard.controller.Controller
+
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
-import scala.swing.{Action, BorderPanel, BoxPanel, Button, ButtonGroup, FlowPanel, Label, ListView, Orientation, RadioButton, ScrollPane, TextField}
-import scala.swing.event.SelectionChanged
+import scala.swing.{Action, BorderPanel, BoxPanel, Button, ButtonGroup, FlowPanel, Frame, Label, ListView, Orientation, RadioButton, ScrollPane, TextField}
+import scala.swing.event.{ButtonClicked, SelectionChanged}
 
-class GuiSettingsBuilder {
-
-  val buttonStart = Button("Start") {
-    this.contents = gamePanel
-  }
-
-  def getPanel(): BorderPanel = {
-    new BorderPanel {
-
-
-      add(bottomPanel, BorderPanel.Position.South)
-      add(rbBox, BorderPanel.Position.West)
-      add(panelPlayerList, BorderPanel.Position.East)
-    }
-  }
-
-  var nameTextBox = new TextField()
-
+class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   var selelctedListIndex = 1
 
-  val buttonChangeName = Button("Change Name") {
-    controller.setPlayerNames(nameTextBox.text, selelctedListIndex)
-    update()
-  }
-
   var panelPlayerList = buildPanelPlayerList()
-
-  val chooseNameLabel = new Label("New Player Name:")
 
   def buildPanelPlayerList(): FlowPanel = {
     new FlowPanel(new ScrollPane(new ListView(controller.getPlayersList().drop(1)) {
@@ -40,6 +19,7 @@ class GuiSettingsBuilder {
       listenTo(this.selection)
       reactions += {
         case e: SelectionChanged => println(this.peer.getSelectedIndex)
+          selelctedListIndex = this.peer.getSelectedIndex + 1
       }}))
   }
 
@@ -48,7 +28,7 @@ class GuiSettingsBuilder {
       override def apply(): Unit = {
         controller.initPlayers(2)
         panelPlayerList = buildPanelPlayerList()
-        update()
+        gui.updateSettings()
       }
     }
   }
@@ -59,7 +39,7 @@ class GuiSettingsBuilder {
       override def apply(): Unit = {
         controller.initPlayers(3)
         panelPlayerList = buildPanelPlayerList()
-        update()
+        gui.updateSettings()
       }
     }
   }
@@ -69,7 +49,7 @@ class GuiSettingsBuilder {
       override def apply(): Unit = {
         controller.initPlayers(4)
         panelPlayerList = buildPanelPlayerList()
-        update()
+        gui.updateSettings()
       }
     }
   }
@@ -79,7 +59,7 @@ class GuiSettingsBuilder {
       override def apply(): Unit = {
         controller.initPlayers(5)
         panelPlayerList = buildPanelPlayerList()
-        update()
+        gui.updateSettings()
       }
     }
   }
@@ -89,7 +69,7 @@ class GuiSettingsBuilder {
       override def apply(): Unit = {
         controller.initPlayers(6)
         panelPlayerList = buildPanelPlayerList()
-        update()
+        gui.updateSettings()
       }
     }
   }
@@ -99,7 +79,7 @@ class GuiSettingsBuilder {
       override def apply(): Unit = {
         controller.initPlayers(7)
         panelPlayerList = buildPanelPlayerList()
-        update()
+        gui.updateSettings()
       }
     }
   }
@@ -113,13 +93,36 @@ class GuiSettingsBuilder {
     contents ++= List(rb1, rb2, rb3, rb4, rb5, rb6)
   }
 
+  var textField = new TextField()
+
   def chooseNameBox = new BoxPanel(Orientation.Horizontal) {
-    contents ++= List(chooseNameLabel, nameTextBox, buttonChangeName)
+    contents += new Label("New Player Name:")
+    contents += textField
+    contents += new Button("Change Name") {
+      listenTo(this)
+      reactions += {
+        case e: ButtonClicked => controller.setPlayerNames(textField.text, selelctedListIndex)
+          gui.updateSettings()
+      }
+    }
   }
 
   def bottomPanel = new BorderPanel {
     add(chooseNameBox, BorderPanel.Position.Center)
-    add(buttonStart, BorderPanel.Position.East)
+    add(new Button("Start") {
+      listenTo(this)
+      reactions += {
+        case e: ButtonClicked => gui.changeToGamePanel()
+      }
+    }, BorderPanel.Position.East)
+  }
+
+  def getPanel(): BorderPanel = {
+    new BorderPanel {
+      add(bottomPanel, BorderPanel.Position.South)
+      add(rbBox, BorderPanel.Position.West)
+      add(panelPlayerList, BorderPanel.Position.East)
+    }
   }
 
 }
