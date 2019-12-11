@@ -132,14 +132,6 @@ class Gui(controller: Controller) extends Frame {
   val buttonChangeName = Button("Change Name") {
     controller.setPlayerNames(nameTextBox.text, selelctedListIndex)
     update()
-    /*
-    listenTo(this)
-    reactions += {
-      case e: ButtonClicked => controller.setPlayerNames(nameTextBox.text, selelctedListIndex)
-        update()
-    }
-    */
-
   }
 
   var panelPlayerList = buildPanelPlayerList()
@@ -147,14 +139,11 @@ class Gui(controller: Controller) extends Frame {
 
   def buildPanelPlayerList(): FlowPanel = {
     new FlowPanel(new ScrollPane(new ListView(controller.getPlayersList().drop(1)) {
-      //selectIndices(0)
       renderer = Renderer(_.name)
-      listenTo(this)
+      listenTo(this.selection)
       reactions += {
-        case e: ComponentEvent => selelctedListIndex = this.peer.getSelectedIndex
-          println(this.peer.getSelectedIndex)
-      }
-    }))
+        case e: SelectionChanged => println(this.peer.getSelectedIndex)
+      }}))
   }
 
   def setMax() = {
