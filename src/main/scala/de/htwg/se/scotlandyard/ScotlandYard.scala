@@ -8,6 +8,7 @@ import scala.io.StdIn.readLine
 
 object ScotlandYard {
   val controller = new Controller
+  GameMaster.startGame()
   val tui = new Tui(controller)
   val gui = new Gui(controller)
 
@@ -15,7 +16,6 @@ object ScotlandYard {
 
   def main(args: Array[String]): Unit = {
 
-    GameMaster.startGame()
 
     var input: String = ""
     do {

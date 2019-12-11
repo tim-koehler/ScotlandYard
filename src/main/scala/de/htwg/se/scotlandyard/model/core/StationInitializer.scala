@@ -1,6 +1,5 @@
 package de.htwg.se.scotlandyard.model.core
 
-import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
 
 import scala.collection.mutable.ListBuffer

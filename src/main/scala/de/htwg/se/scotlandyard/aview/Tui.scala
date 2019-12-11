@@ -11,7 +11,8 @@ import scala.util.{Failure, Success, Try}
 
 class Tui(controller: Controller) extends Observer{
   controller.add(this)
-  var state: State = new MainMenuState(this)
+  //var state: State = new MainMenuState(this)
+  var state: State = new SelectNumberOfPlayerMenuState(this)
 
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
   val titleBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
