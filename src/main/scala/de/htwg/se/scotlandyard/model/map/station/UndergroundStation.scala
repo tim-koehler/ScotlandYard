@@ -1,5 +1,7 @@
 package de.htwg.se.scotlandyard.model.map.station
 
+import java.awt.Point
+
 import de.htwg.se.scotlandyard.model.map.StationType
 import de.htwg.se.scotlandyard.model.map.StationType.StationType
 
@@ -10,6 +12,7 @@ class UndergroundStation(num: Integer, tCoords: (Integer, Integer)) extends Stat
   override var neighbourBuses: Set[Station] = _
   override var neighbourUndergrounds: Set[Station] = _
   override var tuiCoords: (Integer, Integer) = tCoords
+  override var guiCoords: Point = _
 
   override def setNeighbourBuses(neighbourBuses: Set[Station]): Integer = {
     this.neighbourBuses = neighbourBuses
@@ -20,4 +23,5 @@ class UndergroundStation(num: Integer, tCoords: (Integer, Integer)) extends Stat
     this.neighbourUndergrounds = neighbourUndergrounds
     neighbourUndergrounds.size
   }
+
 }

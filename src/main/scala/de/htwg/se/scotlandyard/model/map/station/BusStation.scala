@@ -1,4 +1,6 @@
 package de.htwg.se.scotlandyard.model.map.station
+import java.awt.Point
+
 import de.htwg.se.scotlandyard.model.map.StationType
 import de.htwg.se.scotlandyard.model.map.StationType.StationType
 
@@ -9,6 +11,7 @@ class BusStation(num: Integer, tCoords: (Integer, Integer)) extends Station {
   override var neighbourBuses: Set[Station] = _
   override var neighbourUndergrounds: Set[Station] = _
   override var tuiCoords: (Integer, Integer) = tCoords
+  override var guiCoords: Point = _
 
   override def setNeighbourBuses(neighbourBuses: Set[Station]): Integer = {
     this.neighbourBuses = neighbourBuses

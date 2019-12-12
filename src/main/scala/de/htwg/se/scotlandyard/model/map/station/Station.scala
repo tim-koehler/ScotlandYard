@@ -1,5 +1,7 @@
 package de.htwg.se.scotlandyard.model.map.station
 
+import java.awt.Point
+
 import de.htwg.se.scotlandyard.model.map.StationType.StationType
 
 trait Station {
@@ -9,6 +11,7 @@ trait Station {
   var neighbourBuses: Set[Station]
   var neighbourUndergrounds: Set[Station]
   var tuiCoords: (Integer, Integer)
+  var guiCoords: Point
 
   def setNeighbourTaxis(neighbourTaxis: Set[Station]): Integer = {
     this.neighbourTaxis = neighbourTaxis
