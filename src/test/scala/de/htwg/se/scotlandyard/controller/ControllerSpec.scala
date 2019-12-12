@@ -15,7 +15,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         controller.getPlayersList().length shouldBe (3)
       }
       "should return true from setPlayerNames when index is correct" in {
-        controller.setPlayerNames("Tim", 1) shouldBe true
+        controller.setPlayerName("Tim", 1) shouldBe true
       }
       "should 2 from nextRound Method" in {
         GameMaster.round = 1

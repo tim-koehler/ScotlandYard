@@ -6,13 +6,13 @@ import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 
 class MrX(var station: Station, var name: String = "MrX", var color: Color = Color.BLACK) extends Player {
   var blackTickets: Int = 5 // default: 5
-  var doubleTurns: Int = 2 // default: 2
+  var doubleTurn: Int = 2 // default: 2
   var isVisible: Boolean = false
   var lastSeen: String = "never"
   var history: List[TicketType] = List()
 
   override def toString(): String = {
-    var tickets = " - BLACKTICKETS: " + blackTickets + ", DOUBLETURNS: " + doubleTurns
+    var tickets = " - BLACKTICKETS: " + blackTickets + ", DOUBLETURNS: " + doubleTurn
     if(isVisible) {
       name + " is at " + station.number + tickets
     } else {

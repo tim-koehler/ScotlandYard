@@ -124,7 +124,7 @@ class Tui(controller: Controller) extends Reactor {
   }
 
   def evaluateEnterName(input: String): Boolean = {
-    if(controller.setPlayerNames(input, indexOfPlayerWhichNameToChange)) {
+    if(controller.setPlayerName(input, indexOfPlayerWhichNameToChange)) {
       changeState(new ChooseNameMenuState(this))
       updateScreen()
       true
@@ -163,7 +163,7 @@ class Tui(controller: Controller) extends Reactor {
     for(p <- controller.getPlayersList()) {
       outputString = outputString + p.toString + "\n"
     }
-    outputString = outputString + "\n" + "Player" + " " + controller.getCurrentPlayer().name + " " + "Enter your next Station:"
+    outputString = outputString + "\n" + "Player" + " " + controller.getCurrentPlayer().name.substring(0, 3) + " " + "Enter your next Station:"
     outputString
   }
 

@@ -12,7 +12,6 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     if(GameMaster.getCurrentPlayerIndex() == 0) {
       GameMaster.getCurrentPlayer().asInstanceOf[MrX].addToHistory(ticketType)
     }
-    println(GameMaster.getCurrentPlayerIndex())
     GameMaster.updatePlayerPosition(newPosition)
     GameMaster.decreaseTickets(ticketType)
     val station = GameMaster.getCurrentPlayer().getPosition()
