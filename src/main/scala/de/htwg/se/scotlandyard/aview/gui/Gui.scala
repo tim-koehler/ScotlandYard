@@ -13,7 +13,7 @@ class Gui(controller: Controller) extends Frame {
   peer.setDefaultCloseOperation(EXIT_ON_CLOSE)
 
   def gamePanel(): BorderPanel = {
-    val mainBuiler = new GuiMainBuilder(controller)
+    val mainBuiler = new GuiMainBuilder(controller, this)
     mainBuiler.getPanel()
   }
 
@@ -27,9 +27,11 @@ class Gui(controller: Controller) extends Frame {
     this.repaint()
   }
 
+  //TODO: Screen Max
   def updateGame(): Unit = {
     contents = gamePanel()
     this.repaint()
+    setMax()
   }
 
   def changeToGamePanel(): Unit = {
