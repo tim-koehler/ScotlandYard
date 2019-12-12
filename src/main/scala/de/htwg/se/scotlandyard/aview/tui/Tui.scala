@@ -124,12 +124,10 @@ class Tui(controller: Controller) extends Reactor {
   }
 
   def evaluateEnterName(input: String): Boolean = {
+    changeState(new ChooseNameMenuState(this))
     if(controller.setPlayerName(input, indexOfPlayerWhichNameToChange)) {
-      changeState(new ChooseNameMenuState(this))
-      updateScreen()
       true
     } else {
-      changeState(new ChooseNameMenuState(this))
       updateScreen()
       false
     }

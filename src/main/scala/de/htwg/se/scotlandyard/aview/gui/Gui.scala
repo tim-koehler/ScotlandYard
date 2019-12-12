@@ -1,7 +1,6 @@
 package de.htwg.se.scotlandyard.aview
 
 import java.awt.Toolkit
-import java.io.File
 
 import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin}
 

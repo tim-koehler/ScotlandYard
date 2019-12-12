@@ -12,7 +12,7 @@ class SelectNumberOfPlayerMenuState(tui: Tui) extends State(tui: Tui) {
 
   def isSelectNumberOfPlayerInputCorrect(input: String): Boolean = {
     if(isInputNumberAndNotEmpty(input)) {
-      if(input.toInt >= 2 || input.toInt <= 7) {
+      if(input.toInt >= 2 && input.toInt <= 7) {
         return true
       }
     }

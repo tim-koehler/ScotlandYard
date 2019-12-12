@@ -1,6 +1,5 @@
 package de.htwg.se.scotlandyard.aview.gui
 
-import java.awt.event.KeyEvent
 import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color}
 import java.io.File
@@ -10,7 +9,6 @@ import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import javax.imageio.ImageIO
-import javax.swing.KeyStroke
 
 import scala.swing.Swing._
 import scala.io.Source
