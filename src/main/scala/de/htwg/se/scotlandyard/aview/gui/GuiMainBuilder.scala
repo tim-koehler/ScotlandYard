@@ -125,33 +125,23 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
       contents += new ToggleButton("Taxi: " + controller.getCurrentPlayer().taxiTickets) {
         selected = true
         btnGroup.buttons.add(this)
-        verticalTextPosition = Alignment.Bottom
-        horizontalTextPosition = Alignment.Center
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
       contents += new ToggleButton("Bus: " + controller.getCurrentPlayer().busTickets) {
         btnGroup.buttons.add(this)
-        verticalTextPosition = Alignment.Bottom
-        horizontalTextPosition = Alignment.Center
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
       contents += new ToggleButton("Underground: " + controller.getCurrentPlayer().undergroundTickets) {
         btnGroup.buttons.add(this)
-        verticalTextPosition = Alignment.Bottom
-        horizontalTextPosition = Alignment.Center
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
       contents += new ToggleButton("Black Ticket: " + controller.getPlayersList()(0).asInstanceOf[MrX].blackTickets) {
         enabled = false
         btnGroup.buttons.add(this)
-        verticalTextPosition = Alignment.Bottom
-        horizontalTextPosition = Alignment.Center
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
       contents += new ToggleButton("Double Turn: " + controller.getPlayersList()(0).asInstanceOf[MrX].doubleTurn) {
         enabled = false
-        verticalTextPosition = Alignment.Bottom
-        horizontalTextPosition = Alignment.Center
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
     }, BorderPanel.Position.Center)
