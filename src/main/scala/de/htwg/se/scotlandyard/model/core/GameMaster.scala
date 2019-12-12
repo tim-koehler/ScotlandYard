@@ -91,20 +91,21 @@ object GameMaster {
 
   def validateMove(newPosition: Integer, ticketType: TicketType): Boolean = {
 
-    if(!isTargetStationInBounds(newPosition))
+    if (!isTargetStationInBounds(newPosition))
       return false
 
-    if(!isMeanOfTransportValid(newPosition, ticketType))
+    if (!isMeanOfTransportValid(newPosition, ticketType))
       return false
 
-    if(!isTargetStationEmpty(newPosition))
-      if(getCurrentPlayerIndex() == 0) {
-        return false
-      } else {
+    if (!isTargetStationEmpty(newPosition)) {
+      if (players(0).getPosition().number == newPosition) {
         winningPlayer = getCurrentPlayer()
         win = true
         return true
+      } else {
+        return false
       }
+    }
     true
   }
 

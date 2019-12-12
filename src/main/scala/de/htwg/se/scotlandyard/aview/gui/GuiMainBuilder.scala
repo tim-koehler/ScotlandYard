@@ -165,7 +165,7 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
   }
 
   def drawAllCenteredCircles(g: Graphics2D, r: Int): Unit = {
-    g.setStroke(new BasicStroke(7.0f))
+    g.setStroke(new BasicStroke(10.0f))
     g.setColor(Color.BLUE)
 
     println("Mrx: " + GameMaster.players(0).getPosition().number)

@@ -25,7 +25,8 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
     }
   }
 
-  var buttongroup = new ButtonGroup
+  //TODO: Buttongroup not working
+  var buttongroup = new ButtonGroup()
 
   var rb1 = new RadioButton("2 Player") {
     buttongroup.buttons.add(this)
