@@ -46,6 +46,10 @@ class Controller extends Publisher {
     GameMaster.getCurrentPlayer()
   }
 
+  def getStations(): List[Station] = {
+    GameMaster.stations
+  }
+
   def getTotalRound(): Integer = {
     GameMaster.totalRound
   }
