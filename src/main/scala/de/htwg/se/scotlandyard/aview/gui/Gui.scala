@@ -39,7 +39,6 @@ class Gui(controller: Controller) extends Frame {
   def updateGame(): Unit = {
     contents = gamePanel()
     this.repaint()
-    setMax()
   }
 
   def changeToGamePanel(): Unit = {
@@ -49,11 +48,6 @@ class Gui(controller: Controller) extends Frame {
     centerOnScreen()
     Dialog.showMessage(null, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")
     Dialog.showMessage(null, "MrX is at Station: " + controller.getCurrentPlayer().station.number, "MrX Position")
-  }
-
-  //TODO: fix maxmimize bug
-  def setMax() = {
-    this.maximize()
   }
 
   contents = settingsPanel
