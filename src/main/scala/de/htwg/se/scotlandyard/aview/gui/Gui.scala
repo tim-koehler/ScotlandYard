@@ -1,11 +1,13 @@
 package de.htwg.se.scotlandyard.aview
 
-import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin}
 
 import scala.swing._
 import de.htwg.se.scotlandyard.aview.gui.{GuiMainBuilder, GuiSettingsBuilder}
 
 class Gui(controller: Controller) extends Frame {
+  listenTo(controller)
+
   val EXIT_ON_CLOSE = 3
   title = "Scotland Yard"
   preferredSize = new Dimension(600, 400)
@@ -38,6 +40,7 @@ class Gui(controller: Controller) extends Frame {
     setMax()
   }
 
+  //TODO: fix maxmimize bug
   def setMax() = {
     this.maximize()
   }
@@ -45,4 +48,11 @@ class Gui(controller: Controller) extends Frame {
   contents = settingsPanel
 
   visible = true
+
+  reactions += {
+    case event: PlayerNameChanged => updateSettings()
+    case event: NumberOfPlayersChanged => updateSettings()
+    case event: PlayerMoved => updateGame()
+    case event: PlayerWin => updateGame()
+  }
 }

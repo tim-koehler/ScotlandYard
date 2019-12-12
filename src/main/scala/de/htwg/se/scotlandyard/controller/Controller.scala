@@ -7,7 +7,9 @@ import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.util.Observable
 import de.htwg.se.scotlandyard.util.UndoManager
 
-class Controller extends Observable {
+import scala.swing.Publisher
+
+class Controller extends Publisher {
 
   private val undoManager = new UndoManager()
 
@@ -16,7 +18,7 @@ class Controller extends Observable {
     if(index < GameMaster.players.length || inputName.equals("")) {
       returnValue = GameMaster.players(index).setPlayerName(inputName)
     }
-    notifyObservers
+    publish(new PlayerNameChanged)
     returnValue
   }
 
@@ -27,7 +29,7 @@ class Controller extends Observable {
   def setWinning(win: Boolean): Boolean = {
     var oldWin = GameMaster.win
     GameMaster.win = win
-    notifyObservers
+    publish(new PlayerWin)
     oldWin
   }
 
@@ -37,7 +39,7 @@ class Controller extends Observable {
 
   def initPlayers(nPlayer: Int): Integer = {
     GameInitializer.initPlayers(nPlayer)
-    notifyObservers
+    publish(new NumberOfPlayersChanged)
     GameMaster.players.length
   }
 
@@ -63,19 +65,20 @@ class Controller extends Observable {
 
   def doMove(newPosition: Int, ticketType: TicketType): Station = {
     val newStation = undoManager.doStep(new MoveCommand(getCurrentPlayer().getPosition().number, newPosition, ticketType))
-    notifyObservers
+
+    publish(new PlayerMoved)
     newStation
   }
 
   def undoValidateAndMove(): Station = {
     val newStation = undoManager.undoStep()
-    notifyObservers
+    publish(new PlayerMoved)
     newStation
   }
 
   def redoValidateAndMove(): Station = {
     val newStation = undoManager.redoStep()
-    notifyObservers
+    publish(new PlayerMoved)
     newStation
   }
 

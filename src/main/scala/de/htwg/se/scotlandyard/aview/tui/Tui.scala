@@ -1,15 +1,16 @@
 package de.htwg.se.scotlandyard.aview.tui
 
-import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin}
 import de.htwg.se.scotlandyard.model.core.MapRenderer
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import de.htwg.se.scotlandyard.util.Observer
 
 import scala.io.{BufferedSource, Source}
+import scala.swing.Reactor
 import scala.util.{Failure, Success, Try}
 
-class Tui(controller: Controller) extends Observer{
-  controller.add(this)
+class Tui(controller: Controller) extends Reactor {
+  listenTo(controller)
   var state: State = new SelectNumberOfPlayerMenuState(this)
 
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
@@ -203,7 +204,14 @@ class Tui(controller: Controller) extends Observer{
     println(toString())
   }
 
-  override def update: Unit = {
+  def update: Unit = {
     updateScreen()
+  }
+
+  reactions += {
+    case event: PlayerNameChanged => updateScreen()
+    case event: NumberOfPlayersChanged => updateScreen()
+    case event: PlayerMoved => updateScreen()
+    case event: PlayerWin => updateScreen()
   }
 }

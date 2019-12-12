@@ -110,7 +110,6 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
   def buildMrXHistoryPanel(): ScrollPane = {
     new ScrollPane(new ListView(controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
       renderer = Renderer(_.toString)
-      println("history: " + controller.getPlayersList()(0).asInstanceOf[MrX].getHistory())
     })
   }
 
@@ -150,8 +149,6 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
           if(controller.validateMove(getStationFromCoordinates(e.point.x, e.point.y), getCurrentTicket())) {
             controller.doMove(getStationFromCoordinates(e.point.x, e.point.y), getCurrentTicket())
           }
-          println("CurrentPlayer: " + controller.getCurrentPlayer().name)
-          println("GuessedStation: " + getStationFromCoordinates(e.point.x, e.point.y))
           gui.updateGame()
           repaint()
       }
@@ -167,10 +164,6 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
   def drawAllCenteredCircles(g: Graphics2D, r: Int): Unit = {
     g.setStroke(new BasicStroke(10.0f))
     g.setColor(Color.BLUE)
-
-    println("Mrx: " + GameMaster.players(0).getPosition().number)
-    println("Dt1: " + GameMaster.players(1).getPosition().number)
-    println("Dt2: " + GameMaster.players(2).getPosition().number)
 
     var mrx = controller.getPlayersList()(0).asInstanceOf[MrX]
     if (mrx.isVisible) {
