@@ -47,6 +47,8 @@ class Gui(controller: Controller) extends Frame {
     preferredSize = new Dimension(screenSize.width, screenSize.height - 50)
     contents = gamePanel()
     centerOnScreen()
+    Dialog.showMessage(null, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")
+    Dialog.showMessage(null, "MrX is at Station: " + controller.getCurrentPlayer().station.number, "MrX Position")
   }
 
   //TODO: fix maxmimize bug

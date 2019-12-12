@@ -209,6 +209,7 @@ class Tui(controller: Controller) extends Reactor {
   reactions += {
     case event: PlayerNameChanged => updateScreen()
     case event: NumberOfPlayersChanged => updateScreen()
+      changeState(new ChooseNameMenuState(this))
     case event: PlayerMoved => updateScreen()
     case event: PlayerWin => updateScreen()
   }
