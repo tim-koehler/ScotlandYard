@@ -1,5 +1,7 @@
 package de.htwg.se.scotlandyard.aview
 
+import java.awt.Toolkit
+
 import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin}
 
 import scala.swing._
@@ -36,8 +38,10 @@ class Gui(controller: Controller) extends Frame {
   }
 
   def changeToGamePanel(): Unit = {
+    val screenSize = Toolkit.getDefaultToolkit.getScreenSize
+    preferredSize = new Dimension(screenSize.width, screenSize.height)
     contents = gamePanel()
-    setMax()
+    centerOnScreen()
   }
 
   //TODO: fix maxmimize bug

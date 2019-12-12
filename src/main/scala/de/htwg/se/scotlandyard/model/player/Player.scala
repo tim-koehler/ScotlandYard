@@ -22,8 +22,11 @@ trait Player {
    def setPlayerName(newName: String): Boolean = {
       if(newName.length < 3) {
          false
+      } else if (newName.length > 25) {
+         name = newName.substring(0, 25)
+         true
       } else {
-         name = newName.substring(0, 3)
+        name = newName
          true
       }
    }

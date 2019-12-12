@@ -4,7 +4,6 @@ import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player._
-import de.htwg.se.scotlandyard.util.Observable
 import de.htwg.se.scotlandyard.util.UndoManager
 
 import scala.swing.Publisher
@@ -13,7 +12,7 @@ class Controller extends Publisher {
 
   private val undoManager = new UndoManager()
 
-  def setPlayerNames(inputName: String, index: Int): Boolean = {
+  def setPlayerName(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
     if(index < GameMaster.players.length || inputName.equals("")) {
       returnValue = GameMaster.players(index).setPlayerName(inputName)

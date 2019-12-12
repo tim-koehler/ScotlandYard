@@ -5,16 +5,16 @@ import java.awt.{BasicStroke, Color}
 import java.io.File
 
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.aview.tui.WinningState
 import de.htwg.se.scotlandyard.controller.Controller
-import de.htwg.se.scotlandyard.model.core.GameMaster
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import javax.imageio.ImageIO
 
+import scala.swing.Swing._
 import scala.io.Source
 import scala.swing.ListView.Renderer
-import scala.swing.{Action, Alignment, BorderPanel, Button, ButtonGroup, Dialog, Dimension, FlowPanel, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Panel, Point, ScrollPane, ToggleButton}
+import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
+import scala.swing.{Action, Alignment, BorderPanel, BoxPanel, Button, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, Point, ScrollPane, ToggleButton}
 import scala.swing.event.MouseClicked
 import scala.util.{Failure, Success, Try}
 
@@ -23,6 +23,7 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
   val imagePath = "./src/main/scala/de/htwg/se/scotlandyard/map_large.png"
   val guiCoordinatesPath = "./src/main/scala/de/htwg/se/scotlandyard/gui_coordinates.txt"
 
+  val fontSize = 20
   val image: BufferedImage = ImageIO.read(new File(imagePath))
   var coordinatesList = readCoordinatesFromFile(guiCoordinatesPath)
   var btnGroup = new ButtonGroup()
@@ -107,36 +108,65 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
     }
   }
 
-  def buildMrXHistoryPanel(): ScrollPane = {
-    new ScrollPane(new ListView(controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
-      renderer = Renderer(_.toString)
-    })
+  def buildMrXHistoryPanel(): BoxPanel = new BoxPanel(Orientation.Vertical) {
+    contents += {
+      new ScrollPane(new ListView(controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
+        renderer = Renderer(_.toString)
+        font = Font.apply(this.font.getName, Font.Bold, fontSize)
+      })
+    }
+    var tb = TitledBorder(EtchedBorder, "MrX History")
+    tb.setTitleFont(Font.apply(this.font.getName, Font.Bold, fontSize - 5))
+    border = CompoundBorder(tb, EmptyBorder(8, 8, 8, 8))
+    preferredSize = new Dimension(100, gui.peer.getHeight)
   }
 
-  def buildBottomPanel(): FlowPanel = {
-    new FlowPanel() {
+
+  def buildBottomPanel(): BorderPanel = new BorderPanel {
+    add(new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Current Player:") {
+        font = Font.apply(this.font.getName, Font.Bold, fontSize)
+      }
+      contents += HStrut(10)
       contents += new Panel {
         background = controller.getCurrentPlayer().color
+        preferredSize = new Dimension(30, 30)
       }
-      contents += new Label(controller.getCurrentPlayer().name)
+      contents += HStrut(5)
+      contents += new Label(controller.getCurrentPlayer().name) {
+        font = Font.apply(this.font.getName, Font.Bold, fontSize)
+      }
+      border = EmptyBorder(8, 8, 8, 8)
+    }, BorderPanel.Position.West)
+
+    add(new FlowPanel() {
       contents += new ToggleButton("Taxi: " + controller.getCurrentPlayer().taxiTickets) {
         selected = true
         btnGroup.buttons.add(this)
         verticalTextPosition = Alignment.Bottom
         horizontalTextPosition = Alignment.Center
+        font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
       contents += new ToggleButton("Bus: " + controller.getCurrentPlayer().busTickets) {
         btnGroup.buttons.add(this)
         verticalTextPosition = Alignment.Bottom
         horizontalTextPosition = Alignment.Center
+        font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
       contents += new ToggleButton("Underground: " + controller.getCurrentPlayer().undergroundTickets) {
         btnGroup.buttons.add(this)
         verticalTextPosition = Alignment.Bottom
         horizontalTextPosition = Alignment.Center
+        font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new Label("Round: " + controller.getTotalRound() + "/24")
-    }
+    }, BorderPanel.Position.Center)
+
+    add(new BorderPanel() {
+      add(new Label("Round: " + controller.getTotalRound() + "/24") {
+        font = Font.apply(this.font.getName, Font.Bold, fontSize)
+      }, BorderPanel.Position.Center)
+      border = EmptyBorder(8, 8, 8, 8)
+    }, BorderPanel.Position.East)
   }
 
   def buildMainPanel(): ScrollPane = {
