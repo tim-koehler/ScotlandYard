@@ -24,10 +24,8 @@ object GameInitializer {
   val colorList = List(MRX_COLOR, DT1_COLOR, DT2_COLOR, DT3_COLOR, DT4_COLOR, DT5_COLOR, DT6_COLOR)
 
   // real starting positions
-  //val detectiveStartPositions = List(13, 26, 29, 34, 50, 53, 91, 94, 103, 112, 117, 123, 138, 141, 155, 174) // 16
-  //val misterXStartPositions = List(35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170, 172) // 13
-  val detectiveStartPositions = List(1, 2, 3, 4, 11, 12, 13, 14) // for gui testing purpose
-  val misterXStartPositions = List(8, 19) // for gui testing purpose
+  val detectiveStartPositions = List(13, 26, 29, 34, 50, 53, 91, 94, 103, 112, 117, 123, 138, 141, 155, 174) // 16
+  val misterXStartPositions = List(35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170, 172) // 13
   val MAX_DETECTIVE_LIST_INDEX = detectiveStartPositions.length
   val MAX_MISTERX_LIST_INDEX = misterXStartPositions.length
   // drawn Detective Positions
