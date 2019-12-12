@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.tui
 
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.MapRenderer
-import de.htwg.se.scotlandyard.model.player.TicketType
+import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import de.htwg.se.scotlandyard.util.Observer
 
 import scala.io.{BufferedSource, Source}
@@ -10,7 +10,6 @@ import scala.util.{Failure, Success, Try}
 
 class Tui(controller: Controller) extends Observer{
   controller.add(this)
-  //var state: State = new MainMenuState(this)
   var state: State = new SelectNumberOfPlayerMenuState(this)
 
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
@@ -136,7 +135,7 @@ class Tui(controller: Controller) extends Observer{
   }
 
   def evaluateWinning(input: String): Int = {
-    changeState(new MainMenuState(this))
+    changeState(new SelectNumberOfPlayerMenuState(this))
     controller.setWinning(false)
     TUIMODE_RUNNING
   }
@@ -155,7 +154,11 @@ class Tui(controller: Controller) extends Observer{
 
   def buildOutputStringForRunningGame(): String = {
     var outputString = MapRenderer.renderMap()
-    outputString = outputString + "Round: " + controller.getTotalRound() + "\n"
+    outputString = outputString + "Round: " + controller.getTotalRound() + "\nMrX History: "
+    for(t <- controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
+      outputString = outputString + t.toString + ", "
+    }
+    outputString = outputString + "\n"
     for(p <- controller.getPlayersList()) {
       outputString = outputString + p.toString + "\n"
     }

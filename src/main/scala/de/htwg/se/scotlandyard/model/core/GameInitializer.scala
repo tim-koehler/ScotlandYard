@@ -1,5 +1,7 @@
 package de.htwg.se.scotlandyard.model.core
 
+import java.awt.Color
+
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
 import de.htwg.se.scotlandyard.model.map.{GameMap, StationType}
@@ -11,10 +13,20 @@ import scala.util.{Failure, Success, Try}
 
 object GameInitializer {
 
+  val MRX_COLOR = Color.BLACK
+  val DT1_COLOR = Color.BLUE
+  val DT2_COLOR = Color.GREEN
+  val DT3_COLOR = Color.ORANGE
+  val DT4_COLOR = Color.MAGENTA
+  val DT5_COLOR = Color.RED
+  val DT6_COLOR = Color.CYAN
+
+  val colorList = List(MRX_COLOR, DT1_COLOR, DT2_COLOR, DT3_COLOR, DT4_COLOR, DT5_COLOR, DT6_COLOR)
+
   // real starting positions
   //val detectiveStartPositions = List(13, 26, 29, 34, 50, 53, 91, 94, 103, 112, 117, 123, 138, 141, 155, 174) // 16
   //val misterXStartPositions = List(35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170, 172) // 13
-  val detectiveStartPositions = List(1, 2, 3, 4, 5, 20, 19) // for gui testing purpose
+  val detectiveStartPositions = List(1, 2, 3, 4, 11, 12, 13, 14) // for gui testing purpose
   val misterXStartPositions = List(8, 19) // for gui testing purpose
   val MAX_DETECTIVE_LIST_INDEX = detectiveStartPositions.length
   val MAX_MISTERX_LIST_INDEX = misterXStartPositions.length
@@ -35,10 +47,10 @@ object GameInitializer {
   def initPlayers(nPlayer: Int): Boolean = {
     GameMaster.players = List()
     var st = GameMaster.stations(drawMisterXPosition())
-    GameMaster.players = List[Player](new MrX(st))
+    GameMaster.players = List[Player](new MrX(st, color = MRX_COLOR))
     for(i <- 1 to (nPlayer - 1)) {
       st = GameMaster.stations(drawDetectivePosition())
-      GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i))
+      GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i, colorList(i)))
     }
     distributeTicketsToMrX()
     distributeTicketsToDetectives()

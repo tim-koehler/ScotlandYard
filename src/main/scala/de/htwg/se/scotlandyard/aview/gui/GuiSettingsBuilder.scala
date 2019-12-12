@@ -25,7 +25,10 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
     }
   }
 
+  var buttongroup = new ButtonGroup
+
   var rb1 = new RadioButton("2 Player") {
+    buttongroup.buttons.add(this)
     action = new Action("2 Player") {
       override def apply(): Unit = {
         controller.initPlayers(2)
@@ -36,7 +39,8 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   }
 
   var rb2 = new RadioButton("3 Player") {
-    //selected = true
+    buttongroup.buttons.add(this)
+    selected = true
     action = new Action("3 Player") {
       override def apply(): Unit = {
         controller.initPlayers(3)
@@ -47,6 +51,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   }
 
   var rb3 = new RadioButton("4 Player") {
+    buttongroup.buttons.add(this)
     action = new Action("4 Player") {
       override def apply(): Unit = {
         controller.initPlayers(4)
@@ -57,6 +62,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   }
 
   var rb4 = new RadioButton("5 Player") {
+    buttongroup.buttons.add(this)
     action = new Action("5 Player") {
       override def apply(): Unit = {
         controller.initPlayers(5)
@@ -67,6 +73,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   }
 
   var rb5 = new RadioButton("6 Player") {
+    buttongroup.buttons.add(this)
     action = new Action("6 Player") {
       override def apply(): Unit = {
         controller.initPlayers(6)
@@ -77,6 +84,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   }
 
   var rb6 = new RadioButton("7 Player") {
+    buttongroup.buttons.add(this)
     action = new Action("7 Player") {
       override def apply(): Unit = {
         controller.initPlayers(7)
@@ -84,10 +92,6 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
         gui.updateSettings()
       }
     }
-  }
-
-  val buttongroup = new ButtonGroup {
-    buttons ++= List(rb1, rb2, rb3, rb4, rb5, rb6)
   }
 
   def rbBox = new BoxPanel(Orientation.Vertical) {
@@ -118,6 +122,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
       listenTo(this)
       reactions += {
         case e: ButtonClicked => gui.changeToGamePanel()
+          Dialog.showMessage(null, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")
           Dialog.showMessage(null, "MrX is at Station: " + controller.getCurrentPlayer().station.number, "MrX Position")
       }
     }, BorderPanel.Position.East)

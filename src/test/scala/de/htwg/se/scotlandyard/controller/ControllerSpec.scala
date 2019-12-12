@@ -9,10 +9,10 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "Controller" when {
     "new" should {
       GameMaster.startGame()
-      GameInitializer.initPlayers(2)
+      GameInitializer.initPlayers(3)
       val controller = new Controller()
       "should return 2 from getPlayerList method" in {
-        controller.getPlayersList().length shouldBe (2)
+        controller.getPlayersList().length shouldBe (3)
       }
       "should return true from setPlayerNames when index is correct" in {
         controller.setPlayerNames("Tim", 1) shouldBe true

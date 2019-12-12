@@ -27,7 +27,6 @@ class Gui(controller: Controller) extends Frame {
     this.repaint()
   }
 
-  //TODO: Screen Max
   def updateGame(): Unit = {
     contents = gamePanel()
     this.repaint()
