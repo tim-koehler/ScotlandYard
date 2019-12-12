@@ -1,11 +1,13 @@
 package de.htwg.se.scotlandyard.aview
 
 import java.awt.Toolkit
+import java.io.File
 
 import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin}
 
 import scala.swing._
 import de.htwg.se.scotlandyard.aview.gui.{GuiMainBuilder, GuiSettingsBuilder}
+import javax.swing.ImageIcon
 
 class Gui(controller: Controller) extends Frame {
   listenTo(controller)
@@ -15,6 +17,10 @@ class Gui(controller: Controller) extends Frame {
   preferredSize = new Dimension(600, 400)
   centerOnScreen()
   peer.setDefaultCloseOperation(EXIT_ON_CLOSE)
+
+  iconImage = new ImageIcon("./src/main/scala/de/htwg/se/scotlandyard/Icon.png").getImage
+
+
 
   def gamePanel(): BorderPanel = {
     val mainBuiler = new GuiMainBuilder(controller, this)
@@ -39,7 +45,7 @@ class Gui(controller: Controller) extends Frame {
 
   def changeToGamePanel(): Unit = {
     val screenSize = Toolkit.getDefaultToolkit.getScreenSize
-    preferredSize = new Dimension(screenSize.width, screenSize.height)
+    preferredSize = new Dimension(screenSize.width, screenSize.height - 50)
     contents = gamePanel()
     centerOnScreen()
   }

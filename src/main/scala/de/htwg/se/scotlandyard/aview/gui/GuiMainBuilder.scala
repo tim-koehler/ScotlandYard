@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.aview.gui
 
+import java.awt.event.KeyEvent
 import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color}
 import java.io.File
@@ -9,6 +10,7 @@ import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import javax.imageio.ImageIO
+import javax.swing.KeyStroke
 
 import scala.swing.Swing._
 import scala.io.Source
@@ -80,31 +82,32 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
     }
   }
 
-  def buildMenuBar(): MenuBar = {
-    new MenuBar {
-      contents += new Menu("Files") {
-        contents += new MenuItem(Action("Save") {
-          Dialog.showMessage(null, "Not yet implemented", ": (")
-        })
-        contents += new MenuItem(Action("Load") {
-          Dialog.showMessage(null, "Not yet implemented", ": (")
-        })
-      }
-      contents += new Menu("Options") {
-        contents += new MenuItem(Action("Undo") {
-          controller.undoValidateAndMove()
-          gui.updateGame()
-        })
-        contents += new MenuItem(Action("Redo") {
-          controller.redoValidateAndMove()
-          gui.updateGame()
-        })
-      }
-      contents += new Menu("Help") {
-        contents += new MenuItem(Action("") {
-          Dialog.showMessage(null, "Not yet implemented", ": (")
-        })
-      }
+  def buildMenuBar(): MenuBar = new MenuBar {
+    contents += new Menu("Files") {
+      contents += new MenuItem(Action("Save") {
+        Dialog.showMessage(null, "Not yet implemented", ": (")
+      })
+      contents += new MenuItem(Action("Load") {
+        Dialog.showMessage(null, "Not yet implemented", ": (")
+      })
+    }
+    contents += new Menu("Options") {
+      contents += new MenuItem(Action("Undo") {
+        controller.undoValidateAndMove()
+        gui.updateGame()
+      })
+      contents += new MenuItem(Action("Redo") {
+        controller.redoValidateAndMove()
+        gui.updateGame()
+      })
+    }
+    contents += new Menu("Help") {
+      contents += new MenuItem(Action("www.github.com/tim-koehler/ScotlandYard") {
+        Dialog.showMessage(null, "Not yet implemented", ": (")
+      })
+      contents += new MenuItem(Action("www.github.com/roland-burke") {
+        Dialog.showMessage(null, "Not yet implemented", ": (")
+      })
     }
   }
 
@@ -155,6 +158,19 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
       }
       contents += new ToggleButton("Underground: " + controller.getCurrentPlayer().undergroundTickets) {
         btnGroup.buttons.add(this)
+        verticalTextPosition = Alignment.Bottom
+        horizontalTextPosition = Alignment.Center
+        font = Font.apply(this.font.getName, Font.Bold, fontSize)
+      }
+      contents += new ToggleButton("Black Ticket: " + controller.getPlayersList()(0).asInstanceOf[MrX].blackTickets) {
+        enabled = false
+        btnGroup.buttons.add(this)
+        verticalTextPosition = Alignment.Bottom
+        horizontalTextPosition = Alignment.Center
+        font = Font.apply(this.font.getName, Font.Bold, fontSize)
+      }
+      contents += new ToggleButton("Double Turn: " + controller.getPlayersList()(0).asInstanceOf[MrX].doubleTurn) {
+        enabled = false
         verticalTextPosition = Alignment.Bottom
         horizontalTextPosition = Alignment.Center
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
