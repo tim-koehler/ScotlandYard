@@ -1,71 +1,27 @@
 package de.htwg.se.scotlandyard.aview.gui
 
-import java.awt.event.KeyEvent
 import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color}
 import java.io.File
-
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import javax.imageio.ImageIO
-import javax.swing.KeyStroke
-
 import scala.swing.Swing._
-import scala.io.Source
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
-import scala.swing.{Action, Alignment, BorderPanel, BoxPanel, Button, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, Point, ScrollPane, ToggleButton}
+import scala.swing.{Action, Alignment, BorderPanel, BoxPanel, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, Point, ScrollPane, ToggleButton}
 import scala.swing.event.MouseClicked
-import scala.util.{Failure, Success, Try}
 
 class GuiMainBuilder (controller: Controller, gui: Gui) {
 
-  val imagePath = "./src/main/scala/de/htwg/se/scotlandyard/map_large.png"
-  val guiCoordinatesPath = "./src/main/scala/de/htwg/se/scotlandyard/gui_coordinates.txt"
+  val mapImagePath = "./src/main/scala/de/htwg/se/scotlandyard/map_large.png"
 
   val fontSize = 20
-  val image: BufferedImage = ImageIO.read(new File(imagePath))
-  var coordinatesList = readCoordinatesFromFile(guiCoordinatesPath)
+  val image: BufferedImage = ImageIO.read(new File(mapImagePath))
   var btnGroup = new ButtonGroup()
-
-  def readCoordinatesFromFile(path: String): Option[List[Point]] = {
-    var list: List[Point] = List()
-    Try(Source.fromFile(path)) match {
-      case Success(v) => for (line <- v.getLines()) {
-        var coords = line.split(";")(0)
-        var xPos = coords.split(",")(0).toInt
-        var yPos = coords.split(",")(1).toInt
-        list = new Point(xPos, yPos) :: list
-      }; v.close()
-      case Failure(e) => None
-    }
-    Some(list.reverse)
-  }
-
-  def getStationFromCoordinates(xPos: Int, yPos: Int): Int = {
-    var distance = 9999.0
-    var guessedStation = 1
-    for((pos, index) <- coordinatesList.get.view.zipWithIndex) {
-      if(pos.distance(new Point(xPos, yPos)) < distance) {
-        distance = pos.distance(new Point(xPos, yPos))
-        guessedStation = index
-      }
-    }
-    guessedStation
-  }
-
-  def getCurrentTicket(): TicketType = {
-    var btn = btnGroup.selected.get
-    if(btn.text.contains("Taxi")) {
-      TicketType.Taxi
-    } else if(btn.text.contains("Bus")) {
-      TicketType.Bus
-    } else {
-      TicketType.Underground
-    }
-  }
 
   def getPanel(): BorderPanel = {
 
@@ -82,7 +38,31 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
     }
   }
 
-  def buildMenuBar(): MenuBar = new MenuBar {
+  private def getStationNextToClickedCoords(xPos: Int, yPos: Int): Station = {
+    var distance = 9999.0
+    var guessedStation: Station = controller.getStations()(0)
+    for((station, index) <- controller.getStations().zipWithIndex) {
+      val clickedPoint = new Point(xPos, yPos)
+      if(station.guiCoords.distance(clickedPoint) < distance) {
+        distance = station.guiCoords.distance(clickedPoint)
+        guessedStation = station
+      }
+    }
+    guessedStation
+  }
+
+  private def getCurrentTicketType(): TicketType = {
+    val btn = btnGroup.selected.get
+    if(btn.text.contains("Taxi")) {
+      TicketType.Taxi
+    } else if(btn.text.contains("Bus")) {
+      TicketType.Bus
+    } else {
+      TicketType.Underground
+    }
+  }
+
+  private def buildMenuBar(): MenuBar = new MenuBar {
     contents += new Menu("Files") {
       contents += new MenuItem(Action("Save") {
         Dialog.showMessage(null, "Not yet implemented", ": (")
@@ -111,7 +91,7 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
     }
   }
 
-  def buildMrXHistoryPanel(): BoxPanel = new BoxPanel(Orientation.Vertical) {
+  private def buildMrXHistoryPanel(): BoxPanel = new BoxPanel(Orientation.Vertical) {
     contents += {
       new ScrollPane(new ListView(controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
         renderer = Renderer(_.toString)
@@ -124,8 +104,7 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
     preferredSize = new Dimension(100, gui.peer.getHeight)
   }
 
-
-  def buildBottomPanel(): BorderPanel = new BorderPanel {
+  private def buildBottomPanel(): BorderPanel = new BorderPanel {
     add(new BoxPanel(Orientation.Horizontal) {
       contents += new Label("Current Player:") {
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
@@ -185,15 +164,15 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
     }, BorderPanel.Position.East)
   }
 
-  def buildMainPanel(): ScrollPane = {
+  private def buildMainPanel(): ScrollPane = {
     val panel = new BorderPanel {
       preferredSize = new Dimension(image.getWidth, image.getHeight)
 
       listenTo(mouse.clicks)
       reactions += {
         case e: MouseClicked =>
-          if(controller.validateMove(getStationFromCoordinates(e.point.x, e.point.y), getCurrentTicket())) {
-            controller.doMove(getStationFromCoordinates(e.point.x, e.point.y), getCurrentTicket())
+          if(controller.validateMove(getStationNextToClickedCoords(e.point.x, e.point.y).number, getCurrentTicketType())) {
+            controller.doMove(getStationNextToClickedCoords(e.point.x, e.point.y).number, getCurrentTicketType())
           }
           gui.updateGame()
           repaint()
@@ -201,25 +180,25 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
       override protected def paintComponent(g: Graphics2D): Unit = {
         super.paintComponent(g)
         g.drawImage(image, 0, 0, null)
-        drawAllCenteredCircles(g, 50)
+        drawPlayerCirclesOnMap(g, 50)
       }
     }
     new ScrollPane(panel)
   }
 
-  def drawAllCenteredCircles(g: Graphics2D, r: Int): Unit = {
+  private def drawPlayerCirclesOnMap(g: Graphics2D, r: Int): Unit = {
     g.setStroke(new BasicStroke(10.0f))
     g.setColor(Color.BLUE)
 
-    var mrx = controller.getPlayersList()(0).asInstanceOf[MrX]
+    val mrx = controller.getPlayersList()(0).asInstanceOf[MrX]
     if (mrx.isVisible) {
       g.setColor(mrx.color)
-      g.drawOval(coordinatesList.get(mrx.getPosition().number).x - (r / 2), coordinatesList.get(mrx.getPosition().number).y - (r / 2), r, r)
+      g.drawOval(mrx.getPosition().guiCoords.x - (r / 2), mrx.getPosition().guiCoords.y - (r / 2), r, r)
     }
 
     for (p <- controller.getPlayersList().drop(1)) {
       g.setColor(p.color)
-      g.drawOval(coordinatesList.get(p.getPosition().number).x - (r / 2), coordinatesList.get(p.getPosition().number).y - (r / 2), r, r)
+      g.drawOval(p.getPosition().guiCoords.x - (r / 2), p.getPosition().guiCoords.y - (r / 2), r, r)
     }
   }
 }
