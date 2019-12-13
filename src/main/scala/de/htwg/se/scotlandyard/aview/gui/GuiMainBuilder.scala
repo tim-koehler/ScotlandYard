@@ -3,17 +3,19 @@ package de.htwg.se.scotlandyard.aview.gui
 import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color}
 import java.io.File
+
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import javax.imageio.ImageIO
+
 import scala.swing.Swing._
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
 import scala.swing.{Action, Alignment, BorderPanel, BoxPanel, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, Point, ScrollPane, ToggleButton}
-import scala.swing.event.MouseClicked
+import scala.swing.event.{AdjustingEvent, MouseClicked}
 
 class GuiMainBuilder (controller: Controller, gui: Gui) {
 
@@ -22,6 +24,9 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
   val fontSize = 20
   val image: BufferedImage = ImageIO.read(new File(mapImagePath))
   var btnGroup = new ButtonGroup()
+
+  var scrollBarOffsetY = 0
+  var scrollBarOffsetX = 0
 
   def getPanel(): BorderPanel = {
 
@@ -174,7 +179,18 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
         drawPlayerCirclesOnMap(g, 50)
       }
     }
-    new ScrollPane(panel)
+    new ScrollPane(panel) {
+
+      this.horizontalScrollBar.value = scrollBarOffsetX
+      this.verticalScrollBar.value = scrollBarOffsetY
+
+      listenTo(this)
+      reactions += {
+        case e: AdjustingEvent =>
+          scrollBarOffsetX = this.horizontalScrollBar.value
+          scrollBarOffsetY = this.verticalScrollBar.value
+      }
+    }
   }
 
   private def drawPlayerCirclesOnMap(g: Graphics2D, r: Int): Unit = {
