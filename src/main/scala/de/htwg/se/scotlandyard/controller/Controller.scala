@@ -89,6 +89,16 @@ class Controller extends Publisher {
     GameMaster.updateMrXVisibility()
   }
 
+  def startGame(): Boolean = {
+    publish(new StartGame)
+    true
+  }
+
+  def winGame(): Boolean = {
+    publish(new PlayerWin)
+    true
+  }
+
   def getWin(): Boolean = {
     GameMaster.win
   }

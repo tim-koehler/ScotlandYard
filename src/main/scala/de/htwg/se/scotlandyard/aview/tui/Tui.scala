@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.aview.tui
 
-import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin}
+import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.core.MapRenderer
 import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
 import de.htwg.se.scotlandyard.util.Observer
@@ -63,22 +63,22 @@ class Tui(controller: Controller) extends Reactor {
     val transport = input.substring(index + 1).toCharArray.head.toLower
     if(transport.equals('t')) {
       if(controller.validateMove(newStation, TicketType.Taxi)) {
-        if(controller.getWin()) changeState(new WinningState(this))
         controller.doMove(newStation, TicketType.Taxi)
+        if(controller.getWin()) controller.winGame()
       } else {
         updateScreen()
       }
     } else if (transport.equals('b')) {
       if(controller.validateMove(newStation, TicketType.Bus)) {
-        if (controller.getWin()) changeState(new WinningState(this))
         controller.doMove(newStation, TicketType.Bus)
+        if (controller.getWin()) controller.winGame()
       } else {
         updateScreen()
       }
     } else if (transport.equals('u')) {
       if(controller.validateMove(newStation, TicketType.Underground)) {
-        if (controller.getWin()) changeState(new WinningState(this))
         controller.doMove(newStation, TicketType.Underground)
+        if (controller.getWin()) controller.winGame()
       } else {
         updateScreen()
       }
@@ -96,16 +96,6 @@ class Tui(controller: Controller) extends Reactor {
     TUIMODE_RUNNING
   }
 
-  def evaluateMainMenu(input: Int): Int = {
-    if(input == 1) {
-        changeState(new SelectNumberOfPlayerMenuState(this))
-        updateScreen()
-        TUIMODE_RUNNING
-    } else {
-      TUIMODE_QUIT
-    }
-  }
-
   def evaluateSettings(input: String): Int = {
     changeState(new ChooseNameMenuState(this))
     controller.initPlayers(input.toInt)
@@ -113,8 +103,7 @@ class Tui(controller: Controller) extends Reactor {
 
   def evaluateNameMenu(input: String): Int = {
     if (input.toInt == 1) {
-      changeState(new RevealMrX1State(this))
-      updateScreen()
+      controller.startGame()
     } else if (input.toInt > 1) {
       changeState(new EnterNameState(this))
       updateScreen()
@@ -134,8 +123,7 @@ class Tui(controller: Controller) extends Reactor {
   }
 
   def evaluateWinning(input: String): Int = {
-    changeState(new SelectNumberOfPlayerMenuState(this))
-    controller.setWinning(false)
+    System.exit(0)
     TUIMODE_RUNNING
   }
 
@@ -185,12 +173,12 @@ class Tui(controller: Controller) extends Reactor {
       mrXWinningBanner + "\n\n" +
         controller.getPlayersList()(0).name +
         " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
-        "Enter any key to go back to Main Menu..."
+        "Enter any key to exit..."
     } else {
       detectiveWinningBanner + "\n\n" +
         controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name +
         " at Station " + controller.getWinningPlayer().getPosition().number + " !!!\n\n" +
-        "Enter any key to go back to Main Menu..."
+        "Enter any key to exit..."
     }
   }
 
@@ -206,11 +194,16 @@ class Tui(controller: Controller) extends Reactor {
     updateScreen()
   }
 
+  updateScreen()
+
   reactions += {
     case event: PlayerNameChanged => updateScreen()
-    case event: NumberOfPlayersChanged => updateScreen()
-      changeState(new ChooseNameMenuState(this))
+    case event: NumberOfPlayersChanged => changeState(new ChooseNameMenuState(this))
+      updateScreen()
     case event: PlayerMoved => updateScreen()
-    case event: PlayerWin => updateScreen()
+    case event: PlayerWin => changeState(new WinningState(this))
+      updateScreen()
+    case event: StartGame => changeState(new RunningState(this))
+      updateScreen()
   }
 }

@@ -113,7 +113,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
     add(new Button("Start") {
       listenTo(this)
       reactions += {
-        case e: ButtonClicked => gui.changeToGamePanel()
+        case e: ButtonClicked => controller.startGame()
       }
     }, BorderPanel.Position.East)
   }

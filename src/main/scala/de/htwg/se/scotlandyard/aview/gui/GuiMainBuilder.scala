@@ -163,6 +163,7 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
         case e: MouseClicked =>
           if(controller.validateMove(getStationNextToClickedCoords(e.point.x, e.point.y).number, getCurrentTicketType())) {
             controller.doMove(getStationNextToClickedCoords(e.point.x, e.point.y).number, getCurrentTicketType())
+            if(controller.getWin()) controller.winGame()
           }
           gui.updateGame()
           repaint()

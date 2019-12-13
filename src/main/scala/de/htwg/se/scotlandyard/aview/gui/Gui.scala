@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview
 
 import java.awt.Toolkit
 
-import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin}
+import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 
 import scala.swing._
 import de.htwg.se.scotlandyard.aview.gui.{GuiMainBuilder, GuiSettingsBuilder}
@@ -51,6 +51,18 @@ class Gui(controller: Controller) extends Frame {
     Dialog.showMessage(null, "MrX is at Station: " + controller.getCurrentPlayer().station.number, "MrX Position")
   }
 
+  def showWinningDialog(): Unit = {
+    if (controller.getWinningPlayer().name.equals("MrX")) {
+      var winningMessage = controller.getPlayersList()(0).name + " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
+      Dialog.showMessage(null, winningMessage, "WIN")
+
+    } else {
+      var winningMessage = controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name + " at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
+      Dialog.showMessage(null, winningMessage, "WIN")
+    }
+    this.dispose()
+  }
+
   //TODO: fix maxmimize bug
   def setMax() = {
     this.maximize()
@@ -64,6 +76,7 @@ class Gui(controller: Controller) extends Frame {
     case event: PlayerNameChanged => updateSettings()
     case event: NumberOfPlayersChanged => updateSettings()
     case event: PlayerMoved => updateGame()
-    case event: PlayerWin => updateGame()
+    case event: StartGame => changeToGamePanel()
+    case event: PlayerWin => showWinningDialog()
   }
 }
