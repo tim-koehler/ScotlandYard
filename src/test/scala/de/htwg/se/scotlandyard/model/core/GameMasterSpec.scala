@@ -48,7 +48,7 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("never")
       }
       "and target Station should be empty" in {
-        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(3) should be(true)
+        GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(199) should be(true)
 
         GameMaster.getCurrentPlayer().station = GameMaster.stations(3)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(3) should be(false)

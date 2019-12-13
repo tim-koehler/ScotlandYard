@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.aview
 
+import de.htwg.se.scotlandyard.aview.tui.{ChooseNameMenuState, EnterNameState, RevealMrX1State, RevealMrX2State, RunningState, SelectNumberOfPlayerMenuState, Tui}
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import org.scalatest._
@@ -11,9 +12,6 @@ class TuiSpec extends WordSpec with Matchers {
       val tui = new Tui(new Controller())
       "refresh the screen when input is invalid in mainMenu and not refresh" in {
         tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
-      }
-      "evaluateInput should return -1 when exit game is selected" in {
-        tui.evaluateInput("2") shouldBe(tui.TUIMODE_QUIT)
       }
       "change the number of player or refresh the screen" in {
         GameMaster.startGame()
@@ -51,14 +49,6 @@ class TuiSpec extends WordSpec with Matchers {
         tui.changeState(new RevealMrX2State(tui))
         tui.evaluateInput("") shouldBe(tui.TUIMODE_RUNNING)
         tui.state shouldBe a[RunningState]
-      }
-      "evaluateMainMenuMethod should return number of players, running or -1" in {
-        tui.changeState(new MainMenuState(tui))
-        tui.evaluateMainMenu(1) shouldBe(0)
-        tui.changeState(new MainMenuState(tui))
-        tui.evaluateMainMenu(2) shouldBe(tui.TUIMODE_QUIT)
-        tui.changeState(new MainMenuState(tui))
-        tui.evaluateMainMenu(1) shouldBe(tui.TUIMODE_RUNNING)
       }
       "should return state RUNNING when 'a', 'w', 's' or 'd' is pressed is pressed" in {
         GameMaster.startGame()

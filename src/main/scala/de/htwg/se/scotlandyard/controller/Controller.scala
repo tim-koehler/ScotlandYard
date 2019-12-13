@@ -4,19 +4,20 @@ import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player._
-import de.htwg.se.scotlandyard.util.Observable
 import de.htwg.se.scotlandyard.util.UndoManager
 
-class Controller extends Observable {
+import scala.swing.Publisher
+
+class Controller extends Publisher {
 
   private val undoManager = new UndoManager()
 
-  def setPlayerNames(inputName: String, index: Int): Boolean = {
+  def setPlayerName(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
     if(index < GameMaster.players.length || inputName.equals("")) {
       returnValue = GameMaster.players(index).setPlayerName(inputName)
     }
-    notifyObservers
+    publish(new PlayerNameChanged)
     returnValue
   }
 
@@ -27,7 +28,7 @@ class Controller extends Observable {
   def setWinning(win: Boolean): Boolean = {
     var oldWin = GameMaster.win
     GameMaster.win = win
-    notifyObservers
+    publish(new PlayerWin)
     oldWin
   }
 
@@ -37,12 +38,16 @@ class Controller extends Observable {
 
   def initPlayers(nPlayer: Int): Integer = {
     GameInitializer.initPlayers(nPlayer)
-    notifyObservers
+    publish(new NumberOfPlayersChanged)
     GameMaster.players.length
   }
 
   def getCurrentPlayer(): Player = {
     GameMaster.getCurrentPlayer()
+  }
+
+  def getStations(): List[Station] = {
+    GameMaster.stations
   }
 
   def getTotalRound(): Integer = {
@@ -63,24 +68,35 @@ class Controller extends Observable {
 
   def doMove(newPosition: Int, ticketType: TicketType): Station = {
     val newStation = undoManager.doStep(new MoveCommand(getCurrentPlayer().getPosition().number, newPosition, ticketType))
-    notifyObservers
+
+    publish(new PlayerMoved)
     newStation
   }
 
   def undoValidateAndMove(): Station = {
     val newStation = undoManager.undoStep()
-    notifyObservers
+    publish(new PlayerMoved)
     newStation
   }
 
   def redoValidateAndMove(): Station = {
     val newStation = undoManager.redoStep()
-    notifyObservers
+    publish(new PlayerMoved)
     newStation
   }
 
   def updateMrXVisibility(): Boolean = {
     GameMaster.updateMrXVisibility()
+  }
+
+  def startGame(): Boolean = {
+    publish(new StartGame)
+    true
+  }
+
+  def winGame(): Boolean = {
+    publish(new PlayerWin)
+    true
   }
 
   def getWin(): Boolean = {
