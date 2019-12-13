@@ -39,7 +39,6 @@ class Gui(controller: Controller) extends Frame {
   def updateGame(): Unit = {
     contents = gamePanel()
     this.repaint()
-    setMax()
   }
 
   def changeToGamePanel(): Unit = {
@@ -61,11 +60,6 @@ class Gui(controller: Controller) extends Frame {
       Dialog.showMessage(null, winningMessage, "WIN")
     }
     this.dispose()
-  }
-
-  //TODO: fix maxmimize bug
-  def setMax() = {
-    this.maximize()
   }
 
   contents = settingsPanel
