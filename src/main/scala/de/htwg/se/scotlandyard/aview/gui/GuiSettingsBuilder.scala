@@ -13,12 +13,13 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) {
   var selelctedListIndex = 1
 
   def buildPanelPlayerList(): FlowPanel = {
-    new FlowPanel(new ScrollPane(new ListView(controller.getPlayersList().drop(1)) {
+    new FlowPanel(new ScrollPane(new ListView(controller.getPlayersList()) {
+      this.peer.setSelectedIndex(selelctedListIndex)
       preferredSize = new Dimension(150, 80)
       renderer = Renderer(_.name)
       listenTo(this.selection)
       reactions += {
-        case e: SelectionChanged => selelctedListIndex = this.peer.getSelectedIndex + 1
+        case e: SelectionChanged => if(this.peer.getModel.getElementAt(0) == this.peer.getSelectedValue) this.peer.setSelectedIndex(selelctedListIndex) else selelctedListIndex = this.peer.getSelectedIndex
       }})) {
       border = TitledBorder(EmptyBorder(5, 5, 5, 5), "Player Names:")
     }
