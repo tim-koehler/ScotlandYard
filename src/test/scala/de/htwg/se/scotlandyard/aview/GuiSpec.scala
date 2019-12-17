@@ -6,7 +6,7 @@ import org.scalatest.{Matchers, WordSpec}
 
 class GuiSpec extends WordSpec with Matchers {
     "Gui" when {
-      "created" should {
+      /*"created" should {
         GameMaster.startGame()
         val gui = new Gui(new Controller())
         "should updateGame()" in {
@@ -21,6 +21,6 @@ class GuiSpec extends WordSpec with Matchers {
         "should showWinningDialog()" in {
           gui.showWinningDialog()
         }
-      }
+      }*/
     }
 }
