@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.aview.gui
 
+import java.awt.event.{AdjustmentEvent, AdjustmentListener}
 import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color}
 import java.io.File
@@ -168,10 +169,10 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
         case e: MouseClicked =>
           if(controller.validateMove(getStationNextToClickedCoords(e.point.x, e.point.y).number, getCurrentTicketType())) {
             controller.doMove(getStationNextToClickedCoords(e.point.x, e.point.y).number, getCurrentTicketType())
-            if(controller.getWin()) controller.winGame()
+            if(controller.getWin())
+              controller.winGame()
+            gui.updateGame()
           }
-          gui.updateGame()
-          repaint()
       }
       override protected def paintComponent(g: Graphics2D): Unit = {
         super.paintComponent(g)
@@ -180,16 +181,22 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
       }
     }
     new ScrollPane(panel) {
+      this.verticalScrollBar.maximum = 10000
+      this.horizontalScrollBar.maximum = 10000
+      this.verticalScrollBar.unitIncrement = 16
+      this.horizontalScrollBar.unitIncrement = 16
 
       this.horizontalScrollBar.value = scrollBarOffsetX
       this.verticalScrollBar.value = scrollBarOffsetY
 
-      listenTo(this)
-      reactions += {
-        case e: AdjustingEvent =>
-          scrollBarOffsetX = this.horizontalScrollBar.value
-          scrollBarOffsetY = this.verticalScrollBar.value
-      }
+      this.horizontalScrollBar.peer.addAdjustmentListener((_: AdjustmentEvent) => {
+        scrollBarOffsetX = horizontalScrollBar.value
+        scrollBarOffsetY = verticalScrollBar.value
+      })
+      this.verticalScrollBar.peer.addAdjustmentListener((_: AdjustmentEvent) => {
+        scrollBarOffsetX = horizontalScrollBar.value
+        scrollBarOffsetY = verticalScrollBar.value
+      })
     }
   }
 

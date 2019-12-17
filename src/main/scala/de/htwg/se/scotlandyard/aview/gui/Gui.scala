@@ -19,15 +19,14 @@ class Gui(controller: Controller) extends Frame {
 
   iconImage = new ImageIcon("./src/main/scala/de/htwg/se/scotlandyard/Icon.png").getImage
 
-
+  var mainBuiler = new GuiMainBuilder(controller, this)
+  var settingsBuilder = new GuiSettingsBuilder(controller, this)
 
   def gamePanel(): BorderPanel = {
-    val mainBuiler = new GuiMainBuilder(controller, this)
     mainBuiler.getPanel()
   }
 
   def settingsPanel(): BorderPanel = {
-    val settingsBuilder = new GuiSettingsBuilder(controller, this)
     settingsBuilder.getPanel()
   }
 
@@ -38,7 +37,6 @@ class Gui(controller: Controller) extends Frame {
 
   def updateGame(): Unit = {
     contents = gamePanel()
-    this.repaint()
   }
 
   def changeToGamePanel(): Unit = {
@@ -54,7 +52,6 @@ class Gui(controller: Controller) extends Frame {
     if (controller.getWinningPlayer().name.equals("MrX")) {
       val winningMessage = controller.getPlayersList()(0).name + " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
       Dialog.showMessage(null, winningMessage, "WIN")
-
     } else {
       val winningMessage = controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name + " at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
       Dialog.showMessage(null, winningMessage, "WIN")
@@ -63,7 +60,6 @@ class Gui(controller: Controller) extends Frame {
   }
 
   contents = settingsPanel
-
   visible = true
 
   reactions += {
