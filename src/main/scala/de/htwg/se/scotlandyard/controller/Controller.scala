@@ -26,7 +26,7 @@ class Controller extends Publisher {
   }
 
   def setWinning(win: Boolean): Boolean = {
-    var oldWin = GameMaster.win
+    val oldWin = GameMaster.win
     GameMaster.win = win
     publish(new PlayerWin)
     oldWin
