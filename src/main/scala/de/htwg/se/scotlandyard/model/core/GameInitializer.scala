@@ -1,13 +1,27 @@
 package de.htwg.se.scotlandyard.model.core
 
+import java.awt.Color
+
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
 import de.htwg.se.scotlandyard.model.map.{GameMap, StationType}
 import de.htwg.se.scotlandyard.model.player.{Detective, MrX, Player}
 
 import scala.collection.mutable.ListBuffer
+import scala.io.Source
+import scala.util.{Failure, Success, Try}
 
 object GameInitializer {
+
+  val MRX_COLOR = Color.BLACK
+  val DT1_COLOR = Color.BLUE
+  val DT2_COLOR = Color.GREEN
+  val DT3_COLOR = Color.ORANGE
+  val DT4_COLOR = Color.MAGENTA
+  val DT5_COLOR = Color.RED
+  val DT6_COLOR = Color.CYAN
+
+  val colorList = List(MRX_COLOR, DT1_COLOR, DT2_COLOR, DT3_COLOR, DT4_COLOR, DT5_COLOR, DT6_COLOR)
 
   // real starting positions
   val detectiveStartPositions = List(13, 26, 29, 34, 50, 53, 91, 94, 103, 112, 117, 123, 138, 141, 155, 174) // 16
@@ -23,32 +37,29 @@ object GameInitializer {
 
   def initialize(): Boolean = {
     MapRenderer.init()
-    StationFactory.resetCounter()
-    if(ScotlandYard.isDebugMode) {
-      GameMaster.stations = initDebugStations()
-    }
-    else {
-      GameMaster.stations = initStations()
-    }
+    GameMaster.stations = new StationInitializer().initStations()
+    initPlayers(3)
     true
   }
 
   def initPlayers(nPlayer: Int): Boolean = {
+    GameMaster.players = List()
     var st = GameMaster.stations(drawMisterXPosition())
-    GameMaster.players = List[Player](new MrX(st))
+    GameMaster.players = List[Player](new MrX(st, color = MRX_COLOR))
     for(i <- 1 to (nPlayer - 1)) {
       st = GameMaster.stations(drawDetectivePosition())
-      GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i))
+      GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i, colorList(i)))
     }
     distributeTicketsToMrX()
     distributeTicketsToDetectives()
     GameMap.updatePlayerPositions()
+    drawnPositions = List()
     true
   }
 
-  def drawDetectivePosition(isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
-    if(isDebugMode) {
-      return 2
+  def drawDetectivePosition(nonRandomPosition: Integer = -1): Int = {
+    if(nonRandomPosition != -1) {
+      return nonRandomPosition
     }
     var startPosIndex = 0
     do {
@@ -59,9 +70,9 @@ object GameInitializer {
     detectiveStartPositions(startPosIndex)
   }
 
-  def drawMisterXPosition(isDebugMode: Boolean = ScotlandYard.isDebugMode): Int = {
-    if(isDebugMode) {
-      return 1
+  def drawMisterXPosition(nonRandomPosition: Integer = -1): Int = {
+    if(nonRandomPosition != -1) {
+      return nonRandomPosition
     }
     val startPosIndex = r.nextInt(MAX_MISTERX_LIST_INDEX)
     misterXStartPositions(startPosIndex)
@@ -84,43 +95,5 @@ object GameInitializer {
     GameMaster.players(index).busTickets = nBus
     GameMaster.players(index).undergroundTickets = nUnder
     true
-  }
-
-  def initDebugStations(): List[Station] = {
-
-    val stations = createStations()
-    setNeighbours(stations)
-
-    stations
-  }
-
-  def createStations(): List[Station] = {
-    var stationsBuffer = new ListBuffer[Station]()
-
-    stationsBuffer += StationFactory.createZeroIndexStation()
-
-    stationsBuffer += StationFactory.createTaxiStation(5,20)
-    stationsBuffer += StationFactory.createUndergroundStation(23, 25)
-    stationsBuffer += StationFactory.createUndergroundStation(20, 7)
-
-    stationsBuffer.toList
-  }
-
-  private def setNeighbours(stations: List[Station]): Int = {
-    stations(1).setNeighbourTaxis(Set(stations(2), stations(3)))
-
-    stations(2).setNeighbourTaxis(Set(stations(1)))
-    stations(2).setNeighbourBuses(Set(stations(3)))
-    stations(2).setNeighbourUndergrounds(Set(stations(3)))
-
-    stations(3).setNeighbourTaxis(Set(stations(1)))
-    stations(3).setNeighbourBuses(Set(stations(2)))
-    stations(3).setNeighbourUndergrounds(Set(stations(2)))
-
-    stations.size
-  }
-
-  def initStations(): List[Station] = {
-    null
   }
 }

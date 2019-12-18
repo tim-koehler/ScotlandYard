@@ -7,7 +7,7 @@ import scala.collection.mutable
 import scala.collection.mutable.Map
 
 object GameMap {
-  var map: List[String] = List()
+  var map: Option[List[String]] = Some(List())
   var playerPositions: mutable.Map[Player, Int] = mutable.Map[Player, Int]()
 
   def updatePlayerPositions(): Unit ={
@@ -22,19 +22,19 @@ object GameMap {
     playerPositions
   }
 
-  private def updateMapString(): List[String] ={
+  private def updateMapString(): Option[List[String]] ={
 
     for(s <- GameMaster.stations){
-      map = map.updated(s.tuiCoords._2 - 1, map(s.tuiCoords._2 - 1).updated(s.tuiCoords._1 - 1, ' '))
-      map = map.updated(s.tuiCoords._2 - 1, map(s.tuiCoords._2 - 1).updated(s.tuiCoords._1, ' '))
-      map = map.updated(s.tuiCoords._2 - 1, map(s.tuiCoords._2 - 1).updated(s.tuiCoords._1 + 1, ' '))
+      map = Some(map.get.updated(s.tuiCoords._2 - 1, map.get(s.tuiCoords._2 - 1).updated(s.tuiCoords._1 - 1, ' ')))
+      map = Some(map.get.updated(s.tuiCoords._2 - 1, map.get(s.tuiCoords._2 - 1).updated(s.tuiCoords._1, ' ')))
+      map = Some(map.get.updated(s.tuiCoords._2 - 1, map.get(s.tuiCoords._2 - 1).updated(s.tuiCoords._1 + 1, ' ')))
     }
 
     for(p <- GameMaster.players) {
       if(!p.name.equals("MrX") || GameMaster.checkMrXVisibility()) {
-        map = map.updated(p.getPosition().tuiCoords._2 - 1, map(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1 - 1, p.name(0)))
-        map = map.updated(p.getPosition().tuiCoords._2 - 1, map(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1, p.name(1)))
-        map = map.updated(p.getPosition().tuiCoords._2 - 1, map(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1 + 1, p.name(2)))
+        map = Some(map.get.updated(p.getPosition().tuiCoords._2 - 1, map.get(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1 - 1, p.name(0))))
+        map = Some(map.get.updated(p.getPosition().tuiCoords._2 - 1, map.get(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1, p.name(1))))
+        map = Some(map.get.updated(p.getPosition().tuiCoords._2 - 1, map.get(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1 + 1, p.name(2))))
       }
     }
     map

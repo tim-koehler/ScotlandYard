@@ -2,8 +2,10 @@ package de.htwg.se.scotlandyard.model.core
 
 import de.htwg.se.scotlandyard.ScotlandYard
 
-import scala.io.{Source, StdIn}
+import scala.io.{BufferedSource, Source, StdIn}
 import de.htwg.se.scotlandyard.model.map.GameMap
+
+import scala.util.{Failure, Success, Try}
 
 object MapRenderer {
 
@@ -17,29 +19,25 @@ object MapRenderer {
   val mapMoveOffset = 5;
 
   val mapFilePath = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt"
-  val tinyMapFilePath = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMapTiny.txt"
 
   def init(): Boolean = {
-    if(ScotlandYard.isDebugMode) {
-      GameMap.map = readMapFromFile(tinyMapFilePath)
-    } else {
-      GameMap.map = readMapFromFile(mapFilePath)
-    }
+    GameMap.map = readMapFromFile(mapFilePath)
 
-    if(GameMap.map == null) {
-      return false
+    GameMap.map match {
+      case Some(t) => true
+      case None => false
     }
-    true
   }
 
-  def readMapFromFile(path: String): List[String] = {
-    val source = Source.fromFile(path)
-    for (line <- source.getLines()) {
-      GameMap.map = line + "\n" :: GameMap.map
+  def readMapFromFile(path: String): Option[List[String]] = {
+    Try(Source.fromFile(path)) match {
+      case Success(v) => for (line <- v.getLines()) {
+        GameMap.map = Some(line + "\n" :: GameMap.map.get)
+      }; v.close()
+      case Failure(e) => None
     }
-    source.close()
 
-    GameMap.map.reverse
+    Some(GameMap.map.get.reverse)
   }
 
   def updateX(moveMultiplicator: Int, positive: Boolean ): Int = {
@@ -92,15 +90,12 @@ object MapRenderer {
         else{
             str += "\n\u2551"
         }
-        for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX))
-        {
-          try {
-            str += GameMap.map(y).charAt(x)
-          }
-          catch  {
-            case e: Exception => str += " "
-          }
+
+        Try(for(x <- offsetX until ((renderDimensionX - mapBorderOffset) + offsetX)) str += GameMap.map.get(y).charAt(x)) match {
+          case Success(v) => ;
+          case Failure(e) => str += " "
         }
+
         str += "\u2551" + "\n"
       }
       str += renderBottomBorder()

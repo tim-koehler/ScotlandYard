@@ -1,22 +1,20 @@
 package de.htwg.se.scotlandyard
 
-import de.htwg.se.scotlandyard.aview.Tui
-import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.aview.Gui
+import de.htwg.se.scotlandyard.aview.tui.Tui
+import de.htwg.se.scotlandyard.controller.{Controller, PlayerNameChanged}
 import de.htwg.se.scotlandyard.model.core._
 
 import scala.io.StdIn.readLine
 
 object ScotlandYard {
   val controller = new Controller
+  GameMaster.startGame()
   val tui = new Tui(controller)
-  controller.notifyObservers
-
-
-  val isDebugMode = true
+  val gui = new Gui(controller)
 
   def main(args: Array[String]): Unit = {
 
-    GameMaster.startGame()
 
     var input: String = ""
     do {
@@ -24,5 +22,6 @@ object ScotlandYard {
     } while (tui.evaluateInput(input) != -1)
 
     println("Spiel beendet")
+    System.exit(0)
   }
 }

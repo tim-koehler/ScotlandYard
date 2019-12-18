@@ -1,4 +1,6 @@
 package de.htwg.se.scotlandyard.model.map.station
+import java.awt.Point
+
 import de.htwg.se.scotlandyard.model.map.StationType
 import de.htwg.se.scotlandyard.model.map.StationType.StationType
 
@@ -9,4 +11,5 @@ class TaxiStation(num: Integer, tCoords: (Integer, Integer)) extends Station {
   override var neighbourBuses: Set[Station] = _
   override var neighbourUndergrounds: Set[Station] = _
   override var tuiCoords: (Integer, Integer) = tCoords
+  override var guiCoords: Point = _
 }
