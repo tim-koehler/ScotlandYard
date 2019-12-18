@@ -2,8 +2,8 @@ package de.htwg.se.scotlandyard.aview.tui
 
 import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.core.MapRenderer
-import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
-import de.htwg.se.scotlandyard.util.Observer
+import de.htwg.se.scotlandyard.model.player.MrX
+import de.htwg.se.scotlandyard.util.{Observer, TicketType}
 
 import scala.io.{BufferedSource, Source}
 import scala.swing.Reactor

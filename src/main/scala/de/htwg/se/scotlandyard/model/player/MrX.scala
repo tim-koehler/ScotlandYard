@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.model.player
 import java.awt.Color
 
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
+import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 class MrX(var station: Station, var name: String = "MrX", var color: Color = Color.BLACK) extends Player {
   var blackTickets: Int = 5 // default: 5

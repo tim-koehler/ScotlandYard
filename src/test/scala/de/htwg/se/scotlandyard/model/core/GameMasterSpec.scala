@@ -3,7 +3,8 @@ package de.htwg.se.scotlandyard.model.core
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.core.GameMaster.{players, round, winningRound}
-import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
+import de.htwg.se.scotlandyard.model.player.MrX
+import de.htwg.se.scotlandyard.util.TicketType
 import org.scalatest._
 
 class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {

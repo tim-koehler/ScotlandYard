@@ -5,8 +5,8 @@ import de.htwg.se.scotlandyard.model.map._
 import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.player._
 import de.htwg.se.scotlandyard.model.player.MrX
-import de.htwg.se.scotlandyard.model.player.TicketType
-import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
+import de.htwg.se.scotlandyard.util.TicketType
+import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 object GameMaster {
   var stations: List[Station] = List()
