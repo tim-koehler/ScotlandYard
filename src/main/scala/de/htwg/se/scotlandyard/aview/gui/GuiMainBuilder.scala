@@ -8,17 +8,19 @@ import java.io.File
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.model.player.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.player.{MrX, TicketType}
+import de.htwg.se.scotlandyard.util.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.player.MrX
+import de.htwg.se.scotlandyard.util.TicketType
 import javax.imageio.ImageIO
 
+import scala.collection.mutable
 import scala.swing.Swing._
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
 import scala.swing.{Action, Alignment, BorderPanel, BoxPanel, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, Point, ScrollPane, ToggleButton}
 import scala.swing.event.{AdjustingEvent, MouseClicked}
 
-class GuiMainBuilder (controller: Controller, gui: Gui) {
+class GuiMainBuilder (controller: Controller, gui: Gui) extends GuiBuilder {
 
   val mapImagePath = "./src/main/scala/de/htwg/se/scotlandyard/map_large.png"
 
@@ -29,20 +31,22 @@ class GuiMainBuilder (controller: Controller, gui: Gui) {
   var scrollBarOffsetY = 0
   var scrollBarOffsetX = 0
 
-  def getPanel(): BorderPanel = {
 
+  override def initPanel(): BorderPanel = {
+    components = components.empty
+    components += buildMenuBar()
+    components += buildMrXHistoryPanel()
+    components += buildBottomPanel()
+    components += buildMainPanel()
     new BorderPanel() {
-      val menuBar = buildMenuBar()
-      val historyPanel = buildMrXHistoryPanel()
-      val bottomPanel = buildBottomPanel()
-      val mainPanel = buildMainPanel()
-
-      add(menuBar, BorderPanel.Position.North)
-      add(historyPanel, BorderPanel.Position.West)
-      add(bottomPanel, BorderPanel.Position.South)
-      add(mainPanel, BorderPanel.Position.Center)
+      add(components(0), BorderPanel.Position.North)
+      add(components(1), BorderPanel.Position.West)
+      add(components(2), BorderPanel.Position.South)
+      add(components(3), BorderPanel.Position.Center)
     }
   }
+
+  override def updatePanel(): BorderPanel = initPanel()
 
   private def getStationNextToClickedCoords(xPos: Int, yPos: Int): Station = {
     var distance = 9999.0

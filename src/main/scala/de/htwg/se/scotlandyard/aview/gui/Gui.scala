@@ -22,27 +22,26 @@ class Gui(controller: Controller) extends Frame {
   var mainBuiler = new GuiMainBuilder(controller, this)
   var settingsBuilder = new GuiSettingsBuilder(controller, this)
 
-  def gamePanel(): BorderPanel = {
-    mainBuiler.getPanel()
+  def initGamePanel(): BorderPanel = {
+    mainBuiler.initPanel()
   }
 
-  def settingsPanel(): BorderPanel = {
-    settingsBuilder.getPanel()
+  def initSettingsPanel(): BorderPanel = {
+    settingsBuilder.initPanel()
   }
 
   def updateSettings(): Unit = {
-    contents = settingsPanel
-    this.repaint()
+    contents = settingsBuilder.updatePanel()
   }
 
   def updateGame(): Unit = {
-    contents = gamePanel()
+    contents = mainBuiler.updatePanel()
   }
 
   def changeToGamePanel(): Unit = {
     val screenSize = Toolkit.getDefaultToolkit.getScreenSize
     preferredSize = new Dimension(screenSize.width, screenSize.height - 50)
-    contents = gamePanel()
+    contents = initGamePanel()
     centerOnScreen()
     Dialog.showMessage(null, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")
     Dialog.showMessage(null, "MrX is at Station: " + controller.getCurrentPlayer().station.number, "MrX Position")
@@ -59,7 +58,7 @@ class Gui(controller: Controller) extends Frame {
     this.dispose()
   }
 
-  contents = settingsPanel
+  contents = initSettingsPanel()
   visible = true
 
   reactions += {
