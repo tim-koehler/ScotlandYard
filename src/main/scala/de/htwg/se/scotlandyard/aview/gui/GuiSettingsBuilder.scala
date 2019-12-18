@@ -30,7 +30,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
 
   override def updatePanel(): BorderPanel = {
     new BorderPanel() {
-      add(components(0), BorderPanel.Position.South)
+      add(buildBottomPanel(), BorderPanel.Position.South)
       add(components(1), BorderPanel.Position.West)
       add(buildPanelPlayerList(), BorderPanel.Position.East)
     }
@@ -41,10 +41,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
       this.peer.setSelectedIndex(selectedListIndex)
       preferredSize = new Dimension(150, 80)
       renderer = Renderer(_.name)
-      listenTo(this.selection)
-      reactions += {
-        case e: SelectionChanged => if(this.peer.getModel.getElementAt(0) == this.peer.getSelectedValue) this.peer.setSelectedIndex(selectedListIndex) else selectedListIndex = this.peer.getSelectedIndex
-      }})) {
+    })) {
       border = TitledBorder(EmptyBorder(5, 5, 5, 5), "Player Names:")
     }
   }
@@ -64,23 +61,22 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
     }
   }
 
+  def buildBottomPanel(): BorderPanel = {
+    new BorderPanel {
+      border = EmptyBorder(10, 10, 10, 10)
+      add(buildChooseNameBox(), BorderPanel.Position.Center)
+      add(settingsComponentsFactory.createStartButton("Start"), BorderPanel.Position.East)
+    }
+  }
+
   def buildChooseNameBox(): BoxPanel = {
     new BoxPanel(Orientation.Horizontal) {
       contents += new Label("New Player Name:")
       contents += HStrut(10)
       contents += new TextField()
       contents += HStrut(10)
-      //TODO: "selectedListIndex" wird nur beim initialisieren übergeben, und da ist der Wert 1. danach hohlt er sich nicht mehr den aktuellen Wert
-      contents += settingsComponentsFactory.createButton("Change Name", contents(2).asInstanceOf[TextField], selectedListIndex)
+      contents += settingsComponentsFactory.createChangeNameButton("Change Name")
       contents += HStrut(10)
-    }
-  }
-
-  def buildBottomPanel(): BorderPanel = {
-    new BorderPanel {
-      border = EmptyBorder(10, 10, 10, 10)
-      add(buildChooseNameBox(), BorderPanel.Position.Center)
-      add(settingsComponentsFactory.createButton("Start", null, 0), BorderPanel.Position.East)
     }
   }
 }

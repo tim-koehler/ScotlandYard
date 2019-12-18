@@ -1,9 +1,8 @@
 package de.htwg.se.scotlandyard.aview.gui
-
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controller.Controller
-
-import scala.swing.{Button, ButtonGroup, RadioButton, TextField}
+import javax.swing.{JList, JPanel, JScrollPane, JTextField, JViewport}
+import scala.swing.{Button, ButtonGroup, FlowPanel, ListView, RadioButton, TextField}
 import scala.swing.event.ButtonClicked
 
 class SettingsComponentFactory(controller: Controller, gui: Gui) {
@@ -30,18 +29,30 @@ class SettingsComponentFactory(controller: Controller, gui: Gui) {
     }
   }
 
-  def createButton(displayName: String, newNameTextField: TextField, selectedListIndex: Int): Button = {
+  def createStartButton(displayName: String): Button = {
     new Button(displayName) {
       listenTo(this)
       this.reactions += {
         case e: ButtonClicked =>
-          e.source.text match {
-            case "Change Name" =>
-              controller.setPlayerName(newNameTextField.text, selectedListIndex)
-              gui.updateSettings()
-            case "Start" => controller.startGame()
-          }
+          controller.startGame()
       }
+    }
+  }
+
+  def createChangeNameButton(displayName: String): Button = {
+      new Button(displayName) {
+        listenTo(this)
+        this.reactions += {
+          case e: ButtonClicked =>
+            val textField = e.source.peer.getParent.getComponents()(2).asInstanceOf[JTextField]
+            val flowPanel = e.source.peer.getParent.getParent.getParent.getComponent(2).asInstanceOf[JPanel]
+            val listView = flowPanel.
+              getComponent(0).asInstanceOf[JScrollPane].
+              getComponent(0).asInstanceOf[JViewport].
+              getComponent(0).asInstanceOf[JList[String]]
+            controller.setPlayerName(textField.getText, listView.getSelectedIndex)
+            gui.updateSettings()
+        }
     }
   }
 }
