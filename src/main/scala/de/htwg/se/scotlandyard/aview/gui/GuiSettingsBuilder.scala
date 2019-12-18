@@ -11,7 +11,7 @@ import scala.swing.{Action, BorderPanel, BoxPanel, Button, ButtonGroup, Componen
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 
 class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
-  var selelctedListIndex = 1
+  var selectedListIndex = 1
   var btnGroup = new ButtonGroup()
   val settingsComponentsFactory =  new SettingsComponentFactory(controller, gui)
 
@@ -38,12 +38,12 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
 
   def buildPanelPlayerList(): FlowPanel = {
     new FlowPanel(new ScrollPane(new ListView(controller.getPlayersList()) {
-      this.peer.setSelectedIndex(selelctedListIndex)
+      this.peer.setSelectedIndex(selectedListIndex)
       preferredSize = new Dimension(150, 80)
       renderer = Renderer(_.name)
       listenTo(this.selection)
       reactions += {
-        case e: SelectionChanged => if(this.peer.getModel.getElementAt(0) == this.peer.getSelectedValue) this.peer.setSelectedIndex(selelctedListIndex) else selelctedListIndex = this.peer.getSelectedIndex
+        case e: SelectionChanged => if(this.peer.getModel.getElementAt(0) == this.peer.getSelectedValue) this.peer.setSelectedIndex(selectedListIndex) else selectedListIndex = this.peer.getSelectedIndex
       }})) {
       border = TitledBorder(EmptyBorder(5, 5, 5, 5), "Player Names:")
     }
@@ -64,21 +64,14 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
     }
   }
 
-  var textField = new TextField()
-
   def buildChooseNameBox(): BoxPanel = {
     new BoxPanel(Orientation.Horizontal) {
       contents += new Label("New Player Name:")
       contents += HStrut(10)
-      contents += textField
+      contents += new TextField()
       contents += HStrut(10)
-      contents += new Button("Change Name") {
-        listenTo(this)
-        reactions += {
-          case e: ButtonClicked => controller.setPlayerName(textField.text, selelctedListIndex)
-            gui.updateSettings()
-        }
-      }
+      //TODO: "selectedListIndex" wird nur beim initialisieren übergeben, und da ist der Wert 1. danach hohlt er sich nicht mehr den aktuellen Wert
+      contents += settingsComponentsFactory.createButton("Change Name", contents(2).asInstanceOf[TextField], selectedListIndex)
       contents += HStrut(10)
     }
   }
@@ -87,12 +80,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
     new BorderPanel {
       border = EmptyBorder(10, 10, 10, 10)
       add(buildChooseNameBox(), BorderPanel.Position.Center)
-      add(new Button("Start") {
-        listenTo(this)
-        reactions += {
-          case e: ButtonClicked => controller.startGame()
-        }
-      }, BorderPanel.Position.East)
+      add(settingsComponentsFactory.createButton("Start", null, 0), BorderPanel.Position.East)
     }
   }
 }

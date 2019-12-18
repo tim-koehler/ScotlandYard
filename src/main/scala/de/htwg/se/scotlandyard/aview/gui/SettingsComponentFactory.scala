@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.aview.gui
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controller.Controller
 
-import scala.swing.{ButtonGroup, RadioButton}
+import scala.swing.{Button, ButtonGroup, RadioButton, TextField}
 import scala.swing.event.ButtonClicked
 
 class SettingsComponentFactory(controller: Controller, gui: Gui) {
@@ -26,6 +26,21 @@ class SettingsComponentFactory(controller: Controller, gui: Gui) {
             case "7 Player" => controller.initPlayers(7)
           }
           gui.updateSettings()
+      }
+    }
+  }
+
+  def createButton(displayName: String, newNameTextField: TextField, selectedListIndex: Int): Button = {
+    new Button(displayName) {
+      listenTo(this)
+      this.reactions += {
+        case e: ButtonClicked =>
+          e.source.text match {
+            case "Change Name" =>
+              controller.setPlayerName(newNameTextField.text, selectedListIndex)
+              gui.updateSettings()
+            case "Start" => controller.startGame()
+          }
       }
     }
   }
