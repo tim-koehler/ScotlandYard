@@ -57,13 +57,15 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         controller.getStations() should not be(Set[Station]())
       }
       "and setWin" in {
-        controller.setWinning(false) should be(true)
+        val win = controller.getWin()
+        controller.setWinning(false) should be(win)
       }
       "and winGame" in{
         controller.winGame() should be(true)
       }
       "and getWin" in {
-        controller.getWin() should be(false)
+        controller.setWinning(true)
+        controller.getWin() should be(true)
       }
     }
   }
