@@ -13,7 +13,6 @@ import de.htwg.se.scotlandyard.model.player.MrX
 import de.htwg.se.scotlandyard.util.TicketType
 import javax.imageio.ImageIO
 
-import scala.collection.mutable
 import scala.swing.Swing._
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
@@ -92,6 +91,9 @@ class GuiMainBuilder (controller: Controller, gui: Gui) extends GuiBuilder {
       })
     }
     contents += new Menu("Help") {
+      contents += new MenuItem(Action("Info") {
+        Dialog.showMessage(null, "All possible starting Stations for Mr.X are:\n35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170 and 172", "Info")
+      })
       contents += new MenuItem(Action("www.github.com/tim-koehler/ScotlandYard") {
         Dialog.showMessage(null, "Not yet implemented", ": (")
       })
@@ -212,6 +214,9 @@ class GuiMainBuilder (controller: Controller, gui: Gui) extends GuiBuilder {
     if (mrx.isVisible) {
       g.setColor(mrx.color)
       g.drawOval(mrx.getPosition().guiCoords.x - (r / 2), mrx.getPosition().guiCoords.y - (r / 2), r, r)
+    } else if(!mrx.lastSeen.equals("never")) {
+      g.setColor(mrx.lastSeenColor)
+      g.drawOval(controller.getStations()(mrx.lastSeen.toInt).guiCoords.x - (r / 2), controller.getStations()(mrx.lastSeen.toInt).guiCoords.y - (r / 2), r, r)
     }
 
     for (p <- controller.getPlayersList().drop(1)) {

@@ -2,14 +2,8 @@ package de.htwg.se.scotlandyard.model.core
 
 import java.awt.Color
 
-import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
 import de.htwg.se.scotlandyard.model.map.{GameMap, StationType}
 import de.htwg.se.scotlandyard.model.player.{Detective, MrX, Player}
-
-import scala.collection.mutable.ListBuffer
-import scala.io.Source
-import scala.util.{Failure, Success, Try}
 
 object GameInitializer {
 

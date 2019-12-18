@@ -10,9 +10,10 @@ class MrX(var station: Station, var name: String = "MrX", var color: Color = Col
   var isVisible: Boolean = false
   var lastSeen: String = "never"
   var history: List[TicketType] = List()
+  val lastSeenColor: Color = Color.GRAY
 
   override def toString(): String = {
-    var tickets = " - BLACKTICKETS: " + blackTickets + ", DOUBLETURNS: " + doubleTurn
+    val tickets = " - BLACKTICKETS: " + blackTickets + ", DOUBLETURNS: " + doubleTurn
     if(isVisible) {
       name + " is at " + station.number + tickets
     } else {
