@@ -1,7 +1,8 @@
 package de.htwg.se.scotlandyard.aview.gui
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.{JList, JPanel, JScrollPane, JTextField, JViewport}
+
 import scala.swing.{Button, ButtonGroup, FlowPanel, ListView, RadioButton, TextField}
 import scala.swing.event.ButtonClicked
 

@@ -6,7 +6,7 @@ import java.awt.{BasicStroke, Color}
 import java.io.File
 
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player.MrX

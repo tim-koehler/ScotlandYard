@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.aview.gui
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.controller.controllerComponent.controllerBaseImpl.Controller
+
 import scala.swing.Swing._
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}

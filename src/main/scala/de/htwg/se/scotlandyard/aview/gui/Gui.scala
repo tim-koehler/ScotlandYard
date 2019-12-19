@@ -2,10 +2,11 @@ package de.htwg.se.scotlandyard.aview
 
 import java.awt.Toolkit
 
-import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
+import de.htwg.se.scotlandyard.controller.controllerComponent._
 
 import scala.swing._
 import de.htwg.se.scotlandyard.aview.gui.{GuiMainBuilder, GuiSettingsBuilder}
+import de.htwg.se.scotlandyard.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.ImageIcon
 
 class Gui(controller: Controller) extends Frame {

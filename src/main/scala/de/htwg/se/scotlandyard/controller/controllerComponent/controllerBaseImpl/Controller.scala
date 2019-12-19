@@ -1,14 +1,16 @@
-package de.htwg.se.scotlandyard.controller
+package de.htwg.se.scotlandyard.controller.controllerComponent.controllerBaseImpl
 
+import de.htwg.se.scotlandyard.controller._
+import de.htwg.se.scotlandyard.controller.controllerComponent._
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player._
+import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.UndoManager
 
 import scala.swing.Publisher
 
-class Controller extends Publisher {
+class Controller extends ControllerInterface with Publisher {
 
   private val undoManager = new UndoManager()
 
