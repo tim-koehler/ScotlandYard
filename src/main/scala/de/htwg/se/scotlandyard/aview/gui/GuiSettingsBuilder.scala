@@ -1,9 +1,6 @@
 package de.htwg.se.scotlandyard.aview.gui
-
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controller.Controller
-
-import scala.collection.mutable
 import scala.swing.Swing._
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
@@ -11,7 +8,6 @@ import scala.swing.{Action, BorderPanel, BoxPanel, Button, ButtonGroup, Componen
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 
 class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
-  var selectedListIndex = 1
   var btnGroup = new ButtonGroup()
   val settingsComponentsFactory =  new SettingsComponentFactory(controller, gui)
 
@@ -38,10 +34,15 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
 
   def buildPanelPlayerList(): FlowPanel = {
     new FlowPanel(new ScrollPane(new ListView(controller.getPlayersList()) {
-      this.peer.setSelectedIndex(selectedListIndex)
+      this.peer.setSelectedIndex(1)
       preferredSize = new Dimension(150, 80)
       renderer = Renderer(_.name)
-    })) {
+      listenTo(this.selection)
+      reactions += {
+        case e: SelectionChanged =>
+          if(this.peer.getModel.getElementAt(0) == this.peer.getSelectedValue)
+            this.peer.setSelectedIndex(1)
+      }})) {
       border = TitledBorder(EmptyBorder(5, 5, 5, 5), "Player Names:")
     }
   }
