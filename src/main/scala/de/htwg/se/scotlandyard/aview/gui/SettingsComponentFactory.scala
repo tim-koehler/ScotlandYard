@@ -51,6 +51,7 @@ class SettingsComponentFactory(controller: Controller, gui: Gui) {
               getComponent(0).asInstanceOf[JViewport].
               getComponent(0).asInstanceOf[JList[String]]
             controller.setPlayerName(textField.getText, listView.getSelectedIndex)
+            textField.setText("")
             gui.updateSettings()
         }
     }

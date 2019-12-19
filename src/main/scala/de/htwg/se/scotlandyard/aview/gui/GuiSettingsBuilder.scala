@@ -26,7 +26,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
 
   override def updatePanel(): BorderPanel = {
     new BorderPanel() {
-      add(buildBottomPanel(), BorderPanel.Position.South)
+      add(components(0), BorderPanel.Position.South)
       add(components(1), BorderPanel.Position.West)
       add(buildPanelPlayerList(), BorderPanel.Position.East)
     }
