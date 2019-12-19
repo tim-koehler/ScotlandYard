@@ -1,23 +1,23 @@
-package de.htwg.se.scotlandyard.aview.gui
+package de.htwg.se.scotlandyard.aview.gui.main
 
-import java.awt.event.{AdjustmentEvent, AdjustmentListener}
+import java.awt.event.AdjustmentEvent
 import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color}
 import java.io.File
 
 import de.htwg.se.scotlandyard.aview.Gui
+import de.htwg.se.scotlandyard.aview.gui.GuiBuilder
 import de.htwg.se.scotlandyard.controller.Controller
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.player.MrX
 import de.htwg.se.scotlandyard.util.TicketType
+import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import javax.imageio.ImageIO
 
-import scala.swing.Swing._
 import scala.swing.ListView.Renderer
-import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
-import scala.swing.{Action, Alignment, BorderPanel, BoxPanel, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, Point, ScrollPane, ToggleButton}
-import scala.swing.event.{AdjustingEvent, MouseClicked}
+import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder, _}
+import scala.swing.event.MouseClicked
+import scala.swing.{Action, BorderPanel, BoxPanel, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, Point, ScrollPane, ToggleButton}
 
 class GuiMainBuilder (controller: Controller, gui: Gui) extends GuiBuilder {
 

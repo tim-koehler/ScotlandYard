@@ -1,15 +1,15 @@
-package de.htwg.se.scotlandyard.aview.gui
+package de.htwg.se.scotlandyard.aview.gui.settings
+
 import de.htwg.se.scotlandyard.aview.Gui
+import de.htwg.se.scotlandyard.aview.gui.GuiBuilder
 import de.htwg.se.scotlandyard.controller.Controller
-import scala.swing.Swing._
-import scala.swing.ListView.Renderer
-import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
-import scala.swing.{Action, BorderPanel, BoxPanel, Button, ButtonGroup, Component, Dialog, Dimension, FlowPanel, Label, ListView, Orientation, RadioButton, ScrollPane, TextField}
-import scala.swing.event.{ButtonClicked, SelectionChanged}
+
+import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder, _}
+import scala.swing.{BorderPanel, BoxPanel, ButtonGroup, Dimension, FlowPanel, Label, Orientation, ScrollPane, TextField}
 
 class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
   var btnGroup = new ButtonGroup()
-  val settingsComponentsFactory =  new SettingsComponentFactory(controller, gui)
+  val settingsComponentsFactory =  new GuiSettingsComponentFactory(controller, gui)
 
   override def initPanel(): BorderPanel = {
 
@@ -33,16 +33,7 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
   }
 
   def buildPanelPlayerList(): FlowPanel = {
-    new FlowPanel(new ScrollPane(new ListView(controller.getPlayersList()) {
-      this.peer.setSelectedIndex(1)
-      preferredSize = new Dimension(150, 80)
-      renderer = Renderer(_.name)
-      listenTo(this.selection)
-      reactions += {
-        case e: SelectionChanged =>
-          if(this.peer.getModel.getElementAt(0) == this.peer.getSelectedValue)
-            this.peer.setSelectedIndex(1)
-      }})) {
+    new FlowPanel(new ScrollPane(settingsComponentsFactory.createListView())) {
       border = TitledBorder(EmptyBorder(5, 5, 5, 5), "Player Names:")
     }
   }
@@ -52,12 +43,12 @@ class GuiSettingsBuilder(controller: Controller, gui: Gui) extends GuiBuilder {
       preferredSize = new Dimension(140, 50)
       maximumSize = new Dimension(150, 50)
       contents ++= List(
-        settingsComponentsFactory.createRadioButton("2 Player", btnGroup),
-        settingsComponentsFactory.createRadioButton("3 Player", btnGroup),
-        settingsComponentsFactory.createRadioButton("4 Player", btnGroup),
-        settingsComponentsFactory.createRadioButton("5 Player", btnGroup),
-        settingsComponentsFactory.createRadioButton("6 Player", btnGroup),
-        settingsComponentsFactory.createRadioButton("7 Player", btnGroup))
+        settingsComponentsFactory.createRadioButtons("2 Player", btnGroup),
+        settingsComponentsFactory.createRadioButtons("3 Player", btnGroup),
+        settingsComponentsFactory.createRadioButtons("4 Player", btnGroup),
+        settingsComponentsFactory.createRadioButtons("5 Player", btnGroup),
+        settingsComponentsFactory.createRadioButtons("6 Player", btnGroup),
+        settingsComponentsFactory.createRadioButtons("7 Player", btnGroup))
       border = CompoundBorder(TitledBorder(EtchedBorder, "Number of Player"), EmptyBorder(10, 10, 10, 10))
     }
   }
