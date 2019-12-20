@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.aview.gui.settings
 
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.player.Player
 
 import scala.swing.ListView.Renderer

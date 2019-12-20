@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.aview
 
 import de.htwg.se.scotlandyard.aview.tui.{RevealMrX1State, Tui}
-import de.htwg.se.scotlandyard.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import org.scalatest._
 

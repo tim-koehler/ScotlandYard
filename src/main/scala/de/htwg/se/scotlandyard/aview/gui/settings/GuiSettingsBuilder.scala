@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.gui.settings
 
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.aview.gui.GuiBuilder
-import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder, _}
 import scala.swing.{BorderPanel, BoxPanel, ButtonGroup, Dimension, FlowPanel, Label, Orientation, ScrollPane, TextField}

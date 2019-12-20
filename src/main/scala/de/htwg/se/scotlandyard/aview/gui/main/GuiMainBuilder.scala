@@ -3,11 +3,13 @@ package de.htwg.se.scotlandyard.aview.gui.main
 import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color}
 import java.io.File
+
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.aview.gui.GuiBuilder
-import de.htwg.se.scotlandyard.controller.Controller
+import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.player.MrX
 import javax.imageio.ImageIO
+
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
 import scala.swing.{BorderPanel, BoxPanel, ButtonGroup, Dimension, Font, Graphics2D, MenuBar, Orientation, ScrollPane}
 
