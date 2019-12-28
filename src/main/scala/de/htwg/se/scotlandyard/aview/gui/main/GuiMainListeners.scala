@@ -30,6 +30,8 @@ class GuiMainListeners(controller: Controller, gui: Gui) {
       TicketType.Taxi
     } else if(btn.text.contains("Bus")) {
       TicketType.Bus
+    } else if(btn.text.contains("Black Ticket")) {
+      TicketType.Black
     } else {
       TicketType.Underground
     }

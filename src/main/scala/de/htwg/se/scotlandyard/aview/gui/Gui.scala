@@ -49,13 +49,13 @@ class Gui(controller: Controller) extends Frame {
   }
 
   def showWinningDialog(): Unit = {
+    var winningMessage = ""
     if (controller.getWinningPlayer().name.equals("MrX")) {
-      val winningMessage = controller.getPlayersList()(0).name + " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
-      Dialog.showMessage(null, winningMessage, "WIN")
+      winningMessage = controller.getPlayersList()(0).name + " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
     } else {
-      val winningMessage = controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name + " at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
-      Dialog.showMessage(null, winningMessage, "WIN")
+      winningMessage = controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name + " at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
     }
+    Dialog.showMessage(null, winningMessage, "WIN")
     this.dispose()
   }
 

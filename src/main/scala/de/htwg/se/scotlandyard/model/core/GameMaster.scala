@@ -91,11 +91,13 @@ object GameMaster {
 
   def validateMove(newPosition: Integer, ticketType: TicketType): Boolean = {
 
-    if (!isTargetStationInBounds(newPosition))
+    if (!isTargetStationInBounds(newPosition)) {
       return false
+    }
 
-    if (!isMeanOfTransportValid(newPosition, ticketType))
+    if (!isMeanOfTransportValid(newPosition, ticketType)) {
       return false
+    }
 
     if (!isTargetStationEmpty(newPosition)) {
       if (players(0).getPosition().number == newPosition) {
@@ -117,18 +119,29 @@ object GameMaster {
 
   private def isMeanOfTransportValid(newPosition: Integer, ticketType: TicketType): Boolean = {
     if(ticketType.equals(TicketType.Taxi)) {
-      if(!isTaxiMoveValid(newPosition))
+      if(!isTaxiMoveValid(newPosition)) {
         return false
+      }
     } else if(ticketType.equals(TicketType.Bus)) {
-      if(GameMaster.getCurrentPlayer().getPosition().sType == StationType.Taxi)
+      if(GameMaster.getCurrentPlayer().getPosition().sType == StationType.Taxi) {
         return false
+      }
       if(!isBusMoveValid(newPosition))
         return false
+    } else if(ticketType.equals(TicketType.Underground)) {
+      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Underground) {
+        return false
+      }
+      if(!isUndergroundMoveValid(newPosition)) {
+        return false
+      }
     } else {
-      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Underground)
+      if(!GameMaster.getCurrentPlayer().equals(GameMaster.players(0))) {
         return false
-      if(!isUndergroundMoveValid(newPosition))
+      }
+      if(!isBlackMoveValid(newPosition)) {
         return false
+      }
     }
     true
   }
@@ -155,6 +168,18 @@ object GameMaster {
     true
   }
 
+  private def isBlackMoveValid(newPosition: Int): Boolean = {
+    if(getCurrentPlayer().asInstanceOf[MrX].blackTickets <= 0) return false
+    if(getCurrentPlayer().getPosition().neighbourTaxis.contains(stations(newPosition))) {
+      return true
+    } else if(getCurrentPlayer().getPosition().neighbourBuses.contains(stations(newPosition))) {
+      return true
+    } else if (!getCurrentPlayer().getPosition().neighbourUndergrounds.contains(stations(newPosition))) {
+      return true
+    }
+    false
+  }
+
   private def isTargetStationEmpty(newPosition: Integer): Boolean = {
     for(p <- GameMaster.players)
       if(p.getPosition().number == newPosition)
@@ -174,9 +199,12 @@ object GameMaster {
     } else if(ticketType.equals(TicketType.Bus)){
       getCurrentPlayer().busTickets -= 1
       getCurrentPlayer().busTickets
-    } else {
+    } else if(ticketType.equals(TicketType.Underground)) {
       getCurrentPlayer().undergroundTickets -= 1
       getCurrentPlayer().undergroundTickets
+    } else {
+      getCurrentPlayer().asInstanceOf[MrX].blackTickets -= 1
+      getCurrentPlayer().asInstanceOf[MrX].blackTickets
     }
   }
 

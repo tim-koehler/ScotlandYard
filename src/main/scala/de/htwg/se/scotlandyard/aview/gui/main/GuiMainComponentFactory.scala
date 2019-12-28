@@ -131,7 +131,9 @@ class GuiMainComponentFactory(controller: Controller, gui: Gui) {
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
       contents += new ToggleButton("Black Ticket: " + controller.getPlayersList()(0).asInstanceOf[MrX].blackTickets) {
-        enabled = false
+        if(!controller.getCurrentPlayer().equals(controller.getPlayersList()(0))) {
+          enabled = false
+        }
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }

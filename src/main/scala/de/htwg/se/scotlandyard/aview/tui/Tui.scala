@@ -77,8 +77,15 @@ class Tui(controller: Controller) extends Reactor {
         updateScreen()
       }
     } else if (transport.equals('u')) {
-      if(controller.validateMove(newStation, TicketType.Underground)) {
+      if (controller.validateMove(newStation, TicketType.Underground)) {
         controller.doMove(newStation, TicketType.Underground)
+        if (controller.getWin()) controller.winGame()
+      } else {
+        updateScreen()
+      }
+    } else {
+      if (controller.validateMove(newStation, TicketType.Black)) {
+        controller.doMove(newStation, TicketType.Black)
         if (controller.getWin()) controller.winGame()
       } else {
         updateScreen()
