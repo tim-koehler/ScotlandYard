@@ -215,9 +215,12 @@ object GameMaster {
     } else if(ticketType.equals(TicketType.Bus)){
       getCurrentPlayer().busTickets += 1
       getCurrentPlayer().busTickets
-    } else {
+    } else if(ticketType.equals(TicketType.Underground)){
       getCurrentPlayer().undergroundTickets += 1
       getCurrentPlayer().undergroundTickets
+    } else {
+      getCurrentPlayer().asInstanceOf[MrX].blackTickets += 1
+      getCurrentPlayer().asInstanceOf[MrX].blackTickets
     }
   }
 }
