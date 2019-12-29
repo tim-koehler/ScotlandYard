@@ -115,7 +115,7 @@ class Tui(controller: Controller) extends Reactor {
     } else if (input.toInt > 1) {
       changeState(new EnterNameState(this))
       updateScreen()
-      indexOfPlayerWhichNameToChange = input.toInt - 1 // -1 because 1 is Start and 2 is the first Detective
+      indexOfPlayerWhichNameToChange = input.toInt - 1 // -1 because 1 is Start and 2 is the first Player
     }
     input.toInt
   }

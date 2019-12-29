@@ -9,7 +9,7 @@ class MrXSpec extends WordSpec with Matchers {
     "new" should {
       StationFactory.createZeroIndexStation()
       val st = StationFactory.createTaxiStation(0, (1,1))
-      val mrX = new MrX(st, "MrX")
+      val mrX = new MrX(st)
       "have a station number" in {
         mrX.getPosition().number should be (0)
       }

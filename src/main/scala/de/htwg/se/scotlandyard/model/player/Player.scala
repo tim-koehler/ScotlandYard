@@ -7,13 +7,10 @@ import java.awt.Color
 import de.htwg.se.scotlandyard.model.map.station.Station
 
 
-trait Player {
-   var station: Station
-   var name: String
+class Player(var station: Station, var name: String, var color: Color) {
    var taxiTickets: Int = 0 // default: 11
    var busTickets: Int = 0 // default: 8
    var undergroundTickets: Int = 0 // default 4
-   var color: Color
 
    def getPosition(): Station = {
       station
