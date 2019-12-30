@@ -1,14 +1,14 @@
 package de.htwg.se.scotlandyard.aview.gui.settings
 
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.player.Player
+import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import javax.swing._
 
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 import scala.swing.{ListView, Reactions}
 
-class GuiSettingsListeners(controller: Controller, gui: Gui) {
+class GuiSettingsListeners(controller: ControllerInterface, gui: Gui) {
 
   def addStartButtonListener(reactions: Reactions): Unit = {
     reactions += {
@@ -17,7 +17,7 @@ class GuiSettingsListeners(controller: Controller, gui: Gui) {
     }
   }
 
-  def addListViewListener(reactions: Reactions, listView: ListView[Player]): Unit = {
+  def addListViewListener(reactions: Reactions, listView: ListView[DetectiveInterface]): Unit = {
     reactions += {
       case _: SelectionChanged =>
         if (listView.peer.getModel.getElementAt(0) == listView.peer.getSelectedValue)

@@ -2,14 +2,14 @@ package de.htwg.se.scotlandyard.aview
 
 import java.awt.Toolkit
 
-import scala.swing._
 import de.htwg.se.scotlandyard.aview.gui.main.GuiMainBuilder
 import de.htwg.se.scotlandyard.aview.gui.settings.GuiSettingsBuilder
-import de.htwg.se.scotlandyard.controllerComponent.{NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.scotlandyard.controllerComponent._
 import javax.swing.ImageIcon
 
-class Gui(controller: Controller) extends Frame {
+import scala.swing._
+
+class Gui(controller: ControllerInterface) extends Frame {
   listenTo(controller)
 
   val EXIT_ON_CLOSE = 3

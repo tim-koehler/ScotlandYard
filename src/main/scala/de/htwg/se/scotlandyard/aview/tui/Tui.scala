@@ -1,16 +1,15 @@
 package de.htwg.se.scotlandyard.aview.tui
 
-import de.htwg.se.scotlandyard.controllerComponent.{NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.scotlandyard.controllerComponent._
 import de.htwg.se.scotlandyard.model.core.MapRenderer
-import de.htwg.se.scotlandyard.model.player.MrX
-import de.htwg.se.scotlandyard.util.{Observer, TicketType}
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
+import de.htwg.se.scotlandyard.util.TicketType
 
 import scala.io.{BufferedSource, Source}
 import scala.swing.Reactor
 import scala.util.{Failure, Success, Try}
 
-class Tui(controller: Controller) extends Reactor {
+class Tui(controller: ControllerInterface) extends Reactor {
   listenTo(controller)
   var state: State = new SelectNumberOfPlayerMenuState(this)
 
@@ -115,7 +114,7 @@ class Tui(controller: Controller) extends Reactor {
     } else if (input.toInt > 1) {
       changeState(new EnterNameState(this))
       updateScreen()
-      indexOfPlayerWhichNameToChange = input.toInt - 1 // -1 because 1 is Start and 2 is the first Detective
+      indexOfPlayerWhichNameToChange = input.toInt - 1 // -1 because 1 is Start and 2 is the first Player
     }
     input.toInt
   }

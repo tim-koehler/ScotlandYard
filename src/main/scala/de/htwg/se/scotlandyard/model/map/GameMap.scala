@@ -1,21 +1,20 @@
 package de.htwg.se.scotlandyard.model.map
 
 import de.htwg.se.scotlandyard.model.core.{GameMaster, MapRenderer}
-import de.htwg.se.scotlandyard.model.player.Player
+import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 
 import scala.collection.mutable
-import scala.collection.mutable.Map
 
 object GameMap {
   var map: Option[List[String]] = Some(List())
-  var playerPositions: mutable.Map[Player, Int] = mutable.Map[Player, Int]()
+  var playerPositions: mutable.Map[DetectiveInterface, Int] = mutable.Map[DetectiveInterface, Int]()
 
   def updatePlayerPositions(): Unit ={
     setPlayerPositions()
     updateMapString()
   }
 
-  private def setPlayerPositions(): mutable.Map[Player, Int] = {
+  private def setPlayerPositions(): mutable.Map[DetectiveInterface, Int] = {
     for (p <- GameMaster.players){
       playerPositions += (p -> p.getPosition().number)
     }

@@ -3,15 +3,15 @@ package de.htwg.se.scotlandyard.aview.gui.main
 import java.awt.image.BufferedImage
 
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.player.MrX
+import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{EmptyBorder, HStrut}
-import scala.swing.{Action, BorderPanel, BoxPanel, ButtonGroup, Component, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, ScrollPane, ToggleButton}
+import scala.swing.{Action, BorderPanel, BoxPanel, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, ScrollPane, ToggleButton}
 
-class GuiMainComponentFactory(controller: Controller, gui: Gui) {
+class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
 
   val mainListeners = new GuiMainListeners(controller, gui)
   val btnGroup = new ButtonGroup()

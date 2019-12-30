@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.model.core
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.core.GameMaster.{players, round, winningRound}
-import de.htwg.se.scotlandyard.model.player.MrX
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 import de.htwg.se.scotlandyard.util.TicketType
 import org.scalatest._
 

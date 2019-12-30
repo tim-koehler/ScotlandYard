@@ -3,18 +3,17 @@ package de.htwg.se.scotlandyard.model.core
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.map._
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.model.player._
-import de.htwg.se.scotlandyard.model.player.MrX
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.util.TicketType
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 object GameMaster {
   var stations: List[Station] = List()
-  var players: List[Player] = List()
+  var players: List[DetectiveInterface] = List()
   var round = 1 // counter of moves (increases by 1 when a player moved)
   var totalRound = 1 // number of total rounds (increases by 1 when every player has moved once)
   var win = false
-  var winningPlayer: Player = _
+  var winningPlayer: DetectiveInterface = _
   val winningRound = 24 //24
 
   def startGame(): Boolean = {
@@ -24,7 +23,7 @@ object GameMaster {
     true
   }
 
-  def getCurrentPlayer(): Player = {
+  def getCurrentPlayer(): DetectiveInterface = {
     players(getCurrentPlayerIndex())
   }
 
@@ -68,11 +67,11 @@ object GameMaster {
 
   def updateMrXVisibility(): Boolean = {
     val playerMrX = players(0)
-    playerMrX.asInstanceOf[MrX].isVisible = checkMrXVisibility()
-    if(playerMrX.asInstanceOf[MrX].isVisible) {
-      playerMrX.asInstanceOf[MrX].lastSeen = players(0).getPosition().number.toString
+    playerMrX.asInstanceOf[MrXInterface].isVisible = checkMrXVisibility()
+    if(playerMrX.asInstanceOf[MrXInterface].isVisible) {
+      playerMrX.asInstanceOf[MrXInterface].lastSeen = players(0).getPosition().number.toString
     }
-    playerMrX.asInstanceOf[MrX].isVisible
+    playerMrX.asInstanceOf[MrXInterface].isVisible
   }
 
   def checkMrXVisibility(): Boolean = {
@@ -169,7 +168,7 @@ object GameMaster {
   }
 
   private def isBlackMoveValid(newPosition: Int): Boolean = {
-    if(getCurrentPlayer().asInstanceOf[MrX].blackTickets <= 0) return false
+    if(getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets <= 0) return false
     if(getCurrentPlayer().getPosition().neighbourTaxis.contains(stations(newPosition))) {
       return true
     } else if(getCurrentPlayer().getPosition().neighbourBuses.contains(stations(newPosition))) {
@@ -203,8 +202,8 @@ object GameMaster {
       getCurrentPlayer().undergroundTickets -= 1
       getCurrentPlayer().undergroundTickets
     } else {
-      getCurrentPlayer().asInstanceOf[MrX].blackTickets -= 1
-      getCurrentPlayer().asInstanceOf[MrX].blackTickets
+      getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets -= 1
+      getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets
     }
   }
 
@@ -219,8 +218,8 @@ object GameMaster {
       getCurrentPlayer().undergroundTickets += 1
       getCurrentPlayer().undergroundTickets
     } else {
-      getCurrentPlayer().asInstanceOf[MrX].blackTickets += 1
-      getCurrentPlayer().asInstanceOf[MrX].blackTickets
+      getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets += 1
+      getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets
     }
   }
 }
