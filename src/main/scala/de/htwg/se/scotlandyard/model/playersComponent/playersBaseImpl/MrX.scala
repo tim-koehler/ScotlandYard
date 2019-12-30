@@ -1,17 +1,18 @@
-package de.htwg.se.scotlandyard.model.player
+package de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl
 
 import java.awt.Color
 
 import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.playersComponent.MrXInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
-class MrX(var MrXstation: Station) extends Player(MrXstation, "MrX", Color.BLACK)  {
-  var blackTickets: Int = 5 // default: 5
-  var doubleTurn: Int = 2 // default: 2
-  var isVisible: Boolean = false
-  var lastSeen: String = "never"
-  var history: List[TicketType] = List()
-  val lastSeenColor: Color = Color.GRAY
+class MrX(var mrXstation: Station) extends Detective(mrXstation, "MrX", Color.BLACK) with MrXInterface  {
+  override var blackTickets: Int = 5
+  override var doubleTurn: Int = 2
+  override var isVisible: Boolean = false
+  override var lastSeen: String = "never"
+  override var history: List[TicketType] = List()
+  override val lastSeenColor: Color = Color.GRAY
 
   override def toString(): String = {
     val tickets = " - BLACKTICKETS: " + blackTickets + ", DOUBLETURNS: " + doubleTurn
@@ -39,4 +40,6 @@ class MrX(var MrXstation: Station) extends Player(MrXstation, "MrX", Color.BLACK
       true
     }
   }
+
+
 }

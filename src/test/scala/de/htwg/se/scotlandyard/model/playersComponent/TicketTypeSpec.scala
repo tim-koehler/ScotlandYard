@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.player
+package de.htwg.se.scotlandyard.model.playersComponent
 
 import de.htwg.se.scotlandyard.util.TicketType
 import org.scalatest.{Matchers, WordSpec}

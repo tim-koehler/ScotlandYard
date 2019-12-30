@@ -6,14 +6,13 @@ import java.io.File
 
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.aview.gui.GuiBuilder
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.player.MrX
+import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
 import javax.imageio.ImageIO
 
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
 import scala.swing.{BorderPanel, BoxPanel, ButtonGroup, Dimension, Font, Graphics2D, MenuBar, Orientation, ScrollPane}
 
-class GuiMainBuilder (controller: Controller, gui: Gui) extends GuiBuilder {
+class GuiMainBuilder (controller: ControllerInterface, gui: Gui) extends GuiBuilder {
 
   val fontSize = 20
 

@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.model.player._
+import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.UndoManager
 
@@ -22,7 +22,7 @@ class Controller extends ControllerInterface with Publisher {
     returnValue
   }
 
-  def getWinningPlayer(): Player = {
+  def getWinningPlayer(): DetectiveInterface = {
     GameMaster.winningPlayer
   }
 
@@ -33,7 +33,7 @@ class Controller extends ControllerInterface with Publisher {
     oldWin
   }
 
-  def getPlayersList(): List[Player] = {
+  def getPlayersList(): List[DetectiveInterface] = {
     GameMaster.players
   }
 
@@ -43,7 +43,7 @@ class Controller extends ControllerInterface with Publisher {
     GameMaster.players.length
   }
 
-  def getCurrentPlayer(): Player = {
+  def getCurrentPlayer(): DetectiveInterface = {
     GameMaster.getCurrentPlayer()
   }
 

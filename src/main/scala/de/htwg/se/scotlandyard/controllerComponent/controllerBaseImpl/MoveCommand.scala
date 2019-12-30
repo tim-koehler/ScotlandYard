@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.scotlandyard.model.core.GameMaster
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.model.player.MrX
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 import de.htwg.se.scotlandyard.util.Command
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 

@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.model.core
 import java.awt.Color
 
 import de.htwg.se.scotlandyard.model.map.{GameMap, StationType}
-import de.htwg.se.scotlandyard.model.player.{MrX, Player}
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{MrX, Detective}
 
 object GameInitializer {
 
@@ -39,10 +39,10 @@ object GameInitializer {
   def initPlayers(nPlayer: Int): Boolean = {
     GameMaster.players = List()
     var st = GameMaster.stations(drawMisterXPosition())
-    GameMaster.players = List[Player](new MrX(st))
+    GameMaster.players = List[Detective](new MrX(st))
     for(i <- 1 to (nPlayer - 1)) {
       st = GameMaster.stations(drawDetectivePosition())
-      GameMaster.players = GameMaster.players:::List(new Player(st, "Dt" + i, colorList(i)))
+      GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i, colorList(i)))
     }
     distributeTicketsToMrX()
     distributeTicketsToDetectives()

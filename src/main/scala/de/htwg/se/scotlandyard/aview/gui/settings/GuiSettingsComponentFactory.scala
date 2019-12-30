@@ -1,13 +1,13 @@
 package de.htwg.se.scotlandyard.aview.gui.settings
 
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.player.Player
+import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 
 import scala.swing.ListView.Renderer
 import scala.swing.{Button, ButtonGroup, Dimension, ListView, RadioButton}
 
-class GuiSettingsComponentFactory(controller: Controller, gui: Gui) {
+class GuiSettingsComponentFactory(controller: ControllerInterface, gui: Gui) {
 
   val settingsListeners = new GuiSettingsListeners(controller, gui)
 
@@ -35,7 +35,7 @@ class GuiSettingsComponentFactory(controller: Controller, gui: Gui) {
     }
   }
 
-  def createListView(): ListView[Player] = {
+  def createListView(): ListView[DetectiveInterface] = {
     new ListView(controller.getPlayersList()) {
       this.peer.setSelectedIndex(1)
       preferredSize = new Dimension(150, 80)

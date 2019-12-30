@@ -1,8 +1,8 @@
-package de.htwg.se.scotlandyard.model.player
+package de.htwg.se.scotlandyard.model.playersComponent
 
 import org.scalatest._
 
-class PlayerSpec extends WordSpec with Matchers {
+class DetectiveSpec extends WordSpec with Matchers {
   "A Player" when {
     "new" should {
       //val player = Player("Your Name")

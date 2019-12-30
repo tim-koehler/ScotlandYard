@@ -3,15 +3,15 @@ package de.htwg.se.scotlandyard.aview.gui.main
 import java.awt.event.AdjustmentEvent
 
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
 import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.util.TicketType
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
-import scala.swing.{ButtonGroup, Point, Reactions, ScrollPane}
 import scala.swing.event.MouseClicked
+import scala.swing.{Point, Reactions, ScrollPane}
 
-class GuiMainListeners(controller: Controller, gui: Gui) {
+class GuiMainListeners(controller: ControllerInterface, gui: Gui) {
   def addMapPanelClickListener(reactions: Reactions, guiMainComponentFactory: GuiMainComponentFactory): Unit = {
     reactions += {
       case e: MouseClicked =>

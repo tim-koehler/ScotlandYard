@@ -2,12 +2,12 @@ package de.htwg.se.scotlandyard.aview.gui.main
 
 import java.awt.{BasicStroke, Color}
 
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.player.MrX
+import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 
 import scala.swing.{Graphics2D, Image}
 
-class GuiMainMapDrawer(controller: Controller) {
+class GuiMainMapDrawer(controller: ControllerInterface) {
   def drawOnMap(g: Graphics2D , image: Image): Unit = {
     g.drawImage(image, 0, 0, null)
     drawPlayerCirclesOnMap(g, 50)
