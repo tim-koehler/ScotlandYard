@@ -1,8 +1,6 @@
 package de.htwg.se.scotlandyard.model.core
 
-import de.htwg.se.scotlandyard.ScotlandYard
-
-import scala.io.{BufferedSource, Source, StdIn}
+import scala.io.Source
 import de.htwg.se.scotlandyard.model.map.GameMap
 
 import scala.util.{Failure, Success, Try}
@@ -22,7 +20,6 @@ object MapRenderer {
 
   def init(): Boolean = {
     GameMap.map = readMapFromFile(mapFilePath)
-
     GameMap.map match {
       case Some(t) => true
       case None => false

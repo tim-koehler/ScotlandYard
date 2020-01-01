@@ -51,6 +51,21 @@ object GameInitializer {
     true
   }
 
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int): Boolean = {
+    GameMaster.players(0).asInstanceOf[MrX].name = name
+    GameMaster.players(0).asInstanceOf[MrX].station = GameMaster.stations(stationNumber)
+    GameMaster.players(0).asInstanceOf[MrX].isVisible = isVisible
+    GameMaster.players(0).asInstanceOf[MrX].lastSeen = lastSeen
+    GameMaster.players(0).asInstanceOf[MrX].blackTickets = blackTickets
+    GameMaster.players(0).asInstanceOf[MrX].doubleTurn = doubleTurns
+    GameMaster.players(0).asInstanceOf[MrX].taxiTickets = taxiTickets
+    GameMaster.players(0).asInstanceOf[MrX].busTickets = busTickets
+    GameMaster.players(0).asInstanceOf[MrX].undergroundTickets = undergroundTickets
+    GameMap.updatePlayerPositions()
+    drawnPositions = List()
+    true
+  }
+
   def drawDetectivePosition(nonRandomPosition: Integer = -1): Int = {
     if(nonRandomPosition != -1) {
       return nonRandomPosition

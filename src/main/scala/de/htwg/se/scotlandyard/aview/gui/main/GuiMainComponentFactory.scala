@@ -10,6 +10,7 @@ import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{EmptyBorder, HStrut}
 import scala.swing.{Action, BorderPanel, BoxPanel, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, ScrollPane, ToggleButton}
+import scala.util.{Failure, Success, Try}
 
 class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
 
@@ -85,10 +86,20 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
     new MenuBar {
       contents += new Menu("Files") {
         contents += new MenuItem(Action("Save") {
-          Dialog.showMessage(null, "Not yet implemented", ": (")
+          //TODO: Fancy Select Folder menu
+          Try(controller.save()) match {
+            case Success(v) => Dialog.showMessage(null, "Game successfully saved!", "Saved")
+            case Failure(e) => Dialog.showMessage(null, "An Error occured! The game was not saved!", "Save", Dialog.Message.Error);
+              e.printStackTrace() // for debug purpose
+          }
         })
         contents += new MenuItem(Action("Load") {
-          Dialog.showMessage(null, "Not yet implemented", ": (")
+          Try(controller.load()) match {
+            case Success(v) => Dialog.showMessage(null, "Game successfully Loaded!", "Load");
+              gui.updateGame()
+            case Failure(e) => Dialog.showMessage(null, "An Error occured! The game was not loaded!", "Load", Dialog.Message.Error);
+              e.printStackTrace() // for debug purpose
+          }
         })
       }
       contents += new Menu("Options") {

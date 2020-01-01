@@ -103,6 +103,17 @@ class Tui(controller: ControllerInterface) extends Reactor {
     TUIMODE_RUNNING
   }
 
+  //TODO: Error handling, save path
+  def evaluateSave(): Int = {
+    controller.save()
+    TUIMODE_RUNNING
+  }
+
+  def evaluateLoad(): Int = {
+    controller.load()
+    TUIMODE_RUNNING
+  }
+
   def evaluateSettings(input: String): Int = {
     changeState(new ChooseNameMenuState(this))
     controller.initPlayers(input.toInt)

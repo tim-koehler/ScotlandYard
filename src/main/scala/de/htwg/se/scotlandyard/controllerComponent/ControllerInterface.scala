@@ -8,6 +8,8 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
+  def load(): Unit
+  def save(): Unit
   def setPlayerName(inputName: String, index: Int): Boolean
   def getWinningPlayer(): DetectiveInterface
   def setWinning(win: Boolean): Boolean

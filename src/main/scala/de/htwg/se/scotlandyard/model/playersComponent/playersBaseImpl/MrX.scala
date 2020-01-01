@@ -41,5 +41,4 @@ class MrX(var mrXstation: Station) extends Detective(mrXstation, "MrX", Color.BL
     }
   }
 
-
 }

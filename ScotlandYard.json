@@ -1,0 +1,31 @@
+{
+  "game" : {
+    "round" : 8,
+    "totalRound" : 3,
+    "nPlayer" : 3,
+    "mrX" : {
+      "name" : "MrX",
+      "stationNumber" : 132,
+      "isVisible" : true,
+      "lastSeen" : "114",
+      "blackTickets" : 5,
+      "doubleTurns" : 2,
+      "taxiTickets" : 96,
+      "busTickets" : 99,
+      "undergroundTickets" : 99
+    },
+    "detectives" : [ {
+      "name" : "Dt1",
+      "stationNumber" : 127,
+      "taxiTickets" : 9,
+      "busTickets" : 8,
+      "undergroundTickets" : 4
+    }, {
+      "name" : "Dt2",
+      "stationNumber" : 105,
+      "taxiTickets" : 9,
+      "busTickets" : 8,
+      "undergroundTickets" : 4
+    } ]
+  }
+}
