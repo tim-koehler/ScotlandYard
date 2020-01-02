@@ -18,7 +18,7 @@ object MapRenderer {
 
   val mapMoveOffset = 5;
 
-  val mapFilePath = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt"
+  val mapFilePath = "./resources/ScotlandYardMap.txt"
 
   def init(): Boolean = {
     GameMap.map = readMapFromFile(mapFilePath)

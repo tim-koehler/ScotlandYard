@@ -14,9 +14,9 @@ class Tui(controller: ControllerInterface) extends Reactor {
   var state: State = new SelectNumberOfPlayerMenuState(this)
 
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
-  val titleBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/titleBanner.txt")
-  var detectiveWinningBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/detectiveWinBanner.txt")
-  var mrXWinningBanner = getBanner("./src/main/scala/de/htwg/se/scotlandyard/mrXWinBanner.txt")
+  val titleBanner = getBanner("./resources/titleBanner.txt")
+  var detectiveWinningBanner = getBanner("./resources/detectiveWinBanner.txt")
+  var mrXWinningBanner = getBanner("./resources/mrXWinBanner.txt")
   val chooseNameMenuString = titleBanner + "\n\n" + "->Choose Names<-" + "\n"
 
   val TUIMODE_QUIT: Int = -1

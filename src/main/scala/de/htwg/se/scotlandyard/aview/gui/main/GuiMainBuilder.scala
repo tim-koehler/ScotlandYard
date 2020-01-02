@@ -16,7 +16,7 @@ class GuiMainBuilder (controller: ControllerInterface, gui: Gui) extends GuiBuil
 
   val fontSize = 20
 
-  val mapImagePath = "./src/main/scala/de/htwg/se/scotlandyard/map_large.png"
+  val mapImagePath = "resources/map_large.png"
   val image: BufferedImage = ImageIO.read(new File(mapImagePath))
 
   var scrollBarOffsetY = 0

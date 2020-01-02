@@ -9,7 +9,7 @@ import scala.util.{Failure, Success, Try}
 
 class StationInitializer {
 
-  val guiStationCoordinateFilePath = "./src/main/scala/de/htwg/se/scotlandyard/coordsMap.txt"
+  val guiStationCoordinateFilePath = "./resources/coordsMap.txt"
 
   def initStations(): List[Station] = {
 
@@ -39,7 +39,7 @@ class StationInitializer {
 
   private def parseStationsFromMapFile(): List[String] = {
 
-    val path = "./src/main/scala/de/htwg/se/scotlandyard/ScotlandYardMap.txt"
+    val path = "./resources/ScotlandYardMap.txt"
 
     Try(Source.fromFile(path)) match {
       case Success(v) =>
@@ -89,7 +89,7 @@ class StationInitializer {
 
   private def setNeighbours(stations: List[Station]): Integer = {
 
-    val path = "./src/main/scala/de/htwg/se/scotlandyard/neighbours.dat"
+    val path = "./resources/neighbours.txt"
 
     Try(Source.fromFile(path)) match {
       case Success(v) =>

@@ -18,7 +18,7 @@ class Gui(controller: ControllerInterface) extends Frame {
   centerOnScreen()
   peer.setDefaultCloseOperation(EXIT_ON_CLOSE)
 
-  iconImage = new ImageIcon("./src/main/scala/de/htwg/se/scotlandyard/Icon.png").getImage
+  iconImage = new ImageIcon("./resources/Icon.png").getImage
 
   var mainBuiler = new GuiMainBuilder(controller, this)
   var settingsBuilder = new GuiSettingsBuilder(controller, this)
