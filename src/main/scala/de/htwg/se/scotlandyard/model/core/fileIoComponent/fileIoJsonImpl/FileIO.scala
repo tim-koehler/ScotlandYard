@@ -4,8 +4,9 @@ import java.io._
 
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import play.api.libs.json._
-import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
+import de.htwg.se.scotlandyard.model.core.fileIoComponent.{DetectiveSmall, FileIOInterface, GameStats, MrXSmall}
+import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{Detective, MrX}
 
 import scala.io.Source
 
@@ -14,6 +15,7 @@ class FileIO extends FileIOInterface {
   override def load(): Unit = {
     val source: String = Source.fromFile("ScotlandYard.json").getLines.mkString
     val json: JsValue = Json.parse(source)
+    //Remove "game" to make it work
     GameMaster.round = (json \ "game" \ "round").get.toString().toInt
     GameMaster.totalRound = (json \ "game" \ "totalRound").get.toString().toInt
     val name = (json \ "game" \ "mrX" \ "name").get.toString()
@@ -26,45 +28,56 @@ class FileIO extends FileIOInterface {
     val busTickets = (json \ "game" \ "mrX" \ "busTickets").get.toString().toInt
     val undergroundTickets = (json \ "game" \ "mrX" \ "undergroundTickets").get.toString().toInt
     GameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets)
+
   }
+
 
   override def save(): Unit = {
-    val pw = new PrintWriter(new File("ScotlandYard.json"))
-    pw.write(Json.prettyPrint(gameMasterToJson()))
-    pw.close
-  }
+    var detectives = List[DetectiveSmall]()
+    for(i <- 1 to GameMaster.players.length - 1) {
+      detectives = detectives ::: List(DetectiveSmall(GameMaster.players(i).name, GameMaster.players(i).station.number, GameMaster.players(i).taxiTickets, GameMaster.players(i).busTickets, GameMaster.players(i).undergroundTickets))
+    }
 
-  def gameMasterToJson() = {
-    Json.obj(
-      "game" -> Json.obj(
-        "round" -> JsNumber(GameMaster.round),
-        "totalRound" -> JsNumber(GameMaster.totalRound),
-        "nPlayer" -> JsNumber(GameMaster.players.length),
+    val mrx = MrXSmall(GameMaster.players(0).asInstanceOf[MrX].name, GameMaster.players(0).asInstanceOf[MrX].station.number, GameMaster.players(0).asInstanceOf[MrX].isVisible, GameMaster.players(0).asInstanceOf[MrX].lastSeen, GameMaster.players(0).asInstanceOf[MrX].blackTickets, 2, 3, 4, 5)
+    val gs = GameStats(GameMaster.round, GameMaster.totalRound, GameMaster.players.length, mrx, detectives)
+
+
+    implicit val gameStatsWrites = new Writes[GameStats] {
+      def writes(gs: GameStats) = Json.obj(
+        "round" -> gs.round,
+        "totalRound" -> gs.totalRound,
+        "nPlayer" -> gs.nPlayer,
         "mrX" -> Json.obj(
-          "name" -> JsString(GameMaster.players(0).asInstanceOf[MrX].name),
-          "stationNumber" -> JsNumber(GameMaster.players(0).asInstanceOf[MrX].mrXstation.number.toInt),
-          "isVisible" -> JsBoolean(GameMaster.players(0).asInstanceOf[MrX].isVisible),
-          "lastSeen" -> JsString(GameMaster.players(0).asInstanceOf[MrX].lastSeen),
-          "blackTickets" -> JsNumber(GameMaster.players(0).asInstanceOf[MrX].blackTickets),
-          "doubleTurns" -> JsNumber(GameMaster.players(0).asInstanceOf[MrX].doubleTurn),
-          "taxiTickets" -> JsNumber(GameMaster.players(0).taxiTickets),
-          "busTickets" -> JsNumber(GameMaster.players(0).busTickets),
-          "undergroundTickets" -> JsNumber(GameMaster.players(0).undergroundTickets)
+          "name" -> gs.mrX.name,
+          "stationNumber" -> gs.mrX.stationNumber,
+          "isVisible" -> gs.mrX.isVisible,
+          "lastSeen" -> gs.mrX.lastSeen,
+          "blackTickets" -> gs.mrX.blackTickets,
+          "doubleTurns" -> gs.mrX.doubleTurns,
+          "taxiTickets" -> gs.mrX.taxiTickets,
+          "busTickets" -> gs.mrX.busTickets,
+          "undergroundTickets" -> gs.mrX.undergroundTickets
           //TODO: MrX History
         ),
         "detectives" -> Json.toJson(
-          for(i <- 1 to GameMaster.players.length - 1) yield {
+          for(i <- 0 to gs.detectives.length - 1) yield {
             Json.obj(
-            "name" -> JsString(GameMaster.players(i).name),
-            "stationNumber" -> JsNumber(GameMaster.players(i).station.number.toInt),
-            "taxiTickets" -> JsNumber(GameMaster.players(i).taxiTickets),
-            "busTickets" -> JsNumber(GameMaster.players(i).busTickets),
-            "undergroundTickets" -> JsNumber(GameMaster.players(i).undergroundTickets)
+              "name" -> gs.detectives(i).name,
+              "stationNumber" -> gs.detectives(i).stationNumber,
+              "taxiTickets" -> gs.detectives(i).taxiTickets,
+              "busTickets" -> gs.detectives(i).busTickets,
+              "undergroundTickets" -> gs.detectives(i).undergroundTickets
             )
           }
         )
       )
-    )
+    }
+
+    val json = Json.toJson(gs)
+
+    val pw = new PrintWriter(new File("ScotlandYard.json"))
+    pw.write(Json.prettyPrint(json))
+    pw.close
   }
 
 }
