@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.model.map
 
-import de.htwg.se.scotlandyard.model.core.{GameMaster, MapRenderer}
+import de.htwg.se.scotlandyard.model.core.GameMaster
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 
 import scala.collection.mutable
@@ -40,6 +40,6 @@ object GameMap {
   }
 
   override def toString: String = {
-    MapRenderer.renderMap()
+    GameMapRenderer.renderMap()
   }
 }

@@ -1,13 +1,9 @@
-package de.htwg.se.scotlandyard.model.core
+package de.htwg.se.scotlandyard.model.map
 
-import de.htwg.se.scotlandyard.ScotlandYard
-
-import scala.io.{BufferedSource, Source, StdIn}
-import de.htwg.se.scotlandyard.model.map.GameMap
-
+import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
-object MapRenderer {
+object GameMapRenderer {
 
   var offsetX: Int = 0
   var offsetY: Int = 0

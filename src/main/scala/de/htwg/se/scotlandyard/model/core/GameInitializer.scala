@@ -2,8 +2,8 @@ package de.htwg.se.scotlandyard.model.core
 
 import java.awt.Color
 
-import de.htwg.se.scotlandyard.model.map.{GameMap, StationType}
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{MrX, Detective}
+import de.htwg.se.scotlandyard.model.map.{GameMap, GameMapRenderer, StationType}
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{Detective, MrX}
 
 object GameInitializer {
 
@@ -30,7 +30,7 @@ object GameInitializer {
   val r = scala.util.Random
 
   def initialize(): Boolean = {
-    MapRenderer.init()
+    GameMapRenderer.init()
     GameMaster.stations = new StationInitializer().initStations()
     initPlayers(3)
     true
