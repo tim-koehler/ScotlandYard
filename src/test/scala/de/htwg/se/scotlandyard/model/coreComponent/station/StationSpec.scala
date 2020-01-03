@@ -1,7 +1,7 @@
-package de.htwg.se.scotlandyard.model.core.station
+package de.htwg.se.scotlandyard.model.coreComponent.station
 
-import de.htwg.se.scotlandyard.model.core.station._
-import de.htwg.se.scotlandyard.model.map.station.StationFactory
+import de.htwg.se.scotlandyard.model.coreComponent.station._
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.StationFactory
 import org.scalatest.{Matchers, WordSpec}
 
 class StationSpec extends WordSpec with Matchers {

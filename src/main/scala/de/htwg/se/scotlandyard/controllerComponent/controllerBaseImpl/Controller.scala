@@ -1,8 +1,8 @@
 package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.coreComponent.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.UndoManager

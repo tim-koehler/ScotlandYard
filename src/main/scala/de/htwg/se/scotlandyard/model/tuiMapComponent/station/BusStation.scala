@@ -1,8 +1,8 @@
-package de.htwg.se.scotlandyard.model.map.station
+package de.htwg.se.scotlandyard.model.tuiMapComponent.station
 import java.awt.Point
 
-import de.htwg.se.scotlandyard.model.map.StationType
-import de.htwg.se.scotlandyard.model.map.StationType.StationType
+import de.htwg.se.scotlandyard.util.StationType
+import de.htwg.se.scotlandyard.util.StationType.StationType
 
 class BusStation(num: Integer, tCoords: (Integer, Integer)) extends Station {
   override val number: Integer = num

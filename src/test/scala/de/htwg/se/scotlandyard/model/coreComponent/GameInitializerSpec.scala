@@ -1,7 +1,7 @@
-package de.htwg.se.scotlandyard.model.core
+package de.htwg.se.scotlandyard.model.coreComponent
 
 import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.model.map.station.StationFactory
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.StationFactory
 import org.scalatest._
 
 class GameInitializerSpec extends WordSpec with Matchers {

@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.map
+package de.htwg.se.scotlandyard.util
 
 object StationType extends Enumeration {
   type StationType = Value

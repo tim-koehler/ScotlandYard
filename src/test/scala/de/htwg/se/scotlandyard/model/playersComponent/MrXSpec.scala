@@ -1,8 +1,9 @@
 package de.htwg.se.scotlandyard.model.playersComponent
 
-import de.htwg.se.scotlandyard.model.map._
-import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
+import de.htwg.se.scotlandyard.model.tuiMapComponent._
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
+import de.htwg.se.scotlandyard.util.StationType
 import org.scalatest._
 
 class MrXSpec extends WordSpec with Matchers {

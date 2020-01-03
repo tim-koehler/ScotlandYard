@@ -4,7 +4,7 @@ import java.awt.event.AdjustmentEvent
 
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.util.TicketType
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 

@@ -2,8 +2,8 @@ package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.coreComponent.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.util.TicketType
 import org.scalatest._
 

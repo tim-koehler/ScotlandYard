@@ -5,7 +5,7 @@ import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.aview.tui.Tui
 import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.core._
+import de.htwg.se.scotlandyard.model.coreComponent._
 
 import scala.io.StdIn.readLine
 

@@ -1,8 +1,8 @@
 package de.htwg.se.scotlandyard.aview.tui
 
 import de.htwg.se.scotlandyard.controllerComponent._
-import de.htwg.se.scotlandyard.model.map.GameMapRenderer
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
+import de.htwg.se.scotlandyard.model.tuiMapComponent.baseTuiMapImpl.TuiMap
 import de.htwg.se.scotlandyard.util.TicketType
 
 import scala.io.{BufferedSource, Source}
@@ -43,13 +43,13 @@ class Tui(controller: ControllerInterface) extends Reactor {
 
   def evaluateMoveMapInput(input: String): Int = {
     if(input.matches("(a|A)+")) {
-      GameMapRenderer.updateX(input.length, positive = false)
+      TuiMap.updateViewOffsetX(input.length, positive = false)
     } else if(input.matches("(d|D)+")) {
-      GameMapRenderer.updateX(input.length , positive = true)
+      TuiMap.updateViewOffsetX(input.length , positive = true)
     } else if(input.matches("(w|W)+")) {
-      GameMapRenderer.updateY(input.length, positive = false)
+      TuiMap.updateViewOffsetY(input.length, positive = false)
     } else if(input.matches("(s|S)+")) {
-      GameMapRenderer.updateY(input.length, positive = true)
+      TuiMap.updateViewOffsetY(input.length, positive = true)
     } else if(input.equalsIgnoreCase("exit")) {
       return TUIMODE_QUIT
     }
@@ -147,7 +147,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
   }
 
   def buildOutputStringForRunningGame(): String = {
-    var outputString = GameMapRenderer.renderMap()
+    var outputString = TuiMap.toString()
     outputString = outputString + "Round: " + controller.getTotalRound() + "\nMrX History: "
     for(t <- controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
       outputString = outputString + t.toString + ", "

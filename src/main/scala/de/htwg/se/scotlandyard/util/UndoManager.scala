@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.util
 
-import de.htwg.se.scotlandyard.model.core.GameMaster
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 
 class UndoManager {
   private var undoStack: List[Command]= Nil

@@ -1,10 +1,10 @@
-package de.htwg.se.scotlandyard.model.core
+package de.htwg.se.scotlandyard.model.coreComponent
 
 import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.model.map._
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.tuiMapComponent._
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
-import de.htwg.se.scotlandyard.util.TicketType
+import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 object GameMaster {
