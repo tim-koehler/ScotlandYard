@@ -16,17 +16,17 @@ class FileIO extends FileIOInterface {
     val source: String = Source.fromFile("ScotlandYard.json").getLines.mkString
     val json: JsValue = Json.parse(source)
     //Remove "game" to make it work
-    GameMaster.round = (json \ "game" \ "round").get.toString().toInt
-    GameMaster.totalRound = (json \ "game" \ "totalRound").get.toString().toInt
-    val name = (json \ "game" \ "mrX" \ "name").get.toString()
-    val stationNumber = (json \ "game" \ "mrX" \ "stationNumber").get.toString().toInt
-    val isVisible = (json \ "game" \ "mrX" \ "isVisible").get.toString().toBoolean
-    val lastSeen = (json \ "game" \ "mrX" \ "lastSeen").asOpt[String]
-    val blackTickets = (json \ "game" \ "mrX" \ "blackTickets").get.toString().toInt
-    val doubleTurns = (json \ "game" \ "mrX" \ "doubleTurns").get.toString().toInt
-    val taxiTickets = (json \ "game" \ "mrX" \ "taxiTickets").get.toString().toInt
-    val busTickets = (json \ "game" \ "mrX" \ "busTickets").get.toString().toInt
-    val undergroundTickets = (json \ "game" \ "mrX" \ "undergroundTickets").get.toString().toInt
+    GameMaster.round = (json \ "round").get.toString().toInt
+    GameMaster.totalRound = (json \ "totalRound").get.toString().toInt
+    val name = (json \ "mrX" \ "name").get.toString()
+    val stationNumber = (json \ "mrX" \ "stationNumber").get.toString().toInt
+    val isVisible = (json \ "mrX" \ "isVisible").get.toString().toBoolean
+    val lastSeen = (json \ "mrX" \ "lastSeen").asOpt[String]
+    val blackTickets = (json \ "mrX" \ "blackTickets").get.toString().toInt
+    val doubleTurns = (json \ "mrX" \ "doubleTurns").get.toString().toInt
+    val taxiTickets = (json \ "mrX" \ "taxiTickets").get.toString().toInt
+    val busTickets = (json \ "mrX" \ "busTickets").get.toString().toInt
+    val undergroundTickets = (json \ "mrX" \ "undergroundTickets").get.toString().toInt
     GameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets)
 
   }
