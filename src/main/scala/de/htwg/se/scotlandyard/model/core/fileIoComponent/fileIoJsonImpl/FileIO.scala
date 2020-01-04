@@ -15,7 +15,6 @@ class FileIO extends FileIOInterface {
   override def load(): Unit = {
     val source: String = Source.fromFile("ScotlandYard.json").getLines.mkString
     val json: JsValue = Json.parse(source)
-    //Remove "game" to make it work
     GameMaster.round = (json \ "round").get.toString().toInt
     GameMaster.totalRound = (json \ "totalRound").get.toString().toInt
     val name = (json \ "mrX" \ "name").get.toString()
