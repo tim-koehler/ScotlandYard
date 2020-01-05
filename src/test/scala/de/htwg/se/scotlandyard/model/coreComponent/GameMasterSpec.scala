@@ -1,20 +1,17 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
-import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster.{players, round, winningRound}
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 import de.htwg.se.scotlandyard.util.TicketType
 import org.scalatest._
 
 class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameMaster Object" when {
-    val controller = new Controller
-    "startGame() is called should" should {
+    "initialize() is called should" should {
       "return true" in {
-        GameInitializer.initialize()
-        GameInitializer.initPlayers(2)
-        GameMaster.startGame() should be (true)
+        GameMaster.initialize(2, new GameInitializer) should be (true)
       }
       "and the current player should be MrX" in {
         GameMaster.getCurrentPlayer().isInstanceOf[MrX]

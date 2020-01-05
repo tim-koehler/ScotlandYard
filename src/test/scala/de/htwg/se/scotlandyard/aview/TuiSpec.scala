@@ -2,19 +2,22 @@ package de.htwg.se.scotlandyard.aview
 
 import de.htwg.se.scotlandyard.aview.tui.{ChooseNameMenuState, EnterNameState, RevealMrX1State, RevealMrX2State, RunningState, SelectNumberOfPlayerMenuState, Tui}
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.coreComponent.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapBaseImpl.TuiMap
 import org.scalatest._
 
 class TuiSpec extends WordSpec with Matchers {
   "Tui" when {
     "created" should {
-      GameMaster.startGame()
-      val tui = new Tui(new Controller())
+      val gameInitializer = new GameInitializer
+      GameMaster.initialize(gameInitializer = gameInitializer)
+      val tui = new Tui(new Controller(gameInitializer), new TuiMap)
       "refresh the screen when input is invalid in mainMenu and not refresh" in {
         tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
       }
       "change the number of player or refresh the screen" in {
-        GameMaster.startGame()
+        GameMaster.initialize(gameInitializer = gameInitializer)
         tui.changeState(new SelectNumberOfPlayerMenuState(tui))
         tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
         tui.evaluateInput("2") shouldBe (2)
@@ -51,7 +54,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.state shouldBe a[RunningState]
       }
       "should return state RUNNING when 'a', 'w', 's' or 'd' is pressed is pressed" in {
-        GameMaster.startGame()
+        GameMaster.initialize(gameInitializer = gameInitializer)
         tui.evaluateMoveMapInput("a") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("w") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("s") should be (tui.TUIMODE_RUNNING)
@@ -69,14 +72,11 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "should have a winning output String when a player wins" in {
         //GameInitializer.initStations()
-        GameInitializer.initPlayers(2)
+        GameMaster.initialize(2, gameInitializer = gameInitializer)
         GameMaster.winningPlayer = GameMaster.players(0)
         tui.buildOutputStringWin() shouldNot be (null)
         GameMaster.winningPlayer = GameMaster.players(1)
         tui.buildOutputStringWin() shouldNot be (null)
-      }
-      "should return 0 when evaluateWinningMethod is called" in {
-        //tui.evaluateWinning("") shouldBe (tui.TUIMODE_RUNNING)
       }
     }
   }

@@ -7,7 +7,7 @@ import org.scalatest.{Matchers, WordSpec}
 class GuiSpec extends WordSpec with Matchers {
     "Gui" when {
       /*"created" should {
-        GameMaster.startGame()
+        GameMaster.initialize()
         val gui = new Gui(new Controller())
         "should updateGame()" in {
           gui.updateGame()

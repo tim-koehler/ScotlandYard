@@ -2,15 +2,17 @@ package de.htwg.se.scotlandyard.aview
 
 import de.htwg.se.scotlandyard.aview.tui.{RevealMrX1State, Tui}
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.coreComponent.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapBaseImpl.TuiMap
 import org.scalatest._
 
 class RevealMrX1StateSpec extends WordSpec with Matchers {
   "RevealMrX1StateSpec" when {
     "new" should {
-      GameMaster.startGame()
-      GameInitializer.initPlayers(2)
-      val tui = new Tui(new Controller())
+      val gameInitializer = new GameInitializer
+      GameMaster.initialize(2, gameInitializer)
+      val tui = new Tui(new Controller(gameInitializer), new TuiMap)
       tui.changeState(new RevealMrX1State(tui))
 
       "RevealMrX1State evalInput should return 0" in {

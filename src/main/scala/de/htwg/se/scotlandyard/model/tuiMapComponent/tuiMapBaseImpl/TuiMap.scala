@@ -1,33 +1,26 @@
-package de.htwg.se.scotlandyard.model.tuiMapComponent.baseTuiMapImpl
+package de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapBaseImpl
 
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
-object TuiMap {
-  var map: Option[List[String]] = None
-  map match {
-    case Some(t) => true
-    case None => false
-  }
+class TuiMap extends TuiMapInterface {
+  var map: Option[List[String]] = readMapFromFile("./resources/ScotlandYardMap.txt")
   var playerPositions: mutable.Map[DetectiveInterface, Int] = mutable.Map[DetectiveInterface, Int]()
 
   var viewOffsetX: Int = 0
   var viewOffsetY: Int = 0
 
-  val mapDisplayDimensionsX = 200;
-  val mapDisplayDimensionsY = 30;
-  val mapBorderOffset = 1;
+  val mapDisplayDimensionsX = 200
+  val mapDisplayDimensionsY = 30
+  val mapBorderOffset = 1
 
-  val mapMoveOffset = 5;
-
-  def init(): Boolean = {
-    readMapFromFile("./resources/ScotlandYardMap.txt")
-    true
-  }
+  val mapMoveOffset = 5
 
   def updatePlayerPositions(): Unit ={
     setPlayerPositions()
@@ -97,13 +90,16 @@ object TuiMap {
   }
 
   private def readMapFromFile(path: String): Option[List[String]] = {
+    val mapBuffer = new ListBuffer[String]
     Try(Source.fromFile(path)) match {
-      case Success(v) => for (line <- v.getLines()) {
-        TuiMap.map = Some(line + "\n" :: TuiMap.map.get)
-      }; v.close()
+      case Success(v) =>
+        for (line <- v.getLines()) {
+          mapBuffer.addOne(line + "\n")
+        }
+        v.close()
       case Failure(e) => None
     }
-    Some(TuiMap.map.get.reverse)
+    Option(mapBuffer.toList)
   }
 
   override def toString: String = {
@@ -119,7 +115,7 @@ object TuiMap {
         str += "\n\u2551"
       }
 
-      Try(for (x <- viewOffsetX until ((mapDisplayDimensionsX - mapBorderOffset) + viewOffsetX)) str += TuiMap.map.get(y).charAt(x)) match {
+      Try(for (x <- viewOffsetX until ((mapDisplayDimensionsX - mapBorderOffset) + viewOffsetX)) str += this.map.get(y).charAt(x)) match {
         case Success(v) => ;
         case Failure(e) => str += " "
       }
