@@ -20,16 +20,7 @@ class FileIO extends FileIOInterface {
 
     val mrxSmall = MrXSmall(mrx.name, mrx.station.number, mrx.isVisible, mrx.lastSeen, mrx.blackTickets, mrx.doubleTurn, mrx.taxiTickets, mrx.busTickets, mrx.undergroundTickets)
     val gs = GameStats(GameMaster.round, GameMaster.totalRound, GameMaster.players.length, mrxSmall, detectives)
-
-    def toXml = {
-      <stock>
-        <symbol>{symbol}</symbol>
-        <businessName>{businessName}</businessName>
-        <price>{price}</price>
-      </stock>
-    }
-
-    scala.xml.XML.save("ScotlandYard.xml", toXml)
+    
   }
 
 }
