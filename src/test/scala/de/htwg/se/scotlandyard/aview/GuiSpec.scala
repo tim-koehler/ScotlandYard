@@ -1,13 +1,13 @@
 package de.htwg.se.scotlandyard.aview
 
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.core.GameMaster
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import org.scalatest.{Matchers, WordSpec}
 
 class GuiSpec extends WordSpec with Matchers {
     "Gui" when {
       /*"created" should {
-        GameMaster.startGame()
+        GameMaster.initialize()
         val gui = new Gui(new Controller())
         "should updateGame()" in {
           gui.updateGame()

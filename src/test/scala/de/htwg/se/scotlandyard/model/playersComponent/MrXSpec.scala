@@ -1,8 +1,8 @@
 package de.htwg.se.scotlandyard.model.playersComponent
 
-import de.htwg.se.scotlandyard.model.map._
-import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
+import de.htwg.se.scotlandyard.util.StationType
 import org.scalatest._
 
 class MrXSpec extends WordSpec with Matchers {
@@ -10,7 +10,9 @@ class MrXSpec extends WordSpec with Matchers {
     "new" should {
       StationFactory.createZeroIndexStation()
       val st = StationFactory.createTaxiStation(0, (1,1))
-      val mrX = new MrX(st)
+      val mrX = new MrX()
+      mrX.station = st
+
       "have a station number" in {
         mrX.getPosition().number should be (0)
       }

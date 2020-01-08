@@ -1,17 +1,18 @@
-package de.htwg.se.scotlandyard.model.core
+package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl
 
-import de.htwg.se.scotlandyard.model.map.station.{Station, StationFactory}
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.StationInitializerInterface
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
 
 import scala.collection.mutable.ListBuffer
 import scala.io.Source
 import scala.swing.Point
 import scala.util.{Failure, Success, Try}
 
-class StationInitializer {
+class StationInitializer extends StationInitializerInterface {
 
   val guiStationCoordinateFilePath = "./resources/coordsMap.txt"
 
-  def initStations(): List[Station] = {
+  override def initStations(): List[Station] = {
 
     var stations = createStations()
 

@@ -1,10 +1,9 @@
-package de.htwg.se.scotlandyard.model.core
+package de.htwg.se.scotlandyard.model.coreComponent
 
-import de.htwg.se.scotlandyard.ScotlandYard
-import de.htwg.se.scotlandyard.model.map._
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
-import de.htwg.se.scotlandyard.util.TicketType
+import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 object GameMaster {
@@ -16,8 +15,8 @@ object GameMaster {
   var winningPlayer: DetectiveInterface = _
   val winningRound = 24 //24
 
-  def startGame(): Boolean = {
-    if(!GameInitializer.initialize()) {
+  def initialize(nPlayers: Int = 3, gameInitializer: GameInitializerInterface): Boolean = {
+    if(!gameInitializer.initialize(nPlayers)) {
       return false
     }
     true

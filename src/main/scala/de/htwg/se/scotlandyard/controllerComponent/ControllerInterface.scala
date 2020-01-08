@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.controllerComponent
 
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 

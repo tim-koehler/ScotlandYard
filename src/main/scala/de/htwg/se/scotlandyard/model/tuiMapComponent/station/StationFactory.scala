@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.map.station
+package de.htwg.se.scotlandyard.model.tuiMapComponent.station
 
 object StationFactory {
 

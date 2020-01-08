@@ -1,15 +1,16 @@
 package de.htwg.se.scotlandyard.aview.tui
 
 import de.htwg.se.scotlandyard.controllerComponent._
-import de.htwg.se.scotlandyard.model.core.MapRenderer
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
+import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
+import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapBaseImpl.TuiMap
 import de.htwg.se.scotlandyard.util.TicketType
 
 import scala.io.{BufferedSource, Source}
 import scala.swing.Reactor
 import scala.util.{Failure, Success, Try}
 
-class Tui(controller: ControllerInterface) extends Reactor {
+class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reactor {
   listenTo(controller)
   var state: State = new SelectNumberOfPlayerMenuState(this)
 
@@ -23,6 +24,8 @@ class Tui(controller: ControllerInterface) extends Reactor {
   val TUIMODE_RUNNING: Int = 0
 
   var indexOfPlayerWhichNameToChange = 1
+
+  tuiMap.updatePlayerPositions()
 
   def changeState(state: State): Unit = {
     this.state = state
@@ -43,13 +46,13 @@ class Tui(controller: ControllerInterface) extends Reactor {
 
   def evaluateMoveMapInput(input: String): Int = {
     if(input.matches("(a|A)+")) {
-      MapRenderer.updateX(input.length, positive = false)
+      tuiMap.updateViewOffsetX(input.length, positive = false)
     } else if(input.matches("(d|D)+")) {
-      MapRenderer.updateX(input.length , positive = true)
+      tuiMap.updateViewOffsetX(input.length , positive = true)
     } else if(input.matches("(w|W)+")) {
-      MapRenderer.updateY(input.length, positive = false)
+      tuiMap.updateViewOffsetY(input.length, positive = false)
     } else if(input.matches("(s|S)+")) {
-      MapRenderer.updateY(input.length, positive = true)
+      tuiMap.updateViewOffsetY(input.length, positive = true)
     } else if(input.equalsIgnoreCase("exit")) {
       return TUIMODE_QUIT
     }
@@ -147,7 +150,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
   }
 
   def buildOutputStringForRunningGame(): String = {
-    var outputString = MapRenderer.renderMap()
+    var outputString = tuiMap.toString()
     outputString = outputString + "Round: " + controller.getTotalRound() + "\nMrX History: "
     for(t <- controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
       outputString = outputString + t.toString + ", "

@@ -1,17 +1,21 @@
 package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.UndoManager
 
 import scala.swing.Publisher
 
-class Controller extends ControllerInterface with Publisher {
+class Controller @Inject() (var gameInitializer: GameInitializerInterface) extends ControllerInterface with Publisher {
 
   private val undoManager = new UndoManager()
+  gameInitializer = Guice.createInjector(new ScotlandYardModule).getInstance(classOf[GameInitializerInterface])
 
   def setPlayerName(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
@@ -38,7 +42,7 @@ class Controller extends ControllerInterface with Publisher {
   }
 
   def initPlayers(nPlayer: Int): Integer = {
-    GameInitializer.initPlayers(nPlayer)
+    GameMaster.initialize(nPlayer, gameInitializer)
     publish(new NumberOfPlayersChanged)
     GameMaster.players.length
   }

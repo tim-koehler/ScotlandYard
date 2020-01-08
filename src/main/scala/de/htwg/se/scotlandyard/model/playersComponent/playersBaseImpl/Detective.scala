@@ -4,11 +4,15 @@ package de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl
 
 import java.awt.Color
 
-import de.htwg.se.scotlandyard.model.map.station.Station
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import javax.inject.Inject
 
 
-class Detective(var station: Station, var name: String, var color: Color) extends DetectiveInterface {
+class Detective @Inject() () extends DetectiveInterface {
+   override var station: Station = _
+   override var name: String = _
+   override var color: Color = _
    override var taxiTickets: Int = _ // default: 11
    override var busTickets: Int = _ // default: 8
    override var undergroundTickets: Int = _ // default 4

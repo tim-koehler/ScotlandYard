@@ -2,11 +2,15 @@ package de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl
 
 import java.awt.Color
 
-import de.htwg.se.scotlandyard.model.map.station.Station
+import com.google.inject.Inject
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.MrXInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
-class MrX(var mrXstation: Station) extends Detective(mrXstation, "MrX", Color.BLACK) with MrXInterface  {
+class MrX @Inject() extends Detective with MrXInterface
+{
+  name = "MrX"
+  color = Color.BLACK
   override var blackTickets: Int = 5
   override var doubleTurn: Int = 2
   override var isVisible: Boolean = false

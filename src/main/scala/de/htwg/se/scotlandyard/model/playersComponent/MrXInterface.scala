@@ -4,7 +4,7 @@ import java.awt.Color
 
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
-trait MrXInterface {
+trait MrXInterface extends DetectiveInterface {
   var blackTickets: Int
   var doubleTurn: Int
   var isVisible: Boolean
