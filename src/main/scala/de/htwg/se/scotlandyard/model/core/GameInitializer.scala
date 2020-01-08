@@ -51,16 +51,17 @@ object GameInitializer {
     true
   }
 
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int): Boolean = {
-    GameMaster.players(0).asInstanceOf[MrX].name = name
-    GameMaster.players(0).asInstanceOf[MrX].station = GameMaster.stations(stationNumber)
-    GameMaster.players(0).asInstanceOf[MrX].isVisible = isVisible
-    GameMaster.players(0).asInstanceOf[MrX].lastSeen = lastSeen
-    GameMaster.players(0).asInstanceOf[MrX].blackTickets = blackTickets
-    GameMaster.players(0).asInstanceOf[MrX].doubleTurn = doubleTurns
-    GameMaster.players(0).asInstanceOf[MrX].taxiTickets = taxiTickets
-    GameMaster.players(0).asInstanceOf[MrX].busTickets = busTickets
-    GameMaster.players(0).asInstanceOf[MrX].undergroundTickets = undergroundTickets
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int,taxiTickets: Int, busTickets: Int, undergroundTickets: Int): Boolean = {
+    var mrx = GameMaster.players(0).asInstanceOf[MrX]
+    mrx.name = name
+    mrx.station = GameMaster.stations(stationNumber)
+    mrx.isVisible = isVisible
+    mrx.lastSeen = lastSeen
+    mrx.blackTickets = blackTickets
+    mrx.doubleTurn = doubleTurns
+    mrx.taxiTickets = taxiTickets
+    mrx.busTickets = busTickets
+    mrx.undergroundTickets = undergroundTickets
     GameMap.updatePlayerPositions()
     drawnPositions = List()
     true

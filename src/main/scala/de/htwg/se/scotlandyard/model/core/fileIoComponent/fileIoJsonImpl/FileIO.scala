@@ -28,17 +28,37 @@ class FileIO extends FileIOInterface {
     val undergroundTickets = (json \ "mrX" \ "undergroundTickets").get.toString().toInt
     GameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets)
 
+    /*
+    implicit val detectiveSmallRead = new Reads[DetectiveSmall] {
+      override def reads(json: JsValue): JsResult[DetectiveSmall] = for {
+        name <- (json \ "name").validate[String]
+        stationNumber <- (json \ "stationNumber").validate[Int]
+        taxiTickets = (json \ "taxiTickets").validate[Int]
+        busTickets = (json \ "busTickets").validate[Int]
+        undergroundTickets = (json \ "undergroundTickets").validate[Int]
+      } yield DetectiveSmall(name, stationNumber, taxiTickets, busTickets, undergroundTickets)
+    }
+
+    val detectives = (json \\ "detectives").toList
+
+    println(detectives(0).as[DetectiveSmall].name)
+
+     */
+
   }
 
 
   override def save(): Unit = {
+    val players = GameMaster.players
+    val mrx = GameMaster.players(0).asInstanceOf[MrX]
+
     var detectives = List[DetectiveSmall]()
-    for(i <- 1 to GameMaster.players.length - 1) {
-      detectives = detectives ::: List(DetectiveSmall(GameMaster.players(i).name, GameMaster.players(i).station.number, GameMaster.players(i).taxiTickets, GameMaster.players(i).busTickets, GameMaster.players(i).undergroundTickets))
+    for(i <- 1 to players.length - 1) {
+      detectives = detectives ::: List(DetectiveSmall(players(i).name, players(i).station.number, players(i).taxiTickets, players(i).busTickets, players(i).undergroundTickets))
     }
 
-    val mrx = MrXSmall(GameMaster.players(0).asInstanceOf[MrX].name, GameMaster.players(0).asInstanceOf[MrX].station.number, GameMaster.players(0).asInstanceOf[MrX].isVisible, GameMaster.players(0).asInstanceOf[MrX].lastSeen, GameMaster.players(0).asInstanceOf[MrX].blackTickets, 2, 3, 4, 5)
-    val gs = GameStats(GameMaster.round, GameMaster.totalRound, GameMaster.players.length, mrx, detectives)
+    val mrxSmall = MrXSmall(mrx.name, mrx.station.number, mrx.isVisible, mrx.lastSeen, mrx.blackTickets, mrx.doubleTurn, mrx.taxiTickets, mrx.busTickets, mrx.undergroundTickets)
+    val gs = GameStats(GameMaster.round, GameMaster.totalRound, GameMaster.players.length, mrxSmall, detectives)
 
 
     implicit val gameStatsWrites = new Writes[GameStats] {
