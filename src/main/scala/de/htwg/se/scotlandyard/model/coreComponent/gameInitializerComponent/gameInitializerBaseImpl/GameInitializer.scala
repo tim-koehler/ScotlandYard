@@ -1,12 +1,18 @@
 package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerBaseImpl
 
 import java.awt.Color
+
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl.StationInitializer
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{Detective, MrX}
 
 class GameInitializer extends GameInitializerInterface {
+
+  val injector = Guice.createInjector(new ScotlandYardModule)
 
   val MRX_COLOR = Color.BLACK
   val DT1_COLOR = Color.BLUE
@@ -40,11 +46,20 @@ class GameInitializer extends GameInitializerInterface {
 
   private def initPlayers(nPlayer: Int): Boolean = {
     GameMaster.players = List()
+
     var st = GameMaster.stations(drawMisterXPosition())
-    GameMaster.players = List[Detective](new MrX(st))
+
+    val mrx = injector.getInstance(classOf[MrXInterface])
+    mrx.station = st
+
+    GameMaster.players = List[DetectiveInterface](mrx)
     for(i <- 1 to (nPlayer - 1)) {
       st = GameMaster.stations(drawDetectivePosition())
-      GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i, colorList(i)))
+      val detective = injector.getInstance(classOf[DetectiveInterface])
+      detective.station = st
+      detective.name = "Dt" + i
+      detective.color = colorList(i)
+      GameMaster.players = GameMaster.players:::List(detective)
     }
     distributeTicketsToMrX()
     distributeTicketsToDetectives()

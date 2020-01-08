@@ -10,11 +10,6 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
     val initializer = new GameInitializer()
     "init" in {
       initializer.initialize(3) should be(true)
-      /*initializer invokePrivate PrivateMethod[Int](Symbol("drawMisterXPosition"))() shouldBe >= (1)
-      initializer invokePrivate PrivateMethod[Int](Symbol("drawMisterXPosition"))() shouldBe <= (172)
-
-      initializer invokePrivate PrivateMethod[Int](Symbol("drawDetectivePosition"))() shouldBe >= (1)
-      initializer invokePrivate PrivateMethod[Int](Symbol("drawDetectivePosition"))() shouldBe <= (174)*/
     }
     "try to create and init all Station types" in {
       StationFactory.createZeroIndexStation()
