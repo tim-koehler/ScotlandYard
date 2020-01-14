@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-import de.htwg.se.scotlandyard.model.core.fileIoComponent.fileIoJsonImpl.FileIO
+import de.htwg.se.scotlandyard.model.core.fileIoComponent.fileIOXmlImpl.FileIO
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
