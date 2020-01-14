@@ -1,25 +1,25 @@
 <game>
-    <round>1</round>
+    <round>2</round>
     <totalRound>1</totalRound>
-    <nPlayer>7</nPlayer>
+    <nPlayer>4</nPlayer>
     <mrX>
         <name>MrX</name>
-        <stationNumber>132</stationNumber>
+        <stationNumber>32</stationNumber>
         <isVisible>false</isVisible>
         <lastSeen>never</lastSeen>
         <blackTickets>5</blackTickets>
         <doubleTurns>2</doubleTurns>
-        <taxiTickets>99</taxiTickets>
+        <taxiTickets>98</taxiTickets>
         <busTickets>99</busTickets>
         <undergroundTickets>99</undergroundTickets>
         <history>
-            <transport/>
+            <transport>Taxi</transport>
         </history>
     </mrX>
     <detectives>
         <detective>
             <name>{Dt1}</name>
-            <stationNumber>{103}</stationNumber>
+            <stationNumber>{112}</stationNumber>
             <taxiTickets>{11}</taxiTickets>
             <busTickets>{8}</busTickets>
             <undergroundTickets>{4}</undergroundTickets>
@@ -27,7 +27,7 @@
         </detective>
         <detective>
             <name>{Dt2}</name>
-            <stationNumber>{26}</stationNumber>
+            <stationNumber>{53}</stationNumber>
             <taxiTickets>{11}</taxiTickets>
             <busTickets>{8}</busTickets>
             <undergroundTickets>{4}</undergroundTickets>
@@ -35,35 +35,11 @@
         </detective>
         <detective>
             <name>{Dt3}</name>
-            <stationNumber>{29}</stationNumber>
+            <stationNumber>{117}</stationNumber>
             <taxiTickets>{11}</taxiTickets>
             <busTickets>{8}</busTickets>
             <undergroundTickets>{4}</undergroundTickets>
             <color>{-14336}</color>
-        </detective>
-        <detective>
-            <name>{Dt4}</name>
-            <stationNumber>{91}</stationNumber>
-            <taxiTickets>{11}</taxiTickets>
-            <busTickets>{8}</busTickets>
-            <undergroundTickets>{4}</undergroundTickets>
-            <color>{-65281}</color>
-        </detective>
-        <detective>
-            <name>{Dt5}</name>
-            <stationNumber>{50}</stationNumber>
-            <taxiTickets>{11}</taxiTickets>
-            <busTickets>{8}</busTickets>
-            <undergroundTickets>{4}</undergroundTickets>
-            <color>{-65536}</color>
-        </detective>
-        <detective>
-            <name>{Dt6}</name>
-            <stationNumber>{138}</stationNumber>
-            <taxiTickets>{11}</taxiTickets>
-            <busTickets>{8}</busTickets>
-            <undergroundTickets>{4}</undergroundTickets>
-            <color>{-16711681}</color>
         </detective>
     </detectives>
 </game>
