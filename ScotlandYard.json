@@ -1,47 +1,38 @@
 {
-  "round" : 1,
-  "totalRound" : 1,
-  "nPlayer" : 6,
+  "round" : 5,
+  "totalRound" : 2,
+  "nPlayer" : 4,
   "mrX" : {
     "name" : "MrX",
-    "stationNumber" : 35,
+    "stationNumber" : 67,
     "isVisible" : false,
     "lastSeen" : "never",
     "blackTickets" : 5,
     "doubleTurns" : 2,
-    "taxiTickets" : 3,
-    "busTickets" : 4,
-    "undergroundTickets" : 5
+    "taxiTickets" : 98,
+    "busTickets" : 99,
+    "undergroundTickets" : 99
   },
   "detectives" : [ {
-    "name" : "Halda",
-    "stationNumber" : 13,
-    "taxiTickets" : 11,
+    "name" : "Dt1",
+    "stationNumber" : 124,
+    "taxiTickets" : 10,
     "busTickets" : 8,
-    "undergroundTickets" : 4
+    "undergroundTickets" : 4,
+    "color" : "-16776961"
   }, {
     "name" : "Dt2",
-    "stationNumber" : 117,
-    "taxiTickets" : 11,
+    "stationNumber" : 90,
+    "taxiTickets" : 10,
     "busTickets" : 8,
-    "undergroundTickets" : 4
+    "undergroundTickets" : 4,
+    "color" : "-16711936"
   }, {
-    "name" : "Niklas",
-    "stationNumber" : 53,
-    "taxiTickets" : 11,
+    "name" : "Dt3",
+    "stationNumber" : 154,
+    "taxiTickets" : 10,
     "busTickets" : 8,
-    "undergroundTickets" : 4
-  }, {
-    "name" : "Tim",
-    "stationNumber" : 123,
-    "taxiTickets" : 11,
-    "busTickets" : 8,
-    "undergroundTickets" : 4
-  }, {
-    "name" : "Rororli",
-    "stationNumber" : 34,
-    "taxiTickets" : 11,
-    "busTickets" : 8,
-    "undergroundTickets" : 4
+    "undergroundTickets" : 4,
+    "color" : "-14336"
   } ]
 }

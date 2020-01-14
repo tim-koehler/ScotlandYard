@@ -1,17 +1,11 @@
 package de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl
 
-//import java.awt.Color
-
 import java.awt.Color
 
 import de.htwg.se.scotlandyard.model.map.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 
-
-class Detective(var station: Station, var name: String, var color: Color) extends DetectiveInterface {
-   override var taxiTickets: Int = _ // default: 11
-   override var busTickets: Int = _ // default: 8
-   override var undergroundTickets: Int = _ // default 4
+class Detective(var station: Station, var name: String, var color: Color, var taxiTickets: Int = 11, var busTickets: Int = 8, var undergroundTickets: Int = 4) extends DetectiveInterface {
 
    def getPosition(): Station = {
       station
@@ -30,10 +24,10 @@ class Detective(var station: Station, var name: String, var color: Color) extend
    }
 
    override def toString(): String = {
-      var stationString = station.number + " (" + station.sType.toString.toUpperCase + ")"
-      var taxiString = "T: " + taxiTickets
-      var busString = ", B: " + busTickets
-      var undergroundString = ", U: " + undergroundTickets
+      val stationString = station.number + " (" + station.sType.toString.toUpperCase + ")"
+      val taxiString = "T: " + taxiTickets
+      val busString = ", B: " + busTickets
+      val undergroundString = ", U: " + undergroundTickets
       name + ": " + stationString + "  TICKETS-> " + taxiString + busString + undergroundString
    }
 }

@@ -4,7 +4,7 @@ import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, NumberO
 import de.htwg.se.scotlandyard.model.core.fileIoComponent.fileIoJsonImpl.FileIO
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.UndoManager
 
@@ -18,7 +18,6 @@ class Controller extends ControllerInterface with Publisher {
   def load(): Unit = {
     val fileIo = new FileIO()
     fileIo.load()
-    publish(new PlayerMoved)
   }
 
   def save(): Unit = {
@@ -26,46 +25,10 @@ class Controller extends ControllerInterface with Publisher {
     fileIo.save()
   }
 
-  def setPlayerName(inputName: String, index: Int): Boolean = {
-    var returnValue: Boolean = false
-    if(index < GameMaster.players.length || inputName.equals("")) {
-      returnValue = GameMaster.players(index).setPlayerName(inputName)
-    }
-    publish(new PlayerNameChanged)
-    returnValue
-  }
-
-  def getWinningPlayer(): DetectiveInterface = {
-    GameMaster.winningPlayer
-  }
-
-  def setWinning(win: Boolean): Boolean = {
-    val oldWin = GameMaster.win
-    GameMaster.win = win
-    publish(new PlayerWin)
-    oldWin
-  }
-
-  def getPlayersList(): List[DetectiveInterface] = {
-    GameMaster.players
-  }
-
   def initPlayers(nPlayer: Int): Integer = {
     GameInitializer.initPlayers(nPlayer)
     publish(new NumberOfPlayersChanged)
     GameMaster.players.length
-  }
-
-  def getCurrentPlayer(): DetectiveInterface = {
-    GameMaster.getCurrentPlayer()
-  }
-
-  def getStations(): List[Station] = {
-    GameMaster.stations
-  }
-
-  def getTotalRound(): Integer = {
-    GameMaster.totalRound
   }
 
   def nextRound(): Integer = {
@@ -112,8 +75,48 @@ class Controller extends ControllerInterface with Publisher {
     publish(new PlayerWin)
     true
   }
+  // Getters and Setters
+  def getCurrentPlayer(): DetectiveInterface = {
+    GameMaster.getCurrentPlayer()
+  }
+
+  def getMrX(): MrXInterface = {
+    GameMaster.getMrX()
+  }
+
+  def getPlayersList(): List[DetectiveInterface] = {
+    GameMaster.players
+  }
+
+  def getStations(): List[Station] = {
+    GameMaster.stations
+  }
+
+  def getTotalRound(): Integer = {
+    GameMaster.totalRound
+  }
 
   def getWin(): Boolean = {
     GameMaster.win
+  }
+
+  def getWinningPlayer(): DetectiveInterface = {
+    GameMaster.winningPlayer
+  }
+
+  def setPlayerName(inputName: String, index: Int): Boolean = {
+    var returnValue: Boolean = false
+    if(index < GameMaster.players.length || inputName.equals("")) {
+      returnValue = GameMaster.players(index).setPlayerName(inputName)
+    }
+    publish(new PlayerNameChanged)
+    returnValue
+  }
+
+  def setWinning(win: Boolean): Boolean = {
+    val oldWin = GameMaster.win
+    GameMaster.win = win
+    publish(new PlayerWin)
+    oldWin
   }
 }

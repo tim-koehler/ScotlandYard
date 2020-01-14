@@ -2,7 +2,6 @@ package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.scotlandyard.model.core.GameMaster
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 import de.htwg.se.scotlandyard.util.Command
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
@@ -10,7 +9,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
 
   override def doStep(): Station = {
     if(GameMaster.getCurrentPlayerIndex() == 0) {
-      GameMaster.getCurrentPlayer().asInstanceOf[MrX].addToHistory(ticketType)
+      GameMaster.getMrX().addToHistory(ticketType)
     }
     GameMaster.updatePlayerPosition(newPosition)
     GameMaster.decreaseTickets(ticketType)
@@ -21,7 +20,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
 
   override def undoStep(): Station = {
     if(GameMaster.getCurrentPlayerIndex() == 1) {
-      GameMaster.players(0).asInstanceOf[MrX].removeFromHistory()
+      GameMaster.getMrX().removeFromHistory()
     }
     GameMaster.previousRound()
     GameMaster.updatePlayerPosition(currentPosition)
@@ -31,7 +30,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
 
   override def redoStep(): Station = {
     if(GameMaster.getCurrentPlayerIndex() == 0) {
-      GameMaster.getCurrentPlayer().asInstanceOf[MrX].addToHistory(ticketType)
+      GameMaster.getMrX().addToHistory(ticketType)
     }
     GameMaster.updatePlayerPosition(newPosition)
     GameMaster.decreaseTickets(ticketType)

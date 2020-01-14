@@ -27,6 +27,10 @@ object GameMaster {
     players(getCurrentPlayerIndex())
   }
 
+  def getMrX(): MrXInterface = {
+    players(0).asInstanceOf[MrXInterface]
+  }
+
   def getCurrentPlayerIndex(): Integer = {
     if(round % players.length == 0) {
       (players.length - 1)

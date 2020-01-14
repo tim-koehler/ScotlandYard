@@ -160,7 +160,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
   def buildOutputStringForRunningGame(): String = {
     var outputString = MapRenderer.renderMap()
     outputString = outputString + "Round: " + controller.getTotalRound() + "\nMrX History: "
-    for(t <- controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
+    for(t <- controller.getMrX().getHistory()) {
       outputString = outputString + t.toString + ", "
     }
     outputString = outputString + "\n"

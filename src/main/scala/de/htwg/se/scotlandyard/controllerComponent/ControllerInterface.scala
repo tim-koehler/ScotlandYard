@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.controllerComponent
 
 import de.htwg.se.scotlandyard.model.map.station.Station
-import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 import scala.swing.Publisher
@@ -10,14 +10,7 @@ trait ControllerInterface extends Publisher {
 
   def load(): Unit
   def save(): Unit
-  def setPlayerName(inputName: String, index: Int): Boolean
-  def getWinningPlayer(): DetectiveInterface
-  def setWinning(win: Boolean): Boolean
-  def getPlayersList(): List[DetectiveInterface]
   def initPlayers(nPlayer: Int): Integer
-  def getCurrentPlayer(): DetectiveInterface
-  def getStations(): List[Station]
-  def getTotalRound(): Integer
   def nextRound(): Integer
   def previousRound(): Integer
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean
@@ -27,7 +20,15 @@ trait ControllerInterface extends Publisher {
   def updateMrXVisibility(): Boolean
   def startGame(): Boolean
   def winGame(): Boolean
+  def getCurrentPlayer(): DetectiveInterface
+  def getMrX(): MrXInterface
+  def getPlayersList(): List[DetectiveInterface]
+  def getStations(): List[Station]
+  def getTotalRound(): Integer
   def getWin(): Boolean
+  def getWinningPlayer(): DetectiveInterface
+  def setPlayerName(inputName: String, index: Int): Boolean
+  def setWinning(win: Boolean): Boolean
 }
 
 import scala.swing.event.Event

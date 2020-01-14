@@ -3,7 +3,8 @@ package de.htwg.se.scotlandyard.model.core
 import java.awt.Color
 
 import de.htwg.se.scotlandyard.model.map.{GameMap, StationType}
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{MrX, Detective}
+import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{Detective, MrX}
 
 object GameInitializer {
 
@@ -39,7 +40,7 @@ object GameInitializer {
   def initPlayers(nPlayer: Int): Boolean = {
     GameMaster.players = List()
     var st = GameMaster.stations(drawMisterXPosition())
-    GameMaster.players = List[Detective](new MrX(st))
+    GameMaster.players = List[DetectiveInterface](new MrX(st))
     for(i <- 1 to (nPlayer - 1)) {
       st = GameMaster.stations(drawDetectivePosition())
       GameMaster.players = GameMaster.players:::List(new Detective(st, "Dt" + i, colorList(i)))
@@ -51,19 +52,26 @@ object GameInitializer {
     true
   }
 
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int,taxiTickets: Int, busTickets: Int, undergroundTickets: Int): Boolean = {
-    var mrx = GameMaster.players(0).asInstanceOf[MrX]
-    mrx.name = name
-    mrx.station = GameMaster.stations(stationNumber)
-    mrx.isVisible = isVisible
-    mrx.lastSeen = lastSeen
-    mrx.blackTickets = blackTickets
-    mrx.doubleTurn = doubleTurns
-    mrx.taxiTickets = taxiTickets
-    mrx.busTickets = busTickets
-    mrx.undergroundTickets = undergroundTickets
+  def initDetectiveFromLoad(name: String, stationNumber: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, color: Color): Boolean = {
+    val st = GameMaster.stations(stationNumber)
+    GameMaster.players = GameMaster.players:::List(new Detective(st, name, color, taxiTickets, busTickets, undergroundTickets))
     GameMap.updatePlayerPositions()
-    drawnPositions = List()
+    true
+  }
+
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int): Boolean = {
+    GameMaster.players = List()
+    val st = GameMaster.stations(stationNumber)
+    GameMaster.players = List[Detective](new MrX(st))
+    GameMaster.getMrX().name = name
+    GameMaster.getMrX().isVisible = isVisible
+    GameMaster.getMrX().lastSeen = lastSeen
+    GameMaster.getMrX().blackTickets = blackTickets
+    GameMaster.getMrX().doubleTurn = doubleTurns
+    GameMaster.getMrX().taxiTickets = taxiTickets
+    GameMaster.getMrX().busTickets = busTickets
+    GameMaster.getMrX().undergroundTickets = undergroundTickets
+    GameMap.updatePlayerPositions()
     true
   }
 

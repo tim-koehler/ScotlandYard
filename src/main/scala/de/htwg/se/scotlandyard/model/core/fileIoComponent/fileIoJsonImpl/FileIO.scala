@@ -1,11 +1,11 @@
 package de.htwg.se.scotlandyard.model.core.fileIoComponent.fileIoJsonImpl
 
+import java.awt.Color
 import java.io._
 
 import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
 import play.api.libs.json._
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{Detective, MrX}
 
 import scala.io.Source
 
@@ -26,32 +26,32 @@ class FileIO extends FileIOInterface {
     val taxiTickets = (json \ "mrX" \ "taxiTickets").get.toString().toInt
     val busTickets = (json \ "mrX" \ "busTickets").get.toString().toInt
     val undergroundTickets = (json \ "mrX" \ "undergroundTickets").get.toString().toInt
-    GameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets)
+    GameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets)
 
     val detectives: JsArray = (json \ "detectives").as[JsArray]
 
-    var index = 1;
     for(detective <- detectives.value) {
-      GameMaster.players(index).setPlayerName((detective \ "name").get.toString())
-      GameMaster.players(index).station = GameMaster.stations((detective \ "stationNumber").get.toString().toInt)
-      GameMaster.players(index).taxiTickets = (detective \ "taxiTickets").get.toString().toInt
-      GameMaster.players(index).busTickets = (detective \ "busTickets").get.toString().toInt
-      GameMaster.players(index).undergroundTickets = (detective \ "undergroundTickets").get.toString().toInt
-      index += 1
+      val name = (detective \ "name").get.toString()
+      val stationNumber = (detective \ "stationNumber").get.toString().toInt
+      val taxiTickets = (detective \ "taxiTickets").get.toString().toInt
+      val busTickets = (detective \ "busTickets").get.toString().toInt
+      val undergroundTickets = (detective \ "undergroundTickets").get.toString().toInt
+      val color = (detective \ "color").get.toString()
+      GameInitializer.initDetectiveFromLoad(formatString(name), stationNumber, taxiTickets, busTickets, undergroundTickets, Color.decode(formatString(color)))
     }
   }
 
   override def save(): Unit = {
     val mrx = Json.obj(
-      "name"         ->  GameMaster.players(0).asInstanceOf[MrX].name,
-      "stationNumber"       ->  GameMaster.players(0).asInstanceOf[MrX].station.number.toInt,
-      "isVisible"           ->  GameMaster.players(0).asInstanceOf[MrX].isVisible,
-      "lastSeen"            ->  GameMaster.players(0).asInstanceOf[MrX].lastSeen,
-      "blackTickets"        ->  GameMaster.players(0).asInstanceOf[MrX].blackTickets,
-      "doubleTurns"         ->  2,
-      "taxiTickets"         ->  3,
-      "busTickets"          ->  4,
-      "undergroundTickets"  ->  5
+      "name"         ->  GameMaster.getMrX().name,
+      "stationNumber"       ->  GameMaster.getMrX().station.number.toInt,
+      "isVisible"           ->  GameMaster.getMrX().isVisible,
+      "lastSeen"            ->  GameMaster.getMrX().lastSeen,
+      "blackTickets"        ->  GameMaster.getMrX().blackTickets,
+      "doubleTurns"         ->  GameMaster.getMrX().doubleTurn,
+      "taxiTickets"         ->  GameMaster.getMrX().taxiTickets,
+      "busTickets"          ->  GameMaster.getMrX().busTickets,
+      "undergroundTickets"  ->  GameMaster.getMrX().undergroundTickets
     )
 
     var detectives = new JsArray()
@@ -61,7 +61,8 @@ class FileIO extends FileIOInterface {
         "stationNumber"       -> GameMaster.players(i).station.number.toInt,
         "taxiTickets"         -> GameMaster.players(i).taxiTickets,
         "busTickets"          -> GameMaster.players(i).busTickets,
-        "undergroundTickets"  -> GameMaster.players(i).undergroundTickets
+        "undergroundTickets"  -> GameMaster.players(i).undergroundTickets,
+        "color"               -> String.valueOf(GameMaster.players(i).color.getRGB)
       ))
     }
 
@@ -76,5 +77,9 @@ class FileIO extends FileIOInterface {
     val pw = new PrintWriter(new File("ScotlandYard.json"))
     pw.write(Json.prettyPrint(Json.toJson(gameStateJson)))
     pw.close()
+  }
+
+  def formatString(s: String): String = {
+    s.substring(1, s.length - 1) //removes quotation marks from loaded Strings
   }
 }

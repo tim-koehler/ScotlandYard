@@ -21,6 +21,13 @@ class GuiSettingsComponentFactory(controller: ControllerInterface, gui: Gui) {
     }
   }
 
+  def createLoadButton(displayName: String): Button = {
+    new Button(displayName) {
+      listenTo(this)
+      settingsListeners.addLoadButtonListener(reactions)
+    }
+  }
+
   def createStartButton(displayName: String): Button = {
     new Button(displayName) {
       listenTo(this)

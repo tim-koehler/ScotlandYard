@@ -6,7 +6,8 @@ import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import javax.swing._
 
 import scala.swing.event.{ButtonClicked, SelectionChanged}
-import scala.swing.{ListView, Reactions}
+import scala.swing.{Dialog, ListView, Reactions}
+import scala.util.{Failure, Success, Try}
 
 class GuiSettingsListeners(controller: ControllerInterface, gui: Gui) {
 
@@ -53,6 +54,19 @@ class GuiSettingsListeners(controller: ControllerInterface, gui: Gui) {
           case "7 Player" => controller.initPlayers(7)
         }
         gui.updateSettings()
+    }
+  }
+
+  def addLoadButtonListener(reactions: Reactions): Unit = {
+    reactions += {
+      case e: ButtonClicked =>
+        Try(controller.load()) match {
+          case Success(v) => Dialog.showMessage(null, "Game successfully Loaded!", "Load");
+
+            controller.startGame()
+          case Failure(e) => Dialog.showMessage(null, "An Error occured! The game was not loaded!", "Load", Dialog.Message.Error);
+            e.printStackTrace() // for debug purpose
+        }
     }
   }
 }

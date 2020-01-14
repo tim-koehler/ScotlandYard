@@ -11,7 +11,6 @@ class FileIO extends FileIOInterface {
 
   override def save(): Unit = {
     val players = GameMaster.players
-    val mrx = GameMaster.players(0).asInstanceOf[MrX]
     
   }
 
