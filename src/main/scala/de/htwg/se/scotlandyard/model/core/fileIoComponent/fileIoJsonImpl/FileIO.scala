@@ -29,8 +29,15 @@ class FileIO extends FileIOInterface {
     GameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets)
 
     val detectives: JsArray = (json \ "detectives").as[JsArray]
+
+    var index = 1;
     for(detective <- detectives.value) {
-        println((detective \ "name").get.toString())
+      GameMaster.players(index).setPlayerName((detective \ "name").get.toString())
+      GameMaster.players(index).station = GameMaster.stations((detective \ "stationNumber").get.toString().toInt)
+      GameMaster.players(index).taxiTickets = (detective \ "taxiTickets").get.toString().toInt
+      GameMaster.players(index).busTickets = (detective \ "busTickets").get.toString().toInt
+      GameMaster.players(index).undergroundTickets = (detective \ "undergroundTickets").get.toString().toInt
+      index += 1
     }
   }
 

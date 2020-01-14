@@ -4,42 +4,42 @@
   "nPlayer" : 6,
   "mrX" : {
     "name" : "MrX",
-    "stationNumber" : 106,
+    "stationNumber" : 35,
     "isVisible" : false,
     "lastSeen" : "never",
     "blackTickets" : 5,
     "doubleTurns" : 2,
-    "taxiTickets" : 99,
-    "busTickets" : 99,
-    "undergroundTickets" : 99
+    "taxiTickets" : 3,
+    "busTickets" : 4,
+    "undergroundTickets" : 5
   },
   "detectives" : [ {
-    "name" : "Dt1",
-    "stationNumber" : 117,
-    "taxiTickets" : 11,
-    "busTickets" : 8,
-    "undergroundTickets" : 4
-  }, {
-    "name" : "Dt2",
+    "name" : "Halda",
     "stationNumber" : 13,
     "taxiTickets" : 11,
     "busTickets" : 8,
     "undergroundTickets" : 4
   }, {
-    "name" : "Dt3",
+    "name" : "Dt2",
+    "stationNumber" : 117,
+    "taxiTickets" : 11,
+    "busTickets" : 8,
+    "undergroundTickets" : 4
+  }, {
+    "name" : "Niklas",
     "stationNumber" : 53,
     "taxiTickets" : 11,
     "busTickets" : 8,
     "undergroundTickets" : 4
   }, {
-    "name" : "Roland is so ein hässlig ",
-    "stationNumber" : 138,
+    "name" : "Tim",
+    "stationNumber" : 123,
     "taxiTickets" : 11,
     "busTickets" : 8,
     "undergroundTickets" : 4
   }, {
-    "name" : "Dt5",
-    "stationNumber" : 26,
+    "name" : "Rororli",
+    "stationNumber" : 34,
     "taxiTickets" : 11,
     "busTickets" : 8,
     "undergroundTickets" : 4
