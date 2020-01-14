@@ -5,6 +5,8 @@ import java.awt.Color
 import de.htwg.se.scotlandyard.model.map.{GameMap, StationType}
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{Detective, MrX}
+import de.htwg.se.scotlandyard.util.TicketType
+import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 object GameInitializer {
 
@@ -59,7 +61,7 @@ object GameInitializer {
     true
   }
 
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int): Boolean = {
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, history: List[TicketType]): Boolean = {
     GameMaster.players = List()
     val st = GameMaster.stations(stationNumber)
     GameMaster.players = List[Detective](new MrX(st))
@@ -71,6 +73,7 @@ object GameInitializer {
     GameMaster.getMrX().taxiTickets = taxiTickets
     GameMaster.getMrX().busTickets = busTickets
     GameMaster.getMrX().undergroundTickets = undergroundTickets
+    GameMaster.getMrX().history = history
     GameMap.updatePlayerPositions()
     true
   }

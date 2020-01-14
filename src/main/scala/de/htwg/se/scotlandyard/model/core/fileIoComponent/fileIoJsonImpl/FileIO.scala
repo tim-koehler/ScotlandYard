@@ -5,6 +5,8 @@ import java.io._
 
 import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.util.TicketType
+import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import play.api.libs.json._
 
 import scala.io.Source
@@ -26,7 +28,13 @@ class FileIO extends FileIOInterface {
     val taxiTickets = (json \ "mrX" \ "taxiTickets").get.toString().toInt
     val busTickets = (json \ "mrX" \ "busTickets").get.toString().toInt
     val undergroundTickets = (json \ "mrX" \ "undergroundTickets").get.toString().toInt
-    GameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets)
+    val historyJs: JsArray = (json \ "mrX" \ "history").as[JsArray]
+    var history: List[TicketType] = List()
+    for(transport <- historyJs.value) {
+      var s = (transport \ "transport").get.toString()
+      history = history:::List(TicketType.withName(formatString(s)))
+    }
+    GameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets, history)
 
     val detectives: JsArray = (json \ "detectives").as[JsArray]
 
@@ -42,6 +50,14 @@ class FileIO extends FileIOInterface {
   }
 
   override def save(): Unit = {
+    var history = new JsArray()
+
+    for(h <- GameMaster.getMrX().history) {
+      history = history.append(Json.obj(
+        "transport" -> h
+      ))
+    }
+
     val mrx = Json.obj(
       "name"         ->  GameMaster.getMrX().name,
       "stationNumber"       ->  GameMaster.getMrX().station.number.toInt,
@@ -51,7 +67,8 @@ class FileIO extends FileIOInterface {
       "doubleTurns"         ->  GameMaster.getMrX().doubleTurn,
       "taxiTickets"         ->  GameMaster.getMrX().taxiTickets,
       "busTickets"          ->  GameMaster.getMrX().busTickets,
-      "undergroundTickets"  ->  GameMaster.getMrX().undergroundTickets
+      "undergroundTickets"  ->  GameMaster.getMrX().undergroundTickets,
+      "history"             ->  history
     )
 
     var detectives = new JsArray()
