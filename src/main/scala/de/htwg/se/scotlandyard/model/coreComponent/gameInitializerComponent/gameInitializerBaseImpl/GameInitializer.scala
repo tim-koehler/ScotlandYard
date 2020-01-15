@@ -2,13 +2,12 @@ package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gam
 
 import java.awt.Color
 
-import com.google.inject.{Guice, Inject}
+import com.google.inject.Guice
 import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl.StationInitializer
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.StationInitializerInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
@@ -40,7 +39,7 @@ class GameInitializer extends GameInitializerInterface {
 
   override def initialize(nPlayers: Int): Boolean = {
     if(GameMaster.stations.size == 0){
-      GameMaster.stations = new StationInitializer().initStations()
+      GameMaster.stations = injector.getInstance(classOf[StationInitializerInterface]).initStations()
     }
     initPlayers(nPlayers)
     true

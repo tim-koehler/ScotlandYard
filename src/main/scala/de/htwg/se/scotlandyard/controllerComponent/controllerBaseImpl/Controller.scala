@@ -3,6 +3,7 @@ package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
+import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.core.fileIoComponent.fileIoJsonImpl.FileIO
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
@@ -16,16 +17,18 @@ import scala.swing.Publisher
 class Controller @Inject() (var gameInitializer: GameInitializerInterface) extends ControllerInterface with Publisher {
 
   private val undoManager = new UndoManager()
-  gameInitializer = Guice.createInjector(new ScotlandYardModule).getInstance(classOf[GameInitializerInterface])
-  //TODO: Dependency Injection with FileIO
+
+  val injector = Guice.createInjector(new ScotlandYardModule)
+  gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
+  val fileIO = injector.getInstance(classOf[FileIOInterface])
 
   def load(): Unit = {
-    val fileIo = new FileIO()
+    val fileIo = fileIO
     fileIo.load()
   }
 
   def save(): Unit = {
-    val fileIo = new FileIO()
+    val fileIo = fileIO
     fileIo.save()
   }
 
