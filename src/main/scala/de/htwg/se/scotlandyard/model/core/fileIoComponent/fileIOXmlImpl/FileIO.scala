@@ -17,6 +17,7 @@ class FileIO extends FileIOInterface {
     val xmlFile = scala.xml.XML.loadFile("ScotlandYard.xml")
     GameMaster.round = (xmlFile \\ "game" \ "round").text.toInt
     GameMaster.totalRound = (xmlFile \\ "game" \ "totalRound").text.toInt
+    val nPlayer = (xmlFile \\ "game" \ "nPlayer").text.toInt
     val name = (xmlFile \\ "game" \ "mrX" \ "name").text
     val stationNumber = (xmlFile \\ "game" \ "mrX" \ "stationNumber").text.toInt
     val isVisible = (xmlFile \\ "game" \ "mrX" \ "isVisible").text.toBoolean
@@ -27,14 +28,24 @@ class FileIO extends FileIOInterface {
     val busTickets = (xmlFile \\ "game" \ "mrX" \ "busTickets").text.toInt
     val undergroundTickets = (xmlFile \\ "game" \ "mrX" \ "undergroundTickets").text.toInt
     var history: List[TicketType] = List()
-    for(i <- 0 to (xmlFile \\ "game" \ "mrX" \ "history").length - 1) {
-      var s: String = (xmlFile \\ "game" \ "mrX" \ "history")(i).text
-      s = s.trim.replaceAll("\n ", "")
+    val his = (xmlFile \\ "game" \ "mrX" \ "history")
+    for(i <- 0 to (xmlFile \\ "game" \ "mrX" \ "history").length) {
+      val s: String = (his \\ "transport")(i).text.toString
       history = history:::List(TicketType.withName(s))
     }
     GameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets, history)
 
+    val detectives = (xmlFile \\ "game" \ "detectives")
 
+    for(i <- 0 to nPlayer - 2) {
+      val name = (detectives \\ "detective" \ "name")(i).text.toString
+      val stationNumber = (detectives \\ "detective" \ "stationNumber")(i).text.toInt
+      val taxiTickets = (detectives \\ "detective" \ "taxiTickets")(i).text.toInt
+      val busTickets = (detectives \\ "detective" \ "busTickets")(i).text.toInt
+      val undergroundTickets = (detectives \\ "detective" \ "undergroundTickets")(i).text.toInt
+      val color = (detectives \\ "detective" \ "color")(i).text.toString
+      GameInitializer.initDetectiveFromLoad(name, stationNumber, taxiTickets, busTickets, undergroundTickets, Color.decode(color))
+    }
 
   }
 
@@ -58,12 +69,15 @@ class FileIO extends FileIOInterface {
 
   def mrXHistoryToXml(): Elem = {
     var xmlString: String = ""
-    if(GameMaster.getMrX().history.isEmpty) {
+    if (GameMaster.getMrX().history.isEmpty) {
       xmlString = "<transport></transport>"
+    } else {
+      for (h <- GameMaster.getMrX().history) {
+        xmlString = xmlString + "<transport>" + h + "</transport>"
+      }
     }
-    for(h <- GameMaster.getMrX().history) {
-      xmlString = "<transport>" + h + "</transport>" + xmlString
-    }
+    xmlString = "<history>" + xmlString + "</history>"
+    println(xmlString)
     XML.loadString(xmlString)
   }
 
@@ -78,7 +92,7 @@ class FileIO extends FileIOInterface {
       <taxiTickets>{GameMaster.getMrX().taxiTickets}</taxiTickets>
       <busTickets>{GameMaster.getMrX().busTickets}</busTickets>
       <undergroundTickets>{GameMaster.getMrX().undergroundTickets}</undergroundTickets>
-      <history>{mrXHistoryToXml}</history>
+      {mrXHistoryToXml()}
     </mrX>
   }
 
@@ -92,12 +106,12 @@ class FileIO extends FileIOInterface {
   }
 
   def detectiveToXmlString(name: String, stationNumber: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, color: Color): String = {
-    "<detective><name>{" + name + "}</name> " +
-      "<stationNumber>{" + stationNumber + "}</stationNumber>" +
-      "<taxiTickets>{" + taxiTickets + "}</taxiTickets>" +
-      "<busTickets>{" + busTickets + "}</busTickets>" +
-      "<undergroundTickets>{" + undergroundTickets + "}</undergroundTickets>" +
-      "<color>{" + String.valueOf(color.getRGB) + "}</color></detective>"
+    "<detective><name>" + name + "</name> " +
+      "<stationNumber>" + stationNumber + "</stationNumber>" +
+      "<taxiTickets>" + taxiTickets + "</taxiTickets>" +
+      "<busTickets>" + busTickets + "</busTickets>" +
+      "<undergroundTickets>" + undergroundTickets + "</undergroundTickets>" +
+      "<color>" + String.valueOf(color.getRGB) + "</color></detective>"
   }
 
 }
