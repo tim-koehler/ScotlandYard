@@ -8,7 +8,7 @@ import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.util.TicketType
+import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import play.api.libs.json._
 
@@ -36,12 +36,13 @@ class FileIO @Inject() extends FileIOInterface {
     val historyJs: JsArray = (json \ "mrX" \ "history").as[JsArray]
     var history: List[TicketType] = List()
     for(transport <- historyJs.value) {
-      var s = (transport \ "transport").get.toString()
+      val s = (transport \ "transport").get.toString()
       history = history:::List(TicketType.withName(formatString(s)))
     }
 
     val gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
-    gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets, history)
+    val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets, doubleTurns)
+    gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, tickets, history)
 
     val detectives: JsArray = (json \ "detectives").as[JsArray]
 
@@ -52,7 +53,7 @@ class FileIO @Inject() extends FileIOInterface {
       val busTickets = (detective \ "busTickets").get.toString().toInt
       val undergroundTickets = (detective \ "undergroundTickets").get.toString().toInt
       val color = (detective \ "color").get.toString()
-      gameInitializer.initDetectiveFromLoad(formatString(name), stationNumber, taxiTickets, busTickets, undergroundTickets, Color.decode(formatString(color)))
+      gameInitializer.initDetectivesFromLoad(formatString(name), stationNumber, Tickets(taxiTickets, busTickets, undergroundTickets), Color.decode(formatString(color)))
     }
   }
 
@@ -70,11 +71,11 @@ class FileIO @Inject() extends FileIOInterface {
       "stationNumber"       ->  GameMaster.getMrX().station.number.toInt,
       "isVisible"           ->  GameMaster.getMrX().isVisible,
       "lastSeen"            ->  GameMaster.getMrX().lastSeen,
-      "blackTickets"        ->  GameMaster.getMrX().blackTickets,
-      "doubleTurns"         ->  GameMaster.getMrX().doubleTurn,
-      "taxiTickets"         ->  GameMaster.getMrX().taxiTickets,
-      "busTickets"          ->  GameMaster.getMrX().busTickets,
-      "undergroundTickets"  ->  GameMaster.getMrX().undergroundTickets,
+      "blackTickets"        ->  GameMaster.getMrX().tickets.blackTickets,
+      "doubleTurns"         ->  GameMaster.getMrX().tickets.doubleTurns,
+      "taxiTickets"         ->  GameMaster.getMrX().tickets.taxiTickets,
+      "busTickets"          ->  GameMaster.getMrX().tickets.busTickets,
+      "undergroundTickets"  ->  GameMaster.getMrX().tickets.undergroundTickets,
       "history"             ->  history
     )
 
@@ -83,9 +84,9 @@ class FileIO @Inject() extends FileIOInterface {
       detectives = detectives.append(Json.obj(
         "name"         -> GameMaster.players(i).name,
         "stationNumber"       -> GameMaster.players(i).station.number.toInt,
-        "taxiTickets"         -> GameMaster.players(i).taxiTickets,
-        "busTickets"          -> GameMaster.players(i).busTickets,
-        "undergroundTickets"  -> GameMaster.players(i).undergroundTickets,
+        "taxiTickets"         -> GameMaster.players(i).tickets.taxiTickets,
+        "busTickets"          -> GameMaster.players(i).tickets.busTickets,
+        "undergroundTickets"  -> GameMaster.players(i).tickets.undergroundTickets,
         "color"               -> String.valueOf(GameMaster.players(i).color.getRGB)
       ))
     }

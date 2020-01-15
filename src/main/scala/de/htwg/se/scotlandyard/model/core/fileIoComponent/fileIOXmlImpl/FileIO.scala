@@ -8,7 +8,7 @@ import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.util.TicketType
+import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 import scala.swing.Color
@@ -40,7 +40,8 @@ class FileIO extends FileIOInterface {
     }
 
     val gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
-    gameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets, history)
+    val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets, doubleTurns)
+    gameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen, tickets, history)
 
     val detectives = (xmlFile \\ "game" \ "detectives")
 
@@ -51,7 +52,7 @@ class FileIO extends FileIOInterface {
       val busTickets = (detectives \\ "detective" \ "busTickets")(i).text.toInt
       val undergroundTickets = (detectives \\ "detective" \ "undergroundTickets")(i).text.toInt
       val color = (detectives \\ "detective" \ "color")(i).text.toString
-      gameInitializer.initDetectiveFromLoad(name, stationNumber, taxiTickets, busTickets, undergroundTickets, Color.decode(color))
+      gameInitializer.initDetectivesFromLoad(name, stationNumber, Tickets(taxiTickets, busTickets, undergroundTickets), Color.decode(color))
     }
 
   }
@@ -94,11 +95,11 @@ class FileIO extends FileIOInterface {
       <stationNumber>{GameMaster.getMrX().station.number}</stationNumber>
       <isVisible>{GameMaster.getMrX().isVisible}</isVisible>
       <lastSeen>{GameMaster.getMrX().lastSeen}</lastSeen>
-      <blackTickets>{GameMaster.getMrX().blackTickets}</blackTickets>
-      <doubleTurns>{GameMaster.getMrX().doubleTurn}</doubleTurns>
-      <taxiTickets>{GameMaster.getMrX().taxiTickets}</taxiTickets>
-      <busTickets>{GameMaster.getMrX().busTickets}</busTickets>
-      <undergroundTickets>{GameMaster.getMrX().undergroundTickets}</undergroundTickets>
+      <blackTickets>{GameMaster.getMrX().tickets.blackTickets}</blackTickets>
+      <doubleTurns>{GameMaster.getMrX().tickets.doubleTurns}</doubleTurns>
+      <taxiTickets>{GameMaster.getMrX().tickets.taxiTickets}</taxiTickets>
+      <busTickets>{GameMaster.getMrX().tickets.busTickets}</busTickets>
+      <undergroundTickets>{GameMaster.getMrX().tickets.undergroundTickets}</undergroundTickets>
       {mrXHistoryToXml()}
     </mrX>
   }
@@ -106,19 +107,18 @@ class FileIO extends FileIOInterface {
   def allDetectivesToXml(): Elem = {
     var detectiveString = ""
     for(i <- 1 to GameMaster.players.length - 1) {
-      detectiveString = detectiveString + detectiveToXmlString(GameMaster.players(i).name, GameMaster.players(i).station.number, GameMaster.players(i).taxiTickets, GameMaster.players(i).busTickets, GameMaster.players(i).undergroundTickets, GameMaster.players(i).color)
+      detectiveString = detectiveString + detectiveToXmlString(GameMaster.players(i).name, GameMaster.players(i).station.number, GameMaster.players(i).tickets, GameMaster.players(i).color)
     }
     detectiveString = "<detectives>" + detectiveString + "</detectives>"
     XML.loadString(detectiveString)
   }
 
-  def detectiveToXmlString(name: String, stationNumber: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, color: Color): String = {
+  def detectiveToXmlString(name: String, stationNumber: Int, tickets: Tickets, color: Color): String = {
     "<detective><name>" + name + "</name> " +
       "<stationNumber>" + stationNumber + "</stationNumber>" +
-      "<taxiTickets>" + taxiTickets + "</taxiTickets>" +
-      "<busTickets>" + busTickets + "</busTickets>" +
-      "<undergroundTickets>" + undergroundTickets + "</undergroundTickets>" +
+      "<taxiTickets>" + tickets.taxiTickets + "</taxiTickets>" +
+      "<busTickets>" + tickets.busTickets + "</busTickets>" +
+      "<undergroundTickets>" + tickets.undergroundTickets + "</undergroundTickets>" +
       "<color>" + String.valueOf(color.getRGB) + "</color></detective>"
   }
-
 }

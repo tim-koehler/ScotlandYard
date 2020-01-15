@@ -149,7 +149,7 @@ object GameMaster {
   }
 
   private def isTaxiMoveValid(newPosition: Int): Boolean = {
-    if(getCurrentPlayer().taxiTickets <= 0)
+    if(getCurrentPlayer().tickets.taxiTickets <= 0)
       return false
     if(!getCurrentPlayer().station.neighbourTaxis.contains(stations(newPosition)))
       return false
@@ -157,21 +157,21 @@ object GameMaster {
   }
 
   private def isBusMoveValid(newPosition: Int): Boolean = {
-    if(getCurrentPlayer().busTickets <= 0) return false
+    if(getCurrentPlayer().tickets.busTickets <= 0) return false
     if(!getCurrentPlayer().station.neighbourBuses.contains(stations(newPosition)))
       return false
     true
   }
 
   private def isUndergroundMoveValid(newPosition: Int): Boolean = {
-    if(getCurrentPlayer().undergroundTickets <= 0) return false
+    if(getCurrentPlayer().tickets.undergroundTickets <= 0) return false
     if(!getCurrentPlayer().station.neighbourUndergrounds.contains(stations(newPosition)))
       return false
     true
   }
 
   private def isBlackMoveValid(newPosition: Int): Boolean = {
-    if(getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets <= 0) return false
+    if(getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets <= 0) return false
     if(getCurrentPlayer().station.neighbourTaxis.contains(stations(newPosition))) {
       return true
     } else if(getCurrentPlayer().station.neighbourBuses.contains(stations(newPosition))) {
@@ -196,33 +196,33 @@ object GameMaster {
 
   def decreaseTickets(ticketType: TicketType): Integer = {
     if(ticketType.equals(TicketType.Taxi)) {
-      getCurrentPlayer().taxiTickets -= 1
-      getCurrentPlayer().taxiTickets
+      getCurrentPlayer().tickets.taxiTickets -= 1
+      getCurrentPlayer().tickets.taxiTickets
     } else if(ticketType.equals(TicketType.Bus)){
-      getCurrentPlayer().busTickets -= 1
-      getCurrentPlayer().busTickets
+      getCurrentPlayer().tickets.busTickets -= 1
+      getCurrentPlayer().tickets.busTickets
     } else if(ticketType.equals(TicketType.Underground)) {
-      getCurrentPlayer().undergroundTickets -= 1
-      getCurrentPlayer().undergroundTickets
+      getCurrentPlayer().tickets.undergroundTickets -= 1
+      getCurrentPlayer().tickets.undergroundTickets
     } else {
-      getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets -= 1
-      getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets
+      getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets -= 1
+      getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets
     }
   }
 
   def increaseTickets(ticketType: TicketType): Integer = {
     if(ticketType.equals(TicketType.Taxi)) {
-      getCurrentPlayer().taxiTickets += 1
-      getCurrentPlayer().taxiTickets
+      getCurrentPlayer().tickets.taxiTickets += 1
+      getCurrentPlayer().tickets.taxiTickets
     } else if(ticketType.equals(TicketType.Bus)){
-      getCurrentPlayer().busTickets += 1
-      getCurrentPlayer().busTickets
+      getCurrentPlayer().tickets.busTickets += 1
+      getCurrentPlayer().tickets.busTickets
     } else if(ticketType.equals(TicketType.Underground)){
-      getCurrentPlayer().undergroundTickets += 1
-      getCurrentPlayer().undergroundTickets
+      getCurrentPlayer().tickets.undergroundTickets += 1
+      getCurrentPlayer().tickets.undergroundTickets
     } else {
-      getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets += 1
-      getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets
+      getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets += 1
+      getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets
     }
   }
 }

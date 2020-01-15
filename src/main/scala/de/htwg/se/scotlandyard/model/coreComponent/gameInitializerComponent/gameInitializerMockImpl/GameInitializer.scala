@@ -4,6 +4,7 @@ import java.awt.Color
 
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
+import de.htwg.se.scotlandyard.util.Tickets
 
 class GameInitializer extends GameInitializerInterface{
   override val MRX_COLOR: Color = Color.BLACK
@@ -25,7 +26,7 @@ class GameInitializer extends GameInitializerInterface{
   override var MAX_DETECTIVE_LIST_INDEX: Int = 0
   override var MAX_MISTERX_LIST_INDEX: Int = 2
 
-  override def initDetectiveFromLoad(name: String, stationNumber: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, color: Color): Boolean = true
+  override def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean = true
 
-  override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, history: List[TicketType]): Boolean = true
+  override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType]): Boolean = true
 }

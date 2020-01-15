@@ -122,27 +122,27 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
 
   def createToggleButtons(fontSize: Integer): FlowPanel = {
     new FlowPanel() {
-      contents += new ToggleButton("Taxi: " + controller.getCurrentPlayer().taxiTickets) {
+      contents += new ToggleButton("Taxi: " + controller.getCurrentPlayer().tickets.taxiTickets) {
         selected = true
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Bus: " + controller.getCurrentPlayer().busTickets) {
+      contents += new ToggleButton("Bus: " + controller.getCurrentPlayer().tickets.busTickets) {
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Underground: " + controller.getCurrentPlayer().undergroundTickets) {
+      contents += new ToggleButton("Underground: " + controller.getCurrentPlayer().tickets.undergroundTickets) {
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Black Ticket: " + controller.getMrX().blackTickets) {
+      contents += new ToggleButton("Black Ticket: " + controller.getMrX().tickets.blackTickets) {
         if(!controller.getCurrentPlayer().equals(controller.getPlayersList()(0))) {
           enabled = false
         }
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Double Turn: " + controller.getMrX().doubleTurn) {
+      contents += new ToggleButton("Double Turn: " + controller.getMrX().tickets.doubleTurns) {
         enabled = false
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }

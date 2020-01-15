@@ -56,30 +56,30 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTaxiMoveValid"))(152) should be(true)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTaxiMoveValid"))(183) should be(false)
 
-        val tickets = GameMaster.getCurrentPlayer().taxiTickets
-        GameMaster.getCurrentPlayer().taxiTickets = 0
+        val tickets = GameMaster.getCurrentPlayer().tickets.taxiTickets
+        GameMaster.getCurrentPlayer().tickets.taxiTickets = 0
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTaxiMoveValid"))(2) should be(false)
-        GameMaster.getCurrentPlayer().taxiTickets = tickets
+        GameMaster.getCurrentPlayer().tickets.taxiTickets = tickets
       }
       "and Bus move should be valid" in {
         GameMaster.getCurrentPlayer().station = GameMaster.stations(153)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isBusMoveValid"))(124) should be(true)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isBusMoveValid"))(138) should be(false)
 
-        val tickets = GameMaster.getCurrentPlayer().busTickets
-        GameMaster.getCurrentPlayer().busTickets = 0
+        val tickets = GameMaster.getCurrentPlayer().tickets.busTickets
+        GameMaster.getCurrentPlayer().tickets.busTickets = 0
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isBusMoveValid"))(2) should be(false)
-        GameMaster.getCurrentPlayer().busTickets = tickets
+        GameMaster.getCurrentPlayer().tickets.busTickets = tickets
       }
       "and Underground move should be valid" in {
         GameMaster.getCurrentPlayer().station = GameMaster.stations(153)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isUndergroundMoveValid"))(140) should be(true)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isUndergroundMoveValid"))(124) should be(false)
 
-        val tickets = GameMaster.getCurrentPlayer().undergroundTickets
-        GameMaster.getCurrentPlayer().undergroundTickets = 0
+        val tickets = GameMaster.getCurrentPlayer().tickets.undergroundTickets
+        GameMaster.getCurrentPlayer().tickets.undergroundTickets = 0
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isUndergroundMoveValid"))(3) should be(false)
-        GameMaster.getCurrentPlayer().undergroundTickets = tickets
+        GameMaster.getCurrentPlayer().tickets.undergroundTickets = tickets
       }
       "and target Station is in Bounds" in {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationInBounds"))(1) should be(true)
@@ -103,9 +103,9 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.validateMove(105, TicketType.Bus) should be(true)
         GameMaster.validateMove(90, TicketType.Taxi) should be(false)
 
-        GameMaster.getCurrentPlayer().taxiTickets = 0;
-        GameMaster.getCurrentPlayer().busTickets= 0;
-        GameMaster.getCurrentPlayer().undergroundTickets = 0;
+        GameMaster.getCurrentPlayer().tickets.taxiTickets = 0;
+        GameMaster.getCurrentPlayer().tickets.busTickets= 0;
+        GameMaster.getCurrentPlayer().tickets.undergroundTickets = 0;
 
         GameMaster.validateMove(128, TicketType.Underground) should be(false)
         GameMaster.validateMove(55, TicketType.Bus) should be(false)

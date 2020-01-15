@@ -10,8 +10,6 @@ import javax.inject.Inject
 
 
 class MrX @Inject() () extends Detective() with MrXInterface{
-  override var blackTickets: Int = _
-  override var doubleTurn: Int = _
   override var isVisible: Boolean = _
   override var lastSeen: String = _
   override var history: List[TicketType] = List(TicketType.Taxi, TicketType.Bus, TicketType.Underground)
