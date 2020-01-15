@@ -11,6 +11,5 @@ trait DetectiveInterface {
   var busTickets: Int
   var undergroundTickets: Int
 
-  def getPosition(): Station
   def setPlayerName(newName: String): Boolean
 }

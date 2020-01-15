@@ -20,7 +20,7 @@ class GuiMainMapDrawer(controller: ControllerInterface) {
     val mrx = controller.getMrX()
     if (mrx.isVisible) {
       g.setColor(mrx.color)
-      g.drawOval(mrx.getPosition().guiCoords.x - (r / 2), mrx.getPosition().guiCoords.y - (r / 2), r, r)
+      g.drawOval(mrx.station.guiCoords.x - (r / 2), mrx.station.guiCoords.y - (r / 2), r, r)
     } else if(!mrx.lastSeen.equals("never")) {
       g.setColor(mrx.lastSeenColor)
       g.drawOval(controller.getStations()(mrx.lastSeen.toInt).guiCoords.x - (r / 2),
@@ -29,7 +29,7 @@ class GuiMainMapDrawer(controller: ControllerInterface) {
 
     for (p <- controller.getPlayersList().drop(1)) {
       g.setColor(p.color)
-      g.drawOval(p.getPosition().guiCoords.x - (r / 2), p.getPosition().guiCoords.y - (r / 2), r, r)
+      g.drawOval(p.station.guiCoords.x - (r / 2), p.station.guiCoords.y - (r / 2), r, r)
     }
   }
 }

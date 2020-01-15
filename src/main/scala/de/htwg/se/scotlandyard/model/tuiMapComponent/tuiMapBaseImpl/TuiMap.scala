@@ -66,7 +66,7 @@ class TuiMap extends TuiMapInterface {
 
   private def setPlayerPositions(): mutable.Map[DetectiveInterface, Int] = {
     for (p <- GameMaster.players){
-      playerPositions += (p -> p.getPosition().number)
+      playerPositions += (p -> p.station.number)
     }
     playerPositions
   }
@@ -81,9 +81,9 @@ class TuiMap extends TuiMapInterface {
 
     for(p <- GameMaster.players) {
       if(!p.name.equals("MrX") || GameMaster.checkMrXVisibility()) {
-        map = Some(map.get.updated(p.getPosition().tuiCoords._2 - 1, map.get(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1 - 1, p.name(0))))
-        map = Some(map.get.updated(p.getPosition().tuiCoords._2 - 1, map.get(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1, p.name(1))))
-        map = Some(map.get.updated(p.getPosition().tuiCoords._2 - 1, map.get(p.getPosition().tuiCoords._2 - 1).updated(p.getPosition().tuiCoords._1 + 1, p.name(2))))
+        map = Some(map.get.updated(p.station.tuiCoords._2 - 1, map.get(p.station.tuiCoords._2 - 1).updated(p.station.tuiCoords._1 - 1, p.name(0))))
+        map = Some(map.get.updated(p.station.tuiCoords._2 - 1, map.get(p.station.tuiCoords._2 - 1).updated(p.station.tuiCoords._1, p.name(1))))
+        map = Some(map.get.updated(p.station.tuiCoords._2 - 1, map.get(p.station.tuiCoords._2 - 1).updated(p.station.tuiCoords._1 + 1, p.name(2))))
       }
     }
     map

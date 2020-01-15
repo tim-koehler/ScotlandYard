@@ -72,7 +72,7 @@ object GameMaster {
     val playerMrX = players(0)
     playerMrX.asInstanceOf[MrXInterface].isVisible = checkMrXVisibility()
     if(playerMrX.asInstanceOf[MrXInterface].isVisible) {
-      playerMrX.asInstanceOf[MrXInterface].lastSeen = players(0).getPosition().number.toString
+      playerMrX.asInstanceOf[MrXInterface].lastSeen = players(0).station.number.toString
     }
     playerMrX.asInstanceOf[MrXInterface].isVisible
   }
@@ -102,7 +102,7 @@ object GameMaster {
     }
 
     if (!isTargetStationEmpty(newPosition)) {
-      if (players(0).getPosition().number == newPosition) {
+      if (players(0).station.number == newPosition) {
         winningPlayer = getCurrentPlayer()
         win = true
         return true
@@ -125,13 +125,13 @@ object GameMaster {
         return false
       }
     } else if(ticketType.equals(TicketType.Bus)) {
-      if(GameMaster.getCurrentPlayer().getPosition().sType == StationType.Taxi) {
+      if(GameMaster.getCurrentPlayer().station.sType == StationType.Taxi) {
         return false
       }
       if(!isBusMoveValid(newPosition))
         return false
     } else if(ticketType.equals(TicketType.Underground)) {
-      if(GameMaster.getCurrentPlayer().getPosition().sType != StationType.Underground) {
+      if(GameMaster.getCurrentPlayer().station.sType != StationType.Underground) {
         return false
       }
       if(!isUndergroundMoveValid(newPosition)) {
@@ -151,32 +151,32 @@ object GameMaster {
   private def isTaxiMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().taxiTickets <= 0)
       return false
-    if(!getCurrentPlayer().getPosition().neighbourTaxis.contains(stations(newPosition)))
+    if(!getCurrentPlayer().station.neighbourTaxis.contains(stations(newPosition)))
       return false
     true
   }
 
   private def isBusMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().busTickets <= 0) return false
-    if(!getCurrentPlayer().getPosition().neighbourBuses.contains(stations(newPosition)))
+    if(!getCurrentPlayer().station.neighbourBuses.contains(stations(newPosition)))
       return false
     true
   }
 
   private def isUndergroundMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().undergroundTickets <= 0) return false
-    if(!getCurrentPlayer().getPosition().neighbourUndergrounds.contains(stations(newPosition)))
+    if(!getCurrentPlayer().station.neighbourUndergrounds.contains(stations(newPosition)))
       return false
     true
   }
 
   private def isBlackMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().asInstanceOf[MrXInterface].blackTickets <= 0) return false
-    if(getCurrentPlayer().getPosition().neighbourTaxis.contains(stations(newPosition))) {
+    if(getCurrentPlayer().station.neighbourTaxis.contains(stations(newPosition))) {
       return true
-    } else if(getCurrentPlayer().getPosition().neighbourBuses.contains(stations(newPosition))) {
+    } else if(getCurrentPlayer().station.neighbourBuses.contains(stations(newPosition))) {
       return true
-    } else if (!getCurrentPlayer().getPosition().neighbourUndergrounds.contains(stations(newPosition))) {
+    } else if (!getCurrentPlayer().station.neighbourUndergrounds.contains(stations(newPosition))) {
       return true
     }
     false
@@ -184,7 +184,7 @@ object GameMaster {
 
   private def isTargetStationEmpty(newPosition: Integer): Boolean = {
     for(p <- GameMaster.players)
-      if(p.getPosition().number == newPosition)
+      if(p.station.number == newPosition)
         return false
     true
   }

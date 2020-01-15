@@ -49,9 +49,6 @@ class MrX @Inject() extends DetectiveInterface with MrXInterface
     }
   }
 
-  // TODO: Cleanup
-  override def getPosition(): Station = station
-
   override def setPlayerName(newName: String): Boolean = {
     name = newName
     true

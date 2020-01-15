@@ -3,10 +3,11 @@ package de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl
 import java.awt.Color
 
 import de.htwg.se.scotlandyard.model.playersComponent.MrXInterface
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.StationFactory
 import de.htwg.se.scotlandyard.util.TicketType
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import javax.inject.Inject
+
+
 
 class MrX @Inject() () extends Detective() with MrXInterface{
   override var blackTickets: Int = _

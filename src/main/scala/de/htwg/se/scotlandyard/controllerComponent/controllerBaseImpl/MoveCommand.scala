@@ -14,7 +14,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     }
     GameMaster.updatePlayerPosition(newPosition)
     GameMaster.decreaseTickets(ticketType)
-    val station = GameMaster.getCurrentPlayer().getPosition()
+    val station = GameMaster.getCurrentPlayer().station
     GameMaster.nextRound()
     station
   }
@@ -26,7 +26,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     GameMaster.previousRound()
     GameMaster.updatePlayerPosition(currentPosition)
     GameMaster.increaseTickets(ticketType)
-    GameMaster.getCurrentPlayer().getPosition()
+    GameMaster.getCurrentPlayer().station
     }
 
   override def redoStep(): Station = {
@@ -35,7 +35,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     }
     GameMaster.updatePlayerPosition(newPosition)
     GameMaster.decreaseTickets(ticketType)
-    val station = GameMaster.getCurrentPlayer().getPosition()
+    val station = GameMaster.getCurrentPlayer().station
     GameMaster.nextRound()
     station
   }

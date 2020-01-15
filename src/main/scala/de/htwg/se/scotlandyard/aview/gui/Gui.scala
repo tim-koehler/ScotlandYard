@@ -51,9 +51,9 @@ class Gui(controller: ControllerInterface) extends Frame {
   def showWinningDialog(): Unit = {
     var winningMessage = ""
     if (controller.getWinningPlayer().name.equals("MrX")) {
-      winningMessage = controller.getPlayersList()(0).name + " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
+      winningMessage = controller.getPlayersList()(0).name + " was at Station " + controller.getWinningPlayer().station.number + " !!!"
     } else {
-      winningMessage = controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name + " at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
+      winningMessage = controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name + " at Station " + controller.getWinningPlayer().station.number + " !!!"
     }
     Dialog.showMessage(null, winningMessage, "WIN")
     this.dispose()

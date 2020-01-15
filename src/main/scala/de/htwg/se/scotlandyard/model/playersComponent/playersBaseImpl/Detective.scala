@@ -1,10 +1,10 @@
 package de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl
 
-import java.awt.Color
-
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+
+import scala.swing.Color
 
 class Detective @Inject() () extends DetectiveInterface {
    override var station: Station = _
@@ -13,10 +13,6 @@ class Detective @Inject() () extends DetectiveInterface {
    override var taxiTickets: Int = _ // default: 11
    override var busTickets: Int = _ // default: 8
    override var undergroundTickets: Int = _ // default 4*/
-
-   def getPosition(): Station = {
-      station
-   }
 
    def setPlayerName(newName: String): Boolean = {
       if(newName.length < 3) {

@@ -48,7 +48,7 @@ class Controller @Inject() (var gameInitializer: GameInitializerInterface) exten
   }
 
   def doMove(newPosition: Int, ticketType: TicketType): Station = {
-    val newStation = undoManager.doStep(new MoveCommand(getCurrentPlayer().getPosition().number, newPosition, ticketType))
+    val newStation = undoManager.doStep(new MoveCommand(getCurrentPlayer().station.number, newPosition, ticketType))
 
     publish(new PlayerMoved)
     newStation

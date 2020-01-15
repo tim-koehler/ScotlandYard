@@ -14,10 +14,10 @@ class MrXSpec extends WordSpec with Matchers {
       mrX.station = st
 
       "have a station number" in {
-        mrX.getPosition().number should be (0)
+        mrX.station.number should be (0)
       }
       "have a station Type" in {
-        mrX.getPosition().sType should be (StationType.Taxi)
+        mrX.station.sType should be (StationType.Taxi)
       }
       "should have a nice String representation when visible" in {
         mrX.isVisible = false
