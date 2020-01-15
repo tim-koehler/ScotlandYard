@@ -3,14 +3,18 @@ package de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl
 import java.awt.Color
 
 import com.google.inject.Inject
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
-import de.htwg.se.scotlandyard.model.playersComponent.MrXInterface
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
-class MrX @Inject() extends Detective with MrXInterface
+class MrX @Inject() extends DetectiveInterface with MrXInterface
 {
-  name = "MrX"
-  color = Color.BLACK
+  override var station: Station = _
+  override var name: String = "MrX"
+  override var color: Color = Color.BLACK
+  override var taxiTickets: Int = 99
+  override var busTickets: Int = 99
+  override var undergroundTickets: Int = 99
   override var blackTickets: Int = 5
   override var doubleTurn: Int = 2
   override var isVisible: Boolean = false
@@ -45,4 +49,12 @@ class MrX @Inject() extends Detective with MrXInterface
     }
   }
 
+  // TODO: Cleanup
+  override def getPosition(): Station = station
+
+  override def setPlayerName(newName: String): Boolean = {
+    name = newName
+    true
+  }
 }
+

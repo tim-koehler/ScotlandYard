@@ -9,6 +9,8 @@ import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.Game
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl.StationInitializer
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.{Detective, MrX}
+import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
+import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 class GameInitializer extends GameInitializerInterface {
 
@@ -41,6 +43,39 @@ class GameInitializer extends GameInitializerInterface {
       GameMaster.stations = new StationInitializer().initStations()
     }
     initPlayers(nPlayers)
+    true
+  }
+
+  def initDetectiveFromLoad(name: String, stationNumber: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, color: Color): Boolean = {
+    val st = GameMaster.stations(stationNumber)
+    val detective = injector.getInstance(classOf[DetectiveInterface])
+    detective.name = name
+    detective.station = st
+    detective.color = color
+    detective.taxiTickets = taxiTickets
+    detective.busTickets = busTickets
+    detective.undergroundTickets = undergroundTickets
+
+    GameMaster.players = GameMaster.players:::List(detective)
+    injector.getInstance(classOf[TuiMapInterface]).updatePlayerPositions()
+    true
+  }
+
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, history: List[TicketType]): Boolean = {
+    GameMaster.players = List()
+    val st = GameMaster.stations(stationNumber)
+    GameMaster.players = List[DetectiveInterface](injector.getInstance(classOf[MrXInterface]))
+    GameMaster.getMrX().station = st
+    GameMaster.getMrX().name = name
+    GameMaster.getMrX().isVisible = isVisible
+    GameMaster.getMrX().lastSeen = lastSeen
+    GameMaster.getMrX().blackTickets = blackTickets
+    GameMaster.getMrX().doubleTurn = doubleTurns
+    GameMaster.getMrX().taxiTickets = taxiTickets
+    GameMaster.getMrX().busTickets = busTickets
+    GameMaster.getMrX().undergroundTickets = undergroundTickets
+    GameMaster.getMrX().history = history
+    injector.getInstance(classOf[TuiMapInterface]).updatePlayerPositions()
     true
   }
 

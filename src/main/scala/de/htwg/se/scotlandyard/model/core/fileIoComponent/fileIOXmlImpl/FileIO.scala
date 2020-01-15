@@ -3,8 +3,11 @@ package de.htwg.se.scotlandyard.model.core.fileIoComponent.fileIOXmlImpl
 import java.awt.Color
 import java.io._
 
-import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
+import com.google.inject.Guice
+import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.util.TicketType
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
@@ -12,6 +15,8 @@ import scala.swing.Color
 import scala.xml._
 
 class FileIO extends FileIOInterface {
+
+  val injector = Guice.createInjector(new ScotlandYardModule)
 
   override def load(): Unit = {
     val xmlFile = scala.xml.XML.loadFile("ScotlandYard.xml")
@@ -33,7 +38,9 @@ class FileIO extends FileIOInterface {
       val s: String = (his \\ "transport")(i).text.toString
       history = history:::List(TicketType.withName(s))
     }
-    GameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets, history)
+
+    val gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
+    gameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets, history)
 
     val detectives = (xmlFile \\ "game" \ "detectives")
 
@@ -44,7 +51,7 @@ class FileIO extends FileIOInterface {
       val busTickets = (detectives \\ "detective" \ "busTickets")(i).text.toInt
       val undergroundTickets = (detectives \\ "detective" \ "undergroundTickets")(i).text.toInt
       val color = (detectives \\ "detective" \ "color")(i).text.toString
-      GameInitializer.initDetectiveFromLoad(name, stationNumber, taxiTickets, busTickets, undergroundTickets, Color.decode(color))
+      gameInitializer.initDetectiveFromLoad(name, stationNumber, taxiTickets, busTickets, undergroundTickets, Color.decode(color))
     }
 
   }

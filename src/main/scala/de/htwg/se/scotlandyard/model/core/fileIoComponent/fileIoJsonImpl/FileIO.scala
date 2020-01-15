@@ -3,15 +3,20 @@ package de.htwg.se.scotlandyard.model.core.fileIoComponent.fileIoJsonImpl
 import java.awt.Color
 import java.io._
 
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
-import de.htwg.se.scotlandyard.model.core.{GameInitializer, GameMaster}
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.util.TicketType
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import play.api.libs.json._
 
 import scala.io.Source
 
-class FileIO extends FileIOInterface {
+class FileIO @Inject() extends FileIOInterface {
+
+  val injector = Guice.createInjector(new ScotlandYardModule)
 
   override def load(): Unit = {
     val source: String = Source.fromFile("ScotlandYard.json").getLines.mkString
@@ -34,7 +39,9 @@ class FileIO extends FileIOInterface {
       var s = (transport \ "transport").get.toString()
       history = history:::List(TicketType.withName(formatString(s)))
     }
-    GameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets, history)
+
+    val gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
+    gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, blackTickets, doubleTurns, taxiTickets, busTickets, undergroundTickets, history)
 
     val detectives: JsArray = (json \ "detectives").as[JsArray]
 
@@ -45,7 +52,7 @@ class FileIO extends FileIOInterface {
       val busTickets = (detective \ "busTickets").get.toString().toInt
       val undergroundTickets = (detective \ "undergroundTickets").get.toString().toInt
       val color = (detective \ "color").get.toString()
-      GameInitializer.initDetectiveFromLoad(formatString(name), stationNumber, taxiTickets, busTickets, undergroundTickets, Color.decode(formatString(color)))
+      gameInitializer.initDetectiveFromLoad(formatString(name), stationNumber, taxiTickets, busTickets, undergroundTickets, Color.decode(formatString(color)))
     }
   }
 

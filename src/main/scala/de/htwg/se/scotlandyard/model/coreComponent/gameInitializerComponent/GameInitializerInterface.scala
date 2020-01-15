@@ -2,6 +2,8 @@ package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent
 
 import java.awt.Color
 
+import de.htwg.se.scotlandyard.util.TicketType.TicketType
+
 trait GameInitializerInterface {
   val MRX_COLOR: Color
   val DT1_COLOR: Color
@@ -22,4 +24,7 @@ trait GameInitializerInterface {
   val r = scala.util.Random
 
   def initialize(nPlayers: Int): Boolean
+
+  def initDetectiveFromLoad(name: String, stationNumber: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, color: Color): Boolean
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, blackTickets: Int, doubleTurns: Int, taxiTickets: Int, busTickets: Int, undergroundTickets: Int, history: List[TicketType]): Boolean
 }
