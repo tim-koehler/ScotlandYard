@@ -83,7 +83,7 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
 
   def createMenuBar(): MenuBar = {
     new MenuBar {
-      contents += new Menu("Files") {
+      contents += new Menu("File") {
         contents += new MenuItem(Action("Save") {
           //TODO: Fancy Select Folder menu
           Try(controller.save()) match {
@@ -91,6 +91,9 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
             case Failure(e) => Dialog.showMessage(null, "An Error occured! The game was not saved!", "Save", Dialog.Message.Error);
               e.printStackTrace() // for debug purpose
           }
+        })
+        contents += new MenuItem(Action("Exit") {
+          System.exit(0)
         })
       }
       contents += new Menu("Options") {

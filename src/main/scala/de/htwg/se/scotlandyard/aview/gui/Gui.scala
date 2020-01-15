@@ -41,7 +41,7 @@ class Gui(controller: ControllerInterface) extends Frame {
 
   def changeToGamePanel(): Unit = {
     val screenSize = Toolkit.getDefaultToolkit.getScreenSize
-    preferredSize = new Dimension(screenSize.width, screenSize.height - 50)
+    preferredSize = new Dimension(screenSize.width - 10, screenSize.height - 60)
     contents = initGamePanel()
     centerOnScreen()
     Dialog.showMessage(null, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")

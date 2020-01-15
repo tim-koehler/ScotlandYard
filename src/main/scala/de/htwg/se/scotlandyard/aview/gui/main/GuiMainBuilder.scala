@@ -1,7 +1,6 @@
 package de.htwg.se.scotlandyard.aview.gui.main
 
 import java.awt.image.BufferedImage
-import java.awt.{BasicStroke, Color}
 import java.io.File
 
 import de.htwg.se.scotlandyard.aview.Gui
@@ -10,7 +9,7 @@ import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
 import javax.imageio.ImageIO
 
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}
-import scala.swing.{BorderPanel, BoxPanel, ButtonGroup, Dimension, Font, Graphics2D, MenuBar, Orientation, ScrollPane}
+import scala.swing.{BorderPanel, BoxPanel, Dimension, Font, MenuBar, Orientation, ScrollPane}
 
 class GuiMainBuilder (controller: ControllerInterface, gui: Gui) extends GuiBuilder {
 
@@ -50,8 +49,8 @@ class GuiMainBuilder (controller: ControllerInterface, gui: Gui) extends GuiBuil
     }
     var tb = TitledBorder(EtchedBorder, "MrX History")
     tb.setTitleFont(Font.apply(this.font.getName, Font.Bold, fontSize - 5))
-    border = CompoundBorder(tb, EmptyBorder(8, 8, 8, 8))
-    preferredSize = new Dimension(100, gui.peer.getHeight)
+    border = CompoundBorder(EmptyBorder(5, 5, 0, 5), tb)
+    preferredSize = new Dimension(120, gui.peer.getHeight)
   }
 
   private def buildBottomPanel(): BorderPanel = new BorderPanel {
