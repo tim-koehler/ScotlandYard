@@ -57,7 +57,16 @@ class GuiSettingsBuilder(controller: ControllerInterface, gui: Gui) extends GuiB
     new BorderPanel {
       border = EmptyBorder(10, 10, 10, 10)
       add(buildChooseNameBox(), BorderPanel.Position.Center)
-      add(settingsComponentsFactory.createStartButton("Start"), BorderPanel.Position.East)
+      add(buildSartLoadGameBoxPanel(), BorderPanel.Position.East)
+    }
+  }
+
+  def buildSartLoadGameBoxPanel(): BoxPanel = {
+    new BoxPanel(Orientation.Horizontal) {
+      contents += settingsComponentsFactory.createLoadButton("Load Game")
+      contents += HStrut(10)
+      contents += settingsComponentsFactory.createStartButton("Start new Game")
+      contents += HStrut(10)
     }
   }
 

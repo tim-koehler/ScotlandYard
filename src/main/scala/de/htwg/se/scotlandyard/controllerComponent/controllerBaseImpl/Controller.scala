@@ -5,8 +5,8 @@ import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.UndoManager
 
@@ -16,47 +16,22 @@ class Controller @Inject() (var gameInitializer: GameInitializerInterface) exten
 
   private val undoManager = new UndoManager()
   gameInitializer = Guice.createInjector(new ScotlandYardModule).getInstance(classOf[GameInitializerInterface])
+  //TODO: Dependency Injection with FileIO
 
-  def setPlayerName(inputName: String, index: Int): Boolean = {
-    var returnValue: Boolean = false
-    if(index < GameMaster.players.length || inputName.equals("")) {
-      returnValue = GameMaster.players(index).setPlayerName(inputName)
-    }
-    publish(new PlayerNameChanged)
-    returnValue
+  def load(): Unit = {
+    val fileIo = new FileIO()
+    fileIo.load()
   }
 
-  def getWinningPlayer(): DetectiveInterface = {
-    GameMaster.winningPlayer
-  }
-
-  def setWinning(win: Boolean): Boolean = {
-    val oldWin = GameMaster.win
-    GameMaster.win = win
-    publish(new PlayerWin)
-    oldWin
-  }
-
-  def getPlayersList(): List[DetectiveInterface] = {
-    GameMaster.players
+  def save(): Unit = {
+    val fileIo = new FileIO()
+    fileIo.save()
   }
 
   def initPlayers(nPlayer: Int): Integer = {
     GameMaster.initialize(nPlayer, gameInitializer)
     publish(new NumberOfPlayersChanged)
     GameMaster.players.length
-  }
-
-  def getCurrentPlayer(): DetectiveInterface = {
-    GameMaster.getCurrentPlayer()
-  }
-
-  def getStations(): List[Station] = {
-    GameMaster.stations
-  }
-
-  def getTotalRound(): Integer = {
-    GameMaster.totalRound
   }
 
   def nextRound(): Integer = {
@@ -103,8 +78,48 @@ class Controller @Inject() (var gameInitializer: GameInitializerInterface) exten
     publish(new PlayerWin)
     true
   }
+  // Getters and Setters
+  def getCurrentPlayer(): DetectiveInterface = {
+    GameMaster.getCurrentPlayer()
+  }
+
+  def getMrX(): MrXInterface = {
+    GameMaster.getMrX()
+  }
+
+  def getPlayersList(): List[DetectiveInterface] = {
+    GameMaster.players
+  }
+
+  def getStations(): List[Station] = {
+    GameMaster.stations
+  }
+
+  def getTotalRound(): Integer = {
+    GameMaster.totalRound
+  }
 
   def getWin(): Boolean = {
     GameMaster.win
+  }
+
+  def getWinningPlayer(): DetectiveInterface = {
+    GameMaster.winningPlayer
+  }
+
+  def setPlayerName(inputName: String, index: Int): Boolean = {
+    var returnValue: Boolean = false
+    if(index < GameMaster.players.length || inputName.equals("")) {
+      returnValue = GameMaster.players(index).setPlayerName(inputName)
+    }
+    publish(new PlayerNameChanged)
+    returnValue
+  }
+
+  def setWinning(win: Boolean): Boolean = {
+    val oldWin = GameMaster.win
+    GameMaster.win = win
+    publish(new PlayerWin)
+    oldWin
   }
 }

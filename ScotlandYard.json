@@ -1,0 +1,36 @@
+{
+  "round" : 5,
+  "totalRound" : 2,
+  "nPlayer" : 3,
+  "mrX" : {
+    "name" : "MrX",
+    "stationNumber" : 87,
+    "isVisible" : false,
+    "lastSeen" : "never",
+    "blackTickets" : 5,
+    "doubleTurns" : 2,
+    "taxiTickets" : 97,
+    "busTickets" : 99,
+    "undergroundTickets" : 99,
+    "history" : [ {
+      "transport" : "Taxi"
+    }, {
+      "transport" : "Taxi"
+    } ]
+  },
+  "detectives" : [ {
+    "name" : "Dt1",
+    "stationNumber" : 100,
+    "taxiTickets" : 10,
+    "busTickets" : 8,
+    "undergroundTickets" : 4,
+    "color" : "-16776961"
+  }, {
+    "name" : "Dt2",
+    "stationNumber" : 161,
+    "taxiTickets" : 10,
+    "busTickets" : 8,
+    "undergroundTickets" : 4,
+    "color" : "-16711936"
+  } ]
+}

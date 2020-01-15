@@ -45,7 +45,7 @@ class Gui(controller: ControllerInterface) extends Frame {
     contents = initGamePanel()
     centerOnScreen()
     Dialog.showMessage(null, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")
-    Dialog.showMessage(null, "MrX is at Station: " + controller.getCurrentPlayer().station.number, "MrX Position")
+    Dialog.showMessage(null, "MrX is at Station: " + controller.getMrX().station.number, "MrX Position")
   }
 
   def showWinningDialog(): Unit = {

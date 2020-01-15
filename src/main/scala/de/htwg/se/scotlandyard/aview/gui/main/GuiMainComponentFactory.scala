@@ -10,6 +10,7 @@ import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{EmptyBorder, HStrut}
 import scala.swing.{Action, BorderPanel, BoxPanel, ButtonGroup, Dialog, Dimension, FlowPanel, Font, Graphics2D, Label, ListView, Menu, MenuBar, MenuItem, Orientation, Panel, ScrollPane, ToggleButton}
+import scala.util.{Failure, Success, Try}
 
 class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
 
@@ -75,7 +76,7 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
   }
 
   def createHistoryPanelListView(fontSize: Integer): ListView[TicketType] = {
-    new ListView(controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
+    new ListView(controller.getMrX().getHistory()) {
       renderer = Renderer(_.toString)
       font = Font.apply(this.font.getName, Font.Bold, fontSize)
     }
@@ -85,10 +86,12 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
     new MenuBar {
       contents += new Menu("Files") {
         contents += new MenuItem(Action("Save") {
-          Dialog.showMessage(null, "Not yet implemented", ": (")
-        })
-        contents += new MenuItem(Action("Load") {
-          Dialog.showMessage(null, "Not yet implemented", ": (")
+          //TODO: Fancy Select Folder menu
+          Try(controller.save()) match {
+            case Success(v) => Dialog.showMessage(null, "Game successfully saved!", "Saved")
+            case Failure(e) => Dialog.showMessage(null, "An Error occured! The game was not saved!", "Save", Dialog.Message.Error);
+              e.printStackTrace() // for debug purpose
+          }
         })
       }
       contents += new Menu("Options") {
@@ -130,14 +133,14 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Black Ticket: " + controller.getPlayersList()(0).asInstanceOf[MrX].blackTickets) {
+      contents += new ToggleButton("Black Ticket: " + controller.getMrX().blackTickets) {
         if(!controller.getCurrentPlayer().equals(controller.getPlayersList()(0))) {
           enabled = false
         }
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Double Turn: " + controller.getPlayersList()(0).asInstanceOf[MrX].doubleTurn) {
+      contents += new ToggleButton("Double Turn: " + controller.getMrX().doubleTurn) {
         enabled = false
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }

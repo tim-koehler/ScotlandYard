@@ -45,5 +45,4 @@ class MrX @Inject() extends Detective with MrXInterface
     }
   }
 
-
 }

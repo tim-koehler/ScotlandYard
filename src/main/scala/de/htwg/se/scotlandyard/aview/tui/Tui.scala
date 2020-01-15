@@ -106,6 +106,17 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
     TUIMODE_RUNNING
   }
 
+  //TODO: Error handling, save path
+  def evaluateSave(): Int = {
+    controller.save()
+    TUIMODE_RUNNING
+  }
+
+  def evaluateLoad(): Int = {
+    controller.load()
+    TUIMODE_RUNNING
+  }
+
   def evaluateSettings(input: String): Int = {
     changeState(new ChooseNameMenuState(this))
     controller.initPlayers(input.toInt)
@@ -152,7 +163,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   def buildOutputStringForRunningGame(): String = {
     var outputString = tuiMap.toString()
     outputString = outputString + "Round: " + controller.getTotalRound() + "\nMrX History: "
-    for(t <- controller.getPlayersList()(0).asInstanceOf[MrX].getHistory()) {
+    for(t <- controller.getMrX().getHistory()) {
       outputString = outputString + t.toString + ", "
     }
     outputString = outputString + "\n"
