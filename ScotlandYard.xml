@@ -1,37 +1,34 @@
 <game>
-    <round>14</round>
-    <totalRound>5</totalRound>
+    <round>1</round>
+    <totalRound>1</totalRound>
     <nPlayer>3</nPlayer>
     <mrX>
         <name>MrX</name>
-        <stationNumber>88</stationNumber>
+        <stationNumber>166</stationNumber>
         <isVisible>false</isVisible>
-        <lastSeen>105</lastSeen>
-        <blackTickets>5</blackTickets>
-        <doubleTurns>2</doubleTurns>
-        <taxiTickets>94</taxiTickets>
+        <lastSeen>never</lastSeen>
+        <blackTickets>0</blackTickets>
+        <doubleTurns>0</doubleTurns>
+        <taxiTickets>99</taxiTickets>
         <busTickets>99</busTickets>
         <undergroundTickets>99</undergroundTickets>
         <history>
-            <transport>Taxi</transport>
-            <transport>Taxi</transport>
-            <transport>Taxi</transport>
-            <transport>Taxi</transport>
+            <transport>empty</transport>
         </history>
     </mrX>
     <detectives>
         <detective>
             <name>Dt1</name>
-            <stationNumber>69</stationNumber>
-            <taxiTickets>7</taxiTickets>
+            <stationNumber>141</stationNumber>
+            <taxiTickets>11</taxiTickets>
             <busTickets>8</busTickets>
             <undergroundTickets>4</undergroundTickets>
             <color>-16776961</color>
         </detective>
         <detective>
             <name>Dt2</name>
-            <stationNumber>79</stationNumber>
-            <taxiTickets>7</taxiTickets>
+            <stationNumber>26</stationNumber>
+            <taxiTickets>11</taxiTickets>
             <busTickets>8</busTickets>
             <undergroundTickets>4</undergroundTickets>
             <color>-16711936</color>
