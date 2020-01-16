@@ -7,7 +7,7 @@ import de.htwg.se.scotlandyard.util.Tickets
 
 import scala.swing.Color
 
-class Detective @Inject() () extends DetectiveInterface {
+class Detective @Inject() extends DetectiveInterface {
    override var station: Station = _
    override var name: String = _
    override var color: Color = _

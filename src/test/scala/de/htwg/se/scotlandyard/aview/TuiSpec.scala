@@ -1,26 +1,30 @@
 package de.htwg.se.scotlandyard.aview
 
 import de.htwg.se.scotlandyard.aview.tui.{ChooseNameMenuState, EnterNameState, RevealMrX1State, RevealMrX2State, RunningState, SelectNumberOfPlayerMenuState, Tui}
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.scotlandyard.controllerComponent.controllerMockImpl.Controller
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapBaseImpl.TuiMap
+import de.htwg.se.scotlandyard.model.fileIoComponent.fileIOMockImpl.FileIO
+import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import org.scalatest._
 
 class TuiSpec extends WordSpec with Matchers {
   "Tui" when {
     "created" should {
-      val gameInitializer = new GameInitializer
-      GameMaster.initialize(gameInitializer = gameInitializer)
-      val tui = new Tui(new Controller(gameInitializer), new TuiMap)
+      val controller = new Controller()
+      controller.fileIO = new FileIO()
+      controller.gameInitializer = new GameInitializer
+
+      val tui = new Tui(controller, new TuiMap)
+
       "refresh the screen when input is invalid in mainMenu and not refresh" in {
         tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
       }
       "change the number of player or refresh the screen" in {
-        GameMaster.initialize(gameInitializer = gameInitializer)
+        GameMaster.initialize(gameInitializer = controller.gameInitializer)
         tui.changeState(new SelectNumberOfPlayerMenuState(tui))
         tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
-        tui.evaluateInput("2") shouldBe (2)
+        tui.evaluateInput("3") shouldBe (3)
       }
       "should display all players and their names" in {
         tui.changeState(new ChooseNameMenuState(tui))
@@ -33,7 +37,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.changeState(new EnterNameState(tui))
         tui.evaluateInput("Uff") shouldBe (1)
         tui.changeState(new EnterNameState(tui))
-        tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
+        tui.evaluateInput("") shouldBe (1)
       }
       "should move the map and refresh the screen or move the player and refresh the screen" in {
         tui.changeState(new RunningState(tui))
@@ -54,7 +58,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.state shouldBe a[RunningState]
       }
       "should return state RUNNING when 'a', 'w', 's' or 'd' is pressed is pressed" in {
-        GameMaster.initialize(gameInitializer = gameInitializer)
+        GameMaster.initialize(gameInitializer = controller.gameInitializer)
         tui.evaluateMoveMapInput("a") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("w") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("s") should be (tui.TUIMODE_RUNNING)
@@ -72,7 +76,7 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "should have a winning output String when a player wins" in {
         //GameInitializer.initStations()
-        GameMaster.initialize(2, gameInitializer = gameInitializer)
+        GameMaster.initialize(2, gameInitializer = controller.gameInitializer)
         GameMaster.winningPlayer = GameMaster.players(0)
         tui.buildOutputStringWin() shouldNot be (null)
         GameMaster.winningPlayer = GameMaster.players(1)

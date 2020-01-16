@@ -1,15 +1,13 @@
 package de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl
 
+import java.awt.Color
 
-import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.util.Tickets
 
-import scala.swing.Color
-
-class Detective @Inject() extends DetectiveInterface{
-  override var station: Station = StationFactory.createZeroIndexStation()
+class Detective extends DetectiveInterface{
+  override var station: Station = _
   override var name: String = _
   override var color: Color = _
   override var tickets: Tickets = _

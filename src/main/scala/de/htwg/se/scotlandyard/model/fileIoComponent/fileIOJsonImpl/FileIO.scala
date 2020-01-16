@@ -1,13 +1,13 @@
-package de.htwg.se.scotlandyard.model.core.fileIoComponent.fileIoJsonImpl
+package de.htwg.se.scotlandyard.model.fileIoComponent.fileIOJsonImpl
 
 import java.awt.Color
 import java.io._
 
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
-import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import play.api.libs.json._
@@ -17,9 +17,12 @@ import scala.io.Source
 class FileIO @Inject() extends FileIOInterface {
 
   val injector = Guice.createInjector(new ScotlandYardModule)
+  override var gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
 
-  override def load(): Unit = {
-    val source: String = Source.fromFile("ScotlandYard.json").getLines.mkString
+  var pathname = "ScotlandYard.json"
+
+  override def load(): Boolean = {
+    val source: String = Source.fromFile(pathname).getLines.mkString
     val json = Json.parse(source)
 
     GameMaster.round = (json \ "round").get.toString().toInt
@@ -40,7 +43,6 @@ class FileIO @Inject() extends FileIOInterface {
       history = history:::List(TicketType.withName(formatString(s)))
     }
 
-    val gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
     val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets, doubleTurns)
     gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, tickets, history)
 
@@ -55,9 +57,10 @@ class FileIO @Inject() extends FileIOInterface {
       val color = (detective \ "color").get.toString()
       gameInitializer.initDetectivesFromLoad(formatString(name), stationNumber, Tickets(taxiTickets, busTickets, undergroundTickets), Color.decode(formatString(color)))
     }
+    true
   }
 
-  override def save(): Unit = {
+  override def save(): Boolean = {
     var history = new JsArray()
 
     for(h <- GameMaster.getMrX().history) {
@@ -99,9 +102,11 @@ class FileIO @Inject() extends FileIOInterface {
       "detectives"   -> detectives
     )
 
-    val pw = new PrintWriter(new File("ScotlandYard.json"))
+    val pw = new PrintWriter(new File(pathname))
     pw.write(Json.prettyPrint(Json.toJson(gameStateJson)))
     pw.close()
+
+    true
   }
 
   def formatString(s: String): String = {

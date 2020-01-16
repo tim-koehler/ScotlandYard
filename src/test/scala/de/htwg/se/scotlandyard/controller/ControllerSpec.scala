@@ -1,9 +1,9 @@
 package de.htwg.se.scotlandyard.controller
 
-import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.model.fileIoComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.util.TicketType
 import org.scalatest._
@@ -11,9 +11,13 @@ import org.scalatest._
 class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "Controller" when {
     "new" should {
-      val gameInitializer = new GameInitializer()
-      GameMaster.initialize(gameInitializer = gameInitializer)
-      val controller = new Controller(gameInitializer)
+      val controller = new Controller()
+      controller.fileIO = new FileIO()
+      controller.gameInitializer = new GameInitializer()
+      "should load and save" in {
+        controller.load() should be(true)
+        controller.save() should be(true)
+      }
       "should return 3 from getPlayerList method" in {
         controller.getPlayersList().length shouldBe (3)
       }
@@ -25,7 +29,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         controller.nextRound() shouldBe(2)
       }
       "should return the correct player from setPlayerNumber" in {
-        controller.initPlayers(2) shouldBe (2)
+        controller.initPlayers(3) shouldBe (3)
       }
       "should validateAndMove" in {
         controller.undoValidateAndMove() should be(GameMaster.stations.head)

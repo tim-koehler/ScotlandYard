@@ -1,25 +1,28 @@
-package de.htwg.se.scotlandyard.model.core.fileIoComponent.fileIOXmlImpl
+package de.htwg.se.scotlandyard.model.fileIoComponent.fileIOXmlImpl
 
 import java.awt.Color
 import java.io._
 
 import com.google.inject.Guice
 import de.htwg.se.scotlandyard.ScotlandYardModule
-import de.htwg.se.scotlandyard.model.core.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 import scala.swing.Color
 import scala.xml._
 
-class FileIO extends FileIOInterface {
+class FileIO() extends FileIOInterface {
 
   val injector = Guice.createInjector(new ScotlandYardModule)
+  override var gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
 
-  override def load(): Unit = {
-    val xmlFile = scala.xml.XML.loadFile("ScotlandYard.xml")
+  var pathname = "ScotlandYard.xml"
+
+  override def load(): Boolean = {
+    val xmlFile = scala.xml.XML.loadFile(pathname)
     GameMaster.round = (xmlFile \\ "game" \ "round").text.toInt
     GameMaster.totalRound = (xmlFile \\ "game" \ "totalRound").text.toInt
     val nPlayer = (xmlFile \\ "game" \ "nPlayer").text.toInt
@@ -39,7 +42,6 @@ class FileIO extends FileIOInterface {
       history = history:::List(TicketType.withName(s))
     }
 
-    val gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
     val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets, doubleTurns)
     gameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen, tickets, history)
 
@@ -54,15 +56,17 @@ class FileIO extends FileIOInterface {
       val color = (detectives \\ "detective" \ "color")(i).text.toString
       gameInitializer.initDetectivesFromLoad(name, stationNumber, Tickets(taxiTickets, busTickets, undergroundTickets), Color.decode(color))
     }
-
+    true
   }
 
-  override def save(): Unit = {
-    val pw = new PrintWriter(new File("ScotlandYard.xml"))
+  override def save(): Boolean = {
+    val pw = new PrintWriter(new File(pathname))
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(gametoXML())
     pw.write(xml)
     pw.close
+
+    true
   }
 
   def gametoXML(): Elem = {
