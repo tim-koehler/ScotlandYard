@@ -1,7 +1,7 @@
 {
   "round" : 3,
   "totalRound" : 1,
-  "nPlayer" : 5,
+  "nPlayer" : 3,
   "mrX" : {
     "name" : "MrX",
     "stationNumber" : 133,
@@ -24,8 +24,8 @@
     "undergroundTickets" : 4,
     "color" : "-16776961"
   }, {
-    "name" : "Tim",
-    "stationNumber" : 53,
+    "name" : "Dt2",
+    "stationNumber" : 29,
     "taxiTickets" : 11,
     "busTickets" : 8,
     "undergroundTickets" : 4,

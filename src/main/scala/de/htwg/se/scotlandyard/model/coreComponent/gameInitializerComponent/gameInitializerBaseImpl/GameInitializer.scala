@@ -118,7 +118,8 @@ class GameInitializer extends GameInitializerInterface {
   }
 
   private def distributeTicketsToMrX(): Boolean = {
-    distributeTickets(0, 99, 99, 99)
+    GameMaster.getMrX().tickets = Tickets(99, 99, 99, 5, 2)
+    true
   }
 
   private def distributeTicketsToDetectives(): Boolean = {

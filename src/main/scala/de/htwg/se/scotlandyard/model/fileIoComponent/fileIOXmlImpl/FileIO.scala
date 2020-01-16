@@ -35,11 +35,15 @@ class FileIO() extends FileIOInterface {
     val taxiTickets = (xmlFile \\ "game" \ "mrX" \ "taxiTickets").text.toInt
     val busTickets = (xmlFile \\ "game" \ "mrX" \ "busTickets").text.toInt
     val undergroundTickets = (xmlFile \\ "game" \ "mrX" \ "undergroundTickets").text.toInt
+
     var history: List[TicketType] = List()
     val his = (xmlFile \\ "game" \ "mrX" \ "history")
-    for(i <- 0 to (xmlFile \\ "game" \ "mrX" \ "history").length) {
-      val s: String = (his \\ "transport")(i).text.toString
-      history = history:::List(TicketType.withName(s))
+
+    if(!(his \\ "transport")(0).text.toString.equals("empty")) {
+      for(i <- 0 to his.length) {
+        val s: String = (his \\ "transport")(i).text.toString
+        history = history:::List(TicketType.withName(s))
+      }
     }
 
     val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets, doubleTurns)
@@ -82,14 +86,13 @@ class FileIO() extends FileIOInterface {
   def mrXHistoryToXml(): Elem = {
     var xmlString: String = ""
     if (GameMaster.getMrX().history.isEmpty) {
-      xmlString = "<transport></transport>"
+      xmlString = "<transport>empty</transport>"
     } else {
       for (h <- GameMaster.getMrX().history) {
         xmlString = xmlString + "<transport>" + h + "</transport>"
       }
     }
     xmlString = "<history>" + xmlString + "</history>"
-    println(xmlString)
     XML.loadString(xmlString)
   }
 
