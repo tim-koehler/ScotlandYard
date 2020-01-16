@@ -3,8 +3,8 @@ package de.htwg.se.scotlandyard.controllerComponent.controllerMockImpl
 import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.fileIoComponent.FileIOInterface
-import de.htwg.se.scotlandyard.model.fileIoComponent.fileIOMockImpl.FileIO
+import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
+import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
@@ -42,7 +42,7 @@ class Controller extends ControllerInterface{
 
   override def getMrX(): MrXInterface = new MrX()
 
-  override def getPlayersList(): List[DetectiveInterface] = List(new Detective())
+  override def getPlayersList(): List[DetectiveInterface] = List(new MrX, new Detective, new Detective)
 
   override def getStations(): List[Station] = List(StationFactory.createZeroIndexStation())
 

@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.model.playersComponent
 
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
-import de.htwg.se.scotlandyard.util.StationType
+import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import org.scalatest._
 
 class MrXSpec extends WordSpec with Matchers {
@@ -26,6 +26,20 @@ class MrXSpec extends WordSpec with Matchers {
       "should have a nice String representation when hidden" in {
         mrX.isVisible = true
         mrX.toString() shouldNot be (null)
+      }
+      "getHistory should return history" in {
+        mrX.getHistory() should be(mrX.history)
+      }
+      "addToHistory should add a Ticket to history" in {
+        mrX.addToHistory(TicketType.Taxi) should be(true)
+      }
+      "removeFromHistory should remove Ticket" in {
+        mrX.removeFromHistory() should be(true)
+        mrX.history = List()
+        mrX.removeFromHistory() should be(false)
+      }
+      "should set name with setPlayerNamer method" in {
+        mrX.setPlayerName("Olaf") should be(true)
       }
     }
   }

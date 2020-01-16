@@ -1,8 +1,11 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
+import java.awt.Color
+
 import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.StationFactory
+import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import org.scalatest._
 
 class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTester {
@@ -25,6 +28,12 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
       station.setNeighbourTaxis(Set())
       station.setNeighbourBuses(Set())
       station.setNeighbourUndergrounds(Set())
+    }
+    "load detectives" in {
+      initializer.initDetectivesFromLoad("Bobbie", 5, Tickets(10, 8, 5), Color.GREEN)
+    }
+    "load mrX" in {
+      initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3, 2), List(TicketType.Taxi))
     }
     "and test drawing player positions" in {
     /*  initializer invokePrivate PrivateMethod[Int](Symbol("drawDetectivePosition"))(2) should be(2) //35

@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.fileIoComponent.fileIOXmlImpl
+package de.htwg.se.scotlandyard.model.fileIOComponent.fileIOXmlImpl
 
 import java.awt.Color
 import java.io._
@@ -7,7 +7,7 @@ import com.google.inject.Guice
 import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.fileIoComponent.FileIOInterface
+import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
@@ -40,7 +40,7 @@ class FileIO() extends FileIOInterface {
     val his = (xmlFile \\ "game" \ "mrX" \ "history")
 
     if(!(his \\ "transport")(0).text.toString.equals("empty")) {
-      for(i <- 0 to his.length) {
+      for(i <- 0 to (his \\ "transport").length - 1) {
         val s: String = (his \\ "transport")(i).text.toString
         history = history:::List(TicketType.withName(s))
       }

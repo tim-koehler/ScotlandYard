@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.aview
 import de.htwg.se.scotlandyard.aview.tui.{RevealMrX1State, Tui}
 import de.htwg.se.scotlandyard.controllerComponent.controllerMockImpl.Controller
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.fileIoComponent.fileIOMockImpl.FileIO
+import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import org.scalatest._
 

@@ -1,8 +1,8 @@
-package de.htwg.se.scotlandyard.model.fileIoComponent.fileIOMockImpl
+package de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl
 
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.fileIoComponent.FileIOInterface
+import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 
 class FileIO extends FileIOInterface{
   override var gameInitializer: GameInitializerInterface = new GameInitializer()

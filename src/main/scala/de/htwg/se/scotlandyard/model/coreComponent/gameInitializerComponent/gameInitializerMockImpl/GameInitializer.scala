@@ -2,7 +2,10 @@ package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gam
 
 import java.awt.Color
 
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.Tickets
 
@@ -21,7 +24,13 @@ class GameInitializer extends GameInitializerInterface{
   override val numberOfBusTickets: Int = 3
   override val numberOfUndergroundTickets: Int = 1
 
-  override def initialize(nPlayers: Int): Boolean = true
+  override def initialize(nPlayers: Int): Boolean = {
+    GameMaster.players = List(new MrX())
+    for(i <- 1 to (nPlayers - 1)) {
+      GameMaster.players = GameMaster.players:::List(new Detective)
+    }
+    true
+  }
 
   override var MAX_DETECTIVE_LIST_INDEX: Int = 0
   override var MAX_MISTERX_LIST_INDEX: Int = 2

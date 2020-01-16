@@ -1,10 +1,10 @@
 package de.htwg.se.scotlandyard.aview
 
-import de.htwg.se.scotlandyard.aview.tui.{ChooseNameMenuState, EnterNameState, RevealMrX1State, RevealMrX2State, RunningState, SelectNumberOfPlayerMenuState, Tui}
+import de.htwg.se.scotlandyard.aview.tui.{ChooseNameMenuState, EnterNameState, RevealMrX1State, RevealMrX2State, RunningState, SelectNumberOfPlayerMenuState, Tui, WinningState}
 import de.htwg.se.scotlandyard.controllerComponent.controllerMockImpl.Controller
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.fileIoComponent.fileIOMockImpl.FileIO
+import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import org.scalatest._
 
@@ -75,12 +75,26 @@ class TuiSpec extends WordSpec with Matchers {
         tui.revealMrX2() shouldBe(tui.TUIMODE_RUNNING)
       }
       "should have a winning output String when a player wins" in {
-        //GameInitializer.initStations()
         GameMaster.initialize(2, gameInitializer = controller.gameInitializer)
         GameMaster.winningPlayer = GameMaster.players(0)
         tui.buildOutputStringWin() shouldNot be (null)
         GameMaster.winningPlayer = GameMaster.players(1)
         tui.buildOutputStringWin() shouldNot be (null)
+      }
+      "should evaluate correct in winningState" in {
+        tui.changeState(new WinningState(tui))
+        tui.state.evaluateInput("undo") should be(tui.TUIMODE_RUNNING)
+        tui.state.evaluateInput("redo") should be(tui.TUIMODE_RUNNING)
+        tui.state.toString should not be (null)
+      }
+      "should return TUIMODE_RUNNING when evaluateRedo is called" in {
+        tui.evaluateRedo() should be(tui.TUIMODE_RUNNING)
+      }
+      "should return TUIMODE_RUNNING when evaluateSave is called" in {
+        tui.evaluateSave() should be(tui.TUIMODE_RUNNING)
+      }
+      "should return TUIMODE_RUNNING when evaluateLoad is called" in {
+        tui.evaluateLoad() should be(tui.TUIMODE_RUNNING)
       }
     }
   }

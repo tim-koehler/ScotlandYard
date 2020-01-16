@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.controllerComponent
 
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.fileIoComponent.FileIOInterface
+import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType

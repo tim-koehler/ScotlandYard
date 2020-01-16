@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.model.coreComponent
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster.{players, round, winningRound}
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
+import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.MrX
 import de.htwg.se.scotlandyard.util.TicketType
 import org.scalatest._
 
