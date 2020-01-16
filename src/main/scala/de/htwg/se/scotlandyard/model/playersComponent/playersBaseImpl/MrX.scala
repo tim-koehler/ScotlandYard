@@ -13,7 +13,7 @@ class MrX @Inject() extends DetectiveInterface with MrXInterface
   override var station: Station = _
   override var name: String = "MrX"
   override var color: Color = Color.BLACK
-  override var tickets: Tickets = Tickets(99,99,99,5,2)
+  override var tickets: Tickets = Tickets(99, 99, 99, 5, 2)
   override var isVisible: Boolean = false
   override var lastSeen: String = "never"
   override var history: List[TicketType] = List()

@@ -17,6 +17,6 @@ class ScotlandYardModule extends AbstractModule with ScalaModule {
       bind[StationInitializerInterface].to[model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl.StationInitializer]
       bind[DetectiveInterface].to[model.playersComponent.playersBaseImpl.Detective]
       bind[MrXInterface].to[model.playersComponent.playersBaseImpl.MrX]
-      bind[FileIOInterface].to[model.core.fileIoComponent.fileIOXmlImpl.FileIO]
+      bind[FileIOInterface].to[model.core.fileIoComponent.fileIoJsonImpl.FileIO]
     }
 }
