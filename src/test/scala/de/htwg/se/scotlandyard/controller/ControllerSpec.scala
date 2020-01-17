@@ -4,7 +4,8 @@ import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station}
+import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
+import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import org.scalatest._
 
@@ -15,12 +16,10 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       controller.fileIO = new FileIO()
       controller.gameInitializer = new GameInitializer()
       controller.gameInitializer.initialize(3)
-      "should load and save" in {
-        controller.load() should be(true)
-        controller.save() should be(true)
-      }
+
       "should return 3 from getPlayerList method" in {
-        controller.getPlayersList().length shouldBe (2)
+        controller.gameInitializer.initialize(3)
+        controller.getPlayersList().length shouldBe (3)
       }
       "should return true from setPlayerNames when index is correct" in {
         controller.setPlayerName("Tim", 1) shouldBe true
@@ -88,6 +87,10 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       }
       "and validateMove" in {
         controller.validateMove(10, TicketType.Taxi) should be(GameMaster.validateMove(10, TicketType.Taxi))
+      }
+      "should load and save" in {
+        controller.load() should be(true)
+        controller.save() should be(true)
       }
     }
   }
