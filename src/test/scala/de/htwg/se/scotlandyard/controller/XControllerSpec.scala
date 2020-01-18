@@ -3,36 +3,32 @@ package de.htwg.se.scotlandyard.controller
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerMockImpl.StationInitializer
 import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
-import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import org.scalatest._
 
-class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
+class XControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "Controller" when {
     "new" should {
+      val gameInitializer = new GameInitializer()
+      gameInitializer.initialize(5)
+
+      val stationInitializer = new StationInitializer()
+      stationInitializer.initStations()
+
       val controller = new Controller()
       controller.fileIO = new FileIO()
-      controller.gameInitializer = new GameInitializer()
-      controller.gameInitializer.initialize(3)
+      controller.gameInitializer = gameInitializer
 
-      "should return 3 from getPlayerList method" in {
-        controller.gameInitializer.initialize(3)
-        controller.getPlayersList().length shouldBe (3)
-      }
-      "should return true from setPlayerNames when index is correct" in {
-        controller.setPlayerName("Tim", 1) shouldBe true
-      }
-      "should 2 from nextRound Method" in {
-        GameMaster.round = 1
-        controller.nextRound() shouldBe(2)
-      }
-      "should return the correct player from setPlayerNumber" in {
-        controller.initPlayers(3) shouldBe (3)
-      }
       "should validateAndMove" in {
-        controller.undoValidateAndMove().sType should be(StationType.Taxi)
+        GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)
+        GameMaster.players.head.station = GameMaster.stations(3)
+
+        controller.doMove(2, TicketType.Taxi)
+
+        controller.undoValidateAndMove().sType should be(StationType.Underground)
         controller.redoValidateAndMove().sType should be(StationType.Taxi)
 
         GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)
@@ -52,6 +48,20 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
 
         controller.doMove(3, TicketType.Underground).sType should be(StationType.Bus)
         controller.undoValidateAndMove().sType should be(StationType.Taxi)
+      }
+      "should return 3 from getPlayerList method" in {
+        controller.gameInitializer.initialize(3)
+        controller.getPlayersList().length shouldBe (3)
+      }
+      "should return true from setPlayerNames when index is correct" in {
+        controller.setPlayerName("Tim", 1) shouldBe true
+      }
+      "should 2 from nextRound Method" in {
+        GameMaster.round = 1
+        controller.nextRound() shouldBe(2)
+      }
+      "should return the correct player from setPlayerNumber" in {
+        controller.initPlayers(3) shouldBe (3)
       }
       "and updateMrXVisibility" in {
         controller.updateMrXVisibility() should be(false)
@@ -84,9 +94,6 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       }
       "and startGame" in {
         controller.startGame() should be(true)
-      }
-      "and validateMove" in {
-        controller.validateMove(10, TicketType.Taxi) should be(GameMaster.validateMove(10, TicketType.Taxi))
       }
       "should load and save" in {
         controller.load() should be(true)

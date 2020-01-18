@@ -1,20 +1,37 @@
 <game>
     <round>1</round>
     <totalRound>1</totalRound>
-    <nPlayer>1</nPlayer>
+    <nPlayer>3</nPlayer>
     <mrX>
-        <name>mrX</name>
-        <stationNumber>23</stationNumber>
+        <name>MrX</name>
+        <stationNumber>10</stationNumber>
         <isVisible>true</isVisible>
         <lastSeen>never</lastSeen>
-        <blackTickets>3</blackTickets>
+        <blackTickets>5</blackTickets>
         <doubleTurns>2</doubleTurns>
-        <taxiTickets>98</taxiTickets>
-        <busTickets>98</busTickets>
-        <undergroundTickets>98</undergroundTickets>
+        <taxiTickets>99</taxiTickets>
+        <busTickets>99</busTickets>
+        <undergroundTickets>99</undergroundTickets>
         <history>
             <transport>Taxi</transport>
         </history>
     </mrX>
-    <detectives/>
+    <detectives>
+        <detective>
+            <name>Dt1</name>
+            <stationNumber>20</stationNumber>
+            <taxiTickets>11</taxiTickets>
+            <busTickets>8</busTickets>
+            <undergroundTickets>4</undergroundTickets>
+            <color>-16711936</color>
+        </detective>
+        <detective>
+            <name>Dt1</name>
+            <stationNumber>20</stationNumber>
+            <taxiTickets>11</taxiTickets>
+            <busTickets>8</busTickets>
+            <undergroundTickets>4</undergroundTickets>
+            <color>-16711936</color>
+        </detective>
+    </detectives>
 </game>
