@@ -115,6 +115,20 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.round = winningRound * players.length
         GameMaster.checkMrXWin() shouldBe(true)
       }
+      "tickets counts" in {
+        val currentTaxiTickets = GameMaster.getCurrentPlayer().tickets.taxiTickets
+        GameMaster.increaseTickets(TicketType.Taxi) should be(currentTaxiTickets + 1)
+
+        val currentBusTickets = GameMaster.getCurrentPlayer().tickets.busTickets
+        GameMaster.increaseTickets(TicketType.Bus) should be(currentBusTickets + 1)
+
+        val currentUndergoundTickets = GameMaster.getCurrentPlayer().tickets.undergroundTickets
+        GameMaster.increaseTickets(TicketType.Underground) should be(currentUndergoundTickets + 1)
+
+        GameMaster.decreaseTickets(TicketType.Taxi) should be(currentTaxiTickets)
+        GameMaster.decreaseTickets(TicketType.Bus) should be(currentBusTickets)
+        GameMaster.decreaseTickets(TicketType.Underground) should be(currentUndergoundTickets)
+      }
     }
   }
 }
