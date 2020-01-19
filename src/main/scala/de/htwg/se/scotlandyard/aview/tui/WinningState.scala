@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.aview.tui
 
-class WinningState(tui: Tui) extends State(tui: Tui) {
+class WinningState(tui: Tui) extends State {
   override def evaluateInput(input: String): Int = {
     if(input.equals("undo")) {
       tui.evaluateUndo()

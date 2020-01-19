@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.aview.tui
 
-class ChooseNameMenuState(tui: Tui) extends State(tui: Tui) {
+class ChooseNameMenuState(tui: Tui) extends State {
   override def evaluateInput(input: String): Int = {
     if(isChooseNameInputCorrect(input)) {
       tui.evaluateNameMenu(input)

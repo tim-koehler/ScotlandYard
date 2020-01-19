@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.aview.tui
 
-class EnterNameState(tui: Tui) extends State(tui: Tui) {
+class EnterNameState(tui: Tui) extends State {
   override def evaluateInput(input: String): Int = {
     if(tui.evaluateEnterName(input)) {
       tui.indexOfPlayerWhichNameToChange

@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.tui
 
 import scala.util.{Failure, Success, Try}
 
-abstract class State(tui: Tui) {
+trait State {
   def evaluateInput(input: String): Int
 
   def isInputNumberAndNotEmpty(input: String): Boolean = {

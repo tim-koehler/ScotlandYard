@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.aview.tui
 
-class RunningState(tui: Tui) extends State(tui: Tui) {
+class RunningState(tui: Tui) extends State {
   override def evaluateInput(input: String): Int = {
     if(input.matches("[0-9]{1,3} ((T|t)|(B|b)|(U|u)|(X|x))")) {
       tui.evaluateNextPositionInput(input)
