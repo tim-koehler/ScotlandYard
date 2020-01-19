@@ -22,14 +22,12 @@ class Controller @Inject() extends ControllerInterface with Publisher {
   override var fileIO = injector.getInstance(classOf[FileIOInterface])
 
   def load(): Boolean = {
-    val fileIo = fileIO
-    fileIo.load()
+    fileIO.load()
     true
   }
 
   def save(): Boolean = {
-    val fileIo = fileIO
-    fileIo.save()
+    fileIO.save()
     true
   }
 
