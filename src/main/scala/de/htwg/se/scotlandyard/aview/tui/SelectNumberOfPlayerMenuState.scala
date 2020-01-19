@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.aview.tui
 
-class SelectNumberOfPlayerMenuState(tui: Tui) extends State(tui: Tui) {
+class SelectNumberOfPlayerMenuState(tui: Tui) extends State {
   override def evaluateInput(input: String): Int = {
     if(isSelectNumberOfPlayerInputCorrect(input)) {
       tui.evaluateSettings(input)
