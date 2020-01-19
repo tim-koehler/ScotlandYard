@@ -4,11 +4,16 @@ import java.awt.Color
 
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.StationInitializerInterface
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerMockImpl.StationInitializer
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
+import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
+import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.Tickets
 
-class GameInitializer extends GameInitializerInterface{
+class GameInitializer() extends GameInitializerInterface{
   override val MRX_COLOR: Color = Color.BLACK
   override val DT1_COLOR: Color = Color.BLUE
   override val DT2_COLOR: Color = Color.RED
@@ -37,4 +42,7 @@ class GameInitializer extends GameInitializerInterface{
   override def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean = true
 
   override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType]): Boolean = true
+
+  override val stationInitializer: StationInitializerInterface = new StationInitializer()
+  override val tuiMap: TuiMapInterface = new TuiMap()
 }

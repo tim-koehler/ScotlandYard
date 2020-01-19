@@ -18,9 +18,7 @@ class XControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       val stationInitializer = new StationInitializer()
       stationInitializer.initStations()
 
-      val controller = new Controller()
-      controller.fileIO = new FileIO()
-      controller.gameInitializer = gameInitializer
+      val controller = new Controller(gameInitializer, new FileIO(gameInitializer))
 
       "should validateAndMove" in {
         GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)

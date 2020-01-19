@@ -11,9 +11,9 @@ import org.scalatest._
 class TuiSpec extends WordSpec with Matchers {
   "Tui" when {
     "created" should {
-      val controller = new Controller()
-      controller.fileIO = new FileIO()
-      controller.gameInitializer = new GameInitializer
+      GameMaster.gameInitializer = new GameInitializer
+
+      val controller = new Controller(GameMaster.gameInitializer, new FileIO(GameMaster.gameInitializer))
 
       val tui = new Tui(controller, new TuiMap)
 
@@ -21,7 +21,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
       }
       "change the number of player or refresh the screen" in {
-        GameMaster.initialize(gameInitializer = controller.gameInitializer)
+        GameMaster.initialize()
         tui.changeState(new SelectNumberOfPlayerMenuState(tui))
         tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
         tui.evaluateInput("3") shouldBe (3)
@@ -58,7 +58,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.state shouldBe a[RunningState]
       }
       "should return state RUNNING when 'a', 'w', 's' or 'd' is pressed is pressed" in {
-        GameMaster.initialize(gameInitializer = controller.gameInitializer)
+        GameMaster.initialize()
         tui.evaluateMoveMapInput("a") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("w") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("s") should be (tui.TUIMODE_RUNNING)
@@ -75,7 +75,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.revealMrX2() shouldBe(tui.TUIMODE_RUNNING)
       }
       "should have a winning output String when a player wins" in {
-        GameMaster.initialize(2, gameInitializer = controller.gameInitializer)
+        GameMaster.initialize(2)
         GameMaster.winningPlayer = GameMaster.players(0)
         tui.buildOutputStringWin() shouldNot be (null)
         GameMaster.winningPlayer = GameMaster.players(1)

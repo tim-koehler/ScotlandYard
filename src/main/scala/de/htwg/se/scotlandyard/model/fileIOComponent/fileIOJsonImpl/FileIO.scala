@@ -14,10 +14,7 @@ import play.api.libs.json._
 
 import scala.io.Source
 
-class FileIO @Inject() extends FileIOInterface {
-
-  val injector = Guice.createInjector(new ScotlandYardModule)
-  override var gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
+class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) extends FileIOInterface {
 
   var pathname = "ScotlandYard.json"
 

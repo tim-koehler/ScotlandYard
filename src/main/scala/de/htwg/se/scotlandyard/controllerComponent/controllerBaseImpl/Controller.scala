@@ -13,13 +13,10 @@ import de.htwg.se.scotlandyard.util.UndoManager
 
 import scala.swing.Publisher
 
-class Controller @Inject() extends ControllerInterface with Publisher {
+class Controller @Inject()(override var gameInitializer: GameInitializerInterface,
+                           override var fileIO: FileIOInterface) extends ControllerInterface with Publisher {
 
   private val undoManager = new UndoManager()
-
-  val injector = Guice.createInjector(new ScotlandYardModule)
-  override var gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
-  override var fileIO = injector.getInstance(classOf[FileIOInterface])
 
   def load(): Boolean = {
     fileIO.load()
@@ -32,7 +29,7 @@ class Controller @Inject() extends ControllerInterface with Publisher {
   }
 
   def initPlayers(nPlayer: Int): Integer = {
-    GameMaster.initialize(nPlayer, gameInitializer)
+    GameMaster.initialize(nPlayer)
     publish(new NumberOfPlayersChanged)
     GameMaster.players.length
   }

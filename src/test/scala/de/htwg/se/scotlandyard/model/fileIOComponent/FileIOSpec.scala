@@ -10,11 +10,9 @@ class FileIOSpec extends WordSpec with Matchers with PrivateMethodTester {
       val gameInitializer = new GameInitializer();
       gameInitializer.initialize(3)
 
-      val jsonFileIO = new FileIO()
-      jsonFileIO.gameInitializer = gameInitializer
+      val jsonFileIO = new FileIO(gameInitializer)
 
-      val xmlFileIO = new fileIOXmlImpl.FileIO()
-      xmlFileIO.gameInitializer = gameInitializer
+      val xmlFileIO = new fileIOXmlImpl.FileIO(gameInitializer)
 
       jsonFileIO.pathname = "ScotlandYard_test.json"
       xmlFileIO.pathname = "ScotlandYard_test.xml"

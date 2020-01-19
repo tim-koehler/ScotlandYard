@@ -1,5 +1,7 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
@@ -7,6 +9,9 @@ import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
 object GameMaster {
+
+  var gameInitializer: GameInitializerInterface = Guice.createInjector(new ScotlandYardModule).getInstance(classOf[GameInitializerInterface])
+
   var stations: List[Station] = List()
   var players: List[DetectiveInterface] = List()
   var round = 1 // counter of moves (increases by 1 when a player moved)
@@ -15,7 +20,7 @@ object GameMaster {
   var winningPlayer: DetectiveInterface = _
   val winningRound = 24 //24
 
-  def initialize(nPlayers: Int = 3, gameInitializer: GameInitializerInterface): Boolean = {
+  def initialize(nPlayers: Int = 3): Boolean = {
     if(!gameInitializer.initialize(nPlayers)) {
       return false
     }

@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.model.fileIOComponent.fileIOXmlImpl
 import java.awt.Color
 import java.io._
 
-import com.google.inject.Guice
+import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
@@ -14,10 +14,7 @@ import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import scala.swing.Color
 import scala.xml._
 
-class FileIO() extends FileIOInterface {
-
-  val injector = Guice.createInjector(new ScotlandYardModule)
-  override var gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
+class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) extends FileIOInterface {
 
   var pathname = "ScotlandYard.xml"
 

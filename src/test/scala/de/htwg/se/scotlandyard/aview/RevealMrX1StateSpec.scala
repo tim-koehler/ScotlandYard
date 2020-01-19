@@ -10,9 +10,7 @@ import org.scalatest._
 class RevealMrX1StateSpec extends WordSpec with Matchers {
   "RevealMrX1StateSpec" when {
     "new" should {
-      val controller = new Controller
-      controller.fileIO = new FileIO
-      controller.gameInitializer = new GameInitializer
+      val controller = new Controller(new GameInitializer, new FileIO(new GameInitializer))
 
       val tui = new Tui(controller, new TuiMap)
       tui.changeState(new RevealMrX1State(tui))

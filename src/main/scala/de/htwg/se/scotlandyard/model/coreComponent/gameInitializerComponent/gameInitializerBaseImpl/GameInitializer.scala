@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gam
 
 import java.awt.Color
 
-import com.google.inject.Guice
+import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
@@ -12,9 +12,8 @@ import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.Tickets
 
-class GameInitializer extends GameInitializerInterface {
-
-  val injector = Guice.createInjector(new ScotlandYardModule)
+class GameInitializer @Inject()(override val stationInitializer: StationInitializerInterface,
+                                override val tuiMap: TuiMapInterface) extends GameInitializerInterface {
 
   val MRX_COLOR = Color.BLACK
   val DT1_COLOR = Color.BLUE
@@ -38,9 +37,11 @@ class GameInitializer extends GameInitializerInterface {
   override var MAX_DETECTIVE_LIST_INDEX: Int = detectiveStartPositions.length -1
   override var MAX_MISTERX_LIST_INDEX: Int = misterXStartPositions.length -1
 
+  val injector = Guice.createInjector(new ScotlandYardModule)
+
   override def initialize(nPlayers: Int): Boolean = {
     if(GameMaster.stations.size == 0){
-      GameMaster.stations = injector.getInstance(classOf[StationInitializerInterface]).initStations()
+      GameMaster.stations = stationInitializer.initStations()
     }
     initPlayers(nPlayers)
     true
@@ -55,7 +56,7 @@ class GameInitializer extends GameInitializerInterface {
     detective.tickets = tickets
 
     GameMaster.players = GameMaster.players:::List(detective)
-    injector.getInstance(classOf[TuiMapInterface]).updatePlayerPositions()
+    tuiMap.updatePlayerPositions()
     true
   }
 
@@ -69,7 +70,7 @@ class GameInitializer extends GameInitializerInterface {
     GameMaster.getMrX().lastSeen = lastSeen
     GameMaster.getMrX().tickets = tickets
     GameMaster.getMrX().history = history
-    injector.getInstance(classOf[TuiMapInterface]).updatePlayerPositions()
+    tuiMap.updatePlayerPositions()
     true
   }
 
@@ -77,11 +78,10 @@ class GameInitializer extends GameInitializerInterface {
     GameMaster.players = List()
 
     var st = GameMaster.stations(drawMisterXPosition())
+    val mrX = injector.getInstance(classOf[MrXInterface])
+    mrX.station = st
 
-    val mrx = injector.getInstance(classOf[MrXInterface])
-    mrx.station = st
-
-    GameMaster.players = List[DetectiveInterface](mrx)
+    GameMaster.players = List[DetectiveInterface](mrX)
     for(i <- 1 to (nPlayer - 1)) {
       st = GameMaster.stations(drawDetectivePosition())
       val detective = injector.getInstance(classOf[DetectiveInterface])

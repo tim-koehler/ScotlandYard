@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.controllerComponent.controllerMockImpl
 
+import com.google.inject.Inject
 import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
@@ -10,9 +11,10 @@ import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXIn
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
-class Controller extends ControllerInterface{
-  override var gameInitializer: GameInitializerInterface = new GameInitializer()
-  override var fileIO: FileIOInterface = new FileIO()
+import scala.swing.Publisher
+
+class Controller @Inject()(override var gameInitializer: GameInitializerInterface,
+                           override var fileIO: FileIOInterface) extends ControllerInterface with Publisher {
 
   override def load(): Boolean = true
 

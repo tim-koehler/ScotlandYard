@@ -2,15 +2,17 @@ package de.htwg.se.scotlandyard.model.coreComponent
 
 import java.awt.Color
 
-import de.htwg.se.scotlandyard.ScotlandYard
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerMockImpl.StationInitializer
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.StationFactory
+import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import org.scalatest._
 
 class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameInitializer" should {
-    val initializer = new GameInitializer()
+    val initializer = new GameInitializer(new StationInitializer, new TuiMap())
+
     "init" in {
       initializer.initialize(3) should be(true)
     }

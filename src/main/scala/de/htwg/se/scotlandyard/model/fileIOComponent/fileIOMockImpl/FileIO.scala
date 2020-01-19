@@ -4,9 +4,7 @@ import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.Game
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 
-class FileIO extends FileIOInterface{
-  override var gameInitializer: GameInitializerInterface = new GameInitializer()
-
+class FileIO(override var gameInitializer: GameInitializerInterface) extends FileIOInterface{
   override def load(): Boolean = true
 
   override def save(): Boolean = true

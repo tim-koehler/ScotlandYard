@@ -18,7 +18,7 @@ object ScotlandYard {
   val tuiMap = injector.getInstance(classOf[TuiMapInterface])
   val gameInitializer = injector.getInstance(classOf[GameInitializerInterface])
 
-  GameMaster.initialize(gameInitializer = gameInitializer)
+  GameMaster.initialize()
   val tui = new Tui(controller, tuiMap)
   val gui = new Gui(controller)
 
