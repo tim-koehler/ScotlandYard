@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster.{players, round, winningRound}
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster.{players, round, WINNING_ROUND}
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.MrX
@@ -44,7 +44,7 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.checkMrXVisibility() shouldBe (true)
 
         GameMaster.totalRound = rounds
-        GameMaster.players(0).asInstanceOf[MrX].lastSeen shouldBe ("never")
+        GameMaster.getMrX().lastSeen shouldBe ("never")
       }
       "and target Station should be empty" in {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(199) should be(true)
@@ -52,7 +52,7 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.getCurrentPlayer().station = GameMaster.stations(3)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationEmpty"))(3) should be(false)
       }
-      "and Taxi move should be valid" in {
+      "and Taxi move should be valid  " in {
         GameMaster.getCurrentPlayer().station = GameMaster.stations(153)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTaxiMoveValid"))(152) should be(true)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTaxiMoveValid"))(183) should be(false)
@@ -113,7 +113,7 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.validateMove(88, TicketType.Taxi) should be(false)
       }
       "mrx should win in round 24" in {
-        GameMaster.round = winningRound * players.length
+        GameMaster.round = WINNING_ROUND * players.length
         GameMaster.checkMrXWin() shouldBe(true)
       }
       "tickets counts" in {

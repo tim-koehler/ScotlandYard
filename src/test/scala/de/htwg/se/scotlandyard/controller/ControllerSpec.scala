@@ -9,7 +9,7 @@ import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import org.scalatest._
 
-class XControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
+class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "Controller" when {
     "new" should {
       val gameInitializer = new GameInitializer()
@@ -21,12 +21,14 @@ class XControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       val controller = new Controller(gameInitializer, new FileIO(gameInitializer))
 
       "should validateAndMove" in {
-        GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)
-        GameMaster.players.head.station = GameMaster.stations(3)
+        GameMaster.initialize(5)
 
-        controller.doMove(2, TicketType.Taxi)
+        GameMaster.getCurrentPlayer().station = GameMaster.stations(1)
+        GameMaster.getMrX().station = GameMaster.stations(3)
 
-        controller.undoValidateAndMove().sType should be(StationType.Underground)
+        controller.doMove(2, TicketType.Taxi).sType should be(StationType.Taxi)
+
+        controller.undoValidateAndMove().sType should be(StationType.Bus)
         controller.redoValidateAndMove().sType should be(StationType.Taxi)
 
         GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)
@@ -71,8 +73,9 @@ class XControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         controller.getStations() should not be(Set[Station]())
       }
       "and setWin" in {
-        controller.setWinning(true) should be(true)
-        controller.getWin() should be(true)
+        GameMaster.win = true
+        controller.setWinning(false) should be(true)
+        controller.getWin() should be(false)
       }
       "and winGame" in{
         controller.winGame() should be(true)

@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.model.coreComponent
 import java.awt.Color
 
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerMockImpl.StationInitializer
+import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl.StationInitializer
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.StationFactory
 import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import de.htwg.se.scotlandyard.util.{TicketType, Tickets}

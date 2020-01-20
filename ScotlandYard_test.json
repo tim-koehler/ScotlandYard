@@ -1,7 +1,7 @@
 {
   "round" : 1,
   "totalRound" : 1,
-  "nPlayer" : 5,
+  "nPlayer" : 3,
   "mrX" : {
     "name" : "MrX",
     "stationNumber" : 10,
@@ -17,20 +17,6 @@
     } ]
   },
   "detectives" : [ {
-    "name" : "Dt1",
-    "stationNumber" : 20,
-    "taxiTickets" : 11,
-    "busTickets" : 8,
-    "undergroundTickets" : 4,
-    "color" : "-16711936"
-  }, {
-    "name" : "Dt1",
-    "stationNumber" : 20,
-    "taxiTickets" : 11,
-    "busTickets" : 8,
-    "undergroundTickets" : 4,
-    "color" : "-16711936"
-  }, {
     "name" : "Dt1",
     "stationNumber" : 20,
     "taxiTickets" : 11,

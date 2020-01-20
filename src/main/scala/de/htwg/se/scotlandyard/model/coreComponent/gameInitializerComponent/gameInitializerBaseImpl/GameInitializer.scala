@@ -40,9 +40,7 @@ class GameInitializer @Inject()(override val stationInitializer: StationInitiali
   val injector = Guice.createInjector(new ScotlandYardModule)
 
   override def initialize(nPlayers: Int): Boolean = {
-    if(GameMaster.stations.size == 0){
-      GameMaster.stations = stationInitializer.initStations()
-    }
+    GameMaster.stations = stationInitializer.initStations()
     initPlayers(nPlayers)
     true
   }
