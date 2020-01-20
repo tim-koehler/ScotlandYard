@@ -28,7 +28,9 @@ class Gui(controller: ControllerInterface) extends Frame {
   }
 
   def initSettingsPanel(): BorderPanel = {
-    settingsBuilder.initPanel()
+    val panel = settingsBuilder.initPanel()
+    peer.setDefaultCloseOperation(EXIT_ON_CLOSE)
+    panel
   }
 
   def updateSettings(): Unit = {
