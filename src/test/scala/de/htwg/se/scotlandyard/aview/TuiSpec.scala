@@ -64,9 +64,6 @@ class TuiSpec extends WordSpec with Matchers {
         tui.evaluateMoveMapInput("s") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("d") should be (tui.TUIMODE_RUNNING)
       }
-      "should return state QUIT when 'exit' is inserted" in {
-        tui.evaluateMoveMapInput("exit") should be (tui.TUIMODE_QUIT)
-      }
       "should return RUNNING when 'undo' is inserted" in {
         the [Exception] thrownBy  tui.evaluateNextPositionInput("undo")  should not have message("")
       }
