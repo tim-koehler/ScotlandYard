@@ -2,13 +2,14 @@ package de.htwg.se.scotlandyard.aview
 
 import java.awt.Toolkit
 
-import de.htwg.se.scotlandyard.controller.{Controller, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-
-import scala.swing._
-import de.htwg.se.scotlandyard.aview.gui.{GuiMainBuilder, GuiSettingsBuilder}
+import de.htwg.se.scotlandyard.aview.gui.main.GuiMainBuilder
+import de.htwg.se.scotlandyard.aview.gui.settings.GuiSettingsBuilder
+import de.htwg.se.scotlandyard.controllerComponent._
 import javax.swing.ImageIcon
 
-class Gui(controller: Controller) extends Frame {
+import scala.swing._
+
+class Gui(controller: ControllerInterface) extends Frame {
   listenTo(controller)
 
   val EXIT_ON_CLOSE = 3
@@ -17,49 +18,48 @@ class Gui(controller: Controller) extends Frame {
   centerOnScreen()
   peer.setDefaultCloseOperation(EXIT_ON_CLOSE)
 
-  iconImage = new ImageIcon("./src/main/scala/de/htwg/se/scotlandyard/Icon.png").getImage
+  iconImage = new ImageIcon("./resources/Icon.png").getImage
 
   var mainBuiler = new GuiMainBuilder(controller, this)
   var settingsBuilder = new GuiSettingsBuilder(controller, this)
 
-  def gamePanel(): BorderPanel = {
-    mainBuiler.getPanel()
+  def initGamePanel(): BorderPanel = {
+    mainBuiler.initPanel()
   }
 
-  def settingsPanel(): BorderPanel = {
-    settingsBuilder.getPanel()
+  def initSettingsPanel(): BorderPanel = {
+    settingsBuilder.initPanel()
   }
 
   def updateSettings(): Unit = {
-    contents = settingsPanel
-    this.repaint()
+    contents = settingsBuilder.updatePanel()
   }
 
   def updateGame(): Unit = {
-    contents = gamePanel()
+    contents = mainBuiler.updatePanel()
   }
 
   def changeToGamePanel(): Unit = {
     val screenSize = Toolkit.getDefaultToolkit.getScreenSize
-    preferredSize = new Dimension(screenSize.width, screenSize.height - 50)
-    contents = gamePanel()
+    preferredSize = new Dimension(screenSize.width - 10, screenSize.height - 60)
+    contents = initGamePanel()
     centerOnScreen()
     Dialog.showMessage(null, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")
-    Dialog.showMessage(null, "MrX is at Station: " + controller.getCurrentPlayer().station.number, "MrX Position")
+    Dialog.showMessage(null, "MrX is at Station: " + controller.getMrX().station.number, "MrX Position")
   }
 
   def showWinningDialog(): Unit = {
+    var winningMessage = ""
     if (controller.getWinningPlayer().name.equals("MrX")) {
-      val winningMessage = controller.getPlayersList()(0).name + " was at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
-      Dialog.showMessage(null, winningMessage, "WIN")
+      winningMessage = controller.getPlayersList()(0).name + " was at Station " + controller.getWinningPlayer().station.number + " !!!"
     } else {
-      val winningMessage = controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name + " at Station " + controller.getWinningPlayer().getPosition().number + " !!!"
-      Dialog.showMessage(null, winningMessage, "WIN")
+      winningMessage = controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name + " at Station " + controller.getWinningPlayer().station.number + " !!!"
     }
+    Dialog.showMessage(null, winningMessage, "WIN")
     this.dispose()
   }
 
-  contents = settingsPanel
+  contents = initSettingsPanel()
   visible = true
 
   reactions += {
