@@ -39,6 +39,9 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   }
 
   def evaluateInput(input: String): Int = {
+    if(input.equals("exit")) {
+      return TUIMODE_QUIT
+    }
     state.evaluateInput(input)
   }
 
@@ -51,8 +54,6 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
       tuiMap.updateViewOffsetY(input.length, positive = false)
     } else if(input.matches("(s|S)+")) {
       tuiMap.updateViewOffsetY(input.length, positive = true)
-    } else if(input.equalsIgnoreCase("exit")) {
-      return TUIMODE_QUIT
     }
     updateScreen()
     TUIMODE_RUNNING
