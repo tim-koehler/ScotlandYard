@@ -10,8 +10,6 @@ class RunningState(tui: Tui) extends State {
       tui.evaluateRedo()
     } else if(input.equals("save")) {
       tui.evaluateSave()
-    } else if(input.equals("load")) {
-      tui.evaluateLoad()
     } else {
       tui.evaluateMoveMapInput(input)
     }

@@ -41,6 +41,8 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   def evaluateInput(input: String): Int = {
     if(input.equals("exit")) {
       return TUIMODE_QUIT
+    } else if(input.equals("load") && !state.isInstanceOf[RunningState]) {
+      evaluateLoad()
     }
     state.evaluateInput(input)
   }
@@ -108,11 +110,13 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   //TODO: Error handling, save path
   def evaluateSave(): Int = {
     controller.save()
+    updateScreen()
     TUIMODE_RUNNING
   }
 
   def evaluateLoad(): Int = {
     controller.load()
+    controller.startGame()
     TUIMODE_RUNNING
   }
 
