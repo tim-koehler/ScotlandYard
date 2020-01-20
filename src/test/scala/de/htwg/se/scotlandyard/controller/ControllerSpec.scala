@@ -23,6 +23,8 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       "should validateAndMove" in {
         GameMaster.initialize(5)
 
+        controller.validateMove(45, TicketType.Underground) should be(false)
+
         GameMaster.getCurrentPlayer().station = GameMaster.stations(1)
         GameMaster.getMrX().station = GameMaster.stations(3)
 

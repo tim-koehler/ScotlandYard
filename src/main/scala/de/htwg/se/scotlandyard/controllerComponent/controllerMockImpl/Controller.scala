@@ -10,6 +10,7 @@ import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
+import org.scalactic.anyvals.PosInt
 
 import scala.swing.Publisher
 
@@ -26,7 +27,10 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   override def previousRound(): Integer = 1
 
-  override def validateMove(newPosition: Int, ticketType: TicketType): Boolean = true
+  override def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
+    if(newPosition > 299) return false
+    true
+  }
 
   override def doMove(newPosition: Int, ticketType: TicketType): Station = StationFactory.createZeroIndexStation()
 
@@ -54,7 +58,10 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   override def getWinningPlayer(): DetectiveInterface = new Detective()
 
-  override def setPlayerName(inputName: String, index: Int): Boolean = true
+  override def setPlayerName(inputName: String, index: Int): Boolean = {
+    if(inputName.length < 3) return false
+    true
+  }
 
   override def setWinning(win: Boolean): Boolean = win
 }

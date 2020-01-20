@@ -2,6 +2,7 @@ package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
+import de.htwg.se.scotlandyard.aview.tui.EnterNameState
 import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, MoveCommand, NumberOfPlayersChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
@@ -109,9 +110,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   def setPlayerName(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
-    if(index < GameMaster.players.length || inputName.equals("")) {
-      returnValue = GameMaster.players(index).setPlayerName(inputName)
-    }
+    returnValue = GameMaster.players(index).setPlayerName(inputName)
     publish(new PlayerNameChanged)
     returnValue
   }

@@ -19,6 +19,8 @@ class TuiSpec extends WordSpec with Matchers {
 
       "refresh the screen when input is invalid in mainMenu and not refresh" in {
         tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
+        tui.evaluateInput("load") shouldBe(tui.TUIMODE_RUNNING)
+        tui.evaluateInput("exit") shouldBe(tui.TUIMODE_QUIT)
       }
       "change the number of player or refresh the screen" in {
         GameMaster.initialize()
@@ -35,16 +37,22 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "should take input for a player name and go back to chooseNameMenu" in {
         tui.changeState(new EnterNameState(tui))
-        tui.evaluateInput("Uff") shouldBe (1)
+        tui.evaluateInput("Uffi") shouldBe (1)
         tui.changeState(new EnterNameState(tui))
-        tui.evaluateInput("") shouldBe (1)
+        tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
+        tui.changeState(new EnterNameState(tui))
+        tui.evaluateInput("h") shouldBe (tui.TUIMODE_RUNNING)
       }
       "should move the map and refresh the screen or move the player and refresh the screen" in {
         tui.changeState(new RunningState(tui))
         tui.evaluateInput("1 T") shouldBe(tui.TUIMODE_RUNNING)
         tui.evaluateInput("1 B") shouldBe(tui.TUIMODE_RUNNING)
         tui.evaluateInput("1 U") shouldBe(tui.TUIMODE_RUNNING)
+        tui.evaluateInput("1 x") shouldBe(tui.TUIMODE_RUNNING)
         tui.evaluateInput("WW") shouldBe(tui.TUIMODE_RUNNING)
+        tui.evaluateInput("undo") should be(tui.TUIMODE_RUNNING)
+        tui.evaluateInput("redo") should be(tui.TUIMODE_RUNNING)
+        tui.evaluateInput("save") should be(tui.TUIMODE_RUNNING)
         tui.evaluateUndo() shouldBe(tui.TUIMODE_RUNNING)
       }
       "should just update screen to show that MrX will be revealed" in {
@@ -67,6 +75,12 @@ class TuiSpec extends WordSpec with Matchers {
       "should return RUNNING when 'undo' is inserted" in {
         the [Exception] thrownBy  tui.evaluateNextPositionInput("undo")  should not have message("")
       }
+      "should update the screen when evaluateNextPositionInput is called" in {
+        tui.evaluateNextPositionInput("999 t") shouldBe (tui.TUIMODE_RUNNING)
+        tui.evaluateNextPositionInput("999 b") shouldBe (tui.TUIMODE_RUNNING)
+        tui.evaluateNextPositionInput("999 u") shouldBe (tui.TUIMODE_RUNNING)
+        tui.evaluateNextPositionInput("999 x") shouldBe (tui.TUIMODE_RUNNING)
+      }
       "should return 0 when a revealMrx method is called" in {
         tui.revealMrX1() shouldBe(tui.TUIMODE_RUNNING)
         tui.revealMrX2() shouldBe(tui.TUIMODE_RUNNING)
@@ -82,6 +96,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.changeState(new WinningState(tui))
         tui.state.evaluateInput("undo") should be(tui.TUIMODE_RUNNING)
         tui.state.evaluateInput("redo") should be(tui.TUIMODE_RUNNING)
+        tui.state.evaluateInput("ufgd") should be(tui.TUIMODE_QUIT)
         tui.state.toString should not be (null)
       }
       "should return TUIMODE_RUNNING when evaluateRedo is called" in {

@@ -128,27 +128,23 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   def evaluateNameMenu(input: String): Int = {
     if (input.toInt == 1) {
       controller.startGame()
-    } else if (input.toInt > 1) {
+    } else if (input.toInt > 1 &&  input.toInt <= controller.getPlayersList().length) {
       changeState(new EnterNameState(this))
       updateScreen()
       indexOfPlayerWhichNameToChange = input.toInt - 1 // -1 because 1 is Start and 2 is the first Player
+    } else {
+      updateScreen()
     }
     input.toInt
   }
 
   def evaluateEnterName(input: String): Boolean = {
     changeState(new ChooseNameMenuState(this))
-    if(controller.setPlayerName(input, indexOfPlayerWhichNameToChange)) {
-      true
-    } else {
-      updateScreen()
-      false
-    }
+    controller.setPlayerName(input, indexOfPlayerWhichNameToChange)
   }
 
   def evaluateWinning(input: String): Int = {
-    System.exit(0)
-    TUIMODE_RUNNING
+    TUIMODE_QUIT
   }
 
   def revealMrX1(): Int = {
