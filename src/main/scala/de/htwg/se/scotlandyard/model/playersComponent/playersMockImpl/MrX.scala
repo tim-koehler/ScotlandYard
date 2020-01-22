@@ -31,7 +31,7 @@ class MrX extends MrXInterface with DetectiveInterface {
   }
   override var name: String = "MrX"
   override var color: Color = Color.BLACK
-  override var tickets: Tickets = Tickets(99, 99, 99, 5, 2)
+  override var tickets: Tickets = Tickets(99, 99, 99, 5)
 
   override def setPlayerName(newName: String): Boolean = true
 }

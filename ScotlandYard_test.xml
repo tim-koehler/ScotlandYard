@@ -8,7 +8,6 @@
         <isVisible>true</isVisible>
         <lastSeen>never</lastSeen>
         <blackTickets>5</blackTickets>
-        <doubleTurns>2</doubleTurns>
         <taxiTickets>99</taxiTickets>
         <busTickets>99</busTickets>
         <undergroundTickets>99</undergroundTickets>

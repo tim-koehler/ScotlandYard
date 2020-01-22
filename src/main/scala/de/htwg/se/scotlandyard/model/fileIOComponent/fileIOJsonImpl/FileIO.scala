@@ -29,7 +29,6 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     val isVisible = (json \ "mrX" \ "isVisible").get.toString().toBoolean
     val lastSeen = (json \ "mrX" \ "lastSeen").asOpt[String]
     val blackTickets = (json \ "mrX" \ "blackTickets").get.toString().toInt
-    val doubleTurns = (json \ "mrX" \ "doubleTurns").get.toString().toInt
     val taxiTickets = (json \ "mrX" \ "taxiTickets").get.toString().toInt
     val busTickets = (json \ "mrX" \ "busTickets").get.toString().toInt
     val undergroundTickets = (json \ "mrX" \ "undergroundTickets").get.toString().toInt
@@ -40,7 +39,7 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
       history = history:::List(TicketType.withName(formatString(s)))
     }
 
-    val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets, doubleTurns)
+    val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets)
     gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, tickets, history)
 
     val detectives: JsArray = (json \ "detectives").as[JsArray]
@@ -72,7 +71,6 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
       "isVisible"           ->  GameMaster.getMrX().isVisible,
       "lastSeen"            ->  GameMaster.getMrX().lastSeen,
       "blackTickets"        ->  GameMaster.getMrX().tickets.blackTickets,
-      "doubleTurns"         ->  GameMaster.getMrX().tickets.doubleTurns,
       "taxiTickets"         ->  GameMaster.getMrX().tickets.taxiTickets,
       "busTickets"          ->  GameMaster.getMrX().tickets.busTickets,
       "undergroundTickets"  ->  GameMaster.getMrX().tickets.undergroundTickets,

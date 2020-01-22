@@ -28,7 +28,6 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     val isVisible = (xmlFile \\ "game" \ "mrX" \ "isVisible").text.toBoolean
     val lastSeen = (xmlFile \\ "game" \ "mrX" \ "lastSeen").text
     val blackTickets = (xmlFile \\ "game" \ "mrX" \ "blackTickets").text.toInt
-    val doubleTurns = (xmlFile \\ "game" \ "mrX" \ "doubleTurns").text.toInt
     val taxiTickets = (xmlFile \\ "game" \ "mrX" \ "taxiTickets").text.toInt
     val busTickets = (xmlFile \\ "game" \ "mrX" \ "busTickets").text.toInt
     val undergroundTickets = (xmlFile \\ "game" \ "mrX" \ "undergroundTickets").text.toInt
@@ -43,7 +42,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
       }
     }
 
-    val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets, doubleTurns)
+    val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets)
     gameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen, tickets, history)
 
     val detectives = (xmlFile \\ "game" \ "detectives")
@@ -100,7 +99,6 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
       <isVisible>{GameMaster.getMrX().isVisible}</isVisible>
       <lastSeen>{GameMaster.getMrX().lastSeen}</lastSeen>
       <blackTickets>{GameMaster.getMrX().tickets.blackTickets}</blackTickets>
-      <doubleTurns>{GameMaster.getMrX().tickets.doubleTurns}</doubleTurns>
       <taxiTickets>{GameMaster.getMrX().tickets.taxiTickets}</taxiTickets>
       <busTickets>{GameMaster.getMrX().tickets.busTickets}</busTickets>
       <undergroundTickets>{GameMaster.getMrX().tickets.undergroundTickets}</undergroundTickets>

@@ -35,7 +35,7 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
       initializer.initDetectivesFromLoad("Bobbie", 5, Tickets(10, 8, 5), Color.GREEN)
     }
     "load mrX" in {
-      initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3, 2), List(TicketType.Taxi))
+      initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3), List(TicketType.Taxi))
     }
     "and test drawing player positions" in {
     /*  initializer invokePrivate PrivateMethod[Int](Symbol("drawDetectivePosition"))(2) should be(2) //35

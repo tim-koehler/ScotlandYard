@@ -8,7 +8,6 @@
     "isVisible" : true,
     "lastSeen" : "never",
     "blackTickets" : 5,
-    "doubleTurns" : 2,
     "taxiTickets" : 99,
     "busTickets" : 99,
     "undergroundTickets" : 99,

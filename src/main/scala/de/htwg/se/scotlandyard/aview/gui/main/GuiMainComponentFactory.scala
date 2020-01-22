@@ -142,10 +142,6 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Double Turn: " + controller.getMrX().tickets.doubleTurns) {
-        enabled = false
-        font = Font.apply(this.font.getName, Font.Bold, fontSize)
-      }
     }
   }
 

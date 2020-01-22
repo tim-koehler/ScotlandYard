@@ -116,7 +116,7 @@ class GameInitializer @Inject()(override val stationInitializer: StationInitiali
   }
 
   private def distributeTicketsToMrX(): Boolean = {
-    GameMaster.getMrX().tickets = Tickets(99, 99, 99, 5, 2)
+    GameMaster.getMrX().tickets = Tickets(99, 99, 99, 5)
     true
   }
 
