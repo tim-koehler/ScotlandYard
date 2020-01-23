@@ -25,12 +25,5 @@ and the execute
 sbt run
 ```
 
-#### 3. Download the jar
-Download the jar at the following link: [Download](https://github.com/tim-koehler/ScotlandYard/releases)<br>
-<br>
-To start the game simply run
-```
-java -jar SCOTLANDYARD.jar
-```
 ## Background
 This is a project build during the "Software Engeneering" lecture at the HTWG Konstanz
