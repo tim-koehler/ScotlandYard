@@ -173,8 +173,12 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
     outputString
   }
 
-  def getMrXStartingPositionString(): String = {
+  def getMrXStartingPositionStringAndStartGame(): String = {
     changeState(new RunningState(this))
+    getMrXStartingPositionString()
+  }
+
+  def getMrXStartingPositionString(): String = {
     "MrX is at Station: " + controller.getCurrentPlayer().station.number + "\n\n\n\n\n"
   }
 
