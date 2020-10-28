@@ -66,29 +66,29 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
     val newStation = input.substring(0, index).toInt
     val transport = input.substring(index + 1).toCharArray.head.toLower
     if(transport.equals('t')) {
-      if(controller.validateMove(newStation, TicketType.Taxi)) {
-        controller.doMove(newStation, TicketType.Taxi)
+      if(controller.validateMove(newStation, TicketType.of(transport))) {
+        controller.doMove(newStation, TicketType.of(transport))
         if(controller.getWin()) controller.winGame()
       } else {
         updateScreen()
       }
     } else if (transport.equals('b')) {
-      if(controller.validateMove(newStation, TicketType.Bus)) {
-        controller.doMove(newStation, TicketType.Bus)
+      if(controller.validateMove(newStation, TicketType.of(transport))) {
+        controller.doMove(newStation, TicketType.of(transport))
         if (controller.getWin()) controller.winGame()
       } else {
         updateScreen()
       }
     } else if (transport.equals('u')) {
-      if (controller.validateMove(newStation, TicketType.Underground)) {
-        controller.doMove(newStation, TicketType.Underground)
+      if (controller.validateMove(newStation, TicketType.of(transport))) {
+        controller.doMove(newStation, TicketType.of(transport))
         if (controller.getWin()) controller.winGame()
       } else {
         updateScreen()
       }
     } else {
-      if (controller.validateMove(newStation, TicketType.Black)) {
-        controller.doMove(newStation, TicketType.Black)
+      if (controller.validateMove(newStation, TicketType.of(transport))) {
+        controller.doMove(newStation, TicketType.of(transport))
         if (controller.getWin()) controller.winGame()
       } else {
         updateScreen()
