@@ -7,6 +7,6 @@ class RevealMrX2State(tui: Tui) extends State {
   }
 
   override def toString: String = {
-    tui.getMrXStartingPositionString()
+    tui.getMrXStartingPositionStringAndStartGame()
   }
 }
