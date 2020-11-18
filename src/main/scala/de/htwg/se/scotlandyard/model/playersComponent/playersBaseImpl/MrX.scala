@@ -42,7 +42,7 @@ class MrX @Inject() extends DetectiveInterface with MrXInterface
     if(history.isEmpty) {
       false
     } else {
-      history = history.drop(1)
+      history = history.dropRight(1)
       true
     }
   }
