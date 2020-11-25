@@ -187,7 +187,7 @@ object GameMaster {
       return true
     } else if(getCurrentPlayer().station.neighbourBuses.contains(stations(newPosition))) {
       return true
-    } else if (!getCurrentPlayer().station.neighbourUndergrounds.contains(stations(newPosition))) {
+    } else if (getCurrentPlayer().station.neighbourUndergrounds.contains(stations(newPosition))) {
       return true
     }
     false
