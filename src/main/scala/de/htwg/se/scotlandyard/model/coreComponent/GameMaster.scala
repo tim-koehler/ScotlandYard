@@ -17,11 +17,12 @@ object GameMaster {
   var round = 1 // counter of moves (increases by 1 when a player moved)
   var totalRound = 1 // number of total rounds (increases by 1 when every player has moved once)
   var win = false
+  var gameRunning = false
   var winningPlayer: DetectiveInterface = _
 
   val WINNING_ROUND = 24 //24
 
-  def initialize(nPlayers: Int = 3): Boolean = {
+  def initialinize(nPlayers: Int = 3): Boolean = {
 
     round = 1
     totalRound = 1
@@ -30,6 +31,7 @@ object GameMaster {
     if(!gameInitializer.initialize(nPlayers)) {
       return false
     }
+    gameRunning = true
     true
   }
 
@@ -59,6 +61,7 @@ object GameMaster {
 
   def checkMrXWin(): Boolean = {
     if(round == WINNING_ROUND * players.length) {
+      gameRunning = false
       win = true
       winningPlayer = players(0)
       true
@@ -115,6 +118,7 @@ object GameMaster {
     if (!isTargetStationEmpty(newPosition)) {
       if (players(0).station.number == newPosition) {
         winningPlayer = getCurrentPlayer()
+        gameRunning = false
         win = true
         return true
       } else {
