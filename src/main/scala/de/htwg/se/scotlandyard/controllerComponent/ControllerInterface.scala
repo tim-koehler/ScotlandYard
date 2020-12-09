@@ -25,6 +25,7 @@ trait ControllerInterface extends Publisher {
   def updateMrXVisibility(): Boolean
   def startGame(): Boolean
   def winGame(): Boolean
+  def getGameRunning(): Boolean
   def getCurrentPlayer(): DetectiveInterface
   def getMrX(): MrXInterface
   def getPlayersList(): List[DetectiveInterface]

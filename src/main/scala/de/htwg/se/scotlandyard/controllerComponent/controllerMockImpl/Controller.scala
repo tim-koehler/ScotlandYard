@@ -56,6 +56,8 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   override def getWin(): Boolean = true
 
+  override def getGameRunning(): Boolean = true
+
   override def getWinningPlayer(): DetectiveInterface = new Detective()
 
   override def setPlayerName(inputName: String, index: Int): Boolean = {

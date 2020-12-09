@@ -17,11 +17,11 @@ class GameInitializer @Inject()(override val stationInitializer: StationInitiali
 
   val MRX_COLOR = Color.BLACK
   val DT1_COLOR = Color.BLUE
-  val DT2_COLOR = Color.GREEN
-  val DT3_COLOR = Color.ORANGE
+  val DT2_COLOR = Color.decode("#1c8c1c")
+  val DT3_COLOR = Color.decode("#de991b")
   val DT4_COLOR = Color.MAGENTA
   val DT5_COLOR = Color.RED
-  val DT6_COLOR = Color.CYAN
+  val DT6_COLOR = Color.decode("#2a9fcc")
 
   val colorList = List(MRX_COLOR, DT1_COLOR, DT2_COLOR, DT3_COLOR, DT4_COLOR, DT5_COLOR, DT6_COLOR)
 

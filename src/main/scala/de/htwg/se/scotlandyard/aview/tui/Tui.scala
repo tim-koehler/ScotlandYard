@@ -210,6 +210,10 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
     state.toString()
   }
 
+  def getTuiMap(): String = {
+    tuiMap.toString()
+  }
+
   def updateScreen(): Unit = {
     println(toString())
   }

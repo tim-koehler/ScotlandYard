@@ -104,6 +104,10 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     GameMaster.win
   }
 
+  def getGameRunning(): Boolean = {
+    GameMaster.gameRunning
+  }
+
   def getWinningPlayer(): DetectiveInterface = {
     GameMaster.winningPlayer
   }
