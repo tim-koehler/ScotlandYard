@@ -44,6 +44,10 @@ class GameInitializer @Inject()(override val stationInitializer: StationInitiali
     initPlayers(nPlayers)
     true
   }
+  
+  def getColorList(): List[Color] = {
+    this.colorList
+  }
 
   def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean = {
     val st = GameMaster.stations(stationNumber)

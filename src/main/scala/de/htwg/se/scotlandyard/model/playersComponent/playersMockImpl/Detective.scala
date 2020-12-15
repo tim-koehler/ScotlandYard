@@ -22,4 +22,5 @@ class Detective extends DetectiveInterface {
   override var tickets: Tickets = Tickets(11, 8, 4)
 
   override def setPlayerName(newName: String): Boolean = true
+  override def setPlayerColor(newColor: String): Boolean = true
 }

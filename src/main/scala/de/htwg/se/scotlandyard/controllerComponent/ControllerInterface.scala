@@ -34,7 +34,9 @@ trait ControllerInterface extends Publisher {
   def getWin(): Boolean
   def getWinningPlayer(): DetectiveInterface
   def setPlayerName(inputName: String, index: Int): Boolean
+  def setPlayerColor(newColor: String, index: Int): Boolean
   def setWinning(win: Boolean): Boolean
+  def updateLobby(): Boolean
 }
 
 import scala.swing.event.Event
@@ -44,3 +46,4 @@ class NumberOfPlayersChanged extends Event
 class PlayerMoved extends Event 
 class PlayerWin extends Event
 class StartGame extends Event
+class LobbyChange extends Event

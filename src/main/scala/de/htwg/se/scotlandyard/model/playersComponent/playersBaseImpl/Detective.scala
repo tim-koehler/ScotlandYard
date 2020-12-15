@@ -6,6 +6,7 @@ import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import de.htwg.se.scotlandyard.util.Tickets
 
 import scala.swing.Color
+import java.awt.Color
 
 class Detective @Inject() extends DetectiveInterface {
    override var station: Station = _
@@ -23,6 +24,11 @@ class Detective @Inject() extends DetectiveInterface {
         name = newName
          true
       }
+   }
+
+   def setPlayerColor(newColor: String): Boolean = {
+      this.color = Color.decode(newColor)
+      true
    }
 
    override def toString(): String = {

@@ -65,5 +65,12 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     true
   }
 
+  override def setPlayerColor(newColor: String, index: Int): Boolean = {
+    true
+  }
+
   override def setWinning(win: Boolean): Boolean = win
+
+  override def updateLobby(): Boolean = true
+
 }
