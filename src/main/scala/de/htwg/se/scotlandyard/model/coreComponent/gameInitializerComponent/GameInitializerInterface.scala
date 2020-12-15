@@ -34,5 +34,6 @@ trait GameInitializerInterface {
   def initialize(nPlayers: Int): Boolean
 
   def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean
+  def getColorList(): List[Color]
   def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType]): Boolean
 }

@@ -40,6 +40,7 @@ class GameInitializer() extends GameInitializerInterface{
   override var MAX_MISTERX_LIST_INDEX: Int = 2
 
   override def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean = true
+  override def getColorList(): List[Color] = List(MRX_COLOR, DT1_COLOR)
 
   override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType]): Boolean = true
 

@@ -22,7 +22,7 @@ object GameMaster {
 
   val WINNING_ROUND = 24 //24
 
-  def initialinize(nPlayers: Int = 3): Boolean = {
+  def initialize(nPlayers: Int = 3): Boolean = {
 
     round = 1
     totalRound = 1

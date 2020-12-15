@@ -12,4 +12,5 @@ trait DetectiveInterface {
   var tickets: Tickets
 
   def setPlayerName(newName: String): Boolean
+  def setPlayerColor(newColor: String): Boolean
 }
