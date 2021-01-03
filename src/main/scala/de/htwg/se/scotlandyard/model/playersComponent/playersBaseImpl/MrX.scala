@@ -8,6 +8,8 @@ import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXIn
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.Tickets
 
+import scala.collection.mutable
+
 class MrX @Inject() extends DetectiveInterface with MrXInterface
 {
   override var station: Station = _
@@ -16,7 +18,7 @@ class MrX @Inject() extends DetectiveInterface with MrXInterface
   override var tickets: Tickets = Tickets(99, 99, 99, 5)
   override var isVisible: Boolean = false
   override var lastSeen: String = "never"
-  override var history: List[TicketType] = List()
+  override var history: mutable.Stack[TicketType] = mutable.Stack()
   override val lastSeenColor: Color = Color.GRAY
 
 
@@ -29,12 +31,12 @@ class MrX @Inject() extends DetectiveInterface with MrXInterface
     }
   }
 
-  def getHistory(): List[TicketType] = {
+  def getHistory(): mutable.Stack[TicketType] = {
     this.history
   }
 
   def addToHistory(ticket: TicketType): Boolean = {
-    history = history ::: List(ticket)
+    this.history.push(ticket)
     true
   }
 
@@ -42,7 +44,7 @@ class MrX @Inject() extends DetectiveInterface with MrXInterface
     if(history.isEmpty) {
       false
     } else {
-      history = history.drop(1)
+      history.pop()
       true
     }
   }

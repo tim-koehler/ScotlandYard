@@ -9,6 +9,8 @@ import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import org.scalatest._
 
+import scala.collection.mutable
+
 class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameInitializer" should {
     val initializer = new GameInitializer(new StationInitializer, new TuiMap())
@@ -35,7 +37,7 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
       initializer.initDetectivesFromLoad("Bobbie", 5, Tickets(10, 8, 5), Color.GREEN)
     }
     "load mrX" in {
-      initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3), List(TicketType.Taxi))
+      initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3), mutable.Stack(TicketType.Taxi))
     }
     "and test drawing player positions" in {
     /*  initializer invokePrivate PrivateMethod[Int](Symbol("drawDetectivePosition"))(2) should be(2) //35

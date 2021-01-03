@@ -11,6 +11,7 @@ import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
+import scala.collection.mutable
 import scala.swing.Color
 import scala.xml._
 
@@ -32,13 +33,13 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     val busTickets = (xmlFile \\ "game" \ "mrX" \ "busTickets").text.toInt
     val undergroundTickets = (xmlFile \\ "game" \ "mrX" \ "undergroundTickets").text.toInt
 
-    var history: List[TicketType] = List()
+    var history: mutable.Stack[TicketType] = mutable.Stack()
     val his = (xmlFile \\ "game" \ "mrX" \ "history")
 
     if(!(his \\ "transport")(0).text.toString.equals("empty")) {
       for(i <- 0 to (his \\ "transport").length - 1) {
         val s: String = (his \\ "transport")(i).text.toString
-        history = history:::List(TicketType.withName(s))
+        history.push(TicketType.withName(s))
       }
     }
 

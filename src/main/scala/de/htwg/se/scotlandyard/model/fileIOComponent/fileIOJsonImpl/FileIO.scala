@@ -12,6 +12,7 @@ import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import play.api.libs.json._
 
+import scala.collection.mutable
 import scala.io.Source
 
 class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) extends FileIOInterface {
@@ -33,10 +34,10 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     val busTickets = (json \ "mrX" \ "busTickets").get.toString().toInt
     val undergroundTickets = (json \ "mrX" \ "undergroundTickets").get.toString().toInt
     val historyJs: JsArray = (json \ "mrX" \ "history").as[JsArray]
-    var history: List[TicketType] = List()
+    var history: mutable.Stack[TicketType] = mutable.Stack()
     for(transport <- historyJs.value) {
       val s = (transport \ "transport").get.toString()
-      history = history:::List(TicketType.withName(formatString(s)))
+      history.push(TicketType.withName(formatString(s)))
     }
 
     val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets)

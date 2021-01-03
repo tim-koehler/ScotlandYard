@@ -12,6 +12,8 @@ import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.Tickets
 
+import scala.collection.mutable
+
 class GameInitializer @Inject()(override val stationInitializer: StationInitializerInterface,
                                 override val tuiMap: TuiMapInterface) extends GameInitializerInterface {
 
@@ -62,7 +64,7 @@ class GameInitializer @Inject()(override val stationInitializer: StationInitiali
     true
   }
 
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType]): Boolean = {
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType]): Boolean = {
     GameMaster.players = List()
     val st = GameMaster.stations(stationNumber)
     GameMaster.players = List[DetectiveInterface](injector.getInstance(classOf[MrXInterface]))
@@ -81,6 +83,7 @@ class GameInitializer @Inject()(override val stationInitializer: StationInitiali
 
     var st = GameMaster.stations(drawMisterXPosition())
     val mrX = injector.getInstance(classOf[MrXInterface])
+    mrX.history = mutable.Stack()
     mrX.station = st
 
     GameMaster.players = List[DetectiveInterface](mrX)

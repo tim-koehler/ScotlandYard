@@ -8,6 +8,8 @@ import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.Tickets
 
+import scala.collection.mutable
+
 trait GameInitializerInterface {
 
   val stationInitializer: StationInitializerInterface
@@ -35,5 +37,5 @@ trait GameInitializerInterface {
 
   def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean
   def getColorList(): List[Color]
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType]): Boolean
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType]): Boolean
 }
