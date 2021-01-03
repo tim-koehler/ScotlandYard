@@ -41,9 +41,10 @@ trait ControllerInterface extends Publisher {
 
 import scala.swing.event.Event
 
+class PlayerColorChanged extends Event
 class PlayerNameChanged extends Event
 class NumberOfPlayersChanged extends Event
-class PlayerMoved extends Event 
+class PlayerMoved extends Event
 class PlayerWin extends Event
 class StartGame extends Event
 class LobbyChange extends Event

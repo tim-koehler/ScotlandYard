@@ -5,6 +5,8 @@ import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFa
 import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import org.scalatest._
 
+import scala.collection.mutable
+
 class MrXSpec extends WordSpec with Matchers {
   "MrX" when {
     "new" should {
@@ -35,7 +37,7 @@ class MrXSpec extends WordSpec with Matchers {
       }
       "removeFromHistory should remove Ticket" in {
         mrX.removeFromHistory() should be(true)
-        mrX.history = List()
+        mrX.history = mutable.Stack()
         mrX.removeFromHistory() should be(false)
       }
       "should set name with setPlayerNamer method" in {

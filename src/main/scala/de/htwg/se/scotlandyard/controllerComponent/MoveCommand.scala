@@ -19,6 +19,9 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   }
 
   override def undoStep(): Station = {
+    if(GameMaster.round == 0) {
+      return GameMaster.getCurrentPlayer().station
+    }
     if(GameMaster.getCurrentPlayerIndex() == 1) {
       GameMaster.getMrX().removeFromHistory()
     }

@@ -4,13 +4,15 @@ import java.awt.Color
 
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
+import scala.collection.mutable
+
 trait MrXInterface extends DetectiveInterface {
   var isVisible: Boolean
   var lastSeen: String
-  var history: List[TicketType]
+  var history: mutable.Stack[TicketType]
   val lastSeenColor: Color
 
-  def getHistory(): List[TicketType]
+  def getHistory(): mutable.Stack[TicketType]
   def addToHistory(ticket: TicketType): Boolean
   def removeFromHistory(): Boolean
 }

@@ -75,7 +75,7 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
   }
 
   def createHistoryPanelListView(fontSize: Integer): ListView[TicketType] = {
-    new ListView(controller.getMrX().getHistory()) {
+    new ListView(controller.getMrX().getHistory().reverse) {
       renderer = Renderer(_.toString)
       font = Font.apply(this.font.getName, Font.Bold, fontSize)
     }

@@ -8,13 +8,15 @@ import de.htwg.se.scotlandyard.util.StationType.StationType
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 import de.htwg.se.scotlandyard.util.{StationType, TicketType, Tickets}
 
+import scala.collection.mutable
+
 class MrX extends MrXInterface with DetectiveInterface {
   override var isVisible: Boolean = true
   override var lastSeen: String = "never"
-  override var history: List[TicketType] = List(TicketType.Taxi)
+  override var history: mutable.Stack[TicketType] = mutable.Stack(TicketType.Taxi)
   override val lastSeenColor: Color = Color.GRAY
 
-  override def getHistory(): List[TicketType] = List(TicketType.Bus)
+  override def getHistory(): mutable.Stack[TicketType] = mutable.Stack(TicketType.Bus)
 
   override def addToHistory(ticket: TicketType): Boolean = true
 
