@@ -19,6 +19,7 @@ object GameMaster {
   var win = false
   var gameRunning = false
   var winningPlayer: DetectiveInterface = _
+  var stuckPlayers = scala.collection.mutable.Set[DetectiveInterface]()
 
   val WINNING_ROUND = 24 //24
 
@@ -55,6 +56,16 @@ object GameMaster {
     updateTotalRound()
     updateMrXVisibility()
     checkMrXWin()
+    if(!checkIfPlayerIsAbleToMove()){
+      stuckPlayers.add(getCurrentPlayer())
+      if(stuckPlayers.size == players.size - 1) {
+        gameRunning = false
+        win = true
+        winningPlayer = players(0)
+      } else {
+        nextRound()
+      }
+    }
     round
   }
 
@@ -102,6 +113,17 @@ object GameMaster {
       }
     }
     false
+  }
+
+  def checkIfPlayerIsAbleToMove(): Boolean = {
+    getCurrentPlayer().station.sType match {
+      case de.htwg.se.scotlandyard.util.StationType.Taxi =>
+        (getCurrentPlayer().tickets.taxiTickets > 0)
+      case de.htwg.se.scotlandyard.util.StationType.Bus =>
+        (getCurrentPlayer().tickets.taxiTickets > 0 || getCurrentPlayer().tickets.busTickets > 0)
+      case de.htwg.se.scotlandyard.util.StationType.Underground =>
+        (getCurrentPlayer().tickets.taxiTickets > 0 || getCurrentPlayer().tickets.busTickets > 0 || getCurrentPlayer().tickets.undergroundTickets > 0)
+    }
   }
 
   def validateMove(newPosition: Integer, ticketType: TicketType): Boolean = {
