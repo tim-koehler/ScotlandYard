@@ -12,3 +12,10 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.2.0"
 parallelExecution in Test := false
 coverageExcludedPackages := "<empty>;.*Gui.*;.*ScotlandYard"
 coverageEnabled.in(Test, test) := true
+
+assemblyMergeStrategy in assembly := {
+    case PathList("META-INF", xs @ _*) => 
+      MergeStrategy.discard
+    case x => 
+      MergeStrategy.first
+  }
