@@ -4,9 +4,10 @@ import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stat
 import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
 
 import scala.collection.mutable.ListBuffer
-import scala.io.Source
+import scala.io.{Codec, Source}
 import scala.swing.Point
 import scala.util.{Failure, Success, Try}
+import java.nio.charset.CodingErrorAction
 
 class StationInitializer extends StationInitializerInterface {
 
@@ -41,6 +42,11 @@ class StationInitializer extends StationInitializerInterface {
   private def parseStationsFromMapFile(): List[String] = {
 
     val path = "./resources/ScotlandYardMap.txt"
+    val mapBuffer = new ListBuffer[String]
+
+    implicit val codec = Codec("UTF-8")
+    codec.onMalformedInput(CodingErrorAction.REPLACE)
+    codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
 
     Try(Source.fromFile(path)) match {
       case Success(v) =>

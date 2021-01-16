@@ -9,6 +9,9 @@ import scala.collection.mutable.ListBuffer
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
+import java.nio.charset.CodingErrorAction
+import scala.io.Codec
+
 class TuiMap extends TuiMapInterface {
   var map: Option[List[String]] = readMapFromFile("./resources/ScotlandYardMap.txt")
   var playerPositions: mutable.Map[DetectiveInterface, Int] = mutable.Map[DetectiveInterface, Int]()
@@ -91,6 +94,10 @@ class TuiMap extends TuiMapInterface {
 
   private def readMapFromFile(path: String): Option[List[String]] = {
     val mapBuffer = new ListBuffer[String]
+    implicit val codec = Codec("UTF-8")
+    codec.onMalformedInput(CodingErrorAction.REPLACE)
+    codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
+
     Try(Source.fromFile(path)) match {
       case Success(v) =>
         for (line <- v.getLines()) {
