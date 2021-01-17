@@ -35,8 +35,9 @@ object GameMaster {
     }
 
     players.head.asInstanceOf[MrXInterface].history = mutable.Stack()
-
+    stuckPlayers = scala.collection.mutable.Set[DetectiveInterface]()
     gameRunning = true
+
     true
   }
 
