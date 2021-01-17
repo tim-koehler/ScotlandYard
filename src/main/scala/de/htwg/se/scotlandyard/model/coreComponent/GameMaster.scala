@@ -8,6 +8,8 @@ import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXIn
 import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import de.htwg.se.scotlandyard.util.TicketType.TicketType
 
+import scala.collection.mutable
+
 object GameMaster {
 
   var gameInitializer: GameInitializerInterface = Guice.createInjector(new ScotlandYardModule).getInstance(classOf[GameInitializerInterface])
@@ -31,6 +33,9 @@ object GameMaster {
     if(!gameInitializer.initialize(nPlayers)) {
       return false
     }
+
+    players.head.asInstanceOf[MrXInterface].history = mutable.Stack()
+
     gameRunning = true
     true
   }
