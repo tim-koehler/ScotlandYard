@@ -76,8 +76,9 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   def winGame(): Boolean = {
-    publish(new PlayerWin)
     GameMaster.gameRunning = false
+    GameMaster.win = false
+    publish(new PlayerWin)
     true
   }
   // Getters and Setters
