@@ -17,7 +17,7 @@ jobs:
       run: |
         git clone https://${TOKEN}:x-oauth-basic@github.com/roland-burke/ScotlandYardServer.git
         cd ScotlandYardServer
-        echo "$(date)" > ./UPSTREAM.TXT"
+        echo $(date) > ./UPSTREAM.TXT"
         git add ./UPSTREAM.TXT
         git commit -m "update from upstream"
         git push origin master
