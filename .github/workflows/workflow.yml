@@ -15,6 +15,8 @@ jobs:
       env:
         TOKEN: ${{ secrets.ACCESS_TOKEN }}
       run: |
+        git config --global user.email "github@actions.com"
+        git config --global user.name "Github Action"
         git clone https://${TOKEN}:x-oauth-basic@github.com/roland-burke/ScotlandYardServer.git
         cd ScotlandYardServer
         echo "$(date)" > ./UPSTREAM.TXT
