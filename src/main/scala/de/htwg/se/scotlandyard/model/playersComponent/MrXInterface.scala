@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.model.playersComponent
 
 import java.awt.Color
 
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
 import scala.collection.mutable
 

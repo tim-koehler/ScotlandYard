@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage
 
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
 import scala.swing.ListView.Renderer
 import scala.swing.Swing.{EmptyBorder, HStrut}

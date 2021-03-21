@@ -2,14 +2,14 @@ package de.htwg.se.scotlandyard.controllerComponent.controllerMockImpl
 
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
+import de.htwg.se.scotlandyard.model.{Station, StationType}
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import org.scalactic.anyvals.PosInt
 
 import scala.swing.Publisher
@@ -32,11 +32,11 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     true
   }
 
-  override def doMove(newPosition: Int, ticketType: TicketType): Station = StationFactory.createZeroIndexStation()
+  override def doMove(newPosition: Int, ticketType: TicketType): Station = new Station(0, StationType.Taxi)
 
-  override def undoValidateAndMove(): Station = StationFactory.createZeroIndexStation()
+  override def undoValidateAndMove(): Station = new Station(0, StationType.Taxi)
 
-  override def redoValidateAndMove(): Station = StationFactory.createZeroIndexStation()
+  override def redoValidateAndMove(): Station = new Station(0, StationType.Taxi)
 
   override def updateMrXVisibility(): Boolean = true
 
@@ -50,7 +50,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   override def getPlayersList(): List[DetectiveInterface] = List(new MrX, new Detective, new Detective)
 
-  override def getStations(): List[Station] = List(StationFactory.createZeroIndexStation())
+  override def getStations(): List[Station] = List(new Station(0, StationType.Taxi))
 
   override def getTotalRound(): Integer = 3
 

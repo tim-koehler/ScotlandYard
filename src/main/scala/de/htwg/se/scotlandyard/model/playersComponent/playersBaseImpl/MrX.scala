@@ -1,12 +1,10 @@
 package de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl
 
 import java.awt.Color
-
 import com.google.inject.Inject
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
+import de.htwg.se.scotlandyard.model.{Station, Tickets}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
-import de.htwg.se.scotlandyard.util.Tickets
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
 import scala.collection.mutable
 

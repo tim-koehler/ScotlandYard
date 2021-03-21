@@ -1,12 +1,11 @@
 package de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl
 
-import java.awt.{Color, Point}
+import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType, Tickets}
 
+import java.awt.{Color, Point}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
-import de.htwg.se.scotlandyard.util.StationType.StationType
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
-import de.htwg.se.scotlandyard.util.{StationType, TicketType, Tickets}
+import de.htwg.se.scotlandyard.model.StationType.StationType
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
 import scala.collection.mutable
 
@@ -22,15 +21,7 @@ class MrX extends MrXInterface with DetectiveInterface {
 
   override def removeFromHistory(): Boolean = true
 
-  override var station: Station = new Station {
-    override val number: Integer = 10
-    override var sType: StationType = StationType.Bus
-    override var neighbourTaxis: Set[Station] = _
-    override var neighbourBuses: Set[Station] = _
-    override var neighbourUndergrounds: Set[Station] = _
-    override var tuiCoords: (Integer, Integer) = _
-    override var guiCoords: Point = _
-  }
+  override var station: Station = new Station(10, StationType.Bus)
   override var name: String = "MrX"
   override var color: Color = Color.BLACK
   override var tickets: Tickets = Tickets(99, 99, 99, 5)

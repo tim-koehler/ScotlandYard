@@ -1,12 +1,11 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
-import java.awt.Color
+import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType, Tickets}
 
+import java.awt.Color
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl.StationInitializer
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.StationFactory
 import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
-import de.htwg.se.scotlandyard.util.{TicketType, Tickets}
 import org.scalatest._
 
 import scala.collection.mutable
@@ -19,16 +18,14 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
       initializer.initialize(3) should be(true)
     }
     "try to create and init all Station types" in {
-      StationFactory.createZeroIndexStation()
-
-      var station = StationFactory.createTaxiStation(1, (1, 1))
+      var station = new Station(0, StationType.Taxi)
       station.setNeighbourTaxis(Set())
 
-      station = StationFactory.createBusStation(2, (1, 1))
+      station = new Station(2, StationType.Bus)
       station.setNeighbourTaxis(Set())
       station.setNeighbourBuses(Set())
 
-      station = StationFactory.createUndergroundStation(3,(1,1))
+      station = new Station(3, StationType.Underground)
       station.setNeighbourTaxis(Set())
       station.setNeighbourBuses(Set())
       station.setNeighbourUndergrounds(Set())

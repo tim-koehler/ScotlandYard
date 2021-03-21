@@ -12,6 +12,9 @@ class TuiMapSpec extends WordSpec with Matchers {
       val tuiMap = new TuiMap()
       GameMaster.gameInitializer = new GameInitializer(new StationInitializer, tuiMap)
       GameMaster.initialize()
+      for(s <- GameMaster.stations){
+        println(s.tuiCoords)
+      }
       tuiMap.toString should not be("")
     }
   }

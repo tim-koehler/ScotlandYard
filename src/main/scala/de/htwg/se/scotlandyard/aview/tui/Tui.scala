@@ -1,8 +1,8 @@
 package de.htwg.se.scotlandyard.aview.tui
 
 import de.htwg.se.scotlandyard.controllerComponent._
+import de.htwg.se.scotlandyard.model.TicketType
 import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
-import de.htwg.se.scotlandyard.util.TicketType
 
 import scala.io.{BufferedSource, Source}
 import scala.swing.Reactor

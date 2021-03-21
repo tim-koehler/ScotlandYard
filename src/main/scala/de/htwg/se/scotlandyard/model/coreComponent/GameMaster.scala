@@ -1,12 +1,11 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
 import com.google.inject.{Guice, Inject}
-import de.htwg.se.scotlandyard.ScotlandYardModule
+import de.htwg.se.scotlandyard.{ScotlandYardModule, model}
+import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
-import de.htwg.se.scotlandyard.util.{StationType, TicketType}
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
+import TicketType.TicketType
 
 import scala.collection.mutable
 
@@ -122,12 +121,12 @@ object GameMaster {
   }
 
   def checkIfPlayerIsAbleToMove(): Boolean = {
-    getCurrentPlayer().station.sType match {
-      case de.htwg.se.scotlandyard.util.StationType.Taxi =>
+    getCurrentPlayer().station.stationType match {
+      case StationType.Taxi =>
         (getCurrentPlayer().tickets.taxiTickets > 0)
-      case de.htwg.se.scotlandyard.util.StationType.Bus =>
+      case model.StationType.Bus =>
         (getCurrentPlayer().tickets.taxiTickets > 0 || getCurrentPlayer().tickets.busTickets > 0)
-      case de.htwg.se.scotlandyard.util.StationType.Underground =>
+      case model.StationType.Underground =>
         (getCurrentPlayer().tickets.taxiTickets > 0 || getCurrentPlayer().tickets.busTickets > 0 || getCurrentPlayer().tickets.undergroundTickets > 0)
     }
   }
@@ -167,13 +166,13 @@ object GameMaster {
         return false
       }
     } else if(ticketType.equals(TicketType.Bus)) {
-      if(GameMaster.getCurrentPlayer().station.sType == StationType.Taxi) {
+      if(GameMaster.getCurrentPlayer().station.stationType == StationType.Taxi) {
         return false
       }
       if(!isBusMoveValid(newPosition))
         return false
     } else if(ticketType.equals(TicketType.Underground)) {
-      if(GameMaster.getCurrentPlayer().station.sType != StationType.Underground) {
+      if(GameMaster.getCurrentPlayer().station.stationType != StationType.Underground) {
         return false
       }
       if(!isUndergroundMoveValid(newPosition)) {
@@ -193,32 +192,32 @@ object GameMaster {
   private def isTaxiMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().tickets.taxiTickets <= 0)
       return false
-    if(!getCurrentPlayer().station.neighbourTaxis.contains(stations(newPosition)))
+    if(!getCurrentPlayer().station.getNeighbourTaxis.contains(stations(newPosition)))
       return false
     true
   }
 
   private def isBusMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().tickets.busTickets <= 0) return false
-    if(!getCurrentPlayer().station.neighbourBuses.contains(stations(newPosition)))
+    if(!getCurrentPlayer().station.getNeighbourBuses.contains(stations(newPosition)))
       return false
     true
   }
 
   private def isUndergroundMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().tickets.undergroundTickets <= 0) return false
-    if(!getCurrentPlayer().station.neighbourUndergrounds.contains(stations(newPosition)))
+    if(!getCurrentPlayer().station.getNeighbourUndergrounds.contains(stations(newPosition)))
       return false
     true
   }
 
   private def isBlackMoveValid(newPosition: Int): Boolean = {
     if(getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets <= 0) return false
-    if(getCurrentPlayer().station.neighbourTaxis.contains(stations(newPosition))) {
+    if(getCurrentPlayer().station.getNeighbourTaxis.contains(stations(newPosition))) {
       return true
-    } else if(getCurrentPlayer().station.neighbourBuses.contains(stations(newPosition))) {
+    } else if(getCurrentPlayer().station.getNeighbourBuses.contains(stations(newPosition))) {
       return true
-    } else if (getCurrentPlayer().station.neighbourUndergrounds.contains(stations(newPosition))) {
+    } else if (getCurrentPlayer().station.getNeighbourUndergrounds.contains(stations(newPosition))) {
       return true
     }
     false

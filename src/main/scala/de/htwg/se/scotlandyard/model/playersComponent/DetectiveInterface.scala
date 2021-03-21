@@ -1,9 +1,8 @@
 package de.htwg.se.scotlandyard.model.playersComponent
 
-import java.awt.Color
+import de.htwg.se.scotlandyard.model.{Station, Tickets}
 
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
-import de.htwg.se.scotlandyard.util.Tickets
+import java.awt.Color
 
 trait DetectiveInterface {
   var station: Station

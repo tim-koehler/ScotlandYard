@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl
 
+import de.htwg.se.scotlandyard.model.{Station, StationType}
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.StationInitializerInterface
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.{Station, StationFactory}
 
 import scala.collection.mutable.ListBuffer
 import scala.io.{Codec, Source}
@@ -12,6 +12,8 @@ import java.nio.charset.CodingErrorAction
 class StationInitializer extends StationInitializerInterface {
 
   val guiStationCoordinateFilePath = "./resources/coordsMap.txt"
+  val neighboursFilePath = "./resources/neighbours.txt"
+  val tuiMapPath = "./resources/ScotlandYardMap.txt"
 
   override def initStations(): List[Station] = {
 
@@ -19,6 +21,7 @@ class StationInitializer extends StationInitializerInterface {
 
     stations = stations.sortWith((s: Station, t: Station) => s.number < t.number)
 
+    //setTuiCoordinates(stations)
     setGuiCoordinates(stations)
     setNeighbours(stations)
 
@@ -28,7 +31,9 @@ class StationInitializer extends StationInitializerInterface {
   private def createStations(): List[Station] = {
     var stationsBuffer = new ListBuffer[Station]()
 
-    stationsBuffer += StationFactory.createZeroIndexStation()
+    val zeroIndexStation = new Station(0, StationType.Taxi)
+    zeroIndexStation.tuiCoords = new Point(1,1)
+    stationsBuffer += zeroIndexStation
 
     val stationPositionsList = parseStationsFromMapFile()
 
@@ -40,15 +45,11 @@ class StationInitializer extends StationInitializerInterface {
   }
 
   private def parseStationsFromMapFile(): List[String] = {
-
-    val path = "./resources/ScotlandYardMap.txt"
-    val mapBuffer = new ListBuffer[String]
-
     implicit val codec = Codec("UTF-8")
     codec.onMalformedInput(CodingErrorAction.REPLACE)
     codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
 
-    Try(Source.fromFile(path)) match {
+    Try(Source.fromFile(tuiMapPath)) match {
       case Success(v) =>
         var listBuffer = new ListBuffer[String]
         val content = v.getLines().toList
@@ -86,19 +87,25 @@ class StationInitializer extends StationInitializerInterface {
   private def parseCreateStationLine(line: String): Station = {
     val args = splitLine(line)
 
-    if(args(1).equalsIgnoreCase("t"))
-      StationFactory.createTaxiStation(args(0).toInt, (args(3).toInt, args(2).toInt))
-    else if(args(1).equalsIgnoreCase("b"))
-      StationFactory.createBusStation(args(0).toInt, (args(3).toInt, args(2).toInt))
-    else
-      StationFactory.createUndergroundStation(args(0).toInt, (args(3).toInt, args(2).toInt))
+    val tuiCoords = new Point(args(3).toInt, args(2).toInt)
+    if (args(1).equalsIgnoreCase("t")) {
+      val station = new Station(args(0).toInt, StationType.Taxi)
+      station.tuiCoords = tuiCoords
+      station
+
+    } else if (args(1).equalsIgnoreCase("b")) {
+      val station = new Station(args(0).toInt, StationType.Bus)
+      station.tuiCoords = tuiCoords
+      station
+    } else {
+      val station = new Station(args(0).toInt, StationType.Underground)
+      station.tuiCoords = tuiCoords
+      station
+    }
   }
 
   private def setNeighbours(stations: List[Station]): Integer = {
-
-    val path = "./resources/neighbours.txt"
-
-    Try(Source.fromFile(path)) match {
+    Try(Source.fromFile(neighboursFilePath)) match {
       case Success(v) =>
         for (line <- v.getLines()) {
           parseNeighbourStationLine(stations, line)
@@ -106,7 +113,6 @@ class StationInitializer extends StationInitializerInterface {
         v.close()
       case Failure(e) => None
     }
-
     stations.size
   }
 
@@ -119,13 +125,13 @@ class StationInitializer extends StationInitializerInterface {
 
     if(args(1).toLowerCase().equalsIgnoreCase("t")) {
       stations(args(0).toInt).setNeighbourTaxis(buffer.toSet)
-      stations(args(0).toInt).neighbourTaxis
+      stations(args(0).toInt).getNeighbourTaxis
     } else if (args(1).toLowerCase().equalsIgnoreCase("b")) {
       stations(args(0).toInt).setNeighbourBuses(buffer.toSet)
-      stations(args(0).toInt).neighbourBuses
+      stations(args(0).toInt).getNeighbourBuses
     } else {
       stations(args(0).toInt).setNeighbourUndergrounds(buffer.toSet)
-      stations(args(0).toInt).neighbourUndergrounds
+      stations(args(0).toInt).getNeighbourUndergrounds
     }
   }
 
