@@ -1,0 +1,87 @@
+[
+	{
+		"number": 1,
+		"type": "Underground",
+		"neighbours": {
+			"taxi": [2, 3, 4],
+			"bus": [2, 4],
+			"underground": [5]
+		},
+		"tuiCoordinates": {
+			"x": 111,
+			"y": 333
+		},
+		"guiCoordinates": {
+			"x": 888,
+			"y": 999
+		}
+	},
+	{
+		"number": 2,
+		"type": "Bus",
+		"neighbours": {
+			"taxi": [1, 3, 4],
+			"bus": [1, 5],
+			"underground": []
+},
+		"tuiCoordinates": {
+			"x": 8,
+			"y": 12
+		},
+		"guiCoordinates": {
+			"x": 1234,
+			"y": 3452
+		}
+	},
+	{
+		"number": 3,
+		"type": "Taxi",
+		"neighbours": {
+			"taxi": [1, 3, 4, 5],
+			"bus": [],
+			"underground": []
+		},
+		"tuiCoordinates": {
+			"x": 8,
+			"y": 12
+		},
+		"guiCoordinates": {
+			"x": 1234,
+			"y": 3452
+		}
+	},
+	{
+		"number": 4,
+		"type": "Bus",
+		"neighbours": {
+			"taxi": [1, 3, 4],
+			"bus": [2, 1, 5],
+			"underground": []
+		},
+		"tuiCoordinates": {
+			"x": 8,
+			"y": 12
+		},
+		"guiCoordinates": {
+			"x": 1234,
+			"y": 3452
+		}
+	},
+	{
+		"number": 5,
+		"type": "Underground",
+		"neighbours": {
+			"taxi": [1, 3, 4],
+			"bus": [4],
+			"underground": [1]
+		},
+		"tuiCoordinates": {
+			"x": 8,
+			"y": 12
+		},
+		"guiCoordinates": {
+			"x": 1234,
+			"y": 3452
+		}
+	}
+]

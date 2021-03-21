@@ -12,8 +12,19 @@ import scala.collection.mutable
 
 class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameInitializer" should {
-    val initializer = new GameInitializer(new StationInitializer, new TuiMap())
+    val stationInitializer = new StationInitializer()
+    val initializer = new GameInitializer(stationInitializer, new TuiMap())
 
+    "init stations" in {
+      val stations = stationInitializer.newInitStations()
+      stations.size should be(5 + 1)
+      stations(5).stationType should be(StationType.Underground)
+      stations(5).getNeighbourTaxis.size should be(3)
+      stations(5).getNeighbourBuses.size should be(1)
+      stations(5).getNeighbourUndergrounds.size should be(1)
+      stations(5).guiCoords.x should be(1234)
+      stations(5).guiCoords.y should be(3452)
+    }
     "init" in {
       initializer.initialize(3) should be(true)
     }
@@ -35,14 +46,6 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
     }
     "load mrX" in {
       initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3), mutable.Stack(TicketType.Taxi))
-    }
-    "and test drawing player positions" in {
-    /*  initializer invokePrivate PrivateMethod[Int](Symbol("drawDetectivePosition"))(2) should be(2) //35
-      initializer invokePrivate PrivateMethod[Int](Symbol("drawDetectivePosition"))() should not be (0)*/
-    }
-    "and drawing MrX position should" in {
-     /* initializer invokePrivate PrivateMethod[Int](Symbol("drawMisterXPosition"))(1) should be(1) //35
-      initializer invokePrivate PrivateMethod[Int](Symbol("drawMisterXPosition"))() should not be (0)*/
     }
   }
 }
