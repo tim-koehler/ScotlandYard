@@ -1,18 +1,14 @@
 package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent
 
-import de.htwg.se.scotlandyard.model.Tickets
+import de.htwg.se.scotlandyard.model.{Station, Tickets}
 
 import java.awt.Color
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.StationInitializerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
 import scala.collection.mutable
 
 trait GameInitializerInterface {
-
-  val stationInitializer: StationInitializerInterface
   val tuiMap: TuiMapInterface
 
   val MRX_COLOR: Color

@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.model
 
 import de.htwg.se.scotlandyard.model.StationType.StationType
 
-import java.awt.Point
+import scala.swing.Point
 
 class Station(val number: Integer, val stationType: StationType) {
   private var neighbourTaxis: Set[Station] = Set()
@@ -39,6 +39,14 @@ class Station(val number: Integer, val stationType: StationType) {
     }
     this.neighbourUndergrounds = neighbours
     neighbours.size
+  }
+
+  override def equals(obj: Any): Boolean = {
+    val comparedStation = obj.asInstanceOf[Station]
+    if(number != comparedStation.number) return false
+    if(tuiCoords != comparedStation.tuiCoords) return false
+    if(guiCoords != comparedStation.guiCoords) return false
+    true
   }
 
   def getNeighbourTaxis: Set[Station] = neighbourTaxis
