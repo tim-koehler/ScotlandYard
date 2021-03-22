@@ -1,10 +1,8 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
 import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType, Tickets}
-
 import java.awt.Color
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl.StationInitializer
 import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import org.scalatest._
 
@@ -12,11 +10,12 @@ import scala.collection.mutable
 
 class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameInitializer" should {
-    val stationInitializer = new StationInitializer()
+    val stationInitializer = new de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl.StationInitializer()
     val initializer = new GameInitializer(stationInitializer, new TuiMap())
 
-    "init stations" in {
-      val stations = stationInitializer.newInitStations()
+    "new init stations" in {
+      val newStationInitializer = new de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerNewImpl.StationInitializer()
+      val stations = newStationInitializer.initStations()
       stations.size should be(5 + 1)
       stations(5).stationType should be(StationType.Underground)
       stations(5).getNeighbourTaxis.size should be(3)
@@ -25,6 +24,25 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
       stations(5).guiCoords.x should be(1234)
       stations(5).guiCoords.y should be(3452)
     }
+
+    /*"be equal for new and old implementation" in {
+      val newStationInitializer = new de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerNewImpl.StationInitializer()
+      val oldStationInitializer = new de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerBaseImpl.StationInitializer()
+      val oldStations = oldStationInitializer.initStations()
+      val newStations = newStationInitializer.initStations()
+
+      oldStations.size should be(newStations.size)
+
+      for((oldStation, index) <- oldStations.zipWithIndex) {
+        oldStation.number should be(newStations(index).number)
+        oldStation.tuiCoords should be(newStations(index).tuiCoords)
+        oldStation.guiCoords should be(newStations(index).guiCoords)
+        oldStation.getNeighbourTaxis should be(newStations(index).getNeighbourTaxis)
+        oldStation.getNeighbourBuses should be(newStations(index).getNeighbourBuses)
+        oldStation.getNeighbourUndergrounds should be(newStations(index).getNeighbourUndergrounds)
+      }
+    }*/
+
     "init" in {
       initializer.initialize(3) should be(true)
     }
