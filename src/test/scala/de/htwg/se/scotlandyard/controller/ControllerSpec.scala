@@ -1,12 +1,10 @@
 package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerMockImpl.StationInitializer
 import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
-import de.htwg.se.scotlandyard.model.tuiMapComponent.station.Station
-import de.htwg.se.scotlandyard.util.{StationType, TicketType}
 import org.scalatest._
 
 class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
@@ -14,9 +12,6 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
     "new" should {
       val gameInitializer = new GameInitializer()
       gameInitializer.initialize(5)
-
-      val stationInitializer = new StationInitializer()
-      stationInitializer.initStations()
 
       val controller = new Controller(gameInitializer, new FileIO(gameInitializer))
 
@@ -28,28 +23,28 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster.getCurrentPlayer().station = GameMaster.stations(1)
         GameMaster.getMrX().station = GameMaster.stations(3)
 
-        controller.doMove(2, TicketType.Taxi).sType should be(StationType.Taxi)
+        controller.doMove(2, TicketType.Taxi).stationType should be(StationType.Taxi)
 
-        controller.undoValidateAndMove().sType should be(StationType.Bus)
-        controller.redoValidateAndMove().sType should be(StationType.Taxi)
+        controller.undoValidateAndMove().stationType should be(StationType.Bus)
+        controller.redoValidateAndMove().stationType should be(StationType.Taxi)
 
         GameMaster.getCurrentPlayer().station =  GameMaster.stations(1)
         GameMaster.players.head.station = GameMaster.stations(3)
 
-        controller.doMove(2, TicketType.Taxi).sType should be(GameMaster.stations(2).sType)
-        controller.undoValidateAndMove().sType should be(StationType.Underground)
-        controller.redoValidateAndMove().sType should be(StationType.Taxi)
+        controller.doMove(2, TicketType.Taxi).stationType should be(GameMaster.stations(2).stationType)
+        controller.undoValidateAndMove().stationType should be(StationType.Underground)
+        controller.redoValidateAndMove().stationType should be(StationType.Taxi)
 
         for (p <- GameMaster.players){
           p.station = GameMaster.stations(1)
         }
         GameMaster.getCurrentPlayer().station = GameMaster.stations(2)
 
-        controller.doMove(3, TicketType.Bus).sType should be(StationType.Bus)
-        controller.undoValidateAndMove().sType should be(StationType.Taxi)
+        controller.doMove(3, TicketType.Bus).stationType should be(StationType.Bus)
+        controller.undoValidateAndMove().stationType should be(StationType.Taxi)
 
-        controller.doMove(3, TicketType.Underground).sType should be(StationType.Bus)
-        controller.undoValidateAndMove().sType should be(StationType.Taxi)
+        controller.doMove(3, TicketType.Underground).stationType should be(StationType.Bus)
+        controller.undoValidateAndMove().stationType should be(StationType.Taxi)
       }
       "should return 3 from getPlayerList method" in {
         controller.gameInitializer.initialize(3)

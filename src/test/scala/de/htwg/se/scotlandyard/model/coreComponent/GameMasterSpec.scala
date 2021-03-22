@@ -1,9 +1,9 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster.{players, round, WINNING_ROUND}
+import de.htwg.se.scotlandyard.model.TicketType
+import de.htwg.se.scotlandyard.model.coreComponent.GameMaster.{WINNING_ROUND, players, round}
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.MrX
-import de.htwg.se.scotlandyard.util.TicketType
 import org.scalatest._
 
 class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {

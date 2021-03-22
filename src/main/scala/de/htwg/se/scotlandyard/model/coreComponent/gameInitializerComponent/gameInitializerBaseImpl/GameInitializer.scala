@@ -1,22 +1,23 @@
 package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerBaseImpl
 
 import java.awt.Color
-
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
+import de.htwg.se.scotlandyard.model.{Station, StationType, Tickets}
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.StationInitializerInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
-import de.htwg.se.scotlandyard.util.Tickets
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import play.api.libs.json.{JsArray, JsValue, Json}
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
+import scala.io.Source
+import scala.swing.Point
 
-class GameInitializer @Inject()(override val stationInitializer: StationInitializerInterface,
-                                override val tuiMap: TuiMapInterface) extends GameInitializerInterface {
-
+class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends GameInitializerInterface {
+  val stationsJsonFilePath = "./resources/stations.json"
   val MRX_COLOR = Color.BLACK
   val DT1_COLOR = Color.BLUE
   val DT2_COLOR = Color.decode("#1c8c1c")
@@ -42,7 +43,7 @@ class GameInitializer @Inject()(override val stationInitializer: StationInitiali
   val injector = Guice.createInjector(new ScotlandYardModule)
 
   override def initialize(nPlayers: Int): Boolean = {
-    GameMaster.stations = stationInitializer.initStations()
+    GameMaster.stations = initStations()
     initPlayers(nPlayers)
     true
   }
@@ -76,6 +77,44 @@ class GameInitializer @Inject()(override val stationInitializer: StationInitiali
     GameMaster.getMrX().history = history
     tuiMap.updatePlayerPositions()
     true
+  }
+
+  private def initStations(): List[Station] = {
+    val source: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
+    val json = Json.parse(source)
+
+    val jsonStations = json.as[JsArray].value
+    val stationsBuffer = new ListBuffer[Station]()
+
+    stationsBuffer += new Station(0, StationType.Taxi)
+
+    // First loop over json file to create all Station objects
+    for(jsonStation <- jsonStations ) {
+      val stationType = StationType.fromString((jsonStation \ "type").as[String])
+      val station = new Station((jsonStation \ "number").as[Int], stationType)
+      station.tuiCoords = new Point((jsonStation \ "tuiCoordinates" \ "x").as[Int], (jsonStation \ "tuiCoordinates" \ "y").as[Int])
+      station.guiCoords = new Point((jsonStation \ "guiCoordinates" \ "x").as[Int], (jsonStation \ "guiCoordinates" \ "y").as[Int])
+      stationsBuffer += station
+    }
+
+    val stations = stationsBuffer.toList.sortWith((s: Station, t: Station) => s.number < t.number)
+
+    // Second loop over json file to set all neighbours. This needs to run after the first loop because all stations need to be created before getting assigned as neighbours
+    for((jsonStation, index) <- jsonStations.zipWithIndex) {
+      stations(index + 1).setNeighbourTaxis(getNeighboursFor("taxi", jsonStation, stations))
+      stations(index + 1).setNeighbourBuses(getNeighboursFor("bus", jsonStation, stations))
+      stations(index + 1).setNeighbourUndergrounds(getNeighboursFor("underground", jsonStation, stations))
+    }
+    stations
+  }
+
+  private def getNeighboursFor(transportType: String, jsonStation: JsValue, stations: List[Station]): Set[Station] = {
+    val neighboursIntList = (jsonStation \ "neighbours" \ transportType).as[List[Int]]
+    var neighboursSet = Set[Station]()
+    for(number <- neighboursIntList) {
+      neighboursSet += stations(number)
+    }
+    neighboursSet
   }
 
   private def initPlayers(nPlayer: Int): Boolean = {

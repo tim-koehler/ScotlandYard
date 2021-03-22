@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.util
+package de.htwg.se.scotlandyard.model
 
 object TicketType extends Enumeration {
   type TicketType = Value

@@ -77,16 +77,16 @@ class TuiMap extends TuiMapInterface {
   private def updateMapString(): Option[List[String]] ={
 
     for(s <- GameMaster.stations){
-      map = Some(map.get.updated(s.tuiCoords._2 - 1, map.get(s.tuiCoords._2 - 1).updated(s.tuiCoords._1 - 1, ' ')))
-      map = Some(map.get.updated(s.tuiCoords._2 - 1, map.get(s.tuiCoords._2 - 1).updated(s.tuiCoords._1, ' ')))
-      map = Some(map.get.updated(s.tuiCoords._2 - 1, map.get(s.tuiCoords._2 - 1).updated(s.tuiCoords._1 + 1, ' ')))
+      map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x - 1, ' ')))
+      map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x, ' ')))
+      map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x + 1, ' ')))
     }
 
     for(p <- GameMaster.players) {
       if(!p.name.equals("MrX") || GameMaster.checkMrXVisibility()) {
-        map = Some(map.get.updated(p.station.tuiCoords._2 - 1, map.get(p.station.tuiCoords._2 - 1).updated(p.station.tuiCoords._1 - 1, p.name(0))))
-        map = Some(map.get.updated(p.station.tuiCoords._2 - 1, map.get(p.station.tuiCoords._2 - 1).updated(p.station.tuiCoords._1, p.name(1))))
-        map = Some(map.get.updated(p.station.tuiCoords._2 - 1, map.get(p.station.tuiCoords._2 - 1).updated(p.station.tuiCoords._1 + 1, p.name(2))))
+        map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x - 1, p.name(0))))
+        map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x, p.name(1))))
+        map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x + 1, p.name(2))))
       }
     }
     map

@@ -1,17 +1,14 @@
 package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl
 
-import java.awt.Color
+import de.htwg.se.scotlandyard.model.Tickets
 
+import java.awt.Color
 import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
 import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.StationInitializerInterface
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.stationInitializerComponent.stationInitializerMockImpl.StationInitializer
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
-import de.htwg.se.scotlandyard.util.TicketType.TicketType
-import de.htwg.se.scotlandyard.util.Tickets
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
 import scala.collection.mutable
 
@@ -45,7 +42,5 @@ class GameInitializer() extends GameInitializerInterface{
   override def getColorList(): List[Color] = List(MRX_COLOR, DT1_COLOR)
 
   override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType]): Boolean = true
-
-  override val stationInitializer: StationInitializerInterface = new StationInitializer()
   override val tuiMap: TuiMapInterface = new TuiMap()
 }
