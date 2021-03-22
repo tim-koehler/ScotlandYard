@@ -13,8 +13,6 @@ import scala.io.StdIn.readLine
 object ScotlandYard {
   val injector: Injector = Guice.createInjector(new ScotlandYardModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
-  injector.getInstance(classOf[TuiMapInterface])
-  injector.getInstance(classOf[GameInitializerInterface])
 
   def main(args: Array[String]): Unit = {
     GameMaster.initialize()
