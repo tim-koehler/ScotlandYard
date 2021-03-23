@@ -4,11 +4,10 @@ import java.awt.Color
 import java.io._
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
-import de.htwg.se.scotlandyard.model.{TicketType, Tickets}
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.{GameMaster, TicketType, Tickets}
 import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import TicketType.TicketType
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 import play.api.libs.json._
 
 import scala.collection.mutable

@@ -1,9 +1,9 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType, Tickets}
 
 import java.awt.Color
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import org.scalatest._
 

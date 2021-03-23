@@ -1,7 +1,6 @@
 package de.htwg.se.scotlandyard.controllerComponent
 
-import de.htwg.se.scotlandyard.model.Station
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
+import de.htwg.se.scotlandyard.model.{GameMaster, Station}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
 class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command{

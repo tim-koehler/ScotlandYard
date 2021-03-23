@@ -4,12 +4,11 @@ import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.aview.tui.EnterNameState
 import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, LobbyChange, MoveCommand, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame, UndoManager}
-import de.htwg.se.scotlandyard.model.Station
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.{GameMaster, Station}
 import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 
 import scala.swing.Publisher
 

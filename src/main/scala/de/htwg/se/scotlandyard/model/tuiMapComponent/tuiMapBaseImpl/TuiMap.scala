@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapBaseImpl
 
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
+import de.htwg.se.scotlandyard.model.GameMaster
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 
@@ -8,7 +8,6 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
-
 import java.nio.charset.CodingErrorAction
 import scala.io.Codec
 

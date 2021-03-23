@@ -1,10 +1,9 @@
 package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType}
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.model.{GameMaster, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import org.scalatest._
 
 class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {

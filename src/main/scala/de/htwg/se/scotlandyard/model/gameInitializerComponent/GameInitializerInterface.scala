@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent
+package de.htwg.se.scotlandyard.model.gameInitializerComponent
 
 import de.htwg.se.scotlandyard.model.{Station, Tickets}
 

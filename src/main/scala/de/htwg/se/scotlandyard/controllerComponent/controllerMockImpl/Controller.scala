@@ -3,13 +3,13 @@ package de.htwg.se.scotlandyard.controllerComponent.controllerMockImpl
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
 import de.htwg.se.scotlandyard.model.{Station, StationType}
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import org.scalactic.anyvals.PosInt
 
 import scala.swing.Publisher

@@ -1,14 +1,13 @@
-package de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerBaseImpl
+package de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerBaseImpl
 
 import java.awt.Color
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
-import de.htwg.se.scotlandyard.model.{Station, StationType, Tickets}
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.{GameMaster, Station, StationType, Tickets}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 import play.api.libs.json.{JsArray, JsValue, Json}
 
 import scala.collection.mutable

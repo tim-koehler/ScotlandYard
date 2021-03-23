@@ -1,8 +1,8 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
-import de.htwg.se.scotlandyard.model.TicketType
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster.{WINNING_ROUND, players, round}
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.model.{GameMaster, TicketType}
+import de.htwg.se.scotlandyard.model.GameMaster.{WINNING_ROUND, players, round}
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.MrX
 import org.scalatest._
 
@@ -85,7 +85,7 @@ class GameMasterSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationInBounds"))(1) should be(true)
         GameMaster invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationInBounds"))(1000) should be(false)
       }
-      "and validateMove() should return true" in {
+      "and validateMove() should return" in {
         GameMaster.getCurrentPlayer().station = GameMaster.stations(153)
         GameMaster.players(0).station = GameMaster.stations(180)
 

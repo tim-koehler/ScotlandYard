@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.aview
 
 import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.coreComponent.GameMaster
+import de.htwg.se.scotlandyard.model.GameMaster
 import org.scalatest.{Matchers, WordSpec}
 
 class GuiSpec extends WordSpec with Matchers {

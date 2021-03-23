@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.model.fileIOComponent
 
-import de.htwg.se.scotlandyard.model.coreComponent.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 
 trait FileIOInterface {
   var gameInitializer: GameInitializerInterface
