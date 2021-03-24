@@ -18,7 +18,7 @@ class Gui(controller: ControllerInterface) extends Frame {
   centerOnScreen()
   peer.setDefaultCloseOperation(EXIT_ON_CLOSE)
 
-  iconImage = new ImageIcon("./src/main/scala/de/htwg/se/scotlandyard/resources/Icon.png").getImage
+  iconImage = new ImageIcon("./resources/Icon.png").getImage
 
   var mainBuiler = new GuiMainBuilder(controller, this)
   var settingsBuilder = new GuiSettingsBuilder(controller, this)
@@ -53,9 +53,9 @@ class Gui(controller: ControllerInterface) extends Frame {
   def showWinningDialog(): Unit = {
     var winningMessage = ""
     if (controller.getWinningPlayer().name.equals("MrX")) {
-      winningMessage = controller.getPlayersList()(0).name + " was at Station " + controller.getWinningPlayer().station.number + " !!!"
+      winningMessage = "MrX was at Station " + controller.getWinningPlayer().station.number + " !!!"
     } else {
-      winningMessage = controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name + " at Station " + controller.getWinningPlayer().station.number + " !!!"
+      winningMessage = controller.getWinningPlayer().name + " has caught MrX at Station " + controller.getWinningPlayer().station.number + " !!!"
     }
     Dialog.showMessage(null, winningMessage, "WIN")
     this.dispose()

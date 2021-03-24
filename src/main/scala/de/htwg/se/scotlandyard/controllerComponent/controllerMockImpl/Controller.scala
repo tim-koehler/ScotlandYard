@@ -27,12 +27,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   override def previousRound(): Integer = 1
 
-  override def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
-    if(newPosition > 299) return false
-    true
-  }
-
-  override def doMove(newPosition: Int, ticketType: TicketType): Station = new Station(0, StationType.Taxi)
+  override def move(newPosition: Int, ticketType: TicketType): Station = new Station(0, StationType.Taxi)
 
   override def undoValidateAndMove(): Station = new Station(0, StationType.Taxi)
 
@@ -42,7 +37,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   override def startGame(): Boolean = true
 
-  override def winGame(): Boolean = true
+  override def winGame(winningPlayer: DetectiveInterface): Boolean = false
 
   override def getCurrentPlayer(): DetectiveInterface = new Detective()
 
@@ -68,8 +63,6 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   override def setPlayerColor(newColor: String, index: Int): Boolean = {
     true
   }
-
-  override def setWinning(win: Boolean): Boolean = win
 
   override def updateLobby(): Boolean = true
 

@@ -13,12 +13,8 @@ class GuiMainListeners(controller: ControllerInterface, gui: Gui) {
   def addMapPanelClickListener(reactions: Reactions, guiMainComponentFactory: GuiMainComponentFactory): Unit = {
     reactions += {
       case e: MouseClicked =>
-        if(controller.validateMove(getStationNextToClickedCoords(e.point.x, e.point.y).number, getCurrentTicketType(guiMainComponentFactory))) {
-          controller.doMove(getStationNextToClickedCoords(e.point.x, e.point.y).number, getCurrentTicketType(guiMainComponentFactory))
-          if(controller.getWin())
-            controller.winGame()
-          gui.updateGame()
-        }
+        controller.move(getStationNextToClickedCoords(e.point.x, e.point.y).number, getCurrentTicketType(guiMainComponentFactory))
+        gui.updateGame()
     }
   }
 

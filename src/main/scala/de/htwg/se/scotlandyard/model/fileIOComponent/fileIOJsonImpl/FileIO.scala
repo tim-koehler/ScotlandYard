@@ -4,7 +4,7 @@ import java.awt.Color
 import java.io._
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
-import de.htwg.se.scotlandyard.model.{GameMaster, TicketType, Tickets}
+import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
@@ -21,8 +21,8 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     val source: String = Source.fromFile(pathname).getLines.mkString
     val json = Json.parse(source)
 
-    GameMaster.round = (json \ "round").get.toString().toInt
-    GameMaster.totalRound = (json \ "totalRound").get.toString().toInt
+    GameModel.round = (json \ "round").get.toString().toInt
+    GameModel.totalRound = (json \ "totalRound").get.toString().toInt
     val name = (json \ "mrX" \ "name").get.toString()
     val stationNumber = (json \ "mrX" \ "stationNumber").get.toString().toInt
     val isVisible = (json \ "mrX" \ "isVisible").get.toString().toBoolean
@@ -58,40 +58,40 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
   override def save(): Boolean = {
     var history = new JsArray()
 
-    for(h <- GameMaster.getMrX().history) {
+    for(h <- GameModel.getMrX().history) {
       history = history.append(Json.obj(
         "transport" -> h
       ))
     }
 
     val mrx = Json.obj(
-      "name"         ->  GameMaster.getMrX().name,
-      "stationNumber"       ->  GameMaster.getMrX().station.number.toInt,
-      "isVisible"           ->  GameMaster.getMrX().isVisible,
-      "lastSeen"            ->  GameMaster.getMrX().lastSeen,
-      "blackTickets"        ->  GameMaster.getMrX().tickets.blackTickets,
-      "taxiTickets"         ->  GameMaster.getMrX().tickets.taxiTickets,
-      "busTickets"          ->  GameMaster.getMrX().tickets.busTickets,
-      "undergroundTickets"  ->  GameMaster.getMrX().tickets.undergroundTickets,
+      "name"         ->  GameModel.getMrX().name,
+      "stationNumber"       ->  GameModel.getMrX().station.number.toInt,
+      "isVisible"           ->  GameModel.getMrX().isVisible,
+      "lastSeen"            ->  GameModel.getMrX().lastSeen,
+      "blackTickets"        ->  GameModel.getMrX().tickets.blackTickets,
+      "taxiTickets"         ->  GameModel.getMrX().tickets.taxiTickets,
+      "busTickets"          ->  GameModel.getMrX().tickets.busTickets,
+      "undergroundTickets"  ->  GameModel.getMrX().tickets.undergroundTickets,
       "history"             ->  history
     )
 
     var detectives = new JsArray()
-    for(i <- 1 to GameMaster.players.length - 1) {
+    for(i <- 1 to GameModel.players.length - 1) {
       detectives = detectives.append(Json.obj(
-        "name"         -> GameMaster.players(i).name,
-        "stationNumber"       -> GameMaster.players(i).station.number.toInt,
-        "taxiTickets"         -> GameMaster.players(i).tickets.taxiTickets,
-        "busTickets"          -> GameMaster.players(i).tickets.busTickets,
-        "undergroundTickets"  -> GameMaster.players(i).tickets.undergroundTickets,
-        "color"               -> String.valueOf(GameMaster.players(i).color.getRGB)
+        "name"         -> GameModel.players(i).name,
+        "stationNumber"       -> GameModel.players(i).station.number.toInt,
+        "taxiTickets"         -> GameModel.players(i).tickets.taxiTickets,
+        "busTickets"          -> GameModel.players(i).tickets.busTickets,
+        "undergroundTickets"  -> GameModel.players(i).tickets.undergroundTickets,
+        "color"               -> String.valueOf(GameModel.players(i).color.getRGB)
       ))
     }
 
     val gameStateJson = Json.obj(
-      "round" -> GameMaster.round,
-      "totalRound"   -> GameMaster.totalRound,
-      "nPlayer"      -> GameMaster.players.length,
+      "round" -> GameModel.round,
+      "totalRound"   -> GameModel.totalRound,
+      "nPlayer"      -> GameModel.players.length,
       "mrX"          -> mrx,
       "detectives"   -> detectives
     )

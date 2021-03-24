@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapBaseImpl
 
-import de.htwg.se.scotlandyard.model.GameMaster
+import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 
@@ -67,7 +67,7 @@ class TuiMap extends TuiMapInterface {
   }
 
   private def setPlayerPositions(): mutable.Map[DetectiveInterface, Int] = {
-    for (p <- GameMaster.players){
+    for (p <- GameModel.players){
       playerPositions += (p -> p.station.number)
     }
     playerPositions
@@ -75,14 +75,14 @@ class TuiMap extends TuiMapInterface {
 
   private def updateMapString(): Option[List[String]] ={
 
-    for(s <- GameMaster.stations){
+    for(s <- GameModel.stations){
       map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x - 1, ' ')))
       map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x, ' ')))
       map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x + 1, ' ')))
     }
 
-    for(p <- GameMaster.players) {
-      if(!p.name.equals("MrX") || GameMaster.checkMrXVisibility()) {
+    for(p <- GameModel.players) {
+      if(!p.name.equals("MrX") || GameModel.checkMrXVisibility()) {
         map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x - 1, p.name(0))))
         map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x, p.name(1))))
         map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x + 1, p.name(2))))

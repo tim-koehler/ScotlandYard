@@ -1,16 +1,17 @@
 package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 
-import com.google.inject.{Guice, Inject}
-import de.htwg.se.scotlandyard.ScotlandYardModule
-import de.htwg.se.scotlandyard.aview.tui.EnterNameState
-import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, LobbyChange, MoveCommand, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame, UndoManager}
-import de.htwg.se.scotlandyard.model.{GameMaster, Station}
+import com.google.inject.Inject
+import de.htwg.se.scotlandyard.model
+import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, LobbyChange, MoveCommand, MoveValidator, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame, UndoManager}
+import de.htwg.se.scotlandyard.model.GameModel.{WINNING_ROUND, players, round, stations, stuckPlayers}
+import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 
 import scala.swing.Publisher
+import scala.util.control.Breaks.{break, breakable}
 
 class Controller @Inject()(override var gameInitializer: GameInitializerInterface,
                            override var fileIO: FileIOInterface) extends ControllerInterface with Publisher {
@@ -28,28 +29,72 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   def initPlayers(nPlayer: Int): Integer = {
-    GameMaster.initialize(nPlayer)
+    GameModel.initialize(nPlayer)
     publish(new NumberOfPlayersChanged)
-    GameMaster.players.length
+    GameModel.players.length
   }
 
   def nextRound(): Integer = {
-    GameMaster.nextRound()
+    updateMrXVisibility()
+    round += 1
+    GameModel.updateTotalRound()
+    if (!checkIfPlayerIsAbleToMove()) {
+      stuckPlayers.add(GameModel.getCurrentPlayer())
+      if (stuckPlayers.size == players.size - 1) {
+        winGame(GameModel.getCurrentPlayer())
+      } else {
+        nextRound()
+      }
+    }
+    round
   }
 
   def previousRound(): Integer = {
-    GameMaster.previousRound()
+    updateMrXVisibility()
+    round -= 1
+    GameModel.updateTotalRound()
+    round
   }
 
-  def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
-    GameMaster.validateMove(newPosition, ticketType)
+  private def checkIfPlayerIsAbleToMove(): Boolean = {
+    GameModel.getCurrentPlayer().station.stationType match {
+      case StationType.Taxi =>
+        GameModel.getCurrentPlayer().tickets.taxiTickets > 0
+      case model.StationType.Bus =>
+        GameModel.getCurrentPlayer().tickets.taxiTickets > 0 || GameModel.getCurrentPlayer().tickets.busTickets > 0
+      case model.StationType.Underground =>
+        GameModel.getCurrentPlayer().tickets.taxiTickets > 0 || GameModel.getCurrentPlayer().tickets.busTickets > 0 || GameModel.getCurrentPlayer().tickets.undergroundTickets > 0
+    }
   }
 
-  def doMove(newPosition: Int, ticketType: TicketType): Station = {
-    val newStation = undoManager.doStep(new MoveCommand(getCurrentPlayer().station.number, newPosition, ticketType))
+  private def checkDetectiveWin(): Boolean = {
+    for (dt <- GameModel.getDetectives()) {
+      if (dt.station.number == GameModel.getMrX().station.number) {
+        return true
+      }
+    }
+    false
+  }
 
-    publish(new PlayerMoved)
-    newStation
+  private def checkMrXWin(): Boolean = {
+    round == WINNING_ROUND * players.length
+  }
+
+  def move(newPosition: Int, ticketType: TicketType): Station = {
+    if(MoveValidator.validateMove(newPosition, ticketType)) {
+      val newStation = undoManager.doStep(new MoveCommand(GameModel.getCurrentPlayer().station.number, newPosition, ticketType))
+      publish(new PlayerMoved)
+
+      if (checkDetectiveWin()) {
+        winGame(GameModel.getLastPlayer())
+      }
+      if (checkMrXWin()) {
+        winGame(GameModel.getLastPlayer())
+      }
+      newStation
+    } else {
+      GameModel.getCurrentPlayer().station
+    }
   }
 
   def undoValidateAndMove(): Station = {
@@ -65,7 +110,12 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   def updateMrXVisibility(): Boolean = {
-    GameMaster.updateMrXVisibility()
+    val mrX = getMrX()
+    mrX.isVisible = GameModel.checkMrXVisibility()
+    if (mrX.isVisible) {
+      mrX.lastSeen = players.head.station.number.toString
+    }
+    mrX.isVisible
   }
 
   def startGame(): Boolean = {
@@ -73,55 +123,57 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     true
   }
 
-  def winGame(): Boolean = {
-    GameMaster.gameRunning = false
-    GameMaster.win = false
+  def winGame(winningPlayer: DetectiveInterface): Boolean = {
+    GameModel.winningPlayer = winningPlayer
+    GameModel.gameRunning = false
+    GameModel.win = true
     publish(new PlayerWin)
     true
   }
+
   // Getters and Setters
   def getCurrentPlayer(): DetectiveInterface = {
-    GameMaster.getCurrentPlayer()
+    GameModel.getCurrentPlayer()
   }
 
   def getMrX(): MrXInterface = {
-    GameMaster.getMrX()
+    GameModel.getMrX()
   }
 
   def getPlayersList(): List[DetectiveInterface] = {
-    GameMaster.players
+    GameModel.players
   }
 
   def getStations(): List[Station] = {
-    GameMaster.stations
+    GameModel.stations
   }
 
   def getTotalRound(): Integer = {
-    GameMaster.totalRound
+    GameModel.totalRound
   }
 
   def getWin(): Boolean = {
-    GameMaster.win
+    GameModel.win
   }
 
   def getGameRunning(): Boolean = {
-    GameMaster.gameRunning
+    GameModel.gameRunning
   }
 
   def getWinningPlayer(): DetectiveInterface = {
-    GameMaster.winningPlayer
+    GameModel.winningPlayer
   }
 
   def setPlayerName(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
-    returnValue = GameMaster.players(index).setPlayerName(inputName)
+    returnValue = GameModel.players(index).setPlayerName(inputName)
     publish(new PlayerNameChanged)
     returnValue
   }
 
   def setPlayerColor(newColor: String, index: Int): Boolean = {
     var returnValue: Boolean = false
-    returnValue = GameMaster.players(index).setPlayerColor(newColor)
+    returnValue = GameModel.players(index).setPlayerColor(newColor)
     publish(new PlayerColorChanged)
     returnValue
   }
@@ -129,12 +181,5 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   def updateLobby(): Boolean = {
     publish(new LobbyChange)
     true
-  }
-
-  def setWinning(win: Boolean): Boolean = {
-    val oldWin = GameMaster.win
-    GameMaster.win = win
-    publish(new PlayerWin)
-    oldWin
   }
 }

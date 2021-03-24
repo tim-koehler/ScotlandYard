@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.controllerComponent
 
-import de.htwg.se.scotlandyard.model.{GameMaster, Station}
+import de.htwg.se.scotlandyard.model.{GameModel, Station}
 
 class UndoManager {
   private var undoStack: List[Command]= Nil
@@ -13,7 +13,7 @@ class UndoManager {
 
   def undoStep(): Station  = {
     undoStack match {
-      case  Nil => GameMaster.stations.head
+      case  Nil => GameModel.stations.head
       case head::stack => {
         val station = head.undoStep
         undoStack=stack
@@ -25,7 +25,7 @@ class UndoManager {
 
   def redoStep(): Station = {
     redoStack match {
-      case Nil => GameMaster.stations.head
+      case Nil => GameModel.stations.head
       case head::stack => {
         val station = head.redoStep
         redoStack=stack

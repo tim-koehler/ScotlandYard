@@ -18,13 +18,12 @@ trait ControllerInterface extends Publisher {
   def initPlayers(nPlayer: Int): Integer
   def nextRound(): Integer
   def previousRound(): Integer
-  def validateMove(newPosition: Int, ticketType: TicketType): Boolean
-  def doMove(newPosition: Int, ticketType: TicketType): Station
+  def move(newPosition: Int, ticketType: TicketType): Station
   def undoValidateAndMove(): Station
   def redoValidateAndMove(): Station
   def updateMrXVisibility(): Boolean
   def startGame(): Boolean
-  def winGame(): Boolean
+  def winGame(winningPlayer: DetectiveInterface): Boolean
   def getGameRunning(): Boolean
   def getCurrentPlayer(): DetectiveInterface
   def getMrX(): MrXInterface
@@ -35,7 +34,6 @@ trait ControllerInterface extends Publisher {
   def getWinningPlayer(): DetectiveInterface
   def setPlayerName(inputName: String, index: Int): Boolean
   def setPlayerColor(newColor: String, index: Int): Boolean
-  def setWinning(win: Boolean): Boolean
   def updateLobby(): Boolean
 }
 

@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview
 
 import de.htwg.se.scotlandyard.aview.tui.{ChooseNameMenuState, EnterNameState, RevealMrX1State, RevealMrX2State, RunningState, SelectNumberOfPlayerMenuState, Tui, WinningState}
 import de.htwg.se.scotlandyard.controllerComponent.controllerMockImpl.Controller
-import de.htwg.se.scotlandyard.model.GameMaster
+import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
@@ -11,9 +11,9 @@ import org.scalatest._
 class TuiSpec extends WordSpec with Matchers {
   "Tui" when {
     "created" should {
-      GameMaster.gameInitializer = new GameInitializer
+      GameModel.gameInitializer = new GameInitializer
 
-      val controller = new Controller(GameMaster.gameInitializer, new FileIO(GameMaster.gameInitializer))
+      val controller = new Controller(GameModel.gameInitializer, new FileIO(GameModel.gameInitializer))
 
       val tui = new Tui(controller, new TuiMap)
 
@@ -23,7 +23,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.evaluateInput("exit") shouldBe(tui.TUIMODE_QUIT)
       }
       "change the number of player or refresh the screen" in {
-        GameMaster.initialize()
+        GameModel.initialize()
         tui.changeState(new SelectNumberOfPlayerMenuState(tui))
         tui.evaluateInput("") shouldBe (tui.TUIMODE_RUNNING)
         tui.evaluateInput("3") shouldBe (3)
@@ -66,7 +66,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.state shouldBe a[RunningState]
       }
       "should return state RUNNING when 'a', 'w', 's' or 'd' is pressed is pressed" in {
-        GameMaster.initialize()
+        GameModel.initialize()
         tui.evaluateMoveMapInput("a") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("w") should be (tui.TUIMODE_RUNNING)
         tui.evaluateMoveMapInput("s") should be (tui.TUIMODE_RUNNING)
@@ -86,10 +86,10 @@ class TuiSpec extends WordSpec with Matchers {
         tui.revealMrX2() shouldBe(tui.TUIMODE_RUNNING)
       }
       "should have a winning output String when a player wins" in {
-        GameMaster.initialize(2)
-        GameMaster.winningPlayer = GameMaster.players(0)
+        GameModel.initialize(2)
+        GameModel.winningPlayer = GameModel.players(0)
         tui.buildOutputStringWin() shouldNot be (null)
-        GameMaster.winningPlayer = GameMaster.players(1)
+        GameModel.winningPlayer = GameModel.players(1)
         tui.buildOutputStringWin() shouldNot be (null)
       }
       "should evaluate correct in winningState" in {

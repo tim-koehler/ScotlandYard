@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl
 
-import de.htwg.se.scotlandyard.model.{GameMaster, Tickets}
+import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
 
 import java.awt.Color
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
@@ -27,9 +27,9 @@ class GameInitializer() extends GameInitializerInterface{
   override val numberOfUndergroundTickets: Int = 1
 
   override def initialize(nPlayers: Int): Boolean = {
-    GameMaster.players = List(new MrX())
+    GameModel.players = List(new MrX())
     for(i <- 1 to (nPlayers - 1)) {
-      GameMaster.players = GameMaster.players:::List(new Detective)
+      GameModel.players = GameModel.players:::List(new Detective)
     }
     true
   }
@@ -39,6 +39,7 @@ class GameInitializer() extends GameInitializerInterface{
 
   override def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean = true
   override def getColorList(): List[Color] = List(MRX_COLOR, DT1_COLOR)
+  override def initStations(): List[Station] = List(new Station(1, StationType.Bus))
 
   override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType]): Boolean = true
   override val tuiMap: TuiMapInterface = new TuiMap()

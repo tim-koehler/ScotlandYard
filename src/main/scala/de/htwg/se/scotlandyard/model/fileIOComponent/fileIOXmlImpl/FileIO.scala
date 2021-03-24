@@ -4,7 +4,7 @@ import java.awt.Color
 import java.io._
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
-import de.htwg.se.scotlandyard.model.{GameMaster, TicketType, Tickets}
+import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
@@ -19,8 +19,8 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
 
   override def load(): Boolean = {
     val xmlFile = scala.xml.XML.loadFile(pathname)
-    GameMaster.round = (xmlFile \\ "game" \ "round").text.toInt
-    GameMaster.totalRound = (xmlFile \\ "game" \ "totalRound").text.toInt
+    GameModel.round = (xmlFile \\ "game" \ "round").text.toInt
+    GameModel.totalRound = (xmlFile \\ "game" \ "totalRound").text.toInt
     val nPlayer = (xmlFile \\ "game" \ "nPlayer").text.toInt
     val name = (xmlFile \\ "game" \ "mrX" \ "name").text
     val stationNumber = (xmlFile \\ "game" \ "mrX" \ "stationNumber").text.toInt
@@ -70,9 +70,9 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
 
   def gametoXML(): Elem = {
     <game>
-      <round>{GameMaster.round}</round>
-      <totalRound>{GameMaster.totalRound}</totalRound>
-      <nPlayer>{GameMaster.players.length}</nPlayer>
+      <round>{GameModel.round}</round>
+      <totalRound>{GameModel.totalRound}</totalRound>
+      <nPlayer>{GameModel.players.length}</nPlayer>
       {mrXtoXml()}
       {allDetectivesToXml()}
     </game>
@@ -80,10 +80,10 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
 
   def mrXHistoryToXml(): Elem = {
     var xmlString: String = ""
-    if (GameMaster.getMrX().history.isEmpty) {
+    if (GameModel.getMrX().history.isEmpty) {
       xmlString = "<transport>empty</transport>"
     } else {
-      for (h <- GameMaster.getMrX().history) {
+      for (h <- GameModel.getMrX().history) {
         xmlString = xmlString + "<transport>" + h + "</transport>"
       }
     }
@@ -93,22 +93,22 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
 
   def mrXtoXml(): Elem = {
     <mrX>
-      <name>{GameMaster.getMrX().name}</name>
-      <stationNumber>{GameMaster.getMrX().station.number}</stationNumber>
-      <isVisible>{GameMaster.getMrX().isVisible}</isVisible>
-      <lastSeen>{GameMaster.getMrX().lastSeen}</lastSeen>
-      <blackTickets>{GameMaster.getMrX().tickets.blackTickets}</blackTickets>
-      <taxiTickets>{GameMaster.getMrX().tickets.taxiTickets}</taxiTickets>
-      <busTickets>{GameMaster.getMrX().tickets.busTickets}</busTickets>
-      <undergroundTickets>{GameMaster.getMrX().tickets.undergroundTickets}</undergroundTickets>
+      <name>{GameModel.getMrX().name}</name>
+      <stationNumber>{GameModel.getMrX().station.number}</stationNumber>
+      <isVisible>{GameModel.getMrX().isVisible}</isVisible>
+      <lastSeen>{GameModel.getMrX().lastSeen}</lastSeen>
+      <blackTickets>{GameModel.getMrX().tickets.blackTickets}</blackTickets>
+      <taxiTickets>{GameModel.getMrX().tickets.taxiTickets}</taxiTickets>
+      <busTickets>{GameModel.getMrX().tickets.busTickets}</busTickets>
+      <undergroundTickets>{GameModel.getMrX().tickets.undergroundTickets}</undergroundTickets>
       {mrXHistoryToXml()}
     </mrX>
   }
 
   def allDetectivesToXml(): Elem = {
     var detectiveString = ""
-    for(i <- 1 to GameMaster.players.length - 1) {
-      detectiveString = detectiveString + detectiveToXmlString(GameMaster.players(i).name, GameMaster.players(i).station.number, GameMaster.players(i).tickets, GameMaster.players(i).color)
+    for(i <- 1 to GameModel.players.length - 1) {
+      detectiveString = detectiveString + detectiveToXmlString(GameModel.players(i).name, GameModel.players(i).station.number, GameModel.players(i).tickets, GameModel.players(i).color)
     }
     detectiveString = "<detectives>" + detectiveString + "</detectives>"
     XML.loadString(detectiveString)
