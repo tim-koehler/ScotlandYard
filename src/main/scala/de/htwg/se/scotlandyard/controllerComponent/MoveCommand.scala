@@ -13,7 +13,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
       GameModel.getMrX().addToHistory(ticketType)
     }
     GameModel.updatePlayerPosition(newPosition)
-    GameModel.decreaseTickets(ticketType)
+    GameModel.updateTickets(ticketType)(GameModel.incrementTickets)
 
     val newStation = GameModel.getCurrentPlayer().station
     controller.nextRound()
@@ -33,7 +33,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     }
     controller.previousRound()
     GameModel.updatePlayerPosition(currentPosition)
-    GameModel.increaseTickets(ticketType)
+    GameModel.updateTickets(ticketType)(GameModel.incrementTickets)
     GameModel.getCurrentPlayer().station
     }
 

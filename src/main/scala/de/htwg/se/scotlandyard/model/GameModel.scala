@@ -19,11 +19,11 @@ object GameModel {
   val WINNING_ROUND = 24 //24
   val MRX_VISIBLE_ROUNDS: List[Int] = List(3, 8, 13, 18, 24)
 
-  def getCurrentPlayer(): DetectiveInterface = {
+  def getCurrentPlayer: DetectiveInterface = {
     players(getCurrentPlayerIndex())
   }
 
-  def getLastPlayer(): DetectiveInterface = {
+  def getLastPlayer: DetectiveInterface = {
     val index = getCurrentPlayerIndex()
     if(index == 0) {
       players.last
@@ -32,15 +32,15 @@ object GameModel {
     }
   }
 
-  def getMrX(): MrXInterface = {
+  def getMrX: MrXInterface = {
     players.head.asInstanceOf[MrXInterface]
   }
 
-  def getDetectives(): List[DetectiveInterface] = {
+  def getDetectives: List[DetectiveInterface] = {
     players.drop(1)
   }
 
-  def getCurrentPlayerIndex(): Integer = {
+  def getCurrentPlayerIndex: Integer = {
     if (round % players.length == 0) {
       players.length - 1
     } else {
@@ -54,41 +54,27 @@ object GameModel {
   }
 
   def updatePlayerPosition(newPosition: Int): Station = {
-    getCurrentPlayer().station = stations(newPosition)
-    getCurrentPlayer().station
+    getCurrentPlayer.station = stations(newPosition)
+    getCurrentPlayer.station
   }
 
-  def decreaseTickets(ticketType: TicketType): Integer = {
-    ticketType match {
-      case TicketType.Taxi =>
-        getCurrentPlayer().tickets.taxiTickets -= 1
-        getCurrentPlayer().tickets.taxiTickets
-      case TicketType.Bus =>
-        getCurrentPlayer().tickets.busTickets -= 1
-        getCurrentPlayer().tickets.busTickets
-      case TicketType.Underground =>
-        getCurrentPlayer().tickets.undergroundTickets -= 1
-        getCurrentPlayer().tickets.undergroundTickets
-      case _ =>
-        getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets -= 1
-        getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets
-    }
-  }
+  def incrementTickets(x: Int): Int = {x + 1}
+  def decrementTickets(x: Int): Int = {x - 1}
 
-  def increaseTickets(ticketType: TicketType): Integer = {
+  def updateTickets(ticketType: TicketType)(modFunc:Int => Int): Integer = {
     ticketType match {
       case TicketType.Taxi =>
-        getCurrentPlayer().tickets.taxiTickets += 1
-        getCurrentPlayer().tickets.taxiTickets
+        getCurrentPlayer.tickets.taxiTickets = modFunc(getCurrentPlayer.tickets.taxiTickets)
+        getCurrentPlayer.tickets.taxiTickets
       case TicketType.Bus =>
-        getCurrentPlayer().tickets.busTickets += 1
-        getCurrentPlayer().tickets.busTickets
+        getCurrentPlayer.tickets.busTickets = modFunc(getCurrentPlayer().tickets.busTickets)
+        getCurrentPlayer.tickets.busTickets
       case TicketType.Underground =>
-        getCurrentPlayer().tickets.undergroundTickets += 1
-        getCurrentPlayer().tickets.undergroundTickets
+        getCurrentPlayer.tickets.undergroundTickets = modFunc(getCurrentPlayer().tickets.undergroundTickets)
+        getCurrentPlayer.tickets.undergroundTickets
       case _ =>
-        getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets += 1
-        getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets
+        getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets = modFunc(getCurrentPlayer().tickets.blackTickets)
+        getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets
     }
   }
 }

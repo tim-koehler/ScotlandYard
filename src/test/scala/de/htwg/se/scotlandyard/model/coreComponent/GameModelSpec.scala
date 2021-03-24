@@ -22,17 +22,17 @@ class GameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
       }
       "tickets counts" in {
         val currentTaxiTickets = GameModel.getCurrentPlayer().tickets.taxiTickets
-        GameModel.increaseTickets(TicketType.Taxi) should be(currentTaxiTickets + 1)
+        GameModel.updateTickets(TicketType.Taxi)(GameModel.incrementTickets) should be(currentTaxiTickets + 1)
 
         val currentBusTickets = GameModel.getCurrentPlayer().tickets.busTickets
-        GameModel.increaseTickets(TicketType.Bus) should be(currentBusTickets + 1)
+        GameModel.updateTickets(TicketType.Bus)(GameModel.incrementTickets) should be(currentBusTickets + 1)
 
         val currentUndergroundTickets = GameModel.getCurrentPlayer().tickets.undergroundTickets
-        GameModel.increaseTickets(TicketType.Underground) should be(currentUndergroundTickets + 1)
+        GameModel.updateTickets(TicketType.Underground)(GameModel.incrementTickets) should be(currentUndergroundTickets + 1)
 
-        GameModel.decreaseTickets(TicketType.Taxi) should be(currentTaxiTickets)
-        GameModel.decreaseTickets(TicketType.Bus) should be(currentBusTickets)
-        GameModel.decreaseTickets(TicketType.Underground) should be(currentUndergroundTickets)
+        GameModel.updateTickets(TicketType.Taxi)(GameModel.decrementTickets) should be(currentTaxiTickets)
+        GameModel.updateTickets(TicketType.Bus)(GameModel.decrementTickets) should be(currentBusTickets)
+        GameModel.updateTickets(TicketType.Underground)(GameModel.decrementTickets) should be(currentUndergroundTickets)
       }
     }
   }
