@@ -39,7 +39,6 @@ class GameInitializer() extends GameInitializerInterface{
 
   override def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean = true
   override def getColorList(): List[Color] = List(MRX_COLOR, DT1_COLOR)
-  override def initStations(): List[Station] = List(new Station(1, StationType.Bus))
 
   override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType]): Boolean = true
   override val tuiMap: TuiMapInterface = new TuiMap()
