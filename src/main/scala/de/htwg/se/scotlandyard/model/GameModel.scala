@@ -20,11 +20,11 @@ object GameModel {
   val MRX_VISIBLE_ROUNDS: List[Int] = List(3, 8, 13, 18, 24)
 
   def getCurrentPlayer: DetectiveInterface = {
-    players(getCurrentPlayerIndex())
+    players(getCurrentPlayerIndex)
   }
 
   def getLastPlayer: DetectiveInterface = {
-    val index = getCurrentPlayerIndex()
+    val index = getCurrentPlayerIndex
     if(index == 0) {
       players.last
     } else {
@@ -67,13 +67,13 @@ object GameModel {
         getCurrentPlayer.tickets.taxiTickets = modFunc(getCurrentPlayer.tickets.taxiTickets)
         getCurrentPlayer.tickets.taxiTickets
       case TicketType.Bus =>
-        getCurrentPlayer.tickets.busTickets = modFunc(getCurrentPlayer().tickets.busTickets)
+        getCurrentPlayer.tickets.busTickets = modFunc(getCurrentPlayer.tickets.busTickets)
         getCurrentPlayer.tickets.busTickets
       case TicketType.Underground =>
-        getCurrentPlayer.tickets.undergroundTickets = modFunc(getCurrentPlayer().tickets.undergroundTickets)
+        getCurrentPlayer.tickets.undergroundTickets = modFunc(getCurrentPlayer.tickets.undergroundTickets)
         getCurrentPlayer.tickets.undergroundTickets
       case _ =>
-        getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets = modFunc(getCurrentPlayer().tickets.blackTickets)
+        getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets = modFunc(getCurrentPlayer.tickets.blackTickets)
         getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets
     }
   }
