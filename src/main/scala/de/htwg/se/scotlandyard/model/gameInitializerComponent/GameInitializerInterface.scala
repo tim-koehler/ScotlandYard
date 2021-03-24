@@ -29,8 +29,7 @@ trait GameInitializerInterface {
   val numberOfUndergroundTickets: Int
   val r = scala.util.Random
 
-  def initialize(nPlayers: Int): Boolean
-  def initStations(): List[Station]
+  def initialize(nPlayers: Int = 3): Boolean
 
   def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean
   def getColorList(): List[Color]

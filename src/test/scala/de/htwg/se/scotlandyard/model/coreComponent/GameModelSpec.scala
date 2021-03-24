@@ -8,10 +8,10 @@ import org.scalatest._
 
 class GameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameMaster Object" when {
-    GameModel.gameInitializer = new GameInitializer
+    val gameInitializer = new GameInitializer
     "initialize() is called should" should {
       "return true" in {
-        GameModel.initialize(2) should be (true)
+        gameInitializer.initialize(2) should be (true)
       }
       "and the current player should be MrX" in {
         GameModel.getCurrentPlayer().isInstanceOf[MrX]

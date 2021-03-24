@@ -1,18 +1,13 @@
 package de.htwg.se.scotlandyard.model
 
-import com.google.inject.Guice
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
-import de.htwg.se.scotlandyard.{ScotlandYardModule, model}
 
 import scala.collection.mutable
 
 object GameModel {
 
-  var gameInitializer: GameInitializerInterface = Guice.createInjector(new ScotlandYardModule).getInstance(classOf[GameInitializerInterface])
-
-  val stations: List[Station] = gameInitializer.initStations()
+  var stations: List[Station] = List()
   var players: List[DetectiveInterface] = List()
   var round = 1 // counter of moves (increases by 1 when a player moved)
   var totalRound = 1 // number of total rounds (increases by 1 when every player has moved once)
@@ -23,22 +18,6 @@ object GameModel {
 
   val WINNING_ROUND = 24 //24
   val MRX_VISIBLE_ROUNDS: List[Int] = List(3, 8, 13, 18, 24)
-
-  def initialize(nPlayers: Int = 3): Boolean = {
-    round = 1
-    totalRound = 1
-    win = false
-
-    if (!gameInitializer.initialize(nPlayers)) {
-      return false
-    }
-
-    players.head.asInstanceOf[MrXInterface].history = mutable.Stack()
-    stuckPlayers = scala.collection.mutable.Set[DetectiveInterface]()
-    gameRunning = true
-
-    true
-  }
 
   def getCurrentPlayer(): DetectiveInterface = {
     players(getCurrentPlayerIndex())

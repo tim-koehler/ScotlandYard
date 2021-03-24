@@ -9,8 +9,8 @@ class TuiMapSpec extends WordSpec with Matchers {
   "TuiMap" should {
     "toString" in {
       val tuiMap = new TuiMap()
-      GameModel.gameInitializer = new GameInitializer(tuiMap)
-      GameModel.initialize()
+      val gameInitializer = new GameInitializer(tuiMap)
+      gameInitializer.initialize()
       tuiMap.toString should not be("")
     }
   }

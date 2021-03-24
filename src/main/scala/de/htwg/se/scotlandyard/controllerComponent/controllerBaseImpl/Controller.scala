@@ -11,7 +11,6 @@ import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 
 import scala.swing.Publisher
-import scala.util.control.Breaks.{break, breakable}
 
 class Controller @Inject()(override var gameInitializer: GameInitializerInterface,
                            override var fileIO: FileIOInterface) extends ControllerInterface with Publisher {
@@ -29,7 +28,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   def initPlayers(nPlayer: Int): Integer = {
-    GameModel.initialize(nPlayer)
+    gameInitializer.initialize(nPlayer)
     publish(new NumberOfPlayersChanged)
     GameModel.players.length
   }

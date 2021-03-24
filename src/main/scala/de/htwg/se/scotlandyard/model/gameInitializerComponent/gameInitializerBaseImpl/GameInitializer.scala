@@ -41,8 +41,17 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
 
   val injector = Guice.createInjector(new ScotlandYardModule)
 
-  override def initialize(nPlayers: Int): Boolean = {
+  override def initialize(nPlayers: Int = 3): Boolean = {
+    GameModel.round = 1
+    GameModel.totalRound = 1
+    GameModel.win = false
+    GameModel.gameRunning = true
+    GameModel.stuckPlayers = scala.collection.mutable.Set[DetectiveInterface]()
+
+    GameModel.stations = initStations()
     initPlayers(nPlayers)
+
+    GameModel.players.head.asInstanceOf[MrXInterface].history = mutable.Stack()
     true
   }
   
@@ -77,7 +86,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     true
   }
 
-  def initStations(): List[Station] = {
+  private def initStations(): List[Station] = {
     val source: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
     val json = Json.parse(source)
 
