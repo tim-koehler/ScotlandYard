@@ -4,13 +4,14 @@ import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.GameModel.{WINNING_ROUND, players}
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
+import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import org.scalatest._
 
 class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "Controller" when {
     "new" should {
-      val gameInitializer = new GameInitializer()
+      val gameInitializer = new GameInitializer(new TuiMap)
       gameInitializer.initialize(5)
 
       val controller = new Controller(gameInitializer, new FileIO(gameInitializer))
