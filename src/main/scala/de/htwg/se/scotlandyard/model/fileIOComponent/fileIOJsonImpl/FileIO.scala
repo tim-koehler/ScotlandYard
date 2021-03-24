@@ -58,21 +58,21 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
   override def save(): Boolean = {
     var history = new JsArray()
 
-    for(h <- GameModel.getMrX().history) {
+    for(h <- GameModel.getMrX.history) {
       history = history.append(Json.obj(
         "transport" -> h
       ))
     }
 
     val mrx = Json.obj(
-      "name"         ->  GameModel.getMrX().name,
-      "stationNumber"       ->  GameModel.getMrX().station.number.toInt,
-      "isVisible"           ->  GameModel.getMrX().isVisible,
-      "lastSeen"            ->  GameModel.getMrX().lastSeen,
-      "blackTickets"        ->  GameModel.getMrX().tickets.blackTickets,
-      "taxiTickets"         ->  GameModel.getMrX().tickets.taxiTickets,
-      "busTickets"          ->  GameModel.getMrX().tickets.busTickets,
-      "undergroundTickets"  ->  GameModel.getMrX().tickets.undergroundTickets,
+      "name"         ->  GameModel.getMrX.name,
+      "stationNumber"       ->  GameModel.getMrX.station.number.toInt,
+      "isVisible"           ->  GameModel.getMrX.isVisible,
+      "lastSeen"            ->  GameModel.getMrX.lastSeen,
+      "blackTickets"        ->  GameModel.getMrX.tickets.blackTickets,
+      "taxiTickets"         ->  GameModel.getMrX.tickets.taxiTickets,
+      "busTickets"          ->  GameModel.getMrX.tickets.busTickets,
+      "undergroundTickets"  ->  GameModel.getMrX.tickets.undergroundTickets,
       "history"             ->  history
     )
 

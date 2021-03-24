@@ -146,14 +146,14 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   def buildOutputStringForRunningGame(): String = {
     var outputString = tuiMap.toString()
     outputString = outputString + "Round: " + controller.getTotalRound() + "\nMrX History: "
-    for(t <- controller.getMrX().getHistory().reverse) {
+    for(t <- controller.getMrX.getHistory().reverse) {
       outputString = outputString + t.toString + ", "
     }
     outputString = outputString + "\n"
     for(p <- controller.getPlayersList()) {
       outputString = outputString + p.toString + "\n"
     }
-    outputString = outputString + "\n" + "Player" + " " + controller.getCurrentPlayer().name.substring(0, 3) + " " + "Enter your next Station:"
+    outputString = outputString + "\n" + "Player" + " " + controller.getCurrentPlayer.name.substring(0, 3) + " " + "Enter your next Station:"
     outputString
   }
 
@@ -163,7 +163,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   }
 
   def getMrXStartingPositionString(): String = {
-    "MrX is at Station: " + controller.getCurrentPlayer().station.number + "\n\n\n\n\n"
+    "MrX is at Station: " + controller.getCurrentPlayer.station.number + "\n\n\n\n\n"
   }
 
   def buildOutputStringForChooseNameMenu(): String = {

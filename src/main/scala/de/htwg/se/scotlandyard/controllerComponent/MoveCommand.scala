@@ -9,13 +9,13 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
   private def defaultDo(): Station = {
-    if(GameModel.getCurrentPlayerIndex() == 0) {
-      GameModel.getMrX().addToHistory(ticketType)
+    if(GameModel.getCurrentPlayerIndex == 0) {
+      GameModel.getMrX.addToHistory(ticketType)
     }
     GameModel.updatePlayerPosition(newPosition)
     GameModel.updateTickets(ticketType)(GameModel.incrementTickets)
 
-    val newStation = GameModel.getCurrentPlayer().station
+    val newStation = GameModel.getCurrentPlayer.station
     controller.nextRound()
     newStation
   }
@@ -26,15 +26,15 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
 
   override def undoStep(): Station = {
     if(GameModel.round == 0) {
-      return GameModel.getCurrentPlayer().station
+      return GameModel.getCurrentPlayer.station
     }
-    if(GameModel.getCurrentPlayerIndex() == 1) {
-      GameModel.getMrX().removeFromHistory()
+    if(GameModel.getCurrentPlayerIndex == 1) {
+      GameModel.getMrX.removeFromHistory()
     }
     controller.previousRound()
     GameModel.updatePlayerPosition(currentPosition)
     GameModel.updateTickets(ticketType)(GameModel.incrementTickets)
-    GameModel.getCurrentPlayer().station
+    GameModel.getCurrentPlayer.station
     }
 
   override def redoStep(): Station = {

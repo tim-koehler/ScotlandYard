@@ -39,9 +39,9 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   override def winGame(winningPlayer: DetectiveInterface): Boolean = false
 
-  override def getCurrentPlayer(): DetectiveInterface = new Detective()
+  override def getCurrentPlayer: DetectiveInterface = new Detective()
 
-  override def getMrX(): MrXInterface = new MrX()
+  override def getMrX: MrXInterface = new MrX()
 
   override def getPlayersList(): List[DetectiveInterface] = List(new MrX, new Detective, new Detective)
 

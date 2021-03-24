@@ -11,7 +11,7 @@ object MoveValidator {
 
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
     if (!isTargetStationInBounds(newPosition)) return false
-    if (GameModel.getCurrentPlayer().station.number == newPosition) return false
+    if (GameModel.getCurrentPlayer.station.number == newPosition) return false
     if (!isMeanOfTransportValid(newPosition, ticketType)) return false
     if (!isTargetStationEmpty(newPosition)) return false
     true
@@ -22,7 +22,7 @@ object MoveValidator {
   }
 
   private def isMeanOfTransportValid(newPosition: Integer, ticketType: TicketType): Boolean = {
-    val player = GameModel.getCurrentPlayer()
+    val player = GameModel.getCurrentPlayer
     ticketType match {
       case TicketType.Taxi =>
         isTransportMoveValid(newPosition)(player.tickets.taxiTickets, player.station.getNeighbourTaxis)
@@ -41,7 +41,7 @@ object MoveValidator {
   private def isTargetStationEmpty(newPosition: Integer): Boolean = {
     for ((p, index) <- GameModel.players.zipWithIndex) {
       breakable {
-        if (index == 0 && !GameModel.getCurrentPlayer().equals(GameModel.getMrX())) break
+        if (index == 0 && !GameModel.getCurrentPlayer.equals(GameModel.getMrX)) break
         if (p.station.number == newPosition) return false
       }
     }
@@ -54,10 +54,10 @@ object MoveValidator {
   }
 
   private def isBlackMoveValid(newPosition: Int): Boolean = {
-    if (GameModel.getCurrentPlayer().asInstanceOf[MrXInterface].tickets.blackTickets <= 0) return false
-    GameModel.getCurrentPlayer().station.getNeighbourTaxis.contains(stations(newPosition)) ||
-      GameModel.getCurrentPlayer().station.getNeighbourBuses.contains(stations(newPosition)) ||
-      GameModel.getCurrentPlayer().station.getNeighbourUndergrounds.contains(stations(newPosition))
+    if (GameModel.getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets <= 0) return false
+    GameModel.getCurrentPlayer.station.getNeighbourTaxis.contains(stations(newPosition)) ||
+      GameModel.getCurrentPlayer.station.getNeighbourBuses.contains(stations(newPosition)) ||
+      GameModel.getCurrentPlayer.station.getNeighbourUndergrounds.contains(stations(newPosition))
   }
 
 }

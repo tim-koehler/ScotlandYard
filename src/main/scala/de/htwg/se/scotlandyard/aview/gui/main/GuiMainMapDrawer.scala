@@ -17,7 +17,7 @@ class GuiMainMapDrawer(controller: ControllerInterface) {
     g.setStroke(new BasicStroke(10.0f))
     g.setColor(Color.BLUE)
 
-    val mrx = controller.getMrX()
+    val mrx = controller.getMrX
     if (mrx.isVisible) {
       g.setColor(mrx.color)
       g.drawOval(mrx.station.guiCoords.x - (r / 2), mrx.station.guiCoords.y - (r / 2), r, r)

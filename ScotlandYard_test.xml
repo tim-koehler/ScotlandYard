@@ -1,7 +1,7 @@
 <game>
     <round>1</round>
     <totalRound>1</totalRound>
-    <nPlayer>5</nPlayer>
+    <nPlayer>3</nPlayer>
     <mrX>
         <name>MrX</name>
         <stationNumber>10</stationNumber>
@@ -16,22 +16,6 @@
         </history>
     </mrX>
     <detectives>
-        <detective>
-            <name>Dt1</name>
-            <stationNumber>20</stationNumber>
-            <taxiTickets>11</taxiTickets>
-            <busTickets>8</busTickets>
-            <undergroundTickets>4</undergroundTickets>
-            <color>-16711936</color>
-        </detective>
-        <detective>
-            <name>Dt1</name>
-            <stationNumber>20</stationNumber>
-            <taxiTickets>11</taxiTickets>
-            <busTickets>8</busTickets>
-            <undergroundTickets>4</undergroundTickets>
-            <color>-16711936</color>
-        </detective>
         <detective>
             <name>Dt1</name>
             <stationNumber>20</stationNumber>

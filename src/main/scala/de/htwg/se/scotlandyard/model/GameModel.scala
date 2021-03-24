@@ -6,7 +6,6 @@ import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXIn
 import scala.collection.mutable
 
 object GameModel {
-
   var stations: List[Station] = List()
   var players: List[DetectiveInterface] = List()
   var round = 1 // counter of moves (increases by 1 when a player moved)

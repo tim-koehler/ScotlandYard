@@ -17,17 +17,17 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
 
       "should validateAndMove" in {
         gameInitializer.initialize(5)
-        GameModel.getMrX().station = GameModel.stations(3)
+        GameModel.getMrX.station = GameModel.stations(3)
 
         controller.move(2, TicketType.Taxi).number should be(3)
 
-        GameModel.getMrX().station = GameModel.stations(10)
+        GameModel.getMrX.station = GameModel.stations(10)
         controller.move(2, TicketType.Taxi).number should be(2)
 
         controller.undoValidateAndMove().number should be(10)
         controller.redoValidateAndMove().number should be(2)
 
-        GameModel.getCurrentPlayer().station = GameModel.stations(1)
+        GameModel.getCurrentPlayer.station = GameModel.stations(1)
         GameModel.players.head.station = GameModel.stations(3)
         controller.move(2, TicketType.Taxi).number should be(1)
         controller.move(46, TicketType.Underground).number should be(46)
@@ -67,7 +67,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         controller.getTotalRound() should be(GameModel.totalRound)
       }
       "and getMrX" in {
-        controller.getMrX() should be(GameModel.getMrX())
+        controller.getMrX should be(GameModel.getMrX)
       }
       "and startGame" in {
         controller.startGame() should be(true)
@@ -82,31 +82,31 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameModel.totalRound shouldBe(1)
       }
       "and move() should return" in {
-        GameModel.getCurrentPlayer().station = GameModel.stations(153)
+        GameModel.getCurrentPlayer.station = GameModel.stations(153)
         GameModel.players.head.station = GameModel.stations(180)
         controller.move(166, TicketType.Taxi).number should be(166)
         controller.move(165, TicketType.Bus).number should not be 165
         controller.move(1, TicketType.Underground).number should not be 1
 
         GameModel.players.head.station = GameModel.stations(55)
-        GameModel.getCurrentPlayer().station = GameModel.stations(89)
+        GameModel.getCurrentPlayer.station = GameModel.stations(89)
         controller.move(71, TicketType.Taxi).number should be(71)
 
-        GameModel.getCurrentPlayer().station = GameModel.stations(185)
+        GameModel.getCurrentPlayer.station = GameModel.stations(185)
         controller.move(128, TicketType.Underground).number should be(128)
 
-        GameModel.getCurrentPlayer().station = GameModel.stations(89)
+        GameModel.getCurrentPlayer.station = GameModel.stations(89)
         controller.move(105, TicketType.Bus).number should be(105)
 
-        GameModel.getCurrentPlayer().station = GameModel.stations(91)
+        GameModel.getCurrentPlayer.station = GameModel.stations(91)
         controller.move(90, TicketType.Taxi).number should be(90)
       }
       "and move() should fail because missing tickets" in {
-        GameModel.getCurrentPlayer().tickets.taxiTickets = 0;
-        GameModel.getCurrentPlayer().tickets.busTickets= 0;
-        GameModel.getCurrentPlayer().tickets.undergroundTickets = 0;
+        GameModel.getCurrentPlayer.tickets.taxiTickets = 0;
+        GameModel.getCurrentPlayer.tickets.busTickets= 0;
+        GameModel.getCurrentPlayer.tickets.undergroundTickets = 0;
 
-        GameModel.getCurrentPlayer().station = GameModel.stations(67)
+        GameModel.getCurrentPlayer.station = GameModel.stations(67)
         controller.move(79, TicketType.Underground).number should not be 79
         controller.move(102, TicketType.Bus).number should not be 102
         controller.move(66, TicketType.Taxi).number should not be 66
@@ -126,7 +126,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         GameModel.totalRound = 24
         controller.checkMrXVisibility() shouldBe (true)
 
-        GameModel.getMrX().lastSeen shouldBe ("never")
+        GameModel.getMrX.lastSeen shouldBe ("never")
       }
       "and MrX should win in round 24" in {
         GameModel.round = WINNING_ROUND * players.length

@@ -38,9 +38,9 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     round += 1
     GameModel.updateTotalRound()
     if (!checkIfPlayerIsAbleToMove()) {
-      stuckPlayers.add(GameModel.getCurrentPlayer())
+      stuckPlayers.add(GameModel.getCurrentPlayer)
       if (stuckPlayers.size == players.size - 1) {
-        winGame(GameModel.getCurrentPlayer())
+        winGame(GameModel.getCurrentPlayer)
       } else {
         nextRound()
       }
@@ -60,19 +60,19 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   private def checkIfPlayerIsAbleToMove(): Boolean = {
-    GameModel.getCurrentPlayer().station.stationType match {
+    GameModel.getCurrentPlayer.station.stationType match {
       case StationType.Taxi =>
-        GameModel.getCurrentPlayer().tickets.taxiTickets > 0
+        GameModel.getCurrentPlayer.tickets.taxiTickets > 0
       case model.StationType.Bus =>
-        GameModel.getCurrentPlayer().tickets.taxiTickets > 0 || GameModel.getCurrentPlayer().tickets.busTickets > 0
+        GameModel.getCurrentPlayer.tickets.taxiTickets > 0 || GameModel.getCurrentPlayer.tickets.busTickets > 0
       case model.StationType.Underground =>
-        GameModel.getCurrentPlayer().tickets.taxiTickets > 0 || GameModel.getCurrentPlayer().tickets.busTickets > 0 || GameModel.getCurrentPlayer().tickets.undergroundTickets > 0
+        GameModel.getCurrentPlayer.tickets.taxiTickets > 0 || GameModel.getCurrentPlayer.tickets.busTickets > 0 || GameModel.getCurrentPlayer.tickets.undergroundTickets > 0
     }
   }
 
   private def checkDetectiveWin(): Boolean = {
-    for (dt <- GameModel.getDetectives()) {
-      if (dt.station.number == GameModel.getMrX().station.number) {
+    for (dt <- GameModel.getDetectives) {
+      if (dt.station.number == GameModel.getMrX.station.number) {
         return true
       }
     }
@@ -85,18 +85,18 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   def move(newPosition: Int, ticketType: TicketType): Station = {
     if(MoveValidator.validateMove(newPosition, ticketType)) {
-      val newStation = undoManager.doStep(new MoveCommand(GameModel.getCurrentPlayer().station.number, newPosition, ticketType))
+      val newStation = undoManager.doStep(new MoveCommand(GameModel.getCurrentPlayer.station.number, newPosition, ticketType))
       publish(new PlayerMoved)
 
       if (checkDetectiveWin()) {
-        winGame(GameModel.getLastPlayer())
+        winGame(GameModel.getLastPlayer)
       }
       if (checkMrXWin()) {
-        winGame(GameModel.getLastPlayer())
+        winGame(GameModel.getLastPlayer)
       }
       newStation
     } else {
-      GameModel.getCurrentPlayer().station
+      GameModel.getCurrentPlayer.station
     }
   }
 
@@ -113,7 +113,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   def updateMrXVisibility(): Boolean = {
-    val mrX = getMrX()
+    val mrX = getMrX
     mrX.isVisible = checkMrXVisibility()
     if (mrX.isVisible) {
       mrX.lastSeen = players.head.station.number.toString
@@ -135,12 +135,12 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   // Getters and Setters
-  def getCurrentPlayer(): DetectiveInterface = {
-    GameModel.getCurrentPlayer()
+  def getCurrentPlayer: DetectiveInterface = {
+    GameModel.getCurrentPlayer
   }
 
-  def getMrX(): MrXInterface = {
-    GameModel.getMrX()
+  def getMrX: MrXInterface = {
+    GameModel.getMrX
   }
 
   def getPlayersList(): List[DetectiveInterface] = {

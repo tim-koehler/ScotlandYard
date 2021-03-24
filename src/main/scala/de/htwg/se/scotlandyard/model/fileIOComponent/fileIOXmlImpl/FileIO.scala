@@ -80,10 +80,10 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
 
   def mrXHistoryToXml(): Elem = {
     var xmlString: String = ""
-    if (GameModel.getMrX().history.isEmpty) {
+    if (GameModel.getMrX.history.isEmpty) {
       xmlString = "<transport>empty</transport>"
     } else {
-      for (h <- GameModel.getMrX().history) {
+      for (h <- GameModel.getMrX.history) {
         xmlString = xmlString + "<transport>" + h + "</transport>"
       }
     }
@@ -93,14 +93,14 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
 
   def mrXtoXml(): Elem = {
     <mrX>
-      <name>{GameModel.getMrX().name}</name>
-      <stationNumber>{GameModel.getMrX().station.number}</stationNumber>
-      <isVisible>{GameModel.getMrX().isVisible}</isVisible>
-      <lastSeen>{GameModel.getMrX().lastSeen}</lastSeen>
-      <blackTickets>{GameModel.getMrX().tickets.blackTickets}</blackTickets>
-      <taxiTickets>{GameModel.getMrX().tickets.taxiTickets}</taxiTickets>
-      <busTickets>{GameModel.getMrX().tickets.busTickets}</busTickets>
-      <undergroundTickets>{GameModel.getMrX().tickets.undergroundTickets}</undergroundTickets>
+      <name>{GameModel.getMrX.name}</name>
+      <stationNumber>{GameModel.getMrX.station.number}</stationNumber>
+      <isVisible>{GameModel.getMrX.isVisible}</isVisible>
+      <lastSeen>{GameModel.getMrX.lastSeen}</lastSeen>
+      <blackTickets>{GameModel.getMrX.tickets.blackTickets}</blackTickets>
+      <taxiTickets>{GameModel.getMrX.tickets.taxiTickets}</taxiTickets>
+      <busTickets>{GameModel.getMrX.tickets.busTickets}</busTickets>
+      <undergroundTickets>{GameModel.getMrX.tickets.undergroundTickets}</undergroundTickets>
       {mrXHistoryToXml()}
     </mrX>
   }

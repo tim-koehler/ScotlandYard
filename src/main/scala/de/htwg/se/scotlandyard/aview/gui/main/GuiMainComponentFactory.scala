@@ -33,11 +33,11 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
       }
       contents += HStrut(10)
       contents += new Panel {
-        background = controller.getCurrentPlayer().color
+        background = controller.getCurrentPlayer.color
         preferredSize = new Dimension(30, 30)
       }
       contents += HStrut(5)
-      contents += new Label(controller.getCurrentPlayer().name) {
+      contents += new Label(controller.getCurrentPlayer.name) {
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
       border = EmptyBorder(8, 8, 8, 8)
@@ -75,7 +75,7 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
   }
 
   def createHistoryPanelListView(fontSize: Integer): ListView[TicketType] = {
-    new ListView(controller.getMrX().getHistory().reverse) {
+    new ListView(controller.getMrX.getHistory().reverse) {
       renderer = Renderer(_.toString)
       font = Font.apply(this.font.getName, Font.Bold, fontSize)
     }
@@ -122,21 +122,21 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
 
   def createToggleButtons(fontSize: Integer): FlowPanel = {
     new FlowPanel() {
-      contents += new ToggleButton("Taxi: " + controller.getCurrentPlayer().tickets.taxiTickets) {
+      contents += new ToggleButton("Taxi: " + controller.getCurrentPlayer.tickets.taxiTickets) {
         selected = true
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Bus: " + controller.getCurrentPlayer().tickets.busTickets) {
+      contents += new ToggleButton("Bus: " + controller.getCurrentPlayer.tickets.busTickets) {
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Underground: " + controller.getCurrentPlayer().tickets.undergroundTickets) {
+      contents += new ToggleButton("Underground: " + controller.getCurrentPlayer.tickets.undergroundTickets) {
         btnGroup.buttons.add(this)
         font = Font.apply(this.font.getName, Font.Bold, fontSize)
       }
-      contents += new ToggleButton("Black Ticket: " + controller.getMrX().tickets.blackTickets) {
-        if(!controller.getCurrentPlayer().equals(controller.getPlayersList()(0))) {
+      contents += new ToggleButton("Black Ticket: " + controller.getMrX.tickets.blackTickets) {
+        if(!controller.getCurrentPlayer.equals(controller.getPlayersList()(0))) {
           enabled = false
         }
         btnGroup.buttons.add(this)

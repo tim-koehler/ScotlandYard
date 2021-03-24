@@ -76,12 +76,12 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     GameModel.players = List()
     val st = GameModel.stations(stationNumber)
     GameModel.players = List[DetectiveInterface](injector.getInstance(classOf[MrXInterface]))
-    GameModel.getMrX().station = st
-    GameModel.getMrX().name = name
-    GameModel.getMrX().isVisible = isVisible
-    GameModel.getMrX().lastSeen = lastSeen
-    GameModel.getMrX().tickets = tickets
-    GameModel.getMrX().history = history
+    GameModel.getMrX.station = st
+    GameModel.getMrX.name = name
+    GameModel.getMrX.isVisible = isVisible
+    GameModel.getMrX.lastSeen = lastSeen
+    GameModel.getMrX.tickets = tickets
+    GameModel.getMrX.history = history
     tuiMap.updatePlayerPositions()
     true
   }
@@ -169,7 +169,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
   }
 
   private def distributeTicketsToMrX(): Boolean = {
-    GameModel.getMrX().tickets = Tickets(99, 99, 99, 5)
+    GameModel.getMrX.tickets = Tickets(99, 99, 99, 5)
     true
   }
 
