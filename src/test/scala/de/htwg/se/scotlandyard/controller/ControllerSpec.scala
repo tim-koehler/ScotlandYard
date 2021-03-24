@@ -17,33 +17,22 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
 
       "should validateAndMove" in {
         gameInitializer.initialize(5)
-
-        println(GameModel.stations)
-
         GameModel.getMrX().station = GameModel.stations(3)
 
-        controller.move(2, TicketType.Taxi).stationType should be(StationType.Taxi)
+        controller.move(2, TicketType.Taxi).number should be(3)
 
-        controller.undoValidateAndMove().stationType should be(StationType.Bus)
-        controller.redoValidateAndMove().stationType should be(StationType.Taxi)
+        GameModel.getMrX().station = GameModel.stations(10)
+        controller.move(2, TicketType.Taxi).number should be(2)
 
-        GameModel.getCurrentPlayer().station =  GameModel.stations(1)
+        controller.undoValidateAndMove().number should be(10)
+        controller.redoValidateAndMove().number should be(2)
+
+        GameModel.getCurrentPlayer().station = GameModel.stations(1)
         GameModel.players.head.station = GameModel.stations(3)
-
-        controller.move(2, TicketType.Taxi).stationType should be(GameModel.stations(2).stationType)
-        controller.undoValidateAndMove().stationType should be(StationType.Underground)
-        controller.redoValidateAndMove().stationType should be(StationType.Taxi)
-
-        for (p <- GameModel.players){
-          p.station = GameModel.stations(1)
-        }
-        GameModel.getCurrentPlayer().station = GameModel.stations(2)
-
-        controller.move(3, TicketType.Bus).stationType should be(StationType.Bus)
-        controller.undoValidateAndMove().stationType should be(StationType.Taxi)
-
-        controller.move(3, TicketType.Underground).stationType should be(StationType.Bus)
-        controller.undoValidateAndMove().stationType should be(StationType.Taxi)
+        controller.move(2, TicketType.Taxi).number should be(1)
+        controller.move(46, TicketType.Underground).number should be(46)
+        controller.undoValidateAndMove().number should be(1)
+        controller.redoValidateAndMove().number should be(46)
       }
       "should return 3 from getPlayerList method" in {
         controller.gameInitializer.initialize(3)
@@ -92,41 +81,54 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         controller.nextRound() shouldBe(2)
         GameModel.totalRound shouldBe(1)
       }
-      "and target Station is in Bounds" in {
-        controller invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationInBounds"))(1) should be(true)
-        controller invokePrivate PrivateMethod[Boolean](Symbol("isTargetStationInBounds"))(1000) should be(false)
-      }
       "and move() should return" in {
         GameModel.getCurrentPlayer().station = GameModel.stations(153)
-        GameModel.players(0).station = GameModel.stations(180)
-
+        GameModel.players.head.station = GameModel.stations(180)
         controller.move(166, TicketType.Taxi).number should be(166)
-
         controller.move(165, TicketType.Bus).number should not be 165
-
         controller.move(1, TicketType.Underground).number should not be 1
 
-        GameModel.players(0).station = GameModel.stations(55)
+        GameModel.players.head.station = GameModel.stations(55)
         GameModel.getCurrentPlayer().station = GameModel.stations(89)
-
         controller.move(71, TicketType.Taxi).number should be(71)
 
+        GameModel.getCurrentPlayer().station = GameModel.stations(185)
         controller.move(128, TicketType.Underground).number should be(128)
 
         GameModel.getCurrentPlayer().station = GameModel.stations(89)
         controller.move(105, TicketType.Bus).number should be(105)
-        controller.move(90, TicketType.Taxi) should not be 90
+
+        GameModel.getCurrentPlayer().station = GameModel.stations(91)
+        controller.move(90, TicketType.Taxi).number should be(90)
       }
-      "and move() should return new Station" in {
+      "and move() should fail because missing tickets" in {
         GameModel.getCurrentPlayer().tickets.taxiTickets = 0;
         GameModel.getCurrentPlayer().tickets.busTickets= 0;
         GameModel.getCurrentPlayer().tickets.undergroundTickets = 0;
 
-        controller.move(128, TicketType.Underground).number should not be 128
-        controller.move(55, TicketType.Bus).number should not be 55
-        controller.move(88, TicketType.Taxi).number should not be 88
+        GameModel.getCurrentPlayer().station = GameModel.stations(67)
+        controller.move(79, TicketType.Underground).number should not be 79
+        controller.move(102, TicketType.Bus).number should not be 102
+        controller.move(66, TicketType.Taxi).number should not be 66
       }
-      "mrx should win in round 24" in {
+      "and MrX should also be hidden" in {
+        gameInitializer.initialize(2) should be (true)
+        GameModel.totalRound = 1
+        controller.checkMrXVisibility() shouldBe (false)
+        GameModel.totalRound = 3
+        controller.checkMrXVisibility() shouldBe (true)
+        GameModel.totalRound = 8
+        controller.checkMrXVisibility() shouldBe (true)
+        GameModel.totalRound = 13
+        controller.checkMrXVisibility() shouldBe (true)
+        GameModel.totalRound = 18
+        controller.checkMrXVisibility() shouldBe (true)
+        GameModel.totalRound = 24
+        controller.checkMrXVisibility() shouldBe (true)
+
+        GameModel.getMrX().lastSeen shouldBe ("never")
+      }
+      "and MrX should win in round 24" in {
         GameModel.round = WINNING_ROUND * players.length
         controller invokePrivate PrivateMethod[Boolean](Symbol("checkMrXWin"))() should be(true)
       }

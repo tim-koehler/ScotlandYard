@@ -58,10 +58,6 @@ object GameModel {
     getCurrentPlayer().station
   }
 
-  def checkMrXVisibility(): Boolean = {
-    GameModel.MRX_VISIBLE_ROUNDS.contains(totalRound)
-  }
-
   def decreaseTickets(ticketType: TicketType): Integer = {
     ticketType match {
       case TicketType.Taxi =>

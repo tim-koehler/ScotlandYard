@@ -82,7 +82,7 @@ class TuiMap extends TuiMapInterface {
     }
 
     for(p <- GameModel.players) {
-      if(!p.name.equals("MrX") || GameModel.checkMrXVisibility()) {
+      if(!p.name.equals("MrX")) {
         map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x - 1, p.name(0))))
         map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x, p.name(1))))
         map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x + 1, p.name(2))))

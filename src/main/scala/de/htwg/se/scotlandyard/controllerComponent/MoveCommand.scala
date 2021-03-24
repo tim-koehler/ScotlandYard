@@ -15,8 +15,9 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     GameModel.updatePlayerPosition(newPosition)
     GameModel.decreaseTickets(ticketType)
 
+    val newStation = GameModel.getCurrentPlayer().station
     controller.nextRound()
-    GameModel.getCurrentPlayer().station
+    newStation
   }
 
   override def doStep(): Station = {

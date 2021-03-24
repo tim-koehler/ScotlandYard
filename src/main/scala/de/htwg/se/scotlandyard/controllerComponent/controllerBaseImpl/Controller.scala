@@ -55,6 +55,10 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     round
   }
 
+  def checkMrXVisibility(): Boolean = {
+    GameModel.MRX_VISIBLE_ROUNDS.contains(GameModel.totalRound)
+  }
+
   private def checkIfPlayerIsAbleToMove(): Boolean = {
     GameModel.getCurrentPlayer().station.stationType match {
       case StationType.Taxi =>
@@ -110,7 +114,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   def updateMrXVisibility(): Boolean = {
     val mrX = getMrX()
-    mrX.isVisible = GameModel.checkMrXVisibility()
+    mrX.isVisible = checkMrXVisibility()
     if (mrX.isVisible) {
       mrX.lastSeen = players.head.station.number.toString
     }
