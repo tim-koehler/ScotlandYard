@@ -15,7 +15,7 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
     val initializer = new GameInitializer(new TuiMap())
 
     "init" in {
-      initializer.initialize(3) should be(true)
+      initializer.initialize().round should be(1)
     }
     "try to create and init all Station types" in {
       var station = new Station(0, StationType.Taxi)
@@ -31,10 +31,10 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
       station.setNeighbourUndergrounds(Set())
     }
     "load detectives" in {
-      initializer.initDetectiveFromLoad("Bobbie", 5, Tickets(10, 8, 5), Color.GREEN)
+      initializer.initDetectiveFromLoad("Bobbie", 5, Tickets(10, 8, 5), Color.GREEN, List()).name should be ("Bobbie")
     }
     "load mrX" in {
-      initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3), mutable.Stack(TicketType.Taxi))
+      initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3), mutable.Stack(TicketType.Taxi), List()).name should be ("mrX")
     }
   }
 }

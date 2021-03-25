@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.controller.fileIOComponent
 
+import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
 
@@ -16,12 +17,12 @@ class FileIOSpec extends WordSpec with Matchers with PrivateMethodTester {
       xmlFileIO.pathname = "ScotlandYard_test.xml"
 
       "json load and save" in {
-        jsonFileIO.save() should be(true)
-        jsonFileIO.load() should be(true)
+        jsonFileIO.save(GameModel()) should be(true)
+        jsonFileIO.load().round should be(1)
       }
       "xml load and save" in {
-        xmlFileIO.save() should be(true)
-        xmlFileIO.load() should be(true)
+        xmlFileIO.save(GameModel()) should be(true)
+        xmlFileIO.load().round should be(1)
       }
     }
   }
