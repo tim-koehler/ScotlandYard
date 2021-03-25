@@ -1,5 +1,6 @@
 package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent
 
+import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 
 import scala.collection.mutable
@@ -18,7 +19,7 @@ trait TuiMapInterface {
 
   val mapMoveOffset: Int
 
-  def updatePlayerPositions(): Unit
+  def updatePlayerPositions(controller: ControllerInterface): Unit
   def updateViewOffsetX(moveMultiplicator: Int, positive: Boolean ): Int
   def updateViewOffsetY(moveMultiplicator: Int, positive: Boolean ): Int
 }

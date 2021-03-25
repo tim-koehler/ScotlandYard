@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapMockImpl
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
+import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 
 import scala.collection.mutable
@@ -15,7 +16,7 @@ class TuiMap extends TuiMapInterface{
   override val mapBorderOffset: Int = 1
   override val mapMoveOffset: Int = 5
 
-  override def updatePlayerPositions(): Unit = {}
+  override def updatePlayerPositions(controller: ControllerInterface): Unit = {}
 
   override def updateViewOffsetX(moveMultiplicator: Int, positive: Boolean): Int = {5}
 

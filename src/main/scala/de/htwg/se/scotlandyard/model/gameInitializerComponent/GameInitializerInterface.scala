@@ -1,10 +1,11 @@
 package de.htwg.se.scotlandyard.model.gameInitializerComponent
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
-import de.htwg.se.scotlandyard.model.{Station, Tickets}
+import de.htwg.se.scotlandyard.model.{GameModel, Station, Tickets}
 
 import java.awt.Color
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 
 import scala.collection.mutable
 
@@ -29,9 +30,9 @@ trait GameInitializerInterface {
   val numberOfUndergroundTickets: Int
   val r = scala.util.Random
 
-  def initialize(nPlayer: Int): Boolean
+  def initialize(nPlayer: Int): GameModel
 
-  def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean
+  def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: List[Station]): DetectiveInterface
   def getColorList(): List[Color]
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType]): Boolean
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: List[Station]): MrXInterface
 }

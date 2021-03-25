@@ -8,6 +8,7 @@ import java.awt.Color
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 
 import scala.collection.mutable
 
@@ -26,20 +27,16 @@ class GameInitializer() extends GameInitializerInterface{
   override val numberOfBusTickets: Int = 3
   override val numberOfUndergroundTickets: Int = 1
 
-  override def initialize(nPlayers: Int): Boolean = {
-    GameModel.players = List(new MrX())
-    for(i <- 1 to (nPlayers - 1)) {
-      GameModel.players = GameModel.players:::List(new Detective)
-    }
-    true
+  override def initialize(nPlayers: Int): GameModel = {
+        GameModel()
   }
 
   override var MAX_DETECTIVE_LIST_INDEX: Int = 0
   override var MAX_MISTERX_LIST_INDEX: Int = 2
 
-  override def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean = true
+  override def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: List[Station]): DetectiveInterface = new Detective
   override def getColorList(): List[Color] = List(MRX_COLOR, DT1_COLOR)
 
-  override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType]): Boolean = true
+  override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: List[Station]): MrXInterface = new MrX
   override val tuiMap: TuiMapInterface = new TuiMap()
 }

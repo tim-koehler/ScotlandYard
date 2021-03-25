@@ -8,6 +8,7 @@ import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 import play.api.libs.json.{JsArray, JsValue, Json}
 
 import scala.collection.mutable
@@ -42,48 +43,34 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
   val injector = Guice.createInjector(new ScotlandYardModule)
 
   override def initialize(nPlayers: Int = 3): GameModel = {
-    GameModel.round = 1
-    GameModel.totalRound = 1
-    GameModel.win = false
-    GameModel.gameRunning = true
-    GameModel.stuckPlayers = scala.collection.mutable.Set[DetectiveInterface]()
-
-    GameModel.stations = initStations()
-    initPlayers(nPlayers)
-
-    GameModel.players.head.asInstanceOf[MrXInterface].history = mutable.Stack()
-    true
+    val stations = initStations()
+    GameModel(stations = stations, players = initPlayers(nPlayers, stations), gameRunning = true, stuckPlayers = Set[DetectiveInterface]())
   }
   
   def getColorList(): List[Color] = {
     this.colorList
   }
 
-  def initDetectivesFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color): Boolean = {
-    val st = GameModel.stations(stationNumber)
+  def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: List[Station]): DetectiveInterface = {
+    val st = stations(stationNumber)
     val detective = injector.getInstance(classOf[DetectiveInterface])
     detective.name = name
     detective.station = st
     detective.color = color
     detective.tickets = tickets
 
-    GameModel.players = GameModel.players:::List(detective)
-    tuiMap.updatePlayerPositions()
-    true
+    detective
   }
 
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType]): Boolean = {
-    GameModel.players = List()
-    val st = GameModel.stations(stationNumber)
-    GameModel.players = List[DetectiveInterface](injector.getInstance(classOf[MrXInterface]))
-    GameModel.getMrX.station = st
-    GameModel.getMrX.name = name
-    GameModel.getMrX.isVisible = isVisible
-    GameModel.getMrX.lastSeen = lastSeen
-    GameModel.getMrX.tickets = tickets
-    GameModel.getMrX.history = history
-    tuiMap.updatePlayerPositions()
-    true
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: List[Station]): MrXInterface = {
+    val mrx = injector.getInstance(classOf[MrXInterface])
+    mrx.station = stations(stationNumber)
+    mrx.name = name
+    mrx.isVisible = isVisible
+    mrx.lastSeen = lastSeen
+    mrx.tickets = tickets
+    mrx.history = history
+    mrx
   }
 
   private def initStations(): List[Station] = {
@@ -124,27 +111,26 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     neighboursSet
   }
 
-  private def initPlayers(nPlayer: Int): Boolean = {
-    GameModel.players = List()
-
-    var st = GameModel.stations(drawMisterXPosition())
+  private def initPlayers(nPlayer: Int, stations: List[Station]): List[DetectiveInterface] = {
+    var st = stations(drawMisterXPosition())
     val mrX = injector.getInstance(classOf[MrXInterface])
     mrX.history = mutable.Stack()
     mrX.station = st
 
-    GameModel.players = List[DetectiveInterface](mrX)
+    var players = List[DetectiveInterface](mrX)
     for(i <- 1 to (nPlayer - 1)) {
-      st = GameModel.stations(drawDetectivePosition())
+      st = stations(drawDetectivePosition())
       val detective = injector.getInstance(classOf[DetectiveInterface])
       detective.station = st
       detective.name = "Dt" + i
       detective.color = colorList(i)
-      GameModel.players = GameModel.players:::List(detective)
+      players = players ::: List(detective)
     }
-    distributeTicketsToMrX()
-    distributeTicketsToDetectives()
+    distributeTicketsToMrX(mrX)
+    distributeTicketsToDetectives(players)
     drawnPositions = List()
-    true
+    players.head.asInstanceOf[MrXInterface].history = mutable.Stack()
+    players
   }
 
   private def drawMisterXPosition(nonRandomPosition: Integer = -1): Int = {
@@ -168,21 +154,15 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     detectiveStartPositions(startPosIndex)
   }
 
-  private def distributeTicketsToMrX(): Boolean = {
-    GameModel.getMrX.tickets = Tickets(99, 99, 99, 5)
+  private def distributeTicketsToMrX(mrx: MrXInterface): Boolean = {
+    mrx.tickets = Tickets(99, 99, 99, 5)
     true
   }
 
-  private def distributeTicketsToDetectives(): Boolean = {
-    var success = false
-    for(i <- 1 to (GameModel.players.length - 1)) {
-      success = distributeTickets(i, numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets)
+  private def distributeTicketsToDetectives(players: List[DetectiveInterface]): Boolean = {
+    for(index <- 1 to (players.length - 1)) {
+      players(index).tickets = Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets)
     }
-    success
-  }
-
-  private def distributeTickets(index: Int, nTaxi: Int, nBus: Int, nUnder: Int): Boolean = {
-    GameModel.players(index).tickets = Tickets(nTaxi, nBus, nUnder)
     true
   }
 }

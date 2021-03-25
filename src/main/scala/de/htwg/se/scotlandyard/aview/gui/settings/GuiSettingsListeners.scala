@@ -46,12 +46,12 @@ class GuiSettingsListeners(controller: ControllerInterface, gui: Gui) {
       case e: ButtonClicked =>
         e.source.selected = true
         e.source.text match {
-          case "2 Player" => controller.initPlayers(2)
-          case "3 Player" => controller.initPlayers(3)
-          case "4 Player" => controller.initPlayers(4)
-          case "5 Player" => controller.initPlayers(5)
-          case "6 Player" => controller.initPlayers(6)
-          case "7 Player" => controller.initPlayers(7)
+          case "2 Player" => controller.initialize(2)
+          case "3 Player" => controller.initialize(3)
+          case "4 Player" => controller.initialize(4)
+          case "5 Player" => controller.initialize(5)
+          case "6 Player" => controller.initialize(6)
+          case "7 Player" => controller.initialize(7)
         }
         gui.updateSettings()
     }

@@ -8,6 +8,7 @@ import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import play.api.libs.json._
 
 import scala.collection.mutable
@@ -18,6 +19,8 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
   var pathname = "ScotlandYard.json"
 
   override def load(): GameModel = {
+    val gameModel = gameInitializer.initialize(3)
+
     val source: String = Source.fromFile(pathname).getLines.mkString
     val json = Json.parse(source)
 
@@ -39,20 +42,24 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     }
 
     val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets)
-    gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, tickets, history)
+    val mrx = gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, tickets, history, gameModel.stations)
 
-    val detectives: JsArray = (json \ "detectives").as[JsArray]
+    val detectivesJson: JsArray = (json \ "detectives").as[JsArray]
+    var detectives: List[DetectiveInterface] = List()
 
-    for(detective <- detectives.value) {
+    for(detective <- detectivesJson.value) {
       val name = (detective \ "name").get.toString()
       val stationNumber = (detective \ "stationNumber").get.toString().toInt
       val taxiTickets = (detective \ "taxiTickets").get.toString().toInt
       val busTickets = (detective \ "busTickets").get.toString().toInt
       val undergroundTickets = (detective \ "undergroundTickets").get.toString().toInt
       val color = (detective \ "color").get.toString()
-      gameInitializer.initDetectivesFromLoad(formatString(name), stationNumber, Tickets(taxiTickets, busTickets, undergroundTickets), Color.decode(formatString(color)))
+      detectives = gameInitializer.initDetectiveFromLoad(formatString(name), stationNumber, Tickets(taxiTickets, busTickets, undergroundTickets), Color.decode(formatString(color)), gameModel.stations) :: detectives
     }
-    true
+
+    val players = mrx :: detectives
+
+    gameModel.copy(players = players, round = round, totalRound = totalRound)
   }
 
   override def save(gameModel: GameModel): Boolean = {

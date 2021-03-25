@@ -37,7 +37,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   def nextRound(): Integer = {
     updateMrXVisibility()
-    gameModel.round += 1
+    gameModel.increaseRound()
     gameModel.updateTotalRound()
     if (!checkIfPlayerIsAbleToMove()) {
       gameModel = gameModel.addStuckPlayer()
@@ -52,7 +52,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   def previousRound(): Integer = {
     updateMrXVisibility()
-    gameModel.round -= 1
+    gameModel.decreaseRound()
     gameModel.updateTotalRound()
     gameModel.round
   }

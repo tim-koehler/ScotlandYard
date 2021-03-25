@@ -23,7 +23,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
 
   var indexOfPlayerWhichNameToChange = 1
 
-  tuiMap.updatePlayerPositions()
+  tuiMap.updatePlayerPositions(controller)
 
   def changeState(state: State): Unit = {
     this.state = state
@@ -106,7 +106,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
 
   def evaluateSettings(input: String): Int = {
     changeState(new ChooseNameMenuState(this))
-    controller.initPlayers(input.toInt)
+    controller.initialize(input.toInt)
   }
 
   def evaluateNameMenu(input: String): Int = {
@@ -144,7 +144,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   }
 
   def buildOutputStringForRunningGame(): String = {
-    var outputString = tuiMap.toString()
+    var outputString = getTuiMap()
     outputString = outputString + "Round: " + controller.getTotalRound() + "\nMrX History: "
     for(t <- controller.getMrX.getHistory().reverse) {
       outputString = outputString + t.toString + ", "
@@ -195,6 +195,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   }
 
   def getTuiMap(): String = {
+    tuiMap.updatePlayerPositions(controller)
     tuiMap.toString()
   }
 

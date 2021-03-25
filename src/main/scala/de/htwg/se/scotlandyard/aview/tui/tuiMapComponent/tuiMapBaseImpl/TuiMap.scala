@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapBaseImpl
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
-import de.htwg.se.scotlandyard.model.GameModel
+import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 
 import scala.collection.mutable
@@ -24,9 +24,9 @@ class TuiMap extends TuiMapInterface {
 
   val mapMoveOffset = 5
 
-  def updatePlayerPositions(): Unit ={
-    setPlayerPositions()
-    updateMapString()
+  def updatePlayerPositions(controller: ControllerInterface): Unit ={
+    setPlayerPositions(controller)
+    updateMapString(controller)
   }
 
   def updateViewOffsetX(moveMultiplicator: Int, positive: Boolean ): Int = {
@@ -66,22 +66,22 @@ class TuiMap extends TuiMapInterface {
     viewOffsetY
   }
 
-  private def setPlayerPositions(): mutable.Map[DetectiveInterface, Int] = {
-    for (p <- GameModel.players){
+  private def setPlayerPositions(controller: ControllerInterface): mutable.Map[DetectiveInterface, Int] = {
+    for (p <- controller.getPlayersList()){
       playerPositions += (p -> p.station.number)
     }
     playerPositions
   }
 
-  private def updateMapString(): Option[List[String]] ={
+  private def updateMapString(controller: ControllerInterface): Option[List[String]] ={
 
-    for(s <- GameModel.stations){
+    for(s <- controller.getStations()){
       map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x - 1, ' ')))
       map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x, ' ')))
       map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x + 1, ' ')))
     }
 
-    for(p <- GameModel.players) {
+    for(p <- controller.getPlayersList()) {
       if(!p.name.equals("MrX")) {
         map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x - 1, p.name(0))))
         map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x, p.name(1))))
@@ -109,8 +109,6 @@ class TuiMap extends TuiMapInterface {
   }
 
   override def toString: String = {
-
-    updatePlayerPositions()
 
     var str = getTopBorder()
     for (y <- viewOffsetY until ((mapDisplayDimensionsY - mapBorderOffset) + viewOffsetY)) {

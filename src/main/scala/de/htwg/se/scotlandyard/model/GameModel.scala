@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.model
 
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.Detective
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 
 import scala.collection.mutable
@@ -12,7 +13,7 @@ case class GameModel(
                       totalRound: Int =  1, // number of total rounds (increases by 1 when every player has moved once)
                       win: Boolean = false,
                       gameRunning: Boolean = false,
-                      winningPlayer: DetectiveInterface = _,
+                      winningPlayer: DetectiveInterface = new Detective,
                       stuckPlayers: Set[DetectiveInterface] = Set(),
                       WINNING_ROUND: Int = 24, //24
                       MRX_VISIBLE_ROUNDS: List[Int] = List(3, 8, 13, 18, 24)
@@ -40,6 +41,14 @@ case class GameModel(
     } else {
       (round % players.length) - 1
     }
+  }
+
+  def increaseRound(): GameModel = {
+    copy(round = round + 1)
+  }
+
+  def decreaseRound(): GameModel = {
+    copy(round = round + 1)
   }
 
   def updateTotalRound(): GameModel = {
