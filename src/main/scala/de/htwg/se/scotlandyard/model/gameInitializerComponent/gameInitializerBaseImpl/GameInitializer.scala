@@ -3,9 +3,9 @@ package de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerBa
 import java.awt.Color
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
+import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
-import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 import play.api.libs.json.{JsArray, JsValue, Json}

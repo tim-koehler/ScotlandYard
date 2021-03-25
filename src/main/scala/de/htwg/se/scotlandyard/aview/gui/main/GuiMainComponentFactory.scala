@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.aview.gui.main
 import java.awt.image.BufferedImage
 
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
+import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
 import scala.swing.ListView.Renderer

@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
-import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapBaseImpl.TuiMap
+import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapBaseImpl.TuiMap
 import org.scalatest._
 
 class GameTuiMapRendererSpec extends WordSpec with Matchers with PrivateMethodTester {

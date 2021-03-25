@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.controllerComponent
+package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.ScotlandYard.injector
 import de.htwg.se.scotlandyard.model.{GameModel, Station}

@@ -1,9 +1,9 @@
 package de.htwg.se.scotlandyard.controller
 
-import de.htwg.se.scotlandyard.controllerComponent.MoveValidator
+import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapMockImpl.TuiMap
+import de.htwg.se.scotlandyard.controller.controllerBaseImpl.MoveValidator
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType}
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import org.scalatest._
 
 class MoveValidatorSpec extends WordSpec with Matchers with PrivateMethodTester {

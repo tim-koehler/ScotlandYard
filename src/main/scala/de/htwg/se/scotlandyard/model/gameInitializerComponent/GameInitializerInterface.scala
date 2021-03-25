@@ -1,9 +1,9 @@
 package de.htwg.se.scotlandyard.model.gameInitializerComponent
 
+import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.{Station, Tickets}
 
 import java.awt.Color
-import de.htwg.se.scotlandyard.model.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
 import scala.collection.mutable

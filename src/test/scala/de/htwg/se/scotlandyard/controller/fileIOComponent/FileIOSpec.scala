@@ -1,6 +1,5 @@
-package de.htwg.se.scotlandyard.model.fileIOComponent
+package de.htwg.se.scotlandyard.controller.fileIOComponent
 
-import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOJsonImpl.FileIO
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
 
@@ -10,9 +9,8 @@ class FileIOSpec extends WordSpec with Matchers with PrivateMethodTester {
       val gameInitializer = new GameInitializer();
       gameInitializer.initialize(3)
 
-      val jsonFileIO = new FileIO(gameInitializer)
-
-      val xmlFileIO = new fileIOXmlImpl.FileIO(gameInitializer)
+      val jsonFileIO = new de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOJsonImpl.FileIO(gameInitializer)
+      val xmlFileIO = new de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOXmlImpl.FileIO(gameInitializer)
 
       jsonFileIO.pathname = "ScotlandYard_test.json"
       xmlFileIO.pathname = "ScotlandYard_test.xml"

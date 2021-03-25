@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.aview
 
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.scotlandyard.controller.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.GameModel
 import org.scalatest.{Matchers, WordSpec}
 

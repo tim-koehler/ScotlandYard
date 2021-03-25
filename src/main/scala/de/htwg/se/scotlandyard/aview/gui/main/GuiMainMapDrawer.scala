@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.gui.main
 
 import java.awt.{BasicStroke, Color}
 
-import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
+import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 
 import scala.swing.{Graphics2D, Image}

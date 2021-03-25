@@ -4,10 +4,10 @@ import de.htwg.se.scotlandyard.model.StationType.StationType
 
 import scala.swing.Point
 
-class Station(val number: Integer, val stationType: StationType) {
-  private var neighbourTaxis: Set[Station] = Set()
-  private var neighbourBuses: Set[Station] = Set()
-  private var neighbourUndergrounds: Set[Station] = Set()
+case class Station(val number: Integer, val stationType: StationType) {
+  var neighbourTaxis: Set[Station] = Set()
+  var neighbourBuses: Set[Station] = Set()
+  var neighbourUndergrounds: Set[Station] = Set()
   var tuiCoords: Point = new Point(1, 1)
   var guiCoords: Point = new Point(1, 1)
 
@@ -48,8 +48,4 @@ class Station(val number: Integer, val stationType: StationType) {
     if(guiCoords != comparedStation.guiCoords) return false
     true
   }
-
-  def getNeighbourTaxis: Set[Station] = neighbourTaxis
-  def getNeighbourBuses: Set[Station] = neighbourBuses
-  def getNeighbourUndergrounds: Set[Station] = neighbourUndergrounds
 }

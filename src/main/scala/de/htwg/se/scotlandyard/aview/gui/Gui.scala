@@ -4,7 +4,7 @@ import java.awt.Toolkit
 
 import de.htwg.se.scotlandyard.aview.gui.main.GuiMainBuilder
 import de.htwg.se.scotlandyard.aview.gui.settings.GuiSettingsBuilder
-import de.htwg.se.scotlandyard.controllerComponent._
+import de.htwg.se.scotlandyard.controller._
 import javax.swing.ImageIcon
 
 import scala.swing._

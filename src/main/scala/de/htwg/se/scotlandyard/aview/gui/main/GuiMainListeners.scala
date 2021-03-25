@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.gui.main
 
 import java.awt.event.AdjustmentEvent
 import de.htwg.se.scotlandyard.aview.Gui
-import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
+import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.{Station, TicketType}
 import TicketType.TicketType
 

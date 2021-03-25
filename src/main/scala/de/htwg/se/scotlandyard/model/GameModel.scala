@@ -5,18 +5,18 @@ import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXIn
 
 import scala.collection.mutable
 
-object GameModel {
-  var stations: List[Station] = List()
-  var players: List[DetectiveInterface] = List()
-  var round = 1 // counter of moves (increases by 1 when a player moved)
-  var totalRound = 1 // number of total rounds (increases by 1 when every player has moved once)
-  var win = false
-  var gameRunning = false
-  var winningPlayer: DetectiveInterface = _
-  var stuckPlayers: mutable.Set[DetectiveInterface] = scala.collection.mutable.Set[DetectiveInterface]()
-
-  val WINNING_ROUND = 24 //24
-  val MRX_VISIBLE_ROUNDS: List[Int] = List(3, 8, 13, 18, 24)
+case class GameModel(
+                      var stations: List[Station] = List(),
+                      var players: List[DetectiveInterface] = List(),
+                      var round = 1, // counter of moves (increases by 1 when a player moved)
+                      var totalRound = 1, // number of total rounds (increases by 1 when every player has moved once)
+                      var win = false,
+                      var gameRunning = false,
+                      var winningPlayer: DetectiveInterface = _,
+                      var stuckPlayers: mutable.Set[DetectiveInterface] = scala.collection.mutable.Set[DetectiveInterface](),
+                                            WINNING_ROUND = 24, //24
+                      MRX_VISIBLE_ROUNDS: List[Int] = List(3, 8, 13, 18, 24)
+                    ) {
 
   def getCurrentPlayer: DetectiveInterface = {
     players(getCurrentPlayerIndex)
@@ -31,13 +31,8 @@ object GameModel {
     }
   }
 
-  def getMrX: MrXInterface = {
-    players.head.asInstanceOf[MrXInterface]
-  }
-
-  def getDetectives: List[DetectiveInterface] = {
-    players.drop(1)
-  }
+  def getMrX: MrXInterface = players.head.asInstanceOf[MrXInterface]
+  def getDetectives: List[DetectiveInterface] = players.drop(1)
 
   def getCurrentPlayerIndex: Integer = {
     if (round % players.length == 0) {

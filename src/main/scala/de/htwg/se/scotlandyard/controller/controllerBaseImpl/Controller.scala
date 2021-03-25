@@ -1,11 +1,11 @@
-package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
+package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model
-import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, LobbyChange, MoveCommand, MoveValidator, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame, UndoManager}
+import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, MoveCommand, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame, UndoManager}
 import de.htwg.se.scotlandyard.model.GameModel.{stuckPlayers}
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
-import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
+import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface

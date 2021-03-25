@@ -1,12 +1,12 @@
 package de.htwg.se.scotlandyard.controller
 
-import de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapMockImpl.TuiMap
+import de.htwg.se.scotlandyard.controller.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.GameModel.{WINNING_ROUND, players, stations}
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
-import de.htwg.se.scotlandyard.model.fileIOComponent.fileIOMockImpl.FileIO
+import de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.Detective
-import de.htwg.se.scotlandyard.model.tuiMapComponent.tuiMapMockImpl.TuiMap
 import org.scalatest._
 
 import java.awt.Color

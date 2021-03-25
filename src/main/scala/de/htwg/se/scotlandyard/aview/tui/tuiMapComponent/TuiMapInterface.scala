@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.tuiMapComponent
+package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent
 
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 

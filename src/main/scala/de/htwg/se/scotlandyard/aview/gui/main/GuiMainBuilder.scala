@@ -5,7 +5,7 @@ import java.io.File
 
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.aview.gui.GuiBuilder
-import de.htwg.se.scotlandyard.controllerComponent.ControllerInterface
+import de.htwg.se.scotlandyard.controller.ControllerInterface
 import javax.imageio.ImageIO
 
 import scala.swing.Swing.{CompoundBorder, EmptyBorder, EtchedBorder, TitledBorder}

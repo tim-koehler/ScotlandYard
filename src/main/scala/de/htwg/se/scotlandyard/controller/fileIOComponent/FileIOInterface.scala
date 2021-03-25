@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.fileIOComponent
+package de.htwg.se.scotlandyard.controller.fileIOComponent
 
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 
