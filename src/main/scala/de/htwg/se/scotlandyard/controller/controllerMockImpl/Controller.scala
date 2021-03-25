@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.controller.controllerMockImpl
 
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.{Station, StationType}
+import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
@@ -25,9 +25,9 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   override def move(newPosition: Int, ticketType: TicketType): Station = new Station(0, StationType.Taxi)
 
-  override def undoValidateAndMove(): Station = new Station(0, StationType.Taxi)
+  override def undoMove(): Station = new Station(0, StationType.Taxi)
 
-  override def redoValidateAndMove(): Station = new Station(0, StationType.Taxi)
+  override def redoMove(): Station = new Station(0, StationType.Taxi)
 
   override def updateMrXVisibility(): Boolean = true
 
@@ -62,5 +62,5 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   override def updateLobby(): Boolean = true
 
-  override def initialize(nPlayer: Int): Int = nPlayer
+  override def initialize(nPlayer: Int): GameModel = GameModel()
 }

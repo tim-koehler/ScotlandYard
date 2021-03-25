@@ -82,12 +82,12 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   }
 
   def evaluateUndo(): Int = {
-    controller.undoValidateAndMove()
+    controller.undoMove()
     TUIMODE_RUNNING
   }
 
   def evaluateRedo(): Int = {
-    controller.redoValidateAndMove()
+    controller.redoMove()
     TUIMODE_RUNNING
   }
 
@@ -107,6 +107,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   def evaluateSettings(input: String): Int = {
     changeState(new ChooseNameMenuState(this))
     controller.initialize(input.toInt)
+    controller.getPlayersList().size
   }
 
   def evaluateNameMenu(input: String): Int = {

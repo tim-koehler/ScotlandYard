@@ -98,11 +98,11 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
       }
       contents += new Menu("Options") {
         contents += new MenuItem(Action("Undo") {
-          controller.undoValidateAndMove()
+          controller.undoMove()
           gui.updateGame()
         })
         contents += new MenuItem(Action("Redo") {
-          controller.redoValidateAndMove()
+          controller.redoMove()
           gui.updateGame()
         })
       }

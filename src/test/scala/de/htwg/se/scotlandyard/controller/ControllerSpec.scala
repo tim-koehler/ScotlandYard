@@ -27,15 +27,15 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         gameModel.getMrX.station = gameModel.stations(10)
         controller.move(2, TicketType.Taxi).number should be(2)
 
-        controller.undoValidateAndMove().number should be(10)
-        controller.redoValidateAndMove().number should be(2)
+        controller.undoMove().number should be(10)
+        controller.redoMove().number should be(2)
 
         gameModel.getCurrentPlayer.station = gameModel.stations(1)
         gameModel.players.head.station = gameModel.stations(3)
         controller.move(2, TicketType.Taxi).number should be(1)
         controller.move(46, TicketType.Underground).number should be(46)
-        controller.undoValidateAndMove().number should be(1)
-        controller.redoValidateAndMove().number should be(46)
+        controller.undoMove().number should be(1)
+        controller.redoMove().number should be(46)
       }
       "should return 3 from getPlayerList method" in {
         controller.initialize()

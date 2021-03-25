@@ -13,14 +13,14 @@ trait ControllerInterface extends Publisher {
   val gameInitializer: GameInitializerInterface
   val fileIO: FileIOInterface
 
-  def initialize(nPlayer: Int = 3): Int
+  def initialize(nPlayer: Int = 3): GameModel
   def load(): Boolean
   def save(): Boolean
   def nextRound(): Integer
   def previousRound(): Integer
   def move(newPosition: Int, ticketType: TicketType): Station
-  def undoValidateAndMove(): Station
-  def redoValidateAndMove(): Station
+  def undoMove(): Station
+  def redoMove(): Station
   def updateMrXVisibility(): Boolean
   def startGame(): Boolean
   def winGame(winningPlayer: DetectiveInterface): Boolean

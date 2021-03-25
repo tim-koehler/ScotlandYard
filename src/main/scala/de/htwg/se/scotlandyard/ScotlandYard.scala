@@ -8,10 +8,8 @@ import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInt
 object ScotlandYard {
   val injector: Injector = Guice.createInjector(new ScotlandYardModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
-  var gameInitializer: GameInitializerInterface = Guice.createInjector(new ScotlandYardModule).getInstance(classOf[GameInitializerInterface])
 
   def main(args: Array[String]): Unit = {
-    controller.initialize()
     new Gui(controller)
   }
 }

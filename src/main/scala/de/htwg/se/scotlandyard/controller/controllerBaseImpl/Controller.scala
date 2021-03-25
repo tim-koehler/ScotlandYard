@@ -14,13 +14,19 @@ import scala.swing.Publisher
 import scala.util.control.Breaks.{break, breakable}
 
 class Controller @Inject()(override val gameInitializer: GameInitializerInterface,
-                           override val fileIO: FileIOInterface,
-                           private var gameModel: GameModel) extends ControllerInterface with Publisher {
+                           override val fileIO: FileIOInterface) extends ControllerInterface with Publisher {
 
+  private var gameModel: GameModel = initialize(3)
   private val undoManager = new UndoManager(gameModel)
 
+  def initialize(nPlayers: Int = 3): GameModel = {
+    gameModel = gameInitializer.initialize(nPlayers)
+    publish(new NumberOfPlayersChanged)
+    gameModel
+  }
+
   def load(): Boolean = {
-    fileIO.load()
+    gameModel = fileIO.load()
     true
   }
 
@@ -29,16 +35,10 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     true
   }
 
-  override def initialize(nPlayers: Int = 3): Int = {
-    gameInitializer.initialize(nPlayers)
-    publish(new NumberOfPlayersChanged)
-    gameModel.players.length
-  }
-
   def nextRound(): Integer = {
     updateMrXVisibility()
-    gameModel.increaseRound()
-    gameModel.updateTotalRound()
+    gameModel = gameModel.increaseRound()
+    gameModel = gameModel.updateTotalRound()
     if (!checkIfPlayerIsAbleToMove()) {
       gameModel = gameModel.addStuckPlayer()
       if (gameModel.stuckPlayers.size == gameModel.players.size - 1) {
@@ -52,8 +52,8 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   def previousRound(): Integer = {
     updateMrXVisibility()
-    gameModel.decreaseRound()
-    gameModel.updateTotalRound()
+    gameModel = gameModel.decreaseRound()
+    gameModel = gameModel.updateTotalRound()
     gameModel.round
   }
 
@@ -86,29 +86,26 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def move(newPosition: Int, ticketType: TicketType): Station = {
-    if(validateMove(newPosition, ticketType)) {
-      val newStation = undoManager.doStep(new MoveCommand(gameModel.getCurrentPlayer.station.number, newPosition, ticketType))
-      publish(new PlayerMoved)
-
-      if (checkDetectiveWin()) {
-        winGame(gameModel.getLastPlayer)
-      }
-      if (checkMrXWin()) {
-        winGame(gameModel.getLastPlayer)
-      }
-      newStation
-    } else {
-      gameModel.getCurrentPlayer.station
+    if(!validateMove(newPosition, ticketType)) {
+      return gameModel.getCurrentPlayer.station
     }
+    val newStation = undoManager.doStep(new MoveCommand(gameModel.getCurrentPlayer.station.number, newPosition, ticketType))
+    publish(new PlayerMoved)
+
+    if (checkDetectiveWin()) winGame(gameModel.getCurrentPlayer)
+    if (checkMrXWin()) winGame(gameModel.getCurrentPlayer)
+    nextRound()
+    println("NEXT_ROUND")
+    newStation
   }
 
-  def undoValidateAndMove(): Station = {
+  def undoMove(): Station = {
     val newStation = undoManager.undoStep()
     publish(new PlayerMoved)
     newStation
   }
 
-  def redoValidateAndMove(): Station = {
+  def redoMove(): Station = {
     val newStation = undoManager.redoStep()
     publish(new PlayerMoved)
     newStation
@@ -129,7 +126,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def winGame(winningPlayer: DetectiveInterface): Boolean = {
-    gameModel.winGame(winningPlayer)
+    gameModel = gameModel.winGame(winningPlayer)
     publish(new PlayerWin)
     gameModel.win
   }
