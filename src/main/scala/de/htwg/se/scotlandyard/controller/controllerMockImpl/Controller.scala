@@ -12,14 +12,12 @@ import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInt
 import java.awt.Color
 import scala.swing.Publisher
 
-class Controller @Inject()(override var gameInitializer: GameInitializerInterface,
-                           override var fileIO: FileIOInterface) extends ControllerInterface with Publisher {
+class Controller @Inject()(override val gameInitializer: GameInitializerInterface,
+                           override val fileIO: FileIOInterface) extends ControllerInterface with Publisher {
 
   override def load(): Boolean = true
 
   override def save(): Boolean = true
-
-  override def initPlayers(nPlayer: Int): Integer = nPlayer
 
   override def nextRound(): Integer = 2
 
@@ -64,4 +62,5 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   override def updateLobby(): Boolean = true
 
+  override def initialize(nPlayer: Int): Int = nPlayer
 }

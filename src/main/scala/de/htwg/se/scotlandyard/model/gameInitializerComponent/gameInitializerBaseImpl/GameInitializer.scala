@@ -41,7 +41,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
 
   val injector = Guice.createInjector(new ScotlandYardModule)
 
-  override def initialize(nPlayers: Int = 3): Boolean = {
+  override def initialize(nPlayers: Int = 3): GameModel = {
     GameModel.round = 1
     GameModel.totalRound = 1
     GameModel.win = false

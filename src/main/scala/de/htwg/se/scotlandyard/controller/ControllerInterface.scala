@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.controller
 
-import de.htwg.se.scotlandyard.model.Station
+import de.htwg.se.scotlandyard.model.{GameModel, Station}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
@@ -10,13 +10,12 @@ import java.awt.Color
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
+  val gameInitializer: GameInitializerInterface
+  val fileIO: FileIOInterface
 
-  var gameInitializer: GameInitializerInterface
-  var fileIO: FileIOInterface
-
+  def initialize(nPlayer: Int = 3): Int
   def load(): Boolean
   def save(): Boolean
-  def initPlayers(nPlayer: Int): Integer
   def nextRound(): Integer
   def previousRound(): Integer
   def move(newPosition: Int, ticketType: TicketType): Station

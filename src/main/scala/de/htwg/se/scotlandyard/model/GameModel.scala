@@ -6,15 +6,15 @@ import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXIn
 import scala.collection.mutable
 
 case class GameModel(
-                      var stations: List[Station] = List(),
-                      var players: List[DetectiveInterface] = List(),
-                      var round = 1, // counter of moves (increases by 1 when a player moved)
-                      var totalRound = 1, // number of total rounds (increases by 1 when every player has moved once)
-                      var win = false,
-                      var gameRunning = false,
-                      var winningPlayer: DetectiveInterface = _,
-                      var stuckPlayers: mutable.Set[DetectiveInterface] = scala.collection.mutable.Set[DetectiveInterface](),
-                                            WINNING_ROUND = 24, //24
+                      stations: List[Station] = List(),
+                      players: List[DetectiveInterface] = List(),
+                      round: Int =  1, // counter of moves (increases by 1 when a player moved)
+                      totalRound: Int =  1, // number of total rounds (increases by 1 when every player has moved once)
+                      win: Boolean = false,
+                      gameRunning: Boolean = false,
+                      winningPlayer: DetectiveInterface = _,
+                      stuckPlayers: Set[DetectiveInterface] = Set(),
+                      WINNING_ROUND: Int = 24, //24
                       MRX_VISIBLE_ROUNDS: List[Int] = List(3, 8, 13, 18, 24)
                     ) {
 
@@ -42,14 +42,21 @@ case class GameModel(
     }
   }
 
-  def updateTotalRound(): Integer = {
-    totalRound = (round.toDouble / players.length.toDouble).ceil.toInt
-    totalRound
+  def updateTotalRound(): GameModel = {
+    copy(totalRound = (round.toDouble / players.length.toDouble).ceil.toInt)
   }
 
   def updatePlayerPosition(newPosition: Int): Station = {
     getCurrentPlayer.station = stations(newPosition)
     getCurrentPlayer.station
+  }
+
+  def addStuckPlayer(): GameModel = {
+    copy(stuckPlayers = this.stuckPlayers + this.getCurrentPlayer)
+  }
+
+  def winGame(winningPlayer: DetectiveInterface): GameModel = {
+    copy(winningPlayer = winningPlayer, gameRunning = false, win = true)
   }
 
   def incrementTickets(x: Int): Int = {x + 1}

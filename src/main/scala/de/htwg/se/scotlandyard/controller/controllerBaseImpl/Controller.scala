@@ -2,9 +2,8 @@ package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model
-import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, MoveCommand, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame, UndoManager}
-import de.htwg.se.scotlandyard.model.GameModel.{stuckPlayers}
-import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
+import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
+import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
@@ -12,11 +11,13 @@ import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInt
 
 import java.awt.Color
 import scala.swing.Publisher
+import scala.util.control.Breaks.{break, breakable}
 
-class Controller @Inject()(override var gameInitializer: GameInitializerInterface,
-                           override var fileIO: FileIOInterface) extends ControllerInterface with Publisher {
+class Controller @Inject()(override val gameInitializer: GameInitializerInterface,
+                           override val fileIO: FileIOInterface,
+                           private var gameModel: GameModel) extends ControllerInterface with Publisher {
 
-  private val undoManager = new UndoManager()
+  private val undoManager = new UndoManager(gameModel)
 
   def load(): Boolean = {
     fileIO.load()
@@ -24,56 +25,56 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   def save(): Boolean = {
-    fileIO.save()
+    fileIO.save(gameModel)
     true
   }
 
-  def initPlayers(nPlayer: Int): Integer = {
-    gameInitializer.initialize(nPlayer)
+  override def initialize(nPlayers: Int = 3): Int = {
+    gameInitializer.initialize(nPlayers)
     publish(new NumberOfPlayersChanged)
-    GameModel.players.length
+    gameModel.players.length
   }
 
   def nextRound(): Integer = {
     updateMrXVisibility()
-    GameModel.round += 1
-    GameModel.updateTotalRound()
+    gameModel.round += 1
+    gameModel.updateTotalRound()
     if (!checkIfPlayerIsAbleToMove()) {
-      stuckPlayers.add(GameModel.getCurrentPlayer)
-      if (stuckPlayers.size == GameModel.players.size - 1) {
-        winGame(GameModel.getCurrentPlayer)
+      gameModel = gameModel.addStuckPlayer()
+      if (gameModel.stuckPlayers.size == gameModel.players.size - 1) {
+        winGame(gameModel.getCurrentPlayer)
       } else {
         nextRound()
       }
     }
-    GameModel.round
+    gameModel.round
   }
 
   def previousRound(): Integer = {
     updateMrXVisibility()
-    GameModel.round -= 1
-    GameModel.updateTotalRound()
-    GameModel.round
+    gameModel.round -= 1
+    gameModel.updateTotalRound()
+    gameModel.round
   }
 
   def checkMrXVisibility(): Boolean = {
-    GameModel.MRX_VISIBLE_ROUNDS.contains(GameModel.totalRound)
+    gameModel.MRX_VISIBLE_ROUNDS.contains(gameModel.totalRound)
   }
 
   private def checkIfPlayerIsAbleToMove(): Boolean = {
-    GameModel.getCurrentPlayer.station.stationType match {
+    gameModel.getCurrentPlayer.station.stationType match {
       case StationType.Taxi =>
-        GameModel.getCurrentPlayer.tickets.taxiTickets > 0
+        gameModel.getCurrentPlayer.tickets.taxiTickets > 0
       case model.StationType.Bus =>
-        GameModel.getCurrentPlayer.tickets.taxiTickets > 0 || GameModel.getCurrentPlayer.tickets.busTickets > 0
+        gameModel.getCurrentPlayer.tickets.taxiTickets > 0 || gameModel.getCurrentPlayer.tickets.busTickets > 0
       case model.StationType.Underground =>
-        GameModel.getCurrentPlayer.tickets.taxiTickets > 0 || GameModel.getCurrentPlayer.tickets.busTickets > 0 || GameModel.getCurrentPlayer.tickets.undergroundTickets > 0
+        gameModel.getCurrentPlayer.tickets.taxiTickets > 0 || gameModel.getCurrentPlayer.tickets.busTickets > 0 || gameModel.getCurrentPlayer.tickets.undergroundTickets > 0
     }
   }
 
   private def checkDetectiveWin(): Boolean = {
-    for (dt <- GameModel.getDetectives) {
-      if (dt.station.number == GameModel.getMrX.station.number) {
+    for (dt <- gameModel.getDetectives) {
+      if (dt.station.number == gameModel.getMrX.station.number) {
         return true
       }
     }
@@ -81,23 +82,23 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   private def checkMrXWin(): Boolean = {
-    GameModel.round == GameModel.WINNING_ROUND * GameModel.players.length
+    gameModel.round == gameModel.WINNING_ROUND * gameModel.players.length
   }
 
   def move(newPosition: Int, ticketType: TicketType): Station = {
-    if(MoveValidator.validateMove(newPosition, ticketType)) {
-      val newStation = undoManager.doStep(new MoveCommand(GameModel.getCurrentPlayer.station.number, newPosition, ticketType))
+    if(validateMove(newPosition, ticketType)) {
+      val newStation = undoManager.doStep(new MoveCommand(gameModel.getCurrentPlayer.station.number, newPosition, ticketType))
       publish(new PlayerMoved)
 
       if (checkDetectiveWin()) {
-        winGame(GameModel.getLastPlayer)
+        winGame(gameModel.getLastPlayer)
       }
       if (checkMrXWin()) {
-        winGame(GameModel.getLastPlayer)
+        winGame(gameModel.getLastPlayer)
       }
       newStation
     } else {
-      GameModel.getCurrentPlayer.station
+      gameModel.getCurrentPlayer.station
     }
   }
 
@@ -117,7 +118,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     val mrX = getMrX
     mrX.isVisible = checkMrXVisibility()
     if (mrX.isVisible) {
-      mrX.lastSeen = GameModel.players.head.station.number.toString
+      mrX.lastSeen = gameModel.players.head.station.number.toString
     }
     mrX.isVisible
   }
@@ -128,55 +129,104 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   def winGame(winningPlayer: DetectiveInterface): Boolean = {
-    GameModel.winningPlayer = winningPlayer
-    GameModel.gameRunning = false
-    GameModel.win = true
+    gameModel.winGame(winningPlayer)
     publish(new PlayerWin)
+    gameModel.win
+  }
+
+  def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
+    if (!isTargetStationInBounds(newPosition)) return false
+    if (gameModel.getCurrentPlayer.station.number == newPosition) return false
+    if (!isMeanOfTransportValid(newPosition, ticketType)) return false
+    if (!isTargetStationEmpty(newPosition)) return false
     true
+  }
+
+  private def isTargetStationInBounds(newPosition: Int): Boolean = {
+    newPosition < gameModel.stations.size && newPosition > 0
+  }
+
+  private def isMeanOfTransportValid(newPosition: Integer, ticketType: TicketType): Boolean = {
+    val player = gameModel.getCurrentPlayer
+    ticketType match {
+      case TicketType.Taxi =>
+        isTransportMoveValid(newPosition)(player.tickets.taxiTickets, player.station.neighbourTaxis)
+      case TicketType.Bus =>
+        if (player.station.stationType == StationType.Taxi) return false
+        isTransportMoveValid(newPosition)(player.tickets.busTickets, player.station.neighbourBuses)
+      case TicketType.Underground =>
+        if (player.station.stationType != StationType.Underground) return false
+        isTransportMoveValid(newPosition)(player.tickets.undergroundTickets, player.station.neighbourUndergrounds)
+      case _ =>
+        if (!player.equals(gameModel.players.head)) return false
+        isBlackMoveValid(newPosition)
+    }
+  }
+
+  private def isTargetStationEmpty(newPosition: Integer): Boolean = {
+    for ((p, index) <- gameModel.players.zipWithIndex) {
+      breakable {
+        if (index == 0 && !gameModel.getCurrentPlayer.equals(gameModel.getMrX)) break
+        if (p.station.number == newPosition) return false
+      }
+    }
+    true
+  }
+
+  private def isTransportMoveValid(newPosition: Int)(tickets: Int, neighbours: Set[Station]): Boolean = {
+    if (tickets <= 0) return false
+    neighbours.contains(gameModel.stations(newPosition))
+  }
+
+  private def isBlackMoveValid(newPosition: Int): Boolean = {
+    if (gameModel.getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets <= 0) return false
+    gameModel.getCurrentPlayer.station.neighbourTaxis.contains(gameModel.stations(newPosition)) ||
+      gameModel.getCurrentPlayer.station.neighbourBuses.contains(gameModel.stations(newPosition)) ||
+      gameModel.getCurrentPlayer.station.neighbourUndergrounds.contains(gameModel.stations(newPosition))
   }
 
   // Getters and Setters
   def getCurrentPlayer: DetectiveInterface = {
-    GameModel.getCurrentPlayer
+    gameModel.getCurrentPlayer
   }
 
   def getMrX: MrXInterface = {
-    GameModel.getMrX
+    gameModel.getMrX
   }
 
   def getPlayersList(): List[DetectiveInterface] = {
-    GameModel.players
+    gameModel.players
   }
 
   def getStations(): List[Station] = {
-    GameModel.stations
+    gameModel.stations
   }
 
   def getTotalRound(): Integer = {
-    GameModel.totalRound
+    gameModel.totalRound
   }
 
   def getWin(): Boolean = {
-    GameModel.win
+    gameModel.win
   }
 
   def getGameRunning(): Boolean = {
-    GameModel.gameRunning
+    gameModel.gameRunning
   }
 
   def getWinningPlayer(): DetectiveInterface = {
-    GameModel.winningPlayer
+    gameModel.winningPlayer
   }
 
   def setPlayerName(inputName: String, index: Int): Boolean = {
     var returnValue: Boolean = false
-    returnValue = GameModel.players(index).setPlayerName(inputName)
+    returnValue = gameModel.players(index).setPlayerName(inputName)
     publish(new PlayerNameChanged)
     returnValue
   }
 
   def setPlayerColor(newColor: String, index: Int): Color = {
-    val returnValue = GameModel.players(index).setPlayerColor(newColor)
+    val returnValue = gameModel.players(index).setPlayerColor(newColor)
     publish(new PlayerColorChanged)
     returnValue
   }

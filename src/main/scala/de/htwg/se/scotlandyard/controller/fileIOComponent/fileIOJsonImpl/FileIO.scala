@@ -17,12 +17,12 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
 
   var pathname = "ScotlandYard.json"
 
-  override def load(): Boolean = {
+  override def load(): GameModel = {
     val source: String = Source.fromFile(pathname).getLines.mkString
     val json = Json.parse(source)
 
-    GameModel.round = (json \ "round").get.toString().toInt
-    GameModel.totalRound = (json \ "totalRound").get.toString().toInt
+    val round = (json \ "round").get.toString().toInt
+    val totalRound = (json \ "totalRound").get.toString().toInt
     val name = (json \ "mrX" \ "name").get.toString()
     val stationNumber = (json \ "mrX" \ "stationNumber").get.toString().toInt
     val isVisible = (json \ "mrX" \ "isVisible").get.toString().toBoolean
@@ -55,43 +55,42 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     true
   }
 
-  override def save(): Boolean = {
+  override def save(gameModel: GameModel): Boolean = {
     var history = new JsArray()
 
-    for(h <- GameModel.getMrX.history) {
+    for(h <- gameModel.getMrX.history) {
       history = history.append(Json.obj(
         "transport" -> h
       ))
     }
-
     val mrx = Json.obj(
-      "name"         ->  GameModel.getMrX.name,
-      "stationNumber"       ->  GameModel.getMrX.station.number.toInt,
-      "isVisible"           ->  GameModel.getMrX.isVisible,
-      "lastSeen"            ->  GameModel.getMrX.lastSeen,
-      "blackTickets"        ->  GameModel.getMrX.tickets.blackTickets,
-      "taxiTickets"         ->  GameModel.getMrX.tickets.taxiTickets,
-      "busTickets"          ->  GameModel.getMrX.tickets.busTickets,
-      "undergroundTickets"  ->  GameModel.getMrX.tickets.undergroundTickets,
+      "name"         ->  gameModel.getMrX.name,
+      "stationNumber"       ->  gameModel.getMrX.station.number.toInt,
+      "isVisible"           ->  gameModel.getMrX.isVisible,
+      "lastSeen"            ->  gameModel.getMrX.lastSeen,
+      "blackTickets"        ->  gameModel.getMrX.tickets.blackTickets,
+      "taxiTickets"         ->  gameModel.getMrX.tickets.taxiTickets,
+      "busTickets"          ->  gameModel.getMrX.tickets.busTickets,
+      "undergroundTickets"  ->  gameModel.getMrX.tickets.undergroundTickets,
       "history"             ->  history
     )
 
     var detectives = new JsArray()
-    for(i <- 1 to GameModel.players.length - 1) {
+    for(i <- 1 to gameModel.players.length - 1) {
       detectives = detectives.append(Json.obj(
-        "name"         -> GameModel.players(i).name,
-        "stationNumber"       -> GameModel.players(i).station.number.toInt,
-        "taxiTickets"         -> GameModel.players(i).tickets.taxiTickets,
-        "busTickets"          -> GameModel.players(i).tickets.busTickets,
-        "undergroundTickets"  -> GameModel.players(i).tickets.undergroundTickets,
-        "color"               -> String.valueOf(GameModel.players(i).color.getRGB)
+        "name"         -> gameModel.players(i).name,
+        "stationNumber"       -> gameModel.players(i).station.number.toInt,
+        "taxiTickets"         -> gameModel.players(i).tickets.taxiTickets,
+        "busTickets"          -> gameModel.players(i).tickets.busTickets,
+        "undergroundTickets"  -> gameModel.players(i).tickets.undergroundTickets,
+        "color"               -> String.valueOf(gameModel.players(i).color.getRGB)
       ))
     }
 
     val gameStateJson = Json.obj(
-      "round" -> GameModel.round,
-      "totalRound"   -> GameModel.totalRound,
-      "nPlayer"      -> GameModel.players.length,
+      "round" -> gameModel.round,
+      "totalRound"   -> gameModel.totalRound,
+      "nPlayer"      -> gameModel.players.length,
       "mrX"          -> mrx,
       "detectives"   -> detectives
     )

@@ -11,7 +11,7 @@ object ScotlandYard {
   var gameInitializer: GameInitializerInterface = Guice.createInjector(new ScotlandYardModule).getInstance(classOf[GameInitializerInterface])
 
   def main(args: Array[String]): Unit = {
-    gameInitializer.initialize()
+    controller.initialize()
     new Gui(controller)
   }
 }
