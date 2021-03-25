@@ -15,7 +15,7 @@ val commonDependencies = Seq(
 )
 
 parallelExecution in Test := false
-coverageExcludedPackages := "<empty>;.*Gui.*;.*ScotlandYard"
+coverageExcludedPackages := "<empty>;.*Gui.*;.*ScotlandYard;.*playersMockImpl.*"
 coverageEnabled.in(Test, test) := true
 
 lazy val scotlandYardBase = (project in file(".")).settings(

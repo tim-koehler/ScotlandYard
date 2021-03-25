@@ -21,12 +21,12 @@ class MrXSpec extends WordSpec with Matchers {
         mrX.station.stationType should be (StationType.Taxi)
       }
       "should have a nice String representation when visible" in {
-        mrX.isVisible = false
-        mrX.toString() shouldNot be (null)
+        mrX.isVisible = true
+        mrX.toString() should (include("BLACKTICKETS") and include("MrX") and include("is at"))
       }
       "should have a nice String representation when hidden" in {
-        mrX.isVisible = true
-        mrX.toString() shouldNot be (null)
+        mrX.isVisible = false
+        mrX.toString() should (include("BLACKTICKETS") and include("MrX") and include("(hidden) was"))
       }
       "getHistory should return history" in {
         mrX.getHistory() should be(mrX.history)

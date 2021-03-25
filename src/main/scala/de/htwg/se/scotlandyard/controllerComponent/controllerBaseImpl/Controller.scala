@@ -3,13 +3,14 @@ package de.htwg.se.scotlandyard.controllerComponent.controllerBaseImpl
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.controllerComponent.{ControllerInterface, LobbyChange, MoveCommand, MoveValidator, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame, UndoManager}
-import de.htwg.se.scotlandyard.model.GameModel.{WINNING_ROUND, players, round, stations, stuckPlayers}
-import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
+import de.htwg.se.scotlandyard.model.GameModel.{stuckPlayers}
+import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
 import de.htwg.se.scotlandyard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 
+import java.awt.Color
 import scala.swing.Publisher
 
 class Controller @Inject()(override var gameInitializer: GameInitializerInterface,
@@ -35,24 +36,24 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
 
   def nextRound(): Integer = {
     updateMrXVisibility()
-    round += 1
+    GameModel.round += 1
     GameModel.updateTotalRound()
     if (!checkIfPlayerIsAbleToMove()) {
       stuckPlayers.add(GameModel.getCurrentPlayer)
-      if (stuckPlayers.size == players.size - 1) {
+      if (stuckPlayers.size == GameModel.players.size - 1) {
         winGame(GameModel.getCurrentPlayer)
       } else {
         nextRound()
       }
     }
-    round
+    GameModel.round
   }
 
   def previousRound(): Integer = {
     updateMrXVisibility()
-    round -= 1
+    GameModel.round -= 1
     GameModel.updateTotalRound()
-    round
+    GameModel.round
   }
 
   def checkMrXVisibility(): Boolean = {
@@ -80,7 +81,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
   }
 
   private def checkMrXWin(): Boolean = {
-    round == WINNING_ROUND * players.length
+    GameModel.round == GameModel.WINNING_ROUND * GameModel.players.length
   }
 
   def move(newPosition: Int, ticketType: TicketType): Station = {
@@ -116,7 +117,7 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     val mrX = getMrX
     mrX.isVisible = checkMrXVisibility()
     if (mrX.isVisible) {
-      mrX.lastSeen = players.head.station.number.toString
+      mrX.lastSeen = GameModel.players.head.station.number.toString
     }
     mrX.isVisible
   }
@@ -174,9 +175,8 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     returnValue
   }
 
-  def setPlayerColor(newColor: String, index: Int): Boolean = {
-    var returnValue: Boolean = false
-    returnValue = GameModel.players(index).setPlayerColor(newColor)
+  def setPlayerColor(newColor: String, index: Int): Color = {
+    val returnValue = GameModel.players(index).setPlayerColor(newColor)
     publish(new PlayerColorChanged)
     returnValue
   }

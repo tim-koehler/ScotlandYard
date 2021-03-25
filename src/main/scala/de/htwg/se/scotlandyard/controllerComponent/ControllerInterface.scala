@@ -6,6 +6,7 @@ import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXIn
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
 
+import java.awt.Color
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
@@ -33,7 +34,7 @@ trait ControllerInterface extends Publisher {
   def getWin(): Boolean
   def getWinningPlayer(): DetectiveInterface
   def setPlayerName(inputName: String, index: Int): Boolean
-  def setPlayerColor(newColor: String, index: Int): Boolean
+  def setPlayerColor(newColor: String, index: Int): Color
   def updateLobby(): Boolean
 }
 

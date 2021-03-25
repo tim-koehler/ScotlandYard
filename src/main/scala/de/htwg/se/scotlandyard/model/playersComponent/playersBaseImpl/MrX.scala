@@ -52,8 +52,8 @@ class MrX @Inject() extends DetectiveInterface with MrXInterface
     true
   }
 
-  override def setPlayerColor(newColor: String): Boolean = {
-    true
+  override def setPlayerColor(newColor: String): Color = {
+    this.color
   }
 }
 

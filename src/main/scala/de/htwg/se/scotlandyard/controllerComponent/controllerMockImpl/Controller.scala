@@ -12,6 +12,7 @@ import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInt
 import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import org.scalactic.anyvals.PosInt
 
+import java.awt.Color
 import scala.swing.Publisher
 
 class Controller @Inject()(override var gameInitializer: GameInitializerInterface,
@@ -60,8 +61,8 @@ class Controller @Inject()(override var gameInitializer: GameInitializerInterfac
     true
   }
 
-  override def setPlayerColor(newColor: String, index: Int): Boolean = {
-    true
+  override def setPlayerColor(newColor: String, index: Int): Color = {
+    Color.BLACK
   }
 
   override def updateLobby(): Boolean = true

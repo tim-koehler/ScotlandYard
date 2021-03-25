@@ -46,8 +46,8 @@ class Gui(controller: ControllerInterface) extends Frame {
     preferredSize = new Dimension(screenSize.width - 10, screenSize.height - 60)
     contents = initGamePanel()
     centerOnScreen()
-    Dialog.showMessage(null, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")
-    Dialog.showMessage(null, "MrX is at Station: " + controller.getMrX.station.number, "MrX Position")
+    Dialog.showMessage(this, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")
+    Dialog.showMessage(this, "MrX is at Station: " + controller.getMrX.station.number, "MrX Position")
   }
 
   def showWinningDialog(): Unit = {
@@ -57,7 +57,7 @@ class Gui(controller: ControllerInterface) extends Frame {
     } else {
       winningMessage = controller.getWinningPlayer().name + " has caught MrX at Station " + controller.getWinningPlayer().station.number + " !!!"
     }
-    Dialog.showMessage(null, winningMessage, "WIN")
+    Dialog.showMessage(this, winningMessage, "WIN")
     this.dispose()
   }
 

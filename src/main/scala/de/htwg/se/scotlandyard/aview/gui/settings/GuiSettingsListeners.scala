@@ -61,10 +61,10 @@ class GuiSettingsListeners(controller: ControllerInterface, gui: Gui) {
     reactions += {
       case e: ButtonClicked =>
         Try(controller.load()) match {
-          case Success(v) => Dialog.showMessage(null, "Game successfully Loaded!", "Load");
+          case Success(v) => Dialog.showMessage(gui, "Game successfully Loaded!", "Load");
 
             controller.startGame()
-          case Failure(e) => Dialog.showMessage(null, "An Error occured! The game was not loaded!", "Load", Dialog.Message.Error);
+          case Failure(e) => Dialog.showMessage(gui, "An Error occured! The game was not loaded!", "Load", Dialog.Message.Error);
             e.printStackTrace() // for debug purpose
         }
     }

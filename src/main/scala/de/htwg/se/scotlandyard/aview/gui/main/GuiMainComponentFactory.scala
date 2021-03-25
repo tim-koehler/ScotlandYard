@@ -87,8 +87,8 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
         contents += new MenuItem(Action("Save") {
           //TODO: Fancy Select Folder menu
           Try(controller.save()) match {
-            case Success(v) => Dialog.showMessage(null, "Game successfully saved!", "Saved")
-            case Failure(e) => Dialog.showMessage(null, "An Error occured! The game was not saved!", "Save", Dialog.Message.Error);
+            case Success(v) => Dialog.showMessage(this, "Game successfully saved!", "Saved")
+            case Failure(e) => Dialog.showMessage(this, "An Error occured! The game was not saved!", "Save", Dialog.Message.Error);
               e.printStackTrace() // for debug purpose
           }
         })
@@ -108,13 +108,13 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
       }
       contents += new Menu("Help") {
         contents += new MenuItem(Action("Info") {
-          Dialog.showMessage(null, "All possible starting Stations for Mr.X are:\n35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170 and 172", "Info")
+          Dialog.showMessage(this, "All possible starting Stations for Mr.X are:\n35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170 and 172", "Info")
         })
         contents += new MenuItem(Action("www.github.com/tim-koehler/ScotlandYard") {
-          Dialog.showMessage(null, "Not yet implemented", ": (")
+          Dialog.showMessage(this, "Not yet implemented", ": (")
         })
         contents += new MenuItem(Action("www.github.com/roland-burke") {
-          Dialog.showMessage(null, "Not yet implemented", ": (")
+          Dialog.showMessage(this, "Not yet implemented", ": (")
         })
       }
     }

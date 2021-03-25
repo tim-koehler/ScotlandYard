@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model.{Station, Tickets}
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 
-import scala.swing.Color
 import java.awt.Color
 
 class Detective @Inject() extends DetectiveInterface {
@@ -25,9 +24,10 @@ class Detective @Inject() extends DetectiveInterface {
       }
    }
 
-   def setPlayerColor(newColor: String): Boolean = {
+   def setPlayerColor(newColor: String): Color = {
+      val oldColor = this.color
       this.color = Color.decode(newColor)
-      true
+      oldColor
    }
 
    override def toString(): String = {

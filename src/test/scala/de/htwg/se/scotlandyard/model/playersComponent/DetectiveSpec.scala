@@ -5,6 +5,8 @@ import de.htwg.se.scotlandyard.model.{Station, StationType, Tickets}
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.Detective
 import org.scalatest._
 
+import java.awt.Color
+
 
 class DetectiveSpec extends WordSpec with Matchers {
   "A Detective" when {
@@ -19,6 +21,13 @@ class DetectiveSpec extends WordSpec with Matchers {
       }
       "have a nice String representation" in {
         detective.toString() should not be(null)
+      }
+    }
+    "setPlayerColor is called" should {
+      "return old color" in {
+        val detective = new Detective()
+        detective.color = Color.BLUE
+        detective.setPlayerColor("#ffffff") should be(Color.BLUE)
       }
     }
   }
