@@ -18,13 +18,13 @@ import scala.swing.Point
 
 class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends GameInitializerInterface {
   val stationsJsonFilePath = "./resources/stations.json"
-  val MRX_COLOR = Color.BLACK
-  val DT1_COLOR = Color.BLUE
-  val DT2_COLOR = Color.decode("#1c8c1c")
-  val DT3_COLOR = Color.decode("#de991b")
-  val DT4_COLOR = Color.MAGENTA
-  val DT5_COLOR = Color.RED
-  val DT6_COLOR = Color.decode("#2a9fcc")
+  val MRX_COLOR: Color = Color.BLACK
+  val DT1_COLOR: Color = Color.BLUE
+  val DT2_COLOR: Color = Color.decode("#1c8c1c")
+  val DT3_COLOR: Color = Color.decode("#de991b")
+  val DT4_COLOR: Color = Color.MAGENTA
+  val DT5_COLOR: Color = Color.RED
+  val DT6_COLOR: Color = Color.decode("#2a9fcc")
 
   val colorList = List(MRX_COLOR, DT1_COLOR, DT2_COLOR, DT3_COLOR, DT4_COLOR, DT5_COLOR, DT6_COLOR)
 
@@ -33,7 +33,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
   val misterXStartPositions = List(35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170, 172) // 13
   // drawn Detective Positions
   var drawnPositions: List[Int] = List()
-  val numberOfTaxiTickets = 11
+  val numberOfTaxiTickets = 2
   val numberOfBusTickets = 8
   val numberOfUndergroundTickets = 4
 

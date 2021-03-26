@@ -29,7 +29,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
       if (gameModelTmp.stuckPlayers.size == gameModelTmp.players.size - 1) {
         gameModelTmp = gameModelTmp.setAllPlayerStuck()
       } else {
-        nextRound(gameModelTmp)
+        gameModelTmp = nextRound(gameModelTmp)
       }
     }
     gameModelTmp
