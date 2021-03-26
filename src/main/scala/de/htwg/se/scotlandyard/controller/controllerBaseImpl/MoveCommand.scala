@@ -67,7 +67,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   }
 
   override def undoStep(gameModel: GameModel): GameModel = {
-    if (gameModel.round == 0) {
+    if (gameModel.totalRound == 1 && gameModel.round == 1) {
       return gameModel
     }
     if (gameModel.getCurrentPlayerIndex == 1) {

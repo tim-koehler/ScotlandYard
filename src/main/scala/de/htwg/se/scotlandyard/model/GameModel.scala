@@ -9,8 +9,8 @@ import scala.collection.mutable
 case class GameModel(
                       stations: List[Station] = List(),
                       players: List[DetectiveInterface] = List(),
-                      round: Int =  1, // counter of moves (increases by 1 when a player moved)
-                      totalRound: Int =  1, // number of total rounds (increases by 1 when every player has moved once)
+                      round: Int = 1, // counter of moves (increases by 1 when a player moved)
+                      totalRound: Int = 1, // number of total rounds (increases by 1 when every player has moved once)
                       win: Boolean = false,
                       gameRunning: Boolean = false,
                       winningPlayer: DetectiveInterface = new Detective,
