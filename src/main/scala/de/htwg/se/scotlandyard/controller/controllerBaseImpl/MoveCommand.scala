@@ -7,12 +7,12 @@ import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
 
-class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command{
+class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command {
 
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
   private def defaultDo(gameModel: GameModel): GameModel = {
-    if(gameModel.getCurrentPlayerIndex == 0) {
+    if (gameModel.getCurrentPlayerIndex == 0) {
       gameModel.getMrX.addToHistory(ticketType)
     }
     gameModel.updatePlayerPosition(newPosition)
@@ -67,17 +67,17 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   }
 
   override def undoStep(gameModel: GameModel): GameModel = {
-    if(gameModel.round == 0) {
+    if (gameModel.round == 0) {
       return gameModel
     }
-    if(gameModel.getCurrentPlayerIndex == 1) {
+    if (gameModel.getCurrentPlayerIndex == 1) {
       gameModel.getMrX.removeFromHistory()
     }
-    previousRound(gameModel)
-    gameModel.updatePlayerPosition(currentPosition)
-    gameModel.updateTickets(ticketType)(gameModel.incrementValue)
-    gameModel
-    }
+    val gameModelTmp = previousRound(gameModel)
+    gameModelTmp.updatePlayerPosition(currentPosition)
+    gameModelTmp.updateTickets(ticketType)(gameModelTmp.incrementValue)
+    gameModelTmp
+  }
 
   override def redoStep(gameModel: GameModel): GameModel = {
     defaultDo(gameModel)
