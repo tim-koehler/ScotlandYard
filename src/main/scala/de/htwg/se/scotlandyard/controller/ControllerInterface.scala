@@ -24,8 +24,8 @@ trait ControllerInterface extends Publisher {
   def getGameRunning(): Boolean
   def getCurrentPlayer: DetectiveInterface
   def getMrX: MrXInterface
-  def getPlayersList(): List[DetectiveInterface]
-  def getStations(): List[Station]
+  def getPlayersList(): Vector[DetectiveInterface]
+  def getStations(): Vector[Station]
   def getTotalRound(): Integer
   def getWin(): Boolean
   def getWinningPlayer(): DetectiveInterface

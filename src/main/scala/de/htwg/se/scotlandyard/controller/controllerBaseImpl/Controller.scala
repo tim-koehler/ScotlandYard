@@ -144,11 +144,11 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     gameModel.getMrX
   }
 
-  def getPlayersList(): List[DetectiveInterface] = {
+  def getPlayersList(): Vector[DetectiveInterface] = {
     gameModel.players
   }
 
-  def getStations(): List[Station] = {
+  def getStations(): Vector[Station] = {
     gameModel.stations
   }
 

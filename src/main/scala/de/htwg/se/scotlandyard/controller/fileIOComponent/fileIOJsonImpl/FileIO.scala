@@ -45,7 +45,7 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     val mrx = gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, tickets, history, gameModel.stations)
 
     val detectivesJson: JsArray = (json \ "detectives").as[JsArray]
-    var detectives: List[DetectiveInterface] = List()
+    var detectives: Vector[DetectiveInterface] = Vector()
 
     for(detective <- detectivesJson.value) {
       val name = (detective \ "name").get.toString()
@@ -54,10 +54,10 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
       val busTickets = (detective \ "busTickets").get.toString().toInt
       val undergroundTickets = (detective \ "undergroundTickets").get.toString().toInt
       val color = (detective \ "color").get.toString()
-      detectives = gameInitializer.initDetectiveFromLoad(formatString(name), stationNumber, Tickets(taxiTickets, busTickets, undergroundTickets), Color.decode(formatString(color)), gameModel.stations) :: detectives
+      detectives = detectives :+ gameInitializer.initDetectiveFromLoad(formatString(name), stationNumber, Tickets(taxiTickets, busTickets, undergroundTickets), Color.decode(formatString(color)), gameModel.stations)
     }
 
-    val players = mrx :: detectives
+    val players = mrx +: detectives
 
     gameModel.copy(players = players, round = round, totalRound = totalRound)
   }

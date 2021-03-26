@@ -20,11 +20,11 @@ trait GameInitializerInterface {
   val DT5_COLOR: Color
   val DT6_COLOR: Color
 
-  val detectiveStartPositions: List[Int]
-  val misterXStartPositions: List[Int]
+  val detectiveStartPositions: Vector[Int]
+  val misterXStartPositions: Vector[Int]
   var MAX_DETECTIVE_LIST_INDEX: Int
   var MAX_MISTERX_LIST_INDEX: Int
-  var drawnPositions: List[Int]
+  var drawnPositions: Vector[Int]
   val numberOfTaxiTickets: Int
   val numberOfBusTickets: Int
   val numberOfUndergroundTickets: Int
@@ -32,7 +32,7 @@ trait GameInitializerInterface {
 
   def initialize(nPlayer: Int): GameModel
 
-  def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: List[Station]): DetectiveInterface
-  def getColorList(): List[Color]
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: List[Station]): MrXInterface
+  def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: Vector[Station]): DetectiveInterface
+  def getColorList(): Vector[Color]
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: Vector[Station]): MrXInterface
 }

@@ -26,14 +26,14 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
   val DT5_COLOR: Color = Color.RED
   val DT6_COLOR: Color = Color.decode("#2a9fcc")
 
-  val colorList = List(MRX_COLOR, DT1_COLOR, DT2_COLOR, DT3_COLOR, DT4_COLOR, DT5_COLOR, DT6_COLOR)
+  val colorList = Vector(MRX_COLOR, DT1_COLOR, DT2_COLOR, DT3_COLOR, DT4_COLOR, DT5_COLOR, DT6_COLOR)
 
   // real starting positions
-  val detectiveStartPositions = List(13, 26, 29, 34, 50, 53, 91, 94, 103, 112, 117, 123, 138, 141, 155, 174) // 16
-  val misterXStartPositions = List(35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170, 172) // 13
+  val detectiveStartPositions = Vector(13, 26, 29, 34, 50, 53, 91, 94, 103, 112, 117, 123, 138, 141, 155, 174) // 16
+  val misterXStartPositions = Vector(35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170, 172) // 13
   // drawn Detective Positions
-  var drawnPositions: List[Int] = List()
-  val numberOfTaxiTickets = 2
+  var drawnPositions: Vector[Int] = Vector()
+  val numberOfTaxiTickets = 11
   val numberOfBusTickets = 8
   val numberOfUndergroundTickets = 4
 
@@ -47,11 +47,11 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     GameModel(stations = stations, players = initPlayers(nPlayers, stations), gameRunning = true, stuckPlayers = Set[DetectiveInterface]())
   }
   
-  def getColorList(): List[Color] = {
+  def getColorList(): Vector[Color] = {
     this.colorList
   }
 
-  def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: List[Station]): DetectiveInterface = {
+  def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: Vector[Station]): DetectiveInterface = {
     val st = stations(stationNumber)
     val detective = injector.getInstance(classOf[DetectiveInterface])
     detective.name = name
@@ -62,7 +62,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     detective
   }
 
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: List[Station]): MrXInterface = {
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: Vector[Station]): MrXInterface = {
     val mrx = injector.getInstance(classOf[MrXInterface])
     mrx.station = stations(stationNumber)
     mrx.name = name
@@ -73,7 +73,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     mrx
   }
 
-  private def initStations(): List[Station] = {
+  private def initStations(): Vector[Station] = {
     val source: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
     val json = Json.parse(source)
 
@@ -91,7 +91,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
       stationsBuffer += station
     }
 
-    val stations = stationsBuffer.toList.sortWith((s: Station, t: Station) => s.number < t.number)
+    val stations = stationsBuffer.toVector.sortWith((s: Station, t: Station) => s.number < t.number)
 
     // Second loop over json file to set all neighbours. This needs to run after the first loop because all stations need to be created before getting assigned as neighbours
     for((jsonStation, index) <- jsonStations.zipWithIndex) {
@@ -102,7 +102,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     stations
   }
 
-  private def getNeighboursFor(transportType: String, jsonStation: JsValue, stations: List[Station]): Set[Station] = {
+  private def getNeighboursFor(transportType: String, jsonStation: JsValue, stations: Vector[Station]): Set[Station] = {
     val neighboursIntList = (jsonStation \ "neighbours" \ transportType).as[List[Int]]
     var neighboursSet = Set[Station]()
     for(number <- neighboursIntList) {
@@ -111,7 +111,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     neighboursSet
   }
 
-  private def initPlayers(nPlayer: Int, stations: List[Station]): List[DetectiveInterface] = {
+  private def initPlayers(nPlayer: Int, stations: Vector[Station]): Vector[DetectiveInterface] = {
     var st = stations(drawMisterXPosition())
     val mrX = injector.getInstance(classOf[MrXInterface])
     mrX.history = mutable.Stack()
@@ -128,9 +128,8 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     }
     distributeTicketsToMrX(mrX)
     distributeTicketsToDetectives(players)
-    drawnPositions = List()
     players.head.asInstanceOf[MrXInterface].history = mutable.Stack()
-    players
+    players.toVector
   }
 
   private def drawMisterXPosition(nonRandomPosition: Integer = -1): Int = {
@@ -150,7 +149,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
       startPosIndex = r.nextInt(MAX_DETECTIVE_LIST_INDEX)
     }
     while (drawnPositions.contains(startPosIndex))
-    drawnPositions = startPosIndex :: drawnPositions
+      drawnPositions = drawnPositions :+ startPosIndex
     detectiveStartPositions(startPosIndex)
   }
 

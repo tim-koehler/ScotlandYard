@@ -27,9 +27,9 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   override def getMrX: MrXInterface = new MrX()
 
-  override def getPlayersList(): List[DetectiveInterface] = List(new MrX, new Detective, new Detective)
+  override def getPlayersList(): Vector[DetectiveInterface] = Vector(new MrX, new Detective, new Detective)
 
-  override def getStations(): List[Station] = List(new Station(0, StationType.Taxi))
+  override def getStations(): Vector[Station] = Vector(new Station(0, StationType.Taxi))
 
   override def getTotalRound(): Integer = 3
 

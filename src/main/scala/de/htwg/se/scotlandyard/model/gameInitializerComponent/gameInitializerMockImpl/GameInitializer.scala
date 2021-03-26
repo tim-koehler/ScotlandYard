@@ -20,9 +20,9 @@ class GameInitializer() extends GameInitializerInterface{
   override val DT4_COLOR: Color = Color.PINK
   override val DT5_COLOR: Color = Color.YELLOW
   override val DT6_COLOR: Color = Color.CYAN
-  override val detectiveStartPositions: List[Int] = List(1)
-  override val misterXStartPositions: List[Int] = List(3)
-  override var drawnPositions: List[Int] = _
+  override val detectiveStartPositions: Vector[Int] = Vector(1)
+  override val misterXStartPositions: Vector[Int] = Vector(3)
+  override var drawnPositions: Vector[Int] = _
   override val numberOfTaxiTickets: Int = 5
   override val numberOfBusTickets: Int = 3
   override val numberOfUndergroundTickets: Int = 1
@@ -34,9 +34,9 @@ class GameInitializer() extends GameInitializerInterface{
   override var MAX_DETECTIVE_LIST_INDEX: Int = 0
   override var MAX_MISTERX_LIST_INDEX: Int = 2
 
-  override def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: List[Station]): DetectiveInterface = new Detective
-  override def getColorList(): List[Color] = List(MRX_COLOR, DT1_COLOR)
+  override def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: Vector[Station]): DetectiveInterface = new Detective
+  override def getColorList(): Vector[Color] = Vector(MRX_COLOR, DT1_COLOR)
 
-  override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: List[Station]): MrXInterface = new MrX
+  override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: Vector[Station]): MrXInterface = new MrX
   override val tuiMap: TuiMapInterface = new TuiMap()
 }

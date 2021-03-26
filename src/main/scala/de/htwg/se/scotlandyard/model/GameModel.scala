@@ -7,8 +7,8 @@ import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXIn
 import scala.collection.mutable
 
 case class GameModel(
-                      stations: List[Station] = List(),
-                      players: List[DetectiveInterface] = List(),
+                      stations: Vector[Station] = Vector(),
+                      players: Vector[DetectiveInterface] = Vector(),
                       round: Int = 1, // counter of moves (increases by 1 when a player moved)
                       totalRound: Int = 1, // number of total rounds (increases by 1 when every player has moved once)
                       win: Boolean = false,
@@ -17,7 +17,7 @@ case class GameModel(
                       stuckPlayers: Set[DetectiveInterface] = Set(),
                       allPlayerStuck: Boolean = false,
                       WINNING_ROUND: Int = 24, //24
-                      MRX_VISIBLE_ROUNDS: List[Int] = List(3, 8, 13, 18, 24)
+                      MRX_VISIBLE_ROUNDS: Vector[Int] = Vector(3, 8, 13, 18, 24)
                     ) {
 
   def getCurrentPlayer: DetectiveInterface = {
@@ -34,7 +34,7 @@ case class GameModel(
   }
 
   def getMrX: MrXInterface = players.head.asInstanceOf[MrXInterface]
-  def getDetectives: List[DetectiveInterface] = players.drop(1)
+  def getDetectives: Vector[DetectiveInterface] = players.drop(1)
 
   def getCurrentPlayerIndex: Integer = {
     if (round % players.length == 0) {

@@ -62,7 +62,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
 
     val players = mrx :: detectives
 
-    gameModel.copy(players = players, round = round, totalRound = totalRound)
+    gameModel.copy(players = players.toVector, round = round, totalRound = totalRound)
   }
 
   override def save(gameModel: GameModel): Boolean = {
