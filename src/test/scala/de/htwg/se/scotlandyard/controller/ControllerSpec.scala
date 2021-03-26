@@ -16,7 +16,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       val gameInitializer = new GameInitializer(new TuiMap)
       var gameModel = gameInitializer.initialize(5)
 
-      val controller = new Controller(gameInitializer, new FileIO(gameInitializer), gameModel)
+      val controller = new Controller(gameInitializer, new FileIO(gameInitializer))
 
       "should validateAndMove" in {
         gameInitializer.initialize(5)

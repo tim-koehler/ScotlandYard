@@ -15,6 +15,7 @@ case class GameModel(
                       gameRunning: Boolean = false,
                       winningPlayer: DetectiveInterface = new Detective,
                       stuckPlayers: Set[DetectiveInterface] = Set(),
+                      allPlayerStuck: Boolean = false,
                       WINNING_ROUND: Int = 24, //24
                       MRX_VISIBLE_ROUNDS: List[Int] = List(3, 8, 13, 18, 24)
                     ) {
@@ -62,6 +63,10 @@ case class GameModel(
 
   def addStuckPlayer(): GameModel = {
     copy(stuckPlayers = this.stuckPlayers + this.getCurrentPlayer)
+  }
+
+  def setAllPlayerStuck(): GameModel = {
+    copy(allPlayerStuck = true)
   }
 
   def winGame(winningPlayer: DetectiveInterface): GameModel = {

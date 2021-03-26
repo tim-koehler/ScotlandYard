@@ -17,7 +17,7 @@ class gameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
         gameModel.getCurrentPlayer.isInstanceOf[MrX]
       }
       "and the current player Index should be 0" in {
-        gameModel.round = 1
+        //gameModel.round = 1
         gameModel.getCurrentPlayerIndex shouldBe 0
       }
       "tickets counts" in {
@@ -42,11 +42,11 @@ class gameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
     "getLastPlayer() is called" should {
       gameInitializer.initialize(2)
       "return the last detective if Mrx is current Player" in {
-        gameModel.round = 2
+        //gameModel.round = 2
         gameModel.getLastPlayer.name should be("MrX")
       }
       "return the last player if a detective is the current player" in {
-        gameModel.round = 1
+        //gameModel.round = 1
         gameModel.getLastPlayer.name should be("Dt1")
       }
     }

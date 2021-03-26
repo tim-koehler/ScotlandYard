@@ -1,41 +1,90 @@
 package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
 import de.htwg.se.scotlandyard.ScotlandYard.injector
-import de.htwg.se.scotlandyard.controller.ControllerInterface
+import de.htwg.se.scotlandyard.controller.{ControllerInterface, PlayerWin}
+import de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.{GameModel, Station}
+import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
 
 class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command{
 
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
-  private def defaultDo(gameModel: GameModel): Station = {
+  private def defaultDo(gameModel: GameModel): GameModel = {
     if(gameModel.getCurrentPlayerIndex == 0) {
       gameModel.getMrX.addToHistory(ticketType)
     }
     gameModel.updatePlayerPosition(newPosition)
     gameModel.updateTickets(ticketType)(gameModel.incrementTickets)
-    gameModel.getCurrentPlayer.station
+    nextRound(gameModel)
   }
 
-  override def doStep(gameModel: GameModel): Station = {
+  private def nextRound(gameModel: GameModel): GameModel = {
+    var gameModelTmp = gameModel
+    updateMrXVisibility(gameModelTmp)
+    gameModelTmp = gameModelTmp.increaseRound().updateTotalRound()
+    if (!checkIfPlayerIsAbleToMove(gameModelTmp)) {
+      gameModelTmp = gameModelTmp.addStuckPlayer()
+      if (gameModelTmp.stuckPlayers.size == gameModelTmp.players.size - 1) {
+        gameModelTmp = gameModelTmp.setAllPlayerStuck()
+      } else {
+        nextRound(gameModelTmp)
+      }
+    }
+    gameModelTmp
+  }
+
+  def previousRound(gameModel: GameModel): GameModel = {
+    var gameModelTmp = gameModel
+    updateMrXVisibility(gameModelTmp)
+    gameModelTmp = gameModelTmp.decreaseRound()
+    gameModelTmp = gameModelTmp.updateTotalRound()
+    gameModelTmp
+  }
+
+  private def updateMrXVisibility(gameModel: GameModel): Boolean = {
+    val mrX = gameModel.getMrX
+    mrX.isVisible = checkMrXVisibility(gameModel)
+    if (mrX.isVisible) {
+      mrX.lastSeen = gameModel.players.head.station.number.toString
+    }
+    mrX.isVisible
+  }
+
+  private def checkMrXVisibility(gameModel: GameModel): Boolean = {
+    gameModel.MRX_VISIBLE_ROUNDS.contains(gameModel.totalRound)
+  }
+
+  private def checkIfPlayerIsAbleToMove(gameModel: GameModel): Boolean = {
+    gameModel.getCurrentPlayer.station.stationType match {
+      case StationType.Taxi =>
+        gameModel.getCurrentPlayer.tickets.taxiTickets > 0
+      case model.StationType.Bus =>
+        gameModel.getCurrentPlayer.tickets.taxiTickets > 0 || gameModel.getCurrentPlayer.tickets.busTickets > 0
+      case model.StationType.Underground =>
+        gameModel.getCurrentPlayer.tickets.taxiTickets > 0 || gameModel.getCurrentPlayer.tickets.busTickets > 0 || gameModel.getCurrentPlayer.tickets.undergroundTickets > 0
+    }
+  }
+
+  override def doStep(gameModel: GameModel): GameModel = {
     defaultDo(gameModel)
   }
 
-  override def undoStep(gameModel: GameModel): Station = {
+  override def undoStep(gameModel: GameModel): GameModel = {
     if(gameModel.round == 0) {
-      return gameModel.getCurrentPlayer.station
+      return gameModel
     }
     if(gameModel.getCurrentPlayerIndex == 1) {
       gameModel.getMrX.removeFromHistory()
     }
-    controller.previousRound()
+    previousRound(gameModel)
     gameModel.updatePlayerPosition(currentPosition)
     gameModel.updateTickets(ticketType)(gameModel.incrementTickets)
-    gameModel.getCurrentPlayer.station
+    gameModel
     }
 
-  override def redoStep(gameModel: GameModel): Station = {
+  override def redoStep(gameModel: GameModel): GameModel = {
     defaultDo(gameModel)
   }
 }

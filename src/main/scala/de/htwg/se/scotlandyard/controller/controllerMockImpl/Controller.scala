@@ -19,18 +19,6 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   override def save(): Boolean = true
 
-  override def nextRound(): Integer = 2
-
-  override def previousRound(): Integer = 1
-
-  override def move(newPosition: Int, ticketType: TicketType): Station = new Station(0, StationType.Taxi)
-
-  override def undoMove(): Station = new Station(0, StationType.Taxi)
-
-  override def redoMove(): Station = new Station(0, StationType.Taxi)
-
-  override def updateMrXVisibility(): Boolean = true
-
   override def startGame(): Boolean = true
 
   override def winGame(winningPlayer: DetectiveInterface): Boolean = false
@@ -63,4 +51,10 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   override def updateLobby(): Boolean = true
 
   override def initialize(nPlayer: Int): GameModel = GameModel()
+
+  override def move(newPosition: Int, ticketType: TicketType): GameModel = GameModel()
+
+  override def undoMove(): GameModel = GameModel()
+
+  override def redoMove(): GameModel = GameModel()
 }

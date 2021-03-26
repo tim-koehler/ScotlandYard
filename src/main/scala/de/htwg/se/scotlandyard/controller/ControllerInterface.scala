@@ -16,12 +16,9 @@ trait ControllerInterface extends Publisher {
   def initialize(nPlayer: Int = 3): GameModel
   def load(): Boolean
   def save(): Boolean
-  def nextRound(): Integer
-  def previousRound(): Integer
-  def move(newPosition: Int, ticketType: TicketType): Station
-  def undoMove(): Station
-  def redoMove(): Station
-  def updateMrXVisibility(): Boolean
+  def move(newPosition: Int, ticketType: TicketType): GameModel
+  def undoMove(): GameModel
+  def redoMove(): GameModel
   def startGame(): Boolean
   def winGame(winningPlayer: DetectiveInterface): Boolean
   def getGameRunning(): Boolean

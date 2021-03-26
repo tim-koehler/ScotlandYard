@@ -17,7 +17,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
                            override val fileIO: FileIOInterface) extends ControllerInterface with Publisher {
 
   private var gameModel: GameModel = initialize(3)
-  private val undoManager = new UndoManager(gameModel)
+  private val undoManager = new UndoManager()
 
   def initialize(nPlayers: Int = 3): GameModel = {
     gameModel = gameInitializer.initialize(nPlayers)
@@ -35,43 +35,6 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     true
   }
 
-  def nextRound(): Integer = {
-    updateMrXVisibility()
-    gameModel = gameModel.increaseRound()
-    gameModel = gameModel.updateTotalRound()
-    if (!checkIfPlayerIsAbleToMove()) {
-      gameModel = gameModel.addStuckPlayer()
-      if (gameModel.stuckPlayers.size == gameModel.players.size - 1) {
-        winGame(gameModel.getCurrentPlayer)
-      } else {
-        nextRound()
-      }
-    }
-    gameModel.round
-  }
-
-  def previousRound(): Integer = {
-    updateMrXVisibility()
-    gameModel = gameModel.decreaseRound()
-    gameModel = gameModel.updateTotalRound()
-    gameModel.round
-  }
-
-  def checkMrXVisibility(): Boolean = {
-    gameModel.MRX_VISIBLE_ROUNDS.contains(gameModel.totalRound)
-  }
-
-  private def checkIfPlayerIsAbleToMove(): Boolean = {
-    gameModel.getCurrentPlayer.station.stationType match {
-      case StationType.Taxi =>
-        gameModel.getCurrentPlayer.tickets.taxiTickets > 0
-      case model.StationType.Bus =>
-        gameModel.getCurrentPlayer.tickets.taxiTickets > 0 || gameModel.getCurrentPlayer.tickets.busTickets > 0
-      case model.StationType.Underground =>
-        gameModel.getCurrentPlayer.tickets.taxiTickets > 0 || gameModel.getCurrentPlayer.tickets.busTickets > 0 || gameModel.getCurrentPlayer.tickets.undergroundTickets > 0
-    }
-  }
-
   private def checkDetectiveWin(): Boolean = {
     for (dt <- gameModel.getDetectives) {
       if (dt.station.number == gameModel.getMrX.station.number) {
@@ -85,50 +48,41 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     gameModel.round == gameModel.WINNING_ROUND * gameModel.players.length
   }
 
-  def move(newPosition: Int, ticketType: TicketType): Station = {
+  def move(newPosition: Int, ticketType: TicketType): GameModel = {
     if(!validateMove(newPosition, ticketType)) {
-      return gameModel.getCurrentPlayer.station
+      return this.gameModel
     }
-    val newStation = undoManager.doStep(new MoveCommand(gameModel.getCurrentPlayer.station.number, newPosition, ticketType))
+    this.gameModel = undoManager.doStep(new MoveCommand(gameModel.getCurrentPlayer.station.number, newPosition, ticketType), this.gameModel)
     publish(new PlayerMoved)
 
+    if (gameModel.allPlayerStuck) winGame(gameModel.getMrX)
     if (checkDetectiveWin()) winGame(gameModel.getCurrentPlayer)
     if (checkMrXWin()) winGame(gameModel.getCurrentPlayer)
-    nextRound()
     println("NEXT_ROUND")
-    newStation
-  }
-
-  def undoMove(): Station = {
-    val newStation = undoManager.undoStep()
-    publish(new PlayerMoved)
-    newStation
-  }
-
-  def redoMove(): Station = {
-    val newStation = undoManager.redoStep()
-    publish(new PlayerMoved)
-    newStation
-  }
-
-  def updateMrXVisibility(): Boolean = {
-    val mrX = getMrX
-    mrX.isVisible = checkMrXVisibility()
-    if (mrX.isVisible) {
-      mrX.lastSeen = gameModel.players.head.station.number.toString
-    }
-    mrX.isVisible
-  }
-
-  def startGame(): Boolean = {
-    publish(new StartGame)
-    true
+    gameModel
   }
 
   def winGame(winningPlayer: DetectiveInterface): Boolean = {
     gameModel = gameModel.winGame(winningPlayer)
     publish(new PlayerWin)
     gameModel.win
+  }
+
+  def undoMove(): GameModel = {
+    this.gameModel = undoManager.undoStep(this.gameModel)
+    publish(new PlayerMoved)
+    this.gameModel
+  }
+
+  def redoMove(): GameModel = {
+    this.gameModel = undoManager.redoStep(this.gameModel)
+    publish(new PlayerMoved)
+    this.gameModel
+  }
+
+  def startGame(): Boolean = {
+    publish(new StartGame)
+    true
   }
 
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
