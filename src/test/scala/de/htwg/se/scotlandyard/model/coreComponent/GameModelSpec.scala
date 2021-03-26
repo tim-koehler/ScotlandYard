@@ -22,21 +22,21 @@ class gameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
       }
       "tickets counts" in {
         val currentTaxiTickets = gameModel.getCurrentPlayer.tickets.taxiTickets
-        gameModel.updateTickets(TicketType.Taxi)(gameModel.incrementTickets) should be(currentTaxiTickets + 1)
+        gameModel.updateTickets(TicketType.Taxi)(gameModel.incrementValue) should be(currentTaxiTickets + 1)
 
         val currentBusTickets = gameModel.getCurrentPlayer.tickets.busTickets
-        gameModel.updateTickets(TicketType.Bus)(gameModel.incrementTickets) should be(currentBusTickets + 1)
+        gameModel.updateTickets(TicketType.Bus)(gameModel.incrementValue) should be(currentBusTickets + 1)
 
         val currentUndergroundTickets = gameModel.getCurrentPlayer.tickets.undergroundTickets
-        gameModel.updateTickets(TicketType.Underground)(gameModel.incrementTickets) should be(currentUndergroundTickets + 1)
+        gameModel.updateTickets(TicketType.Underground)(gameModel.incrementValue) should be(currentUndergroundTickets + 1)
 
         val currentBlackTickets = gameModel.getMrX.tickets.blackTickets
-        gameModel.updateTickets(TicketType.Black)(gameModel.incrementTickets) should be(currentBlackTickets + 1)
+        gameModel.updateTickets(TicketType.Black)(gameModel.incrementValue) should be(currentBlackTickets + 1)
 
-        gameModel.updateTickets(TicketType.Taxi)(gameModel.decrementTickets) should be(currentTaxiTickets)
-        gameModel.updateTickets(TicketType.Bus)(gameModel.decrementTickets) should be(currentBusTickets)
-        gameModel.updateTickets(TicketType.Underground)(gameModel.decrementTickets) should be(currentUndergroundTickets)
-        gameModel.updateTickets(TicketType.Black)(gameModel.decrementTickets) should be(currentBlackTickets)
+        gameModel.updateTickets(TicketType.Taxi)(gameModel.decrementValue) should be(currentTaxiTickets)
+        gameModel.updateTickets(TicketType.Bus)(gameModel.decrementValue) should be(currentBusTickets)
+        gameModel.updateTickets(TicketType.Underground)(gameModel.decrementValue) should be(currentUndergroundTickets)
+        gameModel.updateTickets(TicketType.Black)(gameModel.decrementValue) should be(currentBlackTickets)
       }
     }
     "getLastPlayer() is called" should {

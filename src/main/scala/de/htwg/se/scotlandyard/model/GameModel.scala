@@ -44,21 +44,15 @@ case class GameModel(
     }
   }
 
-  def increaseRound(): GameModel = {
-    copy(round = round + 1)
-  }
-
-  def decreaseRound(): GameModel = {
-    copy(round = round + 1)
-  }
-
-  def updateTotalRound(): GameModel = {
-    copy(totalRound = (round.toDouble / players.length.toDouble).ceil.toInt)
-  }
-
   def updatePlayerPosition(newPosition: Int): Station = {
     getCurrentPlayer.station = stations(newPosition)
     getCurrentPlayer.station
+  }
+
+  def updateRound(modFunc:Int => Int): GameModel = {
+    val round = modFunc(this.round)
+    val totalRound = (round.toDouble / players.length.toDouble).ceil.toInt
+    copy(round = round, totalRound = totalRound)
   }
 
   def addStuckPlayer(): GameModel = {
@@ -73,8 +67,8 @@ case class GameModel(
     copy(winningPlayer = winningPlayer, gameRunning = false, win = true)
   }
 
-  def incrementTickets(x: Int): Int = {x + 1}
-  def decrementTickets(x: Int): Int = {x - 1}
+  def incrementValue(x: Int): Int = {x + 1}
+  def decrementValue(x: Int): Int = {x - 1}
 
   def updateTickets(ticketType: TicketType)(modFunc:Int => Int): Integer = {
     ticketType match {

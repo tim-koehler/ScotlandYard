@@ -16,14 +16,14 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
       gameModel.getMrX.addToHistory(ticketType)
     }
     gameModel.updatePlayerPosition(newPosition)
-    gameModel.updateTickets(ticketType)(gameModel.incrementTickets)
+    gameModel.updateTickets(ticketType)(gameModel.decrementValue)
     nextRound(gameModel)
   }
 
   private def nextRound(gameModel: GameModel): GameModel = {
     var gameModelTmp = gameModel
     updateMrXVisibility(gameModelTmp)
-    gameModelTmp = gameModelTmp.increaseRound().updateTotalRound()
+    gameModelTmp = gameModelTmp.updateRound(gameModelTmp.incrementValue)
     if (!checkIfPlayerIsAbleToMove(gameModelTmp)) {
       gameModelTmp = gameModelTmp.addStuckPlayer()
       if (gameModelTmp.stuckPlayers.size == gameModelTmp.players.size - 1) {
@@ -38,22 +38,17 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   def previousRound(gameModel: GameModel): GameModel = {
     var gameModelTmp = gameModel
     updateMrXVisibility(gameModelTmp)
-    gameModelTmp = gameModelTmp.decreaseRound()
-    gameModelTmp = gameModelTmp.updateTotalRound()
+    gameModelTmp = gameModelTmp.updateRound(gameModelTmp.decrementValue)
     gameModelTmp
   }
 
   private def updateMrXVisibility(gameModel: GameModel): Boolean = {
     val mrX = gameModel.getMrX
-    mrX.isVisible = checkMrXVisibility(gameModel)
+    mrX.isVisible = gameModel.MRX_VISIBLE_ROUNDS.contains(gameModel.totalRound)
     if (mrX.isVisible) {
       mrX.lastSeen = gameModel.players.head.station.number.toString
     }
     mrX.isVisible
-  }
-
-  private def checkMrXVisibility(gameModel: GameModel): Boolean = {
-    gameModel.MRX_VISIBLE_ROUNDS.contains(gameModel.totalRound)
   }
 
   private def checkIfPlayerIsAbleToMove(gameModel: GameModel): Boolean = {
@@ -80,7 +75,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     }
     previousRound(gameModel)
     gameModel.updatePlayerPosition(currentPosition)
-    gameModel.updateTickets(ticketType)(gameModel.incrementTickets)
+    gameModel.updateTickets(ticketType)(gameModel.incrementValue)
     gameModel
     }
 
