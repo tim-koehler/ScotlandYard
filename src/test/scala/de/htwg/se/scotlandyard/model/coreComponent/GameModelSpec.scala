@@ -43,11 +43,11 @@ class gameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
       gameInitializer.initialize(2)
       "return the last detective if Mrx is current Player" in {
         //gameModel.round = 2
-        gameModel.getLastPlayer.name should be("MrX")
+        gameModel.getPreviousPlayer.name should be("MrX")
       }
       "return the last player if a detective is the current player" in {
         //gameModel.round = 1
-        gameModel.getLastPlayer.name should be("Dt1")
+        gameModel.getPreviousPlayer.name should be("Dt1")
       }
     }
   }

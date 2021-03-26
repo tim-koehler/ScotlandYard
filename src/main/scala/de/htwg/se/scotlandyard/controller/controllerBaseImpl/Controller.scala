@@ -56,9 +56,8 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     publish(new PlayerMoved)
 
     if (gameModel.allPlayerStuck) winGame(gameModel.getMrX)
-    if (checkDetectiveWin()) winGame(gameModel.getCurrentPlayer)
-    if (checkMrXWin()) winGame(gameModel.getCurrentPlayer)
-    println("NEXT_ROUND")
+    if (checkDetectiveWin()) winGame(gameModel.getPreviousPlayer)
+    if (checkMrXWin()) winGame(gameModel.getMrX)
     gameModel
   }
 

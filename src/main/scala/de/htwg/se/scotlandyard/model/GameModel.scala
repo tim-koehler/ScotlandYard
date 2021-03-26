@@ -24,7 +24,7 @@ case class GameModel(
     players(getCurrentPlayerIndex)
   }
 
-  def getLastPlayer: DetectiveInterface = {
+  def getPreviousPlayer: DetectiveInterface = {
     val index = getCurrentPlayerIndex
     if(index == 0) {
       players.last
