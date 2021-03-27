@@ -8,7 +8,7 @@ class FileIOSpec extends WordSpec with Matchers with PrivateMethodTester {
   "FileIO" when {
     "new" should {
       val gameInitializer = new GameInitializer();
-      gameInitializer.initialize(3)
+      val gameModel = gameInitializer.initialize(3)
 
       val jsonFileIO = new de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOJsonImpl.FileIO(gameInitializer)
       val xmlFileIO = new de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOXmlImpl.FileIO(gameInitializer)
@@ -17,11 +17,11 @@ class FileIOSpec extends WordSpec with Matchers with PrivateMethodTester {
       xmlFileIO.pathname = "ScotlandYard_test.xml"
 
       "json load and save" in {
-        jsonFileIO.save(GameModel()) should be(true)
+        jsonFileIO.save(gameModel, gameModel.getMrX(gameModel.players)) should be(true)
         jsonFileIO.load().round should be(1)
       }
       "xml load and save" in {
-        xmlFileIO.save(GameModel()) should be(true)
+        xmlFileIO.save(gameModel ,gameModel.getMrX(gameModel.players)) should be(true)
         xmlFileIO.load().round should be(1)
       }
     }

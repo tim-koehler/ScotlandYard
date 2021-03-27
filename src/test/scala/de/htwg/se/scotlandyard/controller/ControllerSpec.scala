@@ -20,11 +20,11 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
 
       "should validateAndMove" in {
         gameInitializer.initialize(5)
-        gameModel.getMrX.station = gameModel.stations(3)
+        gameModel.getMrX(gameModel.players).station = gameModel.stations(3)
 
         controller.move(2, TicketType.Taxi).number should be(3)
 
-        gameModel.getMrX.station = gameModel.stations(10)
+        gameModel.getMrX(gameModel.players).station = gameModel.stations(10)
         controller.move(2, TicketType.Taxi).number should be(2)
 
         controller.undoMove().number should be(10)
@@ -44,26 +44,11 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       "should return true from setPlayerNames when index is correct" in {
         controller.setPlayerName("Tim", 1) shouldBe true
       }
-      "should return 2 from nextRound Method" in {
-        controller.nextRound() shouldBe(2)
-        gameModel.totalRound shouldBe(1)
-      }
       "should return the correct player from setPlayerNumber" in {
         controller.initialize() shouldBe (3)
       }
-      "and updateMrXVisibility" in {
-        controller.updateMrXVisibility() should be(false)
-      }
       "and setPlayerColor" in {
         controller.setPlayerColor("#ffffff", 1) should be (Color.BLUE)
-      }
-      "and previous round" in {
-        controller.previousRound() should not be(-1)
-      }
-      "and getCurrentPlayer" in{
-        gameInitializer.initialize(3)
-        controller.nextRound()
-        controller.getCurrentPlayer.name should be("Dt1")
       }
       "and getStations" in {
         controller.getStations() should not be(Set[Station]())
@@ -81,7 +66,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         controller.getTotalRound() should be(gameModel.totalRound)
       }
       "and getMrX" in {
-        controller.getMrX should be(gameModel.getMrX)
+        controller.getMrX should be(gameModel.getMrX(gameModel.players))
       }
       "and startGame" in {
         controller.startGame() should be(true)
@@ -123,7 +108,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       "and move should win the game for detectives" in {
         controller.initialize()
         gameModel = gameModel.copy(round = 3)
-        gameModel.getMrX.station = gameModel.stations(1)
+        gameModel.getMrX(gameModel.players).station = gameModel.stations(1)
         gameModel.players(2).station = gameModel.stations(8)
         controller.move(1, TicketType.Taxi).number should be(1)
         gameModel.win should be (true)
@@ -132,7 +117,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
         //TODO: Winning doesnt work correct!
         controller.initialize()
         gameModel = gameModel.copy(totalRound = 24, round = gameModel.players.length * gameModel.WINNING_ROUND - 1)
-        gameModel.getMrX.station = gameModel.stations(1)
+        gameModel.getMrX(gameModel.players).station = gameModel.stations(1)
         gameModel.players(1).station = gameModel.stations(8) // should not be 1 ?
         controller.move(18, TicketType.Taxi).number should be(18)
         gameModel.win should be (true)
@@ -161,7 +146,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester {
       "should return true with a black move" in {
         val gameInitializer = new GameInitializer(new TuiMap)
         gameInitializer.initialize(5)
-        gameModel.getMrX.station = gameModel.stations(34)
+        gameModel.getMrX(gameModel.players).station = gameModel.stations(34)
         controller.validateMove(22, TicketType.Black) should be (true)
       }
       "and winGame" in{

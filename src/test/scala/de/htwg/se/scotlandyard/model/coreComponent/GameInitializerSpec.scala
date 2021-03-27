@@ -31,10 +31,10 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
       station.setNeighbourUndergrounds(Set())
     }
     "load detectives" in {
-      initializer.initDetectiveFromLoad("Bobbie", 5, Tickets(10, 8, 5), Color.GREEN, List()).name should be ("Bobbie")
+      initializer.initDetectiveFromLoad("Bobbie", 5, Tickets(10, 8, 5), Color.GREEN, Vector()).name should be ("Bobbie")
     }
     "load mrX" in {
-      initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3), mutable.Stack(TicketType.Taxi), List()).name should be ("mrX")
+      initializer.initMrXFromLoad("mrX", 23, true, "never", Tickets(98, 98, 98, 3), mutable.Stack(TicketType.Taxi), Vector()).name should be ("mrX")
     }
   }
 }
