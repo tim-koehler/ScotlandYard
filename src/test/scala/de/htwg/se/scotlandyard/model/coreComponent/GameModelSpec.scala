@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
 import de.htwg.se.scotlandyard.model.{TicketType}
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.MrX
 import org.scalatest._
 

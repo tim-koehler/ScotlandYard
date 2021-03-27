@@ -7,7 +7,7 @@ import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 
 import java.awt.Color
 import scala.swing.Publisher

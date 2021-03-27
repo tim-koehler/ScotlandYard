@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.controller.fileIOComponent
 
 import de.htwg.se.scotlandyard.model.GameModel
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
 
 class FileIOSpec extends WordSpec with Matchers with PrivateMethodTester {

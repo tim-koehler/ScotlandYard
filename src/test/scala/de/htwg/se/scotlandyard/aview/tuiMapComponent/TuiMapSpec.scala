@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.tuiMapComponent
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapBaseImpl.TuiMap
 import de.htwg.se.scotlandyard.model.GameModel
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
+import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import org.scalatest.{Matchers, WordSpec}
 
 class TuiMapSpec extends WordSpec with Matchers {

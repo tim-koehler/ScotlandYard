@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.gameInitializerComponent.gameInitializerBaseImpl
+package de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl
 
 import java.awt.Color
 import com.google.inject.{Guice, Inject}
@@ -7,7 +7,7 @@ import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 import play.api.libs.json.{JsArray, JsValue, Json}
 
@@ -37,8 +37,9 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
   val numberOfBusTickets = 8
   val numberOfUndergroundTickets = 4
 
-  override var MAX_DETECTIVE_LIST_INDEX: Int = detectiveStartPositions.length -1
-  override var MAX_MISTERX_LIST_INDEX: Int = misterXStartPositions.length -1
+  //TODO: error when list size is 1 or less
+  override var MAX_DETECTIVE_LIST_INDEX: Int = detectiveStartPositions.length - 1
+  override var MAX_MISTERX_LIST_INDEX: Int = misterXStartPositions.length - 1
 
   val injector = Guice.createInjector(new ScotlandYardModule)
 

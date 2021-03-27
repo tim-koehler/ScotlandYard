@@ -7,8 +7,8 @@ import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import play.api.libs.json._
 
 import scala.collection.mutable
@@ -62,23 +62,23 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     gameModel.copy(players = players, round = round, totalRound = totalRound)
   }
 
-  override def save(gameModel: GameModel): Boolean = {
+  override def save(gameModel: GameModel, mrX: MrXInterface): Boolean = {
     var history = new JsArray()
 
-    for(h <- gameModel.getMrX.history) {
+    for(h <- mrX.history) {
       history = history.append(Json.obj(
         "transport" -> h
       ))
     }
     val mrx = Json.obj(
-      "name"         ->  gameModel.getMrX.name,
-      "stationNumber"       ->  gameModel.getMrX.station.number.toInt,
-      "isVisible"           ->  gameModel.getMrX.isVisible,
-      "lastSeen"            ->  gameModel.getMrX.lastSeen,
-      "blackTickets"        ->  gameModel.getMrX.tickets.blackTickets,
-      "taxiTickets"         ->  gameModel.getMrX.tickets.taxiTickets,
-      "busTickets"          ->  gameModel.getMrX.tickets.busTickets,
-      "undergroundTickets"  ->  gameModel.getMrX.tickets.undergroundTickets,
+      "name"         ->  mrX.name,
+      "stationNumber"       ->  mrX.station.number.toInt,
+      "isVisible"           ->  mrX.isVisible,
+      "lastSeen"            ->  mrX.lastSeen,
+      "blackTickets"        ->  mrX.tickets.blackTickets,
+      "taxiTickets"         ->  mrX.tickets.taxiTickets,
+      "busTickets"          ->  mrX.tickets.busTickets,
+      "undergroundTickets"  ->  mrX.tickets.undergroundTickets,
       "history"             ->  history
     )
 

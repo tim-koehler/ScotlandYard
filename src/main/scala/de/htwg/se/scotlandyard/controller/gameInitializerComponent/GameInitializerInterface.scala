@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.gameInitializerComponent
+package de.htwg.se.scotlandyard.controller.gameInitializerComponent
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, Tickets}

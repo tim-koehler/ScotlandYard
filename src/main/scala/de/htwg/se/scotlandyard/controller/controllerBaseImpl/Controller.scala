@@ -7,7 +7,7 @@ import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketTyp
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 
 import java.awt.Color
 import scala.swing.Publisher
@@ -31,13 +31,13 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def save(): Boolean = {
-    fileIO.save(gameModel)
+    fileIO.save(gameModel, gameModel.getMrX(gameModel.players))
     true
   }
 
   private def checkDetectiveWin(): Boolean = {
-    for (dt <- gameModel.getDetectives) {
-      if (dt.station.number == gameModel.getMrX.station.number) {
+    for (dt <- gameModel.getDetectives(gameModel.players)) {
+      if (dt.station.number == gameModel.getMrX(gameModel.players).station.number) {
         return true
       }
     }
@@ -52,19 +52,20 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     if(!validateMove(newPosition, ticketType)) {
       return this.gameModel
     }
-    this.gameModel = undoManager.doStep(new MoveCommand(gameModel.getCurrentPlayer.station.number, newPosition, ticketType), this.gameModel)
+    val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+    this.gameModel = undoManager.doStep(new MoveCommand(currentPlayer.station.number, newPosition, ticketType), this.gameModel)
     publish(new PlayerMoved)
 
-    if (gameModel.allPlayerStuck) winGame(gameModel.getMrX)
-    if (checkDetectiveWin()) winGame(gameModel.getPreviousPlayer)
-    if (checkMrXWin()) winGame(gameModel.getMrX)
+    if (gameModel.allPlayerStuck) winGame(gameModel.getMrX(gameModel.players))
+    if (checkDetectiveWin()) winGame(gameModel.getPreviousPlayer(gameModel.players, gameModel.round))
+    if (checkMrXWin()) winGame(gameModel.getMrX(gameModel.players))
     gameModel
   }
 
   def winGame(winningPlayer: DetectiveInterface): Boolean = {
-    gameModel = gameModel.winGame(winningPlayer)
+    this.gameModel = gameModel.winGame(gameModel, winningPlayer)
     publish(new PlayerWin)
-    gameModel.win
+    this.gameModel.win
   }
 
   def undoMove(): GameModel = {
@@ -85,10 +86,11 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
+    val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
     if (!isTargetStationInBounds(newPosition)) return false
-    if (gameModel.getCurrentPlayer.station.number == newPosition) return false
-    if (!isMeanOfTransportValid(newPosition, ticketType)) return false
-    if (!isTargetStationEmpty(newPosition)) return false
+    if (currentPlayer.station.number == newPosition) return false
+    if (!isMeanOfTransportValid(currentPlayer, newPosition, ticketType)) return false
+    if (!isTargetStationEmpty(currentPlayer, newPosition)) return false
     true
   }
 
@@ -96,8 +98,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     newPosition < gameModel.stations.size && newPosition > 0
   }
 
-  private def isMeanOfTransportValid(newPosition: Integer, ticketType: TicketType): Boolean = {
-    val player = gameModel.getCurrentPlayer
+  private def isMeanOfTransportValid(player: DetectiveInterface,newPosition: Integer, ticketType: TicketType): Boolean = {
     ticketType match {
       case TicketType.Taxi =>
         isTransportMoveValid(newPosition)(player.tickets.taxiTickets, player.station.neighbourTaxis)
@@ -109,14 +110,14 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
         isTransportMoveValid(newPosition)(player.tickets.undergroundTickets, player.station.neighbourUndergrounds)
       case _ =>
         if (!player.equals(gameModel.players.head)) return false
-        isBlackMoveValid(newPosition)
+        isBlackMoveValid(player, newPosition)
     }
   }
 
-  private def isTargetStationEmpty(newPosition: Integer): Boolean = {
+  private def isTargetStationEmpty(player: DetectiveInterface, newPosition: Integer): Boolean = {
     for ((p, index) <- gameModel.players.zipWithIndex) {
       breakable {
-        if (index == 0 && !gameModel.getCurrentPlayer.equals(gameModel.getMrX)) break
+        if (index == 0 && !player.equals(gameModel.getMrX(gameModel.players))) break
         if (p.station.number == newPosition) return false
       }
     }
@@ -128,20 +129,21 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     neighbours.contains(gameModel.stations(newPosition))
   }
 
-  private def isBlackMoveValid(newPosition: Int): Boolean = {
-    if (gameModel.getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets <= 0) return false
-    gameModel.getCurrentPlayer.station.neighbourTaxis.contains(gameModel.stations(newPosition)) ||
-      gameModel.getCurrentPlayer.station.neighbourBuses.contains(gameModel.stations(newPosition)) ||
-      gameModel.getCurrentPlayer.station.neighbourUndergrounds.contains(gameModel.stations(newPosition))
+  private def isBlackMoveValid(currentPlayer: DetectiveInterface,newPosition: Int): Boolean = {
+
+    if (currentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets <= 0) return false
+    currentPlayer.station.neighbourTaxis.contains(gameModel.stations(newPosition)) ||
+      currentPlayer.station.neighbourBuses.contains(gameModel.stations(newPosition)) ||
+      currentPlayer.station.neighbourUndergrounds.contains(gameModel.stations(newPosition))
   }
 
   // Getters and Setters
   def getCurrentPlayer: DetectiveInterface = {
-    gameModel.getCurrentPlayer
+    gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
   }
 
   def getMrX: MrXInterface = {
-    gameModel.getMrX
+    gameModel.getMrX(gameModel.players)
   }
 
   def getPlayersList(): Vector[DetectiveInterface] = {

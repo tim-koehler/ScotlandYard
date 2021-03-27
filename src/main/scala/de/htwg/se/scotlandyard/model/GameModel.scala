@@ -20,12 +20,12 @@ case class GameModel(
                       MRX_VISIBLE_ROUNDS: Vector[Int] = Vector(3, 8, 13, 18, 24)
                     ) {
 
-  def getCurrentPlayer: DetectiveInterface = {
-    players(getCurrentPlayerIndex)
+  def getCurrentPlayer(players: Vector[DetectiveInterface], round: Int): DetectiveInterface = {
+    players(getCurrentPlayerIndex(players, round))
   }
 
-  def getPreviousPlayer: DetectiveInterface = {
-    val index = getCurrentPlayerIndex
+  def getPreviousPlayer(players: Vector[DetectiveInterface], round: Int): DetectiveInterface = {
+    val index = getCurrentPlayerIndex(players, round)
     if(index == 0) {
       players.last
     } else {
@@ -33,10 +33,10 @@ case class GameModel(
     }
   }
 
-  def getMrX: MrXInterface = players.head.asInstanceOf[MrXInterface]
-  def getDetectives: Vector[DetectiveInterface] = players.drop(1)
+  def getMrX(players: Vector[DetectiveInterface]): MrXInterface = players.head.asInstanceOf[MrXInterface]
+  def getDetectives(players: Vector[DetectiveInterface]): Vector[DetectiveInterface] = players.drop(1)
 
-  def getCurrentPlayerIndex: Integer = {
+  def getCurrentPlayerIndex(players: Vector[DetectiveInterface], round: Int): Int = {
     if (round % players.length == 0) {
       players.length - 1
     } else {
@@ -44,46 +44,46 @@ case class GameModel(
     }
   }
 
-  def updatePlayerPosition(newPosition: Int): Station = {
-    getCurrentPlayer.station = stations(newPosition)
-    getCurrentPlayer.station
+  def updatePlayerPosition(currentPlayer: DetectiveInterface, newPosition: Int): Station = {
+    currentPlayer.station = stations(newPosition)
+    currentPlayer.station
   }
 
-  def updateRound(modFunc:Int => Int): GameModel = {
-    val round = modFunc(this.round)
-    val totalRound = (round.toDouble / players.length.toDouble).ceil.toInt
-    copy(round = round, totalRound = totalRound)
+  def updateRound(gameModel: GameModel, modFunc:Int => Int): GameModel = {
+    val round = modFunc(gameModel.round)
+    val totalRound = (round.toDouble / gameModel.players.length.toDouble).ceil.toInt
+    gameModel.copy(round = round, totalRound = totalRound)
   }
 
-  def addStuckPlayer(): GameModel = {
-    copy(stuckPlayers = this.stuckPlayers + this.getCurrentPlayer)
+  def addStuckPlayer(gameModel: GameModel, player: DetectiveInterface): GameModel = {
+    gameModel.copy(stuckPlayers = gameModel.stuckPlayers + player)
   }
 
-  def setAllPlayerStuck(): GameModel = {
-    copy(allPlayerStuck = true)
+  def setAllPlayerStuck(gameModel: GameModel): GameModel = {
+    gameModel.copy(allPlayerStuck = true)
   }
 
-  def winGame(winningPlayer: DetectiveInterface): GameModel = {
-    copy(winningPlayer = winningPlayer, gameRunning = false, win = true)
+  def winGame(gameModel: GameModel, winningPlayer: DetectiveInterface): GameModel = {
+    gameModel.copy(winningPlayer = winningPlayer, gameRunning = false, win = true)
   }
 
   def incrementValue(x: Int): Int = {x + 1}
   def decrementValue(x: Int): Int = {x - 1}
 
-  def updateTickets(ticketType: TicketType)(modFunc:Int => Int): Integer = {
+  def updateTickets(currentPlayer: DetectiveInterface, ticketType: TicketType)(modFunc:Int => Int): Integer = {
     ticketType match {
       case TicketType.Taxi =>
-        getCurrentPlayer.tickets.taxiTickets = modFunc(getCurrentPlayer.tickets.taxiTickets)
-        getCurrentPlayer.tickets.taxiTickets
+        currentPlayer.tickets.taxiTickets = modFunc(currentPlayer.tickets.taxiTickets)
+        currentPlayer.tickets.taxiTickets
       case TicketType.Bus =>
-        getCurrentPlayer.tickets.busTickets = modFunc(getCurrentPlayer.tickets.busTickets)
-        getCurrentPlayer.tickets.busTickets
+        currentPlayer.tickets.busTickets = modFunc(currentPlayer.tickets.busTickets)
+        currentPlayer.tickets.busTickets
       case TicketType.Underground =>
-        getCurrentPlayer.tickets.undergroundTickets = modFunc(getCurrentPlayer.tickets.undergroundTickets)
-        getCurrentPlayer.tickets.undergroundTickets
+        currentPlayer.tickets.undergroundTickets = modFunc(currentPlayer.tickets.undergroundTickets)
+        currentPlayer.tickets.undergroundTickets
       case _ =>
-        getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets = modFunc(getCurrentPlayer.tickets.blackTickets)
-        getCurrentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets
+        currentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets = modFunc(currentPlayer.tickets.blackTickets)
+        currentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets
     }
   }
 }

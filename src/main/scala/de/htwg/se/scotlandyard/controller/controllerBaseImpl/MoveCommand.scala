@@ -9,25 +9,24 @@ import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
 
 class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command {
 
-  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
-
   private def defaultDo(gameModel: GameModel): GameModel = {
-    if (gameModel.getCurrentPlayerIndex == 0) {
-      gameModel.getMrX.addToHistory(ticketType)
+    if (gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round) == 0) {
+      gameModel.getMrX(gameModel.players).addToHistory(ticketType)
     }
-    gameModel.updatePlayerPosition(newPosition)
-    gameModel.updateTickets(ticketType)(gameModel.decrementValue)
+    val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+    gameModel.updatePlayerPosition(currentPlayer, newPosition)
+    gameModel.updateTickets(currentPlayer, ticketType)(gameModel.decrementValue)
     nextRound(gameModel)
   }
 
   private def nextRound(gameModel: GameModel): GameModel = {
     var gameModelTmp = gameModel
     updateMrXVisibility(gameModelTmp)
-    gameModelTmp = gameModelTmp.updateRound(gameModelTmp.incrementValue)
+    gameModelTmp = gameModelTmp.updateRound(gameModelTmp, gameModelTmp.incrementValue)
     if (!checkIfPlayerIsAbleToMove(gameModelTmp)) {
-      gameModelTmp = gameModelTmp.addStuckPlayer()
+      gameModelTmp = gameModelTmp.addStuckPlayer(gameModelTmp, gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round))
       if (gameModelTmp.stuckPlayers.size == gameModelTmp.players.size - 1) {
-        gameModelTmp = gameModelTmp.setAllPlayerStuck()
+        gameModelTmp = gameModelTmp.setAllPlayerStuck(gameModelTmp)
       } else {
         gameModelTmp = nextRound(gameModelTmp)
       }
@@ -38,12 +37,12 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   def previousRound(gameModel: GameModel): GameModel = {
     var gameModelTmp = gameModel
     updateMrXVisibility(gameModelTmp)
-    gameModelTmp = gameModelTmp.updateRound(gameModelTmp.decrementValue)
+    gameModelTmp = gameModelTmp.updateRound(gameModelTmp, gameModelTmp.decrementValue)
     gameModelTmp
   }
 
   private def updateMrXVisibility(gameModel: GameModel): Boolean = {
-    val mrX = gameModel.getMrX
+    val mrX = gameModel.getMrX(gameModel.players)
     mrX.isVisible = gameModel.MRX_VISIBLE_ROUNDS.contains(gameModel.totalRound)
     if (mrX.isVisible) {
       mrX.lastSeen = gameModel.players.head.station.number.toString
@@ -52,13 +51,14 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   }
 
   private def checkIfPlayerIsAbleToMove(gameModel: GameModel): Boolean = {
-    gameModel.getCurrentPlayer.station.stationType match {
+    val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+    currentPlayer.station.stationType match {
       case StationType.Taxi =>
-        gameModel.getCurrentPlayer.tickets.taxiTickets > 0
+        currentPlayer.tickets.taxiTickets > 0
       case model.StationType.Bus =>
-        gameModel.getCurrentPlayer.tickets.taxiTickets > 0 || gameModel.getCurrentPlayer.tickets.busTickets > 0
+        currentPlayer.tickets.taxiTickets > 0 || currentPlayer.tickets.busTickets > 0
       case model.StationType.Underground =>
-        gameModel.getCurrentPlayer.tickets.taxiTickets > 0 || gameModel.getCurrentPlayer.tickets.busTickets > 0 || gameModel.getCurrentPlayer.tickets.undergroundTickets > 0
+        currentPlayer.tickets.taxiTickets > 0 || currentPlayer.tickets.busTickets > 0 || currentPlayer.tickets.undergroundTickets > 0
     }
   }
 
@@ -70,12 +70,14 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     if (gameModel.totalRound == 1 && gameModel.round == 1) {
       return gameModel
     }
-    if (gameModel.getCurrentPlayerIndex == 1) {
-      gameModel.getMrX.removeFromHistory()
+    if (gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round) == 1) {
+      gameModel.getMrX(gameModel.players).removeFromHistory()
     }
     val gameModelTmp = previousRound(gameModel)
-    gameModelTmp.updatePlayerPosition(currentPosition)
-    gameModelTmp.updateTickets(ticketType)(gameModelTmp.incrementValue)
+
+    val currentPlayer = gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round)
+    gameModelTmp.updatePlayerPosition(currentPlayer, currentPosition)
+    gameModelTmp.updateTickets(currentPlayer, ticketType)(gameModelTmp.incrementValue)
     gameModelTmp
   }
 

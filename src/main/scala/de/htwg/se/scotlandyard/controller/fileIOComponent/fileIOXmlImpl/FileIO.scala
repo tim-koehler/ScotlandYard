@@ -6,8 +6,8 @@ import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
-import de.htwg.se.scotlandyard.model.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 
 import scala.::
 import scala.collection.mutable
@@ -65,32 +65,32 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     gameModel.copy(players = players.toVector, round = round, totalRound = totalRound)
   }
 
-  override def save(gameModel: GameModel): Boolean = {
+  override def save(gameModel: GameModel, mrX: MrXInterface): Boolean = {
     val pw = new PrintWriter(new File(pathname))
     val prettyPrinter = new PrettyPrinter(120, 4)
-    val xml = prettyPrinter.format(gametoXML(gameModel))
+    val xml = prettyPrinter.format(gametoXML(gameModel, mrX))
     pw.write(xml)
     pw.close
 
     true
   }
 
-  def gametoXML(gameModel: GameModel): Elem = {
+  def gametoXML(gameModel: GameModel, mrX: MrXInterface): Elem = {
     <game>
       <round>{gameModel.round}</round>
       <totalRound>{gameModel.totalRound}</totalRound>
       <nPlayer>{gameModel.players.length}</nPlayer>
-      {mrXtoXml(gameModel)}
+      {mrXtoXml(gameModel, mrX)}
       {allDetectivesToXml(gameModel)}
     </game>
   }
 
-  def mrXHistoryToXml(gameModel: GameModel): Elem = {
+  private def mrXHistoryToXml(mrX: MrXInterface): Elem = {
     var xmlString: String = ""
-    if (gameModel.getMrX.history.isEmpty) {
+    if (mrX.history.isEmpty) {
       xmlString = "<transport>empty</transport>"
     } else {
-      for (h <- gameModel.getMrX.history) {
+      for (h <- mrX.history) {
         xmlString = xmlString + "<transport>" + h + "</transport>"
       }
     }
@@ -98,21 +98,21 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     XML.loadString(xmlString)
   }
 
-  def mrXtoXml(gameModel: GameModel): Elem = {
+  private def mrXtoXml(gameModel: GameModel, mrX: MrXInterface): Elem = {
     <mrX>
-      <name>{gameModel.getMrX.name}</name>
-      <stationNumber>{gameModel.getMrX.station.number}</stationNumber>
-      <isVisible>{gameModel.getMrX.isVisible}</isVisible>
-      <lastSeen>{gameModel.getMrX.lastSeen}</lastSeen>
-      <blackTickets>{gameModel.getMrX.tickets.blackTickets}</blackTickets>
-      <taxiTickets>{gameModel.getMrX.tickets.taxiTickets}</taxiTickets>
-      <busTickets>{gameModel.getMrX.tickets.busTickets}</busTickets>
-      <undergroundTickets>{gameModel.getMrX.tickets.undergroundTickets}</undergroundTickets>
-      {mrXHistoryToXml(gameModel)}
+      <name>{mrX.name}</name>
+      <stationNumber>{mrX.station.number}</stationNumber>
+      <isVisible>{mrX.isVisible}</isVisible>
+      <lastSeen>{mrX.lastSeen}</lastSeen>
+      <blackTickets>{mrX.tickets.blackTickets}</blackTickets>
+      <taxiTickets>{mrX.tickets.taxiTickets}</taxiTickets>
+      <busTickets>{mrX.tickets.busTickets}</busTickets>
+      <undergroundTickets>{mrX.tickets.undergroundTickets}</undergroundTickets>
+      {mrXHistoryToXml(mrX)}
     </mrX>
   }
 
-  def allDetectivesToXml(gameModel: GameModel): Elem = {
+  private def allDetectivesToXml(gameModel: GameModel): Elem = {
     var detectiveString = ""
     for(i <- 1 to gameModel.players.length - 1) {
       detectiveString = detectiveString + detectiveToXmlString(gameModel.players(i).name, gameModel.players(i).station.number, gameModel.players(i).tickets, gameModel.players(i).color)
@@ -121,7 +121,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     XML.loadString(detectiveString)
   }
 
-  def detectiveToXmlString(name: String, stationNumber: Int, tickets: Tickets, color: Color): String = {
+  private def detectiveToXmlString(name: String, stationNumber: Int, tickets: Tickets, color: Color): String = {
     "<detective><name>" + name + "</name> " +
       "<stationNumber>" + stationNumber + "</stationNumber>" +
       "<taxiTickets>" + tickets.taxiTickets + "</taxiTickets>" +
