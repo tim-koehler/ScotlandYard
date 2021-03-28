@@ -43,8 +43,8 @@ case class GameModel(
     }
   }
 
-  def updatePlayerPosition(gameModel: GameModel, currentPlayer: Player, newPosition: Int): GameModel = {
-    val newPlayer = currentPlayer.setPlayerStation(stations(newPosition))
+  def updatePlayerPosition(gameModel: GameModel, newPosition: Int): GameModel = {
+    val newPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round).setPlayerStation(stations(newPosition))
     val newPlayers = gameModel.players.updated(getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer)
     gameModel.copy(players = newPlayers)
   }
@@ -70,20 +70,21 @@ case class GameModel(
   def incrementValue(x: Int): Int = {x + 1}
   def decrementValue(x: Int): Int = {x - 1}
 
-  def updateTickets(currentPlayer: Player, ticketType: TicketType)(modFunc:Int => Int): Integer = {
+  def updateTickets(gameModel: GameModel, ticketType: TicketType)(modFunc:Int => Int): GameModel = {
+    val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
     ticketType match {
       case TicketType.Taxi =>
-        currentPlayer.tickets.taxiTickets = modFunc(currentPlayer.tickets.taxiTickets)
-        currentPlayer.tickets.taxiTickets
+        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer.tickets.copy(taxiTickets = modFunc(currentPlayer.tickets.taxiTickets)))
+        gameModel.copy(players = gameModel.players.updated(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer))
       case TicketType.Bus =>
-        currentPlayer.tickets.busTickets = modFunc(currentPlayer.tickets.busTickets)
-        currentPlayer.tickets.busTickets
+        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer.tickets.copy(busTickets = modFunc(currentPlayer.tickets.busTickets)))
+        gameModel.copy(players = gameModel.players.updated(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer))
       case TicketType.Underground =>
-        currentPlayer.tickets.undergroundTickets = modFunc(currentPlayer.tickets.undergroundTickets)
-        currentPlayer.tickets.undergroundTickets
+        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer.tickets.copy(undergroundTickets = modFunc(currentPlayer.tickets.undergroundTickets)))
+        gameModel.copy(players = gameModel.players.updated(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer))
       case _ =>
-        currentPlayer.asInstanceOf[MrX].tickets.blackTickets = modFunc(currentPlayer.tickets.blackTickets)
-        currentPlayer.asInstanceOf[MrX].tickets.blackTickets
+        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer.tickets.copy(blackTickets = modFunc(currentPlayer.tickets.blackTickets)))
+        gameModel.copy(players = gameModel.players.updated(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer))
     }
   }
 }

@@ -14,9 +14,8 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
       val newMrX = gameModelTmp.getMrX(gameModelTmp.players).addToHistory(ticketType)
       gameModelTmp = gameModelTmp.copy(players = gameModelTmp.players.updated(0, newMrX))
     }
-    val currentPlayer = gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round)
-    gameModelTmp = gameModelTmp.updatePlayerPosition(gameModelTmp, currentPlayer, newPosition)
-    gameModelTmp.updateTickets(currentPlayer, ticketType)(gameModelTmp.decrementValue)
+    gameModelTmp = gameModelTmp.updatePlayerPosition(gameModelTmp, newPosition)
+    gameModelTmp = gameModelTmp.updateTickets(gameModelTmp, ticketType)(gameModelTmp.decrementValue)
     nextRound(gameModelTmp)
   }
 
@@ -76,8 +75,8 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
       gameModelTmp = gameModelTmp.copy(players = gameModelTmp.players.updated(0, newMrX))
     }
     val currentPlayer = gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round)
-    gameModelTmp = gameModelTmp.updatePlayerPosition(gameModelTmp, currentPlayer, currentPosition)
-    gameModelTmp.updateTickets(currentPlayer, ticketType)(gameModelTmp.incrementValue)
+    gameModelTmp = gameModelTmp.updatePlayerPosition(gameModelTmp, currentPosition)
+    gameModelTmp = gameModelTmp.updateTickets(gameModelTmp, ticketType)(gameModelTmp.incrementValue)
     gameModelTmp
   }
 

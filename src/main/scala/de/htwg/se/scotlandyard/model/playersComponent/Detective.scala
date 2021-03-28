@@ -27,6 +27,9 @@ case class Detective(override val station: Station = Station(),
     copy(station = newStation)
   }
 
+  override def setPlayerTickets(newTickets: Tickets): Player = {
+    copy(tickets = newTickets)
+  }
 
   override def toString(): String = {
     val stationString = station.number + " (" + station.stationType.toString.toUpperCase + ")"

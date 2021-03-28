@@ -52,6 +52,10 @@ case class MrX(override val station: Station = Station(),
     copy(station = newStation)
   }
 
+  override def setPlayerTickets(newTickets: Tickets): Player = {
+    copy(tickets = newTickets)
+  }
+
   override def toString(): String = {
     val ticketsString = " - BLACKTICKETS: " + tickets.blackTickets
     if(isVisible) {
