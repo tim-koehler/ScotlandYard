@@ -4,8 +4,7 @@ import com.google.inject.Inject
 import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
-import de.htwg.se.scotlandyard.model.playersComponent.playersMockImpl.{Detective, MrX}
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
+import de.htwg.se.scotlandyard.model.playersComponent.{Detective, MrX, Player}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 
@@ -21,15 +20,15 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   override def startGame(): Boolean = true
 
-  override def winGame(winningPlayer: DetectiveInterface): Boolean = false
+  override def winGame(winningPlayer: Player): Boolean = false
 
-  override def getCurrentPlayer: DetectiveInterface = new Detective()
+  override def getCurrentPlayer: Player = Detective()
 
-  override def getMrX: MrXInterface = new MrX()
+  override def getMrX: MrX = MrX()
 
-  override def getPlayersList(): Vector[DetectiveInterface] = Vector(new MrX, new Detective, new Detective)
+  override def getPlayersList(): Vector[Player] = Vector(MrX(), Detective(), Detective())
 
-  override def getStations(): Vector[Station] = Vector(new Station(0, StationType.Taxi))
+  override def getStations(): Vector[Station] = Vector(Station(0, StationType.Taxi))
 
   override def getTotalRound(): Integer = 3
 
@@ -37,7 +36,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   override def getGameRunning(): Boolean = false
 
-  override def getWinningPlayer(): DetectiveInterface = new Detective()
+  override def getWinningPlayer(): Player = Detective()
 
   override def setPlayerName(inputName: String, index: Int): Boolean = {
     if(inputName.length < 3) return false

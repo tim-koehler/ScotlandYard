@@ -2,13 +2,13 @@ package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapMockImpl
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.playersComponent.Player
 
 import scala.collection.mutable
 
 class TuiMap extends TuiMapInterface{
   override var map: Option[List[String]] = _
-  override var playerPositions: mutable.Map[DetectiveInterface, Int] = _
+  override var playerPositions: mutable.Map[Player, Int] = _
   override var viewOffsetX: Int = _
   override var viewOffsetY: Int = _
   override val mapDisplayDimensionsX: Int = 300

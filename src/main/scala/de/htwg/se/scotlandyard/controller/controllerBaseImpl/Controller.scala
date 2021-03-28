@@ -5,9 +5,9 @@ import de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.{MrX, Player}
 
 import java.awt.Color
 import scala.swing.Publisher
@@ -62,7 +62,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     gameModel
   }
 
-  def winGame(winningPlayer: DetectiveInterface): Boolean = {
+  def winGame(winningPlayer: Player): Boolean = {
     this.gameModel = gameModel.winGame(gameModel, winningPlayer)
     publish(new PlayerWin)
     this.gameModel.win
@@ -98,7 +98,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     newPosition < gameModel.stations.size && newPosition > 0
   }
 
-  private def isMeanOfTransportValid(player: DetectiveInterface,newPosition: Integer, ticketType: TicketType): Boolean = {
+  private def isMeanOfTransportValid(player: Player,newPosition: Integer, ticketType: TicketType): Boolean = {
     ticketType match {
       case TicketType.Taxi =>
         isTransportMoveValid(newPosition)(player.tickets.taxiTickets, player.station.neighbourTaxis)
@@ -114,7 +114,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     }
   }
 
-  private def isTargetStationEmpty(player: DetectiveInterface, newPosition: Integer): Boolean = {
+  private def isTargetStationEmpty(player: Player, newPosition: Integer): Boolean = {
     for ((p, index) <- gameModel.players.zipWithIndex) {
       breakable {
         if (index == 0 && !player.equals(gameModel.getMrX(gameModel.players))) break
@@ -129,24 +129,24 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     neighbours.contains(gameModel.stations(newPosition))
   }
 
-  private def isBlackMoveValid(currentPlayer: DetectiveInterface,newPosition: Int): Boolean = {
+  private def isBlackMoveValid(currentPlayer: Player,newPosition: Int): Boolean = {
 
-    if (currentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets <= 0) return false
+    if (currentPlayer.asInstanceOf[MrX].tickets.blackTickets <= 0) return false
     currentPlayer.station.neighbourTaxis.contains(gameModel.stations(newPosition)) ||
       currentPlayer.station.neighbourBuses.contains(gameModel.stations(newPosition)) ||
       currentPlayer.station.neighbourUndergrounds.contains(gameModel.stations(newPosition))
   }
 
   // Getters and Setters
-  def getCurrentPlayer: DetectiveInterface = {
+  def getCurrentPlayer: Player = {
     gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
   }
 
-  def getMrX: MrXInterface = {
+  def getMrX: MrX = {
     gameModel.getMrX(gameModel.players)
   }
 
-  def getPlayersList(): Vector[DetectiveInterface] = {
+  def getPlayersList(): Vector[Player] = {
     gameModel.players
   }
 
@@ -166,21 +166,20 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     gameModel.gameRunning
   }
 
-  def getWinningPlayer(): DetectiveInterface = {
+  def getWinningPlayer(): Player = {
     gameModel.winningPlayer
   }
 
   def setPlayerName(inputName: String, index: Int): Boolean = {
-    var returnValue: Boolean = false
-    returnValue = gameModel.players(index).setPlayerName(inputName)
+    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.players(index).setPlayerName(inputName)))
     publish(new PlayerNameChanged)
-    returnValue
+    gameModel.players(index).name == inputName
   }
 
   def setPlayerColor(newColor: String, index: Int): Color = {
-    val returnValue = gameModel.players(index).setPlayerColor(newColor)
+    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.players(index).setPlayerColor(newColor)))
     publish(new PlayerColorChanged)
-    returnValue
+    gameModel.players(index).color
   }
 
   def updateLobby(): Boolean = {

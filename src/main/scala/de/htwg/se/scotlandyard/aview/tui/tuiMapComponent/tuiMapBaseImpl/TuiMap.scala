@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapBaseImpl
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.playersComponent.Player
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -13,7 +13,7 @@ import scala.io.Codec
 
 class TuiMap extends TuiMapInterface {
   var map: Option[List[String]] = readMapFromFile("./resources/ScotlandYardMap.txt")
-  var playerPositions: mutable.Map[DetectiveInterface, Int] = mutable.Map[DetectiveInterface, Int]()
+  var playerPositions: mutable.Map[Player, Int] = mutable.Map[Player, Int]()
 
   var viewOffsetX: Int = 0
   var viewOffsetY: Int = 0
@@ -66,7 +66,7 @@ class TuiMap extends TuiMapInterface {
     viewOffsetY
   }
 
-  private def setPlayerPositions(controller: ControllerInterface): mutable.Map[DetectiveInterface, Int] = {
+  private def setPlayerPositions(controller: ControllerInterface): mutable.Map[Player, Int] = {
     for (p <- controller.getPlayersList()){
       playerPositions += (p -> p.station.number)
     }

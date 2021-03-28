@@ -2,7 +2,6 @@ package de.htwg.se.scotlandyard.model.playersComponent
 
 
 import de.htwg.se.scotlandyard.model.{Station, StationType, Tickets}
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.Detective
 import org.scalatest._
 
 import java.awt.Color

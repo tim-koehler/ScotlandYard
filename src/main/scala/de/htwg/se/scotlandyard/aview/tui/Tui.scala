@@ -147,7 +147,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   def buildOutputStringForRunningGame(): String = {
     var outputString = getTuiMap()
     outputString = outputString + "Round: " + controller.getTotalRound() + "\nMrX History: "
-    for(t <- controller.getMrX.getHistory().reverse) {
+    for(t <- controller.getMrX.history.reverse) {
       outputString = outputString + t.toString + ", "
     }
     outputString = outputString + "\n"

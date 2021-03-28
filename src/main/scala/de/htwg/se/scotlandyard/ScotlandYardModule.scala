@@ -8,7 +8,7 @@ import de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOJsonImpl.FileIO
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
+import de.htwg.se.scotlandyard.model.playersComponent.{Detective, MrX}
 import net.codingwell.scalaguice.ScalaModule
 
 class ScotlandYardModule extends AbstractModule with ScalaModule {
@@ -16,8 +16,6 @@ class ScotlandYardModule extends AbstractModule with ScalaModule {
       bind[ControllerInterface].to[controller.controllerBaseImpl.Controller]
       bind[TuiMapInterface].to[TuiMap]
       bind[GameInitializerInterface].to[GameInitializer]
-      bind[DetectiveInterface].to[model.playersComponent.playersBaseImpl.Detective]
-      bind[MrXInterface].to[model.playersComponent.playersBaseImpl.MrX]
       bind[FileIOInterface].to[FileIO]
     }
 }

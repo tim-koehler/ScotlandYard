@@ -8,7 +8,8 @@ import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
+import de.htwg.se.scotlandyard.model.playersComponent.MrX
+import de.htwg.se.scotlandyard.model.playersComponent.Player
 import play.api.libs.json._
 
 import scala.collection.mutable
@@ -35,17 +36,17 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     val busTickets = (json \ "mrX" \ "busTickets").get.toString().toInt
     val undergroundTickets = (json \ "mrX" \ "undergroundTickets").get.toString().toInt
     val historyJs: JsArray = (json \ "mrX" \ "history").as[JsArray]
-    var history: mutable.Stack[TicketType] = mutable.Stack()
+    var history: List[TicketType] = List()
     for(transport <- historyJs.value) {
       val s = (transport \ "transport").get.toString()
-      history.push(TicketType.withName(formatString(s)))
+      history = TicketType.withName(formatString(s)) :: history
     }
 
     val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets)
     val mrx = gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, tickets, history, gameModel.stations)
 
     val detectivesJson: JsArray = (json \ "detectives").as[JsArray]
-    var detectives: Vector[DetectiveInterface] = Vector()
+    var detectives: Vector[Player] = Vector()
 
     for(detective <- detectivesJson.value) {
       val name = (detective \ "name").get.toString()
@@ -62,7 +63,7 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     gameModel.copy(players = players, round = round, totalRound = totalRound)
   }
 
-  override def save(gameModel: GameModel, mrX: MrXInterface): Boolean = {
+  override def save(gameModel: GameModel, mrX: MrX): Boolean = {
     var history = new JsArray()
 
     for(h <- mrX.history) {

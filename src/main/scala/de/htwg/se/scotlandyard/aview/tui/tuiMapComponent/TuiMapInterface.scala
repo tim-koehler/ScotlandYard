@@ -1,14 +1,14 @@
 package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent
 
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.DetectiveInterface
+import de.htwg.se.scotlandyard.model.playersComponent.Player
 
 import scala.collection.mutable
 
 trait TuiMapInterface {
 
   var map: Option[List[String]]
-  var playerPositions: mutable.Map[DetectiveInterface, Int]
+  var playerPositions: mutable.Map[Player, Int]
 
   var viewOffsetX: Int
   var viewOffsetY: Int

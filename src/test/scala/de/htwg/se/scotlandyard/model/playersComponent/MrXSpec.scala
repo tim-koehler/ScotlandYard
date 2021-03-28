@@ -1,7 +1,6 @@
 package de.htwg.se.scotlandyard.model.playersComponent
 
 import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType}
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.MrX
 import org.scalatest._
 
 import scala.collection.mutable

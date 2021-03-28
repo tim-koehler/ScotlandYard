@@ -1,30 +1,29 @@
 package de.htwg.se.scotlandyard.model
 
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.Detective
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
+import de.htwg.se.scotlandyard.model.playersComponent.{Detective, MrX, Player}
 
 import scala.collection.mutable
 
 case class GameModel(
-                      stations: Vector[Station] = Vector(),
-                      players: Vector[DetectiveInterface] = Vector(),
+                      stations: Vector[Station] = Vector[Station](),
+                      players: Vector[Player] = Vector[Player](),
                       round: Int = 1, // counter of moves (increases by 1 when a player moved)
                       totalRound: Int = 1, // number of total rounds (increases by 1 when every player has moved once)
                       win: Boolean = false,
                       gameRunning: Boolean = false,
-                      winningPlayer: DetectiveInterface = new Detective,
-                      stuckPlayers: Set[DetectiveInterface] = Set(),
+                      winningPlayer: Player = Detective(),
+                      stuckPlayers: Set[Player] = Set(),
                       allPlayerStuck: Boolean = false,
                       WINNING_ROUND: Int = 24, //24
                       MRX_VISIBLE_ROUNDS: Vector[Int] = Vector(3, 8, 13, 18, 24)
                     ) {
 
-  def getCurrentPlayer(players: Vector[DetectiveInterface], round: Int): DetectiveInterface = {
+  def getCurrentPlayer(players: Vector[Player], round: Int): Player = {
     players(getCurrentPlayerIndex(players, round))
   }
 
-  def getPreviousPlayer(players: Vector[DetectiveInterface], round: Int): DetectiveInterface = {
+  def getPreviousPlayer(players: Vector[Player], round: Int): Player = {
     val index = getCurrentPlayerIndex(players, round)
     if(index == 0) {
       players.last
@@ -33,10 +32,10 @@ case class GameModel(
     }
   }
 
-  def getMrX(players: Vector[DetectiveInterface]): MrXInterface = players.head.asInstanceOf[MrXInterface]
-  def getDetectives(players: Vector[DetectiveInterface]): Vector[DetectiveInterface] = players.drop(1)
+  def getMrX(players: Vector[Player]): MrX = players.head.asInstanceOf[MrX]
+  def getDetectives(players: Vector[Player]): Vector[Player] = players.drop(1)
 
-  def getCurrentPlayerIndex(players: Vector[DetectiveInterface], round: Int): Int = {
+  def getCurrentPlayerIndex(players: Vector[Player], round: Int): Int = {
     if (round % players.length == 0) {
       players.length - 1
     } else {
@@ -44,9 +43,10 @@ case class GameModel(
     }
   }
 
-  def updatePlayerPosition(currentPlayer: DetectiveInterface, newPosition: Int): Station = {
-    currentPlayer.station = stations(newPosition)
-    currentPlayer.station
+  def updatePlayerPosition(gameModel: GameModel, currentPlayer: Player, newPosition: Int): GameModel = {
+    val newPlayer = currentPlayer.setPlayerStation(stations(newPosition))
+    val newPlayers = gameModel.players.updated(getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer)
+    gameModel.copy(players = newPlayers)
   }
 
   def updateRound(gameModel: GameModel, modFunc:Int => Int): GameModel = {
@@ -55,7 +55,7 @@ case class GameModel(
     gameModel.copy(round = round, totalRound = totalRound)
   }
 
-  def addStuckPlayer(gameModel: GameModel, player: DetectiveInterface): GameModel = {
+  def addStuckPlayer(gameModel: GameModel, player: Player): GameModel = {
     gameModel.copy(stuckPlayers = gameModel.stuckPlayers + player)
   }
 
@@ -63,14 +63,14 @@ case class GameModel(
     gameModel.copy(allPlayerStuck = true)
   }
 
-  def winGame(gameModel: GameModel, winningPlayer: DetectiveInterface): GameModel = {
+  def winGame(gameModel: GameModel, winningPlayer: Player): GameModel = {
     gameModel.copy(winningPlayer = winningPlayer, gameRunning = false, win = true)
   }
 
   def incrementValue(x: Int): Int = {x + 1}
   def decrementValue(x: Int): Int = {x - 1}
 
-  def updateTickets(currentPlayer: DetectiveInterface, ticketType: TicketType)(modFunc:Int => Int): Integer = {
+  def updateTickets(currentPlayer: Player, ticketType: TicketType)(modFunc:Int => Int): Integer = {
     ticketType match {
       case TicketType.Taxi =>
         currentPlayer.tickets.taxiTickets = modFunc(currentPlayer.tickets.taxiTickets)
@@ -82,8 +82,8 @@ case class GameModel(
         currentPlayer.tickets.undergroundTickets = modFunc(currentPlayer.tickets.undergroundTickets)
         currentPlayer.tickets.undergroundTickets
       case _ =>
-        currentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets = modFunc(currentPlayer.tickets.blackTickets)
-        currentPlayer.asInstanceOf[MrXInterface].tickets.blackTickets
+        currentPlayer.asInstanceOf[MrX].tickets.blackTickets = modFunc(currentPlayer.tickets.blackTickets)
+        currentPlayer.asInstanceOf[MrX].tickets.blackTickets
     }
   }
 }

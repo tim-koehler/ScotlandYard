@@ -5,7 +5,7 @@ import de.htwg.se.scotlandyard.model.{GameModel, Station, Tickets}
 
 import java.awt.Color
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
+import de.htwg.se.scotlandyard.model.playersComponent.{MrX, Player}
 
 import scala.collection.mutable
 
@@ -32,7 +32,7 @@ trait GameInitializerInterface {
 
   def initialize(nPlayer: Int): GameModel
 
-  def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: Vector[Station]): DetectiveInterface
+  def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: Vector[Station]): Player
+  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType], stations: Vector[Station]): MrX
   def getColorList(): Vector[Color]
-  def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: mutable.Stack[TicketType], stations: Vector[Station]): MrXInterface
 }

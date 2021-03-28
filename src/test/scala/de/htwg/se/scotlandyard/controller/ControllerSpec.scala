@@ -5,7 +5,7 @@ import de.htwg.se.scotlandyard.controller.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.{Station, TicketType}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.playersComponent.playersBaseImpl.Detective
+import de.htwg.se.scotlandyard.model.playersComponent.Detective
 import org.scalatest._
 
 import java.awt.Color

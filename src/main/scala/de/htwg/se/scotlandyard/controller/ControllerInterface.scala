@@ -2,9 +2,9 @@ package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.model.{GameModel, Station}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.model.playersComponent.{MrX, Player}
 
 import java.awt.Color
 import scala.swing.Publisher
@@ -20,15 +20,15 @@ trait ControllerInterface extends Publisher {
   def undoMove(): GameModel
   def redoMove(): GameModel
   def startGame(): Boolean
-  def winGame(winningPlayer: DetectiveInterface): Boolean
+  def winGame(winningPlayer: Player): Boolean
   def getGameRunning(): Boolean
-  def getCurrentPlayer: DetectiveInterface
-  def getMrX: MrXInterface
-  def getPlayersList(): Vector[DetectiveInterface]
+  def getCurrentPlayer: Player
+  def getMrX: MrX
+  def getPlayersList(): Vector[Player]
   def getStations(): Vector[Station]
   def getTotalRound(): Integer
   def getWin(): Boolean
-  def getWinningPlayer(): DetectiveInterface
+  def getWinningPlayer(): Player
   def setPlayerName(inputName: String, index: Int): Boolean
   def setPlayerColor(newColor: String, index: Int): Color
   def updateLobby(): Boolean

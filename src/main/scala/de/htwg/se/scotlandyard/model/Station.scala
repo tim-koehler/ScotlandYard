@@ -4,7 +4,7 @@ import de.htwg.se.scotlandyard.model.StationType.StationType
 
 import scala.swing.Point
 
-case class Station(val number: Integer, val stationType: StationType) {
+case class Station(val number: Integer = -1, val stationType: StationType = StationType.Taxi) {
   var neighbourTaxis: Set[Station] = Set()
   var neighbourBuses: Set[Station] = Set()
   var neighbourUndergrounds: Set[Station] = Set()

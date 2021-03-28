@@ -7,7 +7,7 @@ import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.{DetectiveInterface, MrXInterface}
+import de.htwg.se.scotlandyard.model.playersComponent.{MrX, Player}
 
 import scala.::
 import scala.collection.mutable
@@ -34,13 +34,12 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     val busTickets = (xmlFile \\ "game" \ "mrX" \ "busTickets").text.toInt
     val undergroundTickets = (xmlFile \\ "game" \ "mrX" \ "undergroundTickets").text.toInt
 
-    var history: mutable.Stack[TicketType] = mutable.Stack()
     val his = (xmlFile \\ "game" \ "mrX" \ "history")
-
+    var history: List[TicketType] = List()
     if(!(his \\ "transport")(0).text.toString.equals("empty")) {
       for(i <- 0 to (his \\ "transport").length - 1) {
         val s: String = (his \\ "transport")(i).text.toString
-        history.push(TicketType.withName(s))
+        history = TicketType.withName(s) :: history
       }
     }
 
@@ -48,7 +47,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     val mrx = gameInitializer.initMrXFromLoad(name, stationNumber, isVisible, lastSeen, tickets, history, gameModel.stations)
 
     val detectivesXML = (xmlFile \\ "game" \ "detectives")
-    var detectives: List[DetectiveInterface] = List()
+    var detectives: List[Player] = List()
 
     for(i <- 0 to nPlayer - 2) {
       val name = (detectivesXML \\ "detective" \ "name")(i).text.toString
@@ -65,7 +64,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     gameModel.copy(players = players.toVector, round = round, totalRound = totalRound)
   }
 
-  override def save(gameModel: GameModel, mrX: MrXInterface): Boolean = {
+  override def save(gameModel: GameModel, mrX: MrX): Boolean = {
     val pw = new PrintWriter(new File(pathname))
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(gametoXML(gameModel, mrX))
@@ -75,7 +74,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     true
   }
 
-  def gametoXML(gameModel: GameModel, mrX: MrXInterface): Elem = {
+  def gametoXML(gameModel: GameModel, mrX: MrX): Elem = {
     <game>
       <round>{gameModel.round}</round>
       <totalRound>{gameModel.totalRound}</totalRound>
@@ -85,7 +84,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     </game>
   }
 
-  private def mrXHistoryToXml(mrX: MrXInterface): Elem = {
+  private def mrXHistoryToXml(mrX: MrX): Elem = {
     var xmlString: String = ""
     if (mrX.history.isEmpty) {
       xmlString = "<transport>empty</transport>"
@@ -98,7 +97,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     XML.loadString(xmlString)
   }
 
-  private def mrXtoXml(gameModel: GameModel, mrX: MrXInterface): Elem = {
+  private def mrXtoXml(gameModel: GameModel, mrX: MrX): Elem = {
     <mrX>
       <name>{mrX.name}</name>
       <stationNumber>{mrX.station.number}</stationNumber>
