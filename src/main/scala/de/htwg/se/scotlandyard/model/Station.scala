@@ -4,41 +4,39 @@ import de.htwg.se.scotlandyard.model.StationType.StationType
 
 import scala.swing.Point
 
-case class Station(val number: Integer = -1, val stationType: StationType = StationType.Taxi) {
-  var neighbourTaxis: Set[Station] = Set()
-  var neighbourBuses: Set[Station] = Set()
-  var neighbourUndergrounds: Set[Station] = Set()
-  var tuiCoords: Point = new Point(1, 1)
-  var guiCoords: Point = new Point(1, 1)
-
-  def setNeighbourTaxis(neighbours: Set[Station]): Integer = {
+case class Station(number: Integer = -1,
+                   stationType: StationType = StationType.Taxi,
+                   neighbourTaxis: Set[Station] = Set(),
+                   neighbourBuses: Set[Station] = Set(),
+                   neighbourUndergrounds: Set[Station] = Set(),
+                   tuiCoords: Point = new Point(1, 1),
+                   guiCoords: Point = new Point(1, 1))
+{
+  def setNeighbourTaxis(station: Station, neighbours: Set[Station]): Station = {
     if(neighbours.isEmpty) {
-      return neighbours.size
+      return station
     }
-    this.neighbourTaxis = neighbours
-    neighbours.size
+    station.copy(neighbourTaxis = neighbours)
   }
 
-  def setNeighbourBuses(neighbours: Set[Station]): Integer = {
+  def setNeighbourBuses(station: Station, neighbours: Set[Station]): Station = {
     if(neighbours.isEmpty) {
-      return neighbours.size
+      return station
     }
     if(stationType < StationType.Bus) {
       throw new Exception("Taxi stations can't have Bus neighbours")
     }
-    this.neighbourBuses = neighbours
-    neighbours.size
+    station.copy(neighbourBuses = neighbours)
   }
 
-  def setNeighbourUndergrounds(neighbours: Set[Station]): Integer = {
+  def setNeighbourUndergrounds(station: Station, neighbours: Set[Station]): Station = {
     if(neighbours.isEmpty) {
-      return neighbours.size
+      return station
     }
     if(stationType < StationType.Underground) {
       throw new Exception("Bus or Taxi stations can't have Underground neighbours")
     }
-    this.neighbourUndergrounds = neighbours
-    neighbours.size
+    station.copy(neighbourUndergrounds = neighbours)
   }
 
   override def equals(obj: Any): Boolean = {

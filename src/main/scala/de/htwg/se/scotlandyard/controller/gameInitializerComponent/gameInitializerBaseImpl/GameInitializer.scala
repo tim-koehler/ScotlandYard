@@ -72,19 +72,23 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     // First loop over json file to create all Station objects
     for(jsonStation <- jsonStations ) {
       val stationType = StationType.fromString((jsonStation \ "type").as[String])
-      val station = new Station((jsonStation \ "number").as[Int], stationType)
-      station.tuiCoords = new Point((jsonStation \ "tuiCoordinates" \ "x").as[Int], (jsonStation \ "tuiCoordinates" \ "y").as[Int])
-      station.guiCoords = new Point((jsonStation \ "guiCoordinates" \ "x").as[Int], (jsonStation \ "guiCoordinates" \ "y").as[Int])
+      val station = Station(number = (jsonStation \ "number").as[Int], stationType = stationType, tuiCoords = new Point((jsonStation \ "tuiCoordinates" \ "x").as[Int], (jsonStation \ "tuiCoordinates" \ "y").as[Int]), guiCoords = new Point((jsonStation \ "guiCoordinates" \ "x").as[Int], (jsonStation \ "guiCoordinates" \ "y").as[Int]))
       stationsBuffer += station
     }
 
-    val stations = stationsBuffer.toVector.sortWith((s: Station, t: Station) => s.number < t.number)
+    var stations = stationsBuffer.toVector.sortWith((s: Station, t: Station) => s.number < t.number)
 
     // Second loop over json file to set all neighbours. This needs to run after the first loop because all stations need to be created before getting assigned as neighbours
     for((jsonStation, index) <- jsonStations.zipWithIndex) {
-      stations(index + 1).setNeighbourTaxis(getNeighboursFor("taxi", jsonStation, stations))
-      stations(index + 1).setNeighbourBuses(getNeighboursFor("bus", jsonStation, stations))
-      stations(index + 1).setNeighbourUndergrounds(getNeighboursFor("underground", jsonStation, stations))
+      var station = stations(index + 1)
+      station = station.setNeighbourTaxis(station, getNeighboursFor("taxi", jsonStation, stations))
+      stations = stations.updated(index + 1, station)
+
+      station = station.setNeighbourBuses(station, getNeighboursFor("bus", jsonStation, stations))
+      stations = stations.updated(index + 1, station)
+
+      station = station.setNeighbourUndergrounds(station, getNeighboursFor("underground", jsonStation, stations))
+      stations = stations.updated(index + 1, station)
     }
     stations
   }
