@@ -59,6 +59,7 @@ class Gui(controller: ControllerInterface) extends Frame {
     }
     Dialog.showMessage(this, winningMessage, "WIN")
     this.dispose()
+    System.exit(0)
   }
 
   contents = initSettingsPanel()
