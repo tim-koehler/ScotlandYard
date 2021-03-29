@@ -18,7 +18,7 @@ class Gui(controller: ControllerInterface) extends Frame {
   centerOnScreen()
   peer.setDefaultCloseOperation(EXIT_ON_CLOSE)
 
-  iconImage = new ImageIcon("./resources/Icon.png").getImage
+  iconImage = new ImageIcon("./resources/icon.png").getImage
 
   var mainBuiler = new GuiMainBuilder(controller, this)
   var settingsBuilder = new GuiSettingsBuilder(controller, this)

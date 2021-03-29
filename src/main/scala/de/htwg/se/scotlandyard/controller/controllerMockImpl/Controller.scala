@@ -14,6 +14,10 @@ import scala.swing.Publisher
 class Controller @Inject()(override val gameInitializer: GameInitializerInterface,
                            override val fileIO: FileIOInterface) extends ControllerInterface with Publisher {
 
+  override def initializeStations(stationsSource: String): Boolean = true
+
+  override def initialize(nPlayer: Int): GameModel = GameModel()
+
   override def load(): Boolean = true
 
   override def save(): Boolean = true
@@ -48,8 +52,6 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   override def updateLobby(): Boolean = true
-
-  override def initialize(nPlayer: Int): GameModel = GameModel()
 
   override def move(newPosition: Int, ticketType: TicketType): GameModel = GameModel()
 

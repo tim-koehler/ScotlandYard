@@ -42,8 +42,8 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
 
   val injector = Guice.createInjector(new ScotlandYardModule)
 
-  override def initialize(nPlayers: Int = 3): GameModel = {
-    val stations = initStations()
+  override def initialize(nPlayers: Int = 3, stationsSource: String): GameModel = {
+    val stations = initStations(stationsSource)
     GameModel(stations = stations, players = initPlayers(nPlayers, stations), gameRunning = true, stuckPlayers = Set[Player]())
   }
   
@@ -60,9 +60,8 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     MrX(station = stations(stationNumber), name = name, isVisible = isVisible, lastSeen = lastSeen, tickets = tickets, history = history)
   }
 
-  private def initStations(): Vector[Station] = {
-    val source: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
-    val json = Json.parse(source)
+  private def initStations(stationsSource: String): Vector[Station] = {
+    val json = Json.parse(stationsSource)
 
     val jsonStations = json.as[JsArray].value
     val stationsBuffer = new ListBuffer[Station]()

@@ -13,9 +13,9 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   var state: State = new SelectNumberOfPlayerMenuState(this)
 
   val chooseNameMenuEntries: List[String] = List("Start", "Detective1", "Detective2", "Detective3", "Detective4", "Detective5", "Detective6")
-  val titleBanner: String = getBanner("./resources/titleBanner.txt")
-  var detectiveWinningBanner: String = getBanner("./resources/detectiveWinBanner.txt")
-  var mrXWinningBanner: String = getBanner("./resources/mrXWinBanner.txt")
+  val titleBanner: String = getBanner("./resources/tui_titleBanner.txt")
+  var detectiveWinningBanner: String = getBanner("./resources/tui_detectiveWinBanner.txt")
+  var mrXWinningBanner: String = getBanner("./resources/tui_mrXWinBanner.txt")
   val chooseNameMenuString: String = titleBanner + "\n\n" + "->Choose Names<-" + "\n"
 
   val TUIMODE_QUIT: Int = -1

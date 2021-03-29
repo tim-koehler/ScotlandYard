@@ -6,11 +6,13 @@ import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
+import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
 import scala.::
 import scala.collection.mutable
+import scala.io.Source
 import scala.swing.Color
 import scala.xml._
 
@@ -19,7 +21,8 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
   var pathname = "ScotlandYard.xml"
 
   override def load(): GameModel = {
-    val gameModel = gameInitializer.initialize(3)
+    val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
+    val gameModel = gameInitializer.initialize(3, stationsSource)
 
     val xmlFile = scala.xml.XML.loadFile(pathname)
     val round = (xmlFile \\ "game" \ "round").text.toInt

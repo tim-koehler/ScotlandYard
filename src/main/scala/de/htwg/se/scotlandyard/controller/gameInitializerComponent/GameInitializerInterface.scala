@@ -30,7 +30,7 @@ trait GameInitializerInterface {
   val numberOfUndergroundTickets: Int
   val r = scala.util.Random
 
-  def initialize(nPlayer: Int): GameModel
+  def initialize(nPlayer: Int, stationsSource: String): GameModel
 
   def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: Vector[Station]): Player
   def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType], stations: Vector[Station]): MrX

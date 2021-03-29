@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
 import com.google.inject.Inject
+import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
@@ -10,18 +11,26 @@ import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializ
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
 import java.awt.Color
+import scala.io.Source
 import scala.swing.Publisher
 import scala.util.control.Breaks.{break, breakable}
 
 class Controller @Inject()(override val gameInitializer: GameInitializerInterface,
                            override val fileIO: FileIOInterface) extends ControllerInterface with Publisher {
 
-  private var gameModel: GameModel = initialize(3)
+  private var stationsSource: String = ""
+  private var gameModel: GameModel = _
   private val undoManager = new UndoManager()
 
+  def initializeStations(stationsSource: String): Boolean = {
+    this.stationsSource = stationsSource
+    true
+  }
+
   def initialize(nPlayers: Int = 3): GameModel = {
-    gameModel = gameInitializer.initialize(nPlayers)
+    gameModel = gameInitializer.initialize(nPlayers, this.stationsSource)
     publish(new NumberOfPlayersChanged)
+    this.gameModel = gameModel
     gameModel
   }
 
@@ -49,7 +58,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def move(newPosition: Int, ticketType: TicketType): GameModel = {
-    if(!validateMove(newPosition, ticketType)) {
+    if (!validateMove(newPosition, ticketType)) {
       return this.gameModel
     }
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
@@ -59,7 +68,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     if (gameModel.allPlayerStuck) winGame(gameModel.getMrX(gameModel.players))
     if (checkDetectiveWin()) winGame(gameModel.getPreviousPlayer(gameModel.players, gameModel.round))
     if (checkMrXWin()) winGame(gameModel.getMrX(gameModel.players))
-    gameModel
+    this.gameModel
   }
 
   def winGame(winningPlayer: Player): Boolean = {
@@ -129,12 +138,12 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     neighbours.exists(_.number == newPosition)
   }
 
-  private def isBlackMoveValid(currentPlayer: Player,newPosition: Int): Boolean = {
+  private def isBlackMoveValid(currentPlayer: Player, newPosition: Int): Boolean = {
 
     if (currentPlayer.asInstanceOf[MrX].tickets.blackTickets <= 0) return false
-    currentPlayer.station.neighbourTaxis.contains(gameModel.stations(newPosition)) ||
-      currentPlayer.station.neighbourBuses.contains(gameModel.stations(newPosition)) ||
-      currentPlayer.station.neighbourUndergrounds.contains(gameModel.stations(newPosition))
+    currentPlayer.station.neighbourTaxis.exists(_.number == newPosition) ||
+      currentPlayer.station.neighbourBuses.exists(_.number == newPosition) ||
+      currentPlayer.station.neighbourUndergrounds.exists(_.number == newPosition)
   }
 
   // Getters and Setters

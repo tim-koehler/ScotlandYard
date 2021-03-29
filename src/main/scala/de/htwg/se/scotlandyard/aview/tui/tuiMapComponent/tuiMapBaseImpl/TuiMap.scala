@@ -12,7 +12,7 @@ import java.nio.charset.CodingErrorAction
 import scala.io.Codec
 
 class TuiMap extends TuiMapInterface {
-  var map: Option[List[String]] = readMapFromFile("./resources/ScotlandYardMap.txt")
+  var map: Option[List[String]] = readMapFromFile("./resources/tui_map.txt")
   var playerPositions: mutable.Map[Player, Int] = mutable.Map[Player, Int]()
 
   var viewOffsetX: Int = 0

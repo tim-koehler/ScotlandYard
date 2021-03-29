@@ -1,10 +1,12 @@
 package de.htwg.se.scotlandyard.aview.gui.settings
 
+import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.players.Player
 
 import javax.swing._
+import scala.io.Source
 import scala.swing.event.{ButtonClicked, SelectionChanged}
 import scala.swing.{Dialog, ListView, Reactions}
 import scala.util.{Failure, Success, Try}

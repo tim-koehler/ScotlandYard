@@ -7,6 +7,7 @@ import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
+import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.players.MrX
 import de.htwg.se.scotlandyard.model.players.Player
@@ -20,7 +21,8 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
   var pathname = "ScotlandYard.json"
 
   override def load(): GameModel = {
-    val gameModel = gameInitializer.initialize(3)
+    val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
+    val gameModel = gameInitializer.initialize(3, stationsSource)
 
     val source: String = Source.fromFile(pathname).getLines.mkString
     val json = Json.parse(source)

@@ -13,6 +13,7 @@ trait ControllerInterface extends Publisher {
   val gameInitializer: GameInitializerInterface
   val fileIO: FileIOInterface
 
+  def initializeStations(stationsSource: String): Boolean
   def initialize(nPlayer: Int = 3): GameModel
   def load(): Boolean
   def save(): Boolean
