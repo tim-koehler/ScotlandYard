@@ -20,7 +20,11 @@ case class Detective(override val station: Station = Station(),
   }
 
   override def setPlayerColor(newColor: String): Player = {
-    copy(color = Color.decode(newColor))
+    this.setPlayerColor(Color.decode(newColor))
+  }
+
+  override def setPlayerColor(newColor: Color): Player = {
+    copy(color = newColor)
   }
 
   override def setPlayerStation(newStation: Station): Player = {

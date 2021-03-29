@@ -85,22 +85,11 @@ class TuiSpec extends WordSpec with Matchers {
         tui.revealMrX1() shouldBe(tui.TUIMODE_RUNNING)
         tui.revealMrX2() shouldBe(tui.TUIMODE_RUNNING)
       }
-      "should have a winning output String when a player wins" in {
-        /*
-        gameInitializer.initialize(2)
-        controller.getWinningPlayer() = controller.getPlayersList()(0)
-        tui.buildOutputStringWin() shouldNot be (null)
-        GameModel.winningPlayer = GameModel.players(1)
-        tui.buildOutputStringWin() shouldNot be (null)
-
-         */
-      }
       "should evaluate correct in winningState" in {
         tui.changeState(new WinningState(tui))
         tui.state.evaluateInput("undo") should be(tui.TUIMODE_RUNNING)
         tui.state.evaluateInput("redo") should be(tui.TUIMODE_RUNNING)
         tui.state.evaluateInput("ufgd") should be(tui.TUIMODE_QUIT)
-        tui.state.toString should not be (null)
       }
       "should return TUIMODE_RUNNING when evaluateRedo is called" in {
         tui.evaluateRedo() should be(tui.TUIMODE_RUNNING)

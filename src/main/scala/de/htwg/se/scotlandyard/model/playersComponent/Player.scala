@@ -14,5 +14,6 @@ abstract class Player(
   def setPlayerStation(newStation: Station): Player
   def setPlayerName(newName: String): Player
   def setPlayerColor(newColor: String): Player
+  def setPlayerColor(newColor: Color): Player
   def setPlayerTickets(newTickets: Tickets): Player
 }
