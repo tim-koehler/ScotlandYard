@@ -74,7 +74,6 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
       val newMrX = gameModelTmp.getMrX(gameModelTmp.players).removeFromHistory()
       gameModelTmp = gameModelTmp.copy(players = gameModelTmp.players.updated(0, newMrX))
     }
-    val currentPlayer = gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round)
     gameModelTmp = gameModelTmp.updatePlayerPosition(gameModelTmp, currentPosition)
     gameModelTmp = gameModelTmp.updateTickets(gameModelTmp, ticketType)(gameModelTmp.incrementValue)
     gameModelTmp

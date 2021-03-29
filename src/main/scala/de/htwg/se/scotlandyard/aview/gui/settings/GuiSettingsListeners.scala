@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.gui.settings
 
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.Player
+import de.htwg.se.scotlandyard.model.players.Player
 
 import javax.swing._
 import scala.swing.event.{ButtonClicked, SelectionChanged}

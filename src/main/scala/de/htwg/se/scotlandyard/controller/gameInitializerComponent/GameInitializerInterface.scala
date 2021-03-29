@@ -5,7 +5,7 @@ import de.htwg.se.scotlandyard.model.{GameModel, Station, Tickets}
 
 import java.awt.Color
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.playersComponent.{MrX, Player}
+import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
 import scala.collection.mutable
 

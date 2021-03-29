@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.controller.fileIOComponent
 
 import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.MrX
+import de.htwg.se.scotlandyard.model.players.MrX
 
 trait FileIOInterface {
   var gameInitializer: GameInitializerInterface

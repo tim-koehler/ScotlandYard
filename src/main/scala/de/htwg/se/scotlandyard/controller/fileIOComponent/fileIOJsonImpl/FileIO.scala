@@ -8,8 +8,8 @@ import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.MrX
-import de.htwg.se.scotlandyard.model.playersComponent.Player
+import de.htwg.se.scotlandyard.model.players.MrX
+import de.htwg.se.scotlandyard.model.players.Player
 import play.api.libs.json._
 
 import scala.collection.mutable
@@ -59,7 +59,6 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     }
 
     val players = mrx +: detectives
-
     gameModel.copy(players = players, round = round, totalRound = totalRound)
   }
 

@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapMockImpl
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.Player
+import de.htwg.se.scotlandyard.model.players.Player
 
 import scala.collection.mutable
 

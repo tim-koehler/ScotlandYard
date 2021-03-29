@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.model
 
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.playersComponent.{Detective, MrX, Player}
+import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 
 import scala.collection.mutable
 
@@ -44,7 +44,8 @@ case class GameModel(
   }
 
   def updatePlayerPosition(gameModel: GameModel, newPosition: Int): GameModel = {
-    val newPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round).setPlayerStation(stations(newPosition))
+    val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+    val newPlayer = currentPlayer.setPlayerStation(currentPlayer, stations(newPosition))
     val newPlayers = gameModel.players.updated(getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer)
     gameModel.copy(players = newPlayers)
   }
@@ -74,16 +75,16 @@ case class GameModel(
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
     ticketType match {
       case TicketType.Taxi =>
-        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer.tickets.copy(taxiTickets = modFunc(currentPlayer.tickets.taxiTickets)))
+        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer, currentPlayer.tickets.copy(taxiTickets = modFunc(currentPlayer.tickets.taxiTickets)))
         gameModel.copy(players = gameModel.players.updated(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer))
       case TicketType.Bus =>
-        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer.tickets.copy(busTickets = modFunc(currentPlayer.tickets.busTickets)))
+        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer, currentPlayer.tickets.copy(busTickets = modFunc(currentPlayer.tickets.busTickets)))
         gameModel.copy(players = gameModel.players.updated(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer))
       case TicketType.Underground =>
-        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer.tickets.copy(undergroundTickets = modFunc(currentPlayer.tickets.undergroundTickets)))
+        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer, currentPlayer.tickets.copy(undergroundTickets = modFunc(currentPlayer.tickets.undergroundTickets)))
         gameModel.copy(players = gameModel.players.updated(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer))
       case _ =>
-        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer.tickets.copy(blackTickets = modFunc(currentPlayer.tickets.blackTickets)))
+        val newPlayer = currentPlayer.setPlayerTickets(currentPlayer, currentPlayer.tickets.copy(blackTickets = modFunc(currentPlayer.tickets.blackTickets)))
         gameModel.copy(players = gameModel.players.updated(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer))
     }
   }

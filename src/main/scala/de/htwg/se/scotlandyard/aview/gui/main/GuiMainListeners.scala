@@ -36,8 +36,8 @@ class GuiMainListeners(controller: ControllerInterface, gui: Gui) {
     var guessedStation: Station = controller.getStations()(0)
     for(station <- controller.getStations()) {
       val clickedPoint = new Point(xPos, yPos)
-      if(station.guiCoords.distance(clickedPoint) < distance) {
-        distance = station.guiCoords.distance(clickedPoint)
+      if(station.guiCoordinates.distance(clickedPoint) < distance) {
+        distance = station.guiCoordinates.distance(clickedPoint)
         guessedStation = station
       }
     }

@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
-import de.htwg.se.scotlandyard.model.playersComponent.{Detective, MrX, Player}
+import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 

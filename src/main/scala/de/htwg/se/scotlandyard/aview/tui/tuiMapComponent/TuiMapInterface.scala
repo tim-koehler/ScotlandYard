@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent
 
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.Player
+import de.htwg.se.scotlandyard.model.players.Player
 
 import scala.collection.mutable
 

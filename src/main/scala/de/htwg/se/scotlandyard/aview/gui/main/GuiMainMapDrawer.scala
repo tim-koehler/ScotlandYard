@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.gui.main
 
 import java.awt.{BasicStroke, Color}
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.MrX
+import de.htwg.se.scotlandyard.model.players.MrX
 
 import scala.swing.{Graphics2D, Image}
 
@@ -19,16 +19,16 @@ class GuiMainMapDrawer(controller: ControllerInterface) {
     val mrx = controller.getMrX
     if (mrx.isVisible) {
       g.setColor(mrx.color)
-      g.drawOval(mrx.station.guiCoords.x - (r / 2), mrx.station.guiCoords.y - (r / 2), r, r)
+      g.drawOval(mrx.station.guiCoordinates.x - (r / 2), mrx.station.guiCoordinates.y - (r / 2), r, r)
     } else if(!mrx.lastSeen.equals("never")) {
       g.setColor(mrx.lastSeenColor)
-      g.drawOval(controller.getStations()(mrx.lastSeen.toInt).guiCoords.x - (r / 2),
-        controller.getStations()(mrx.lastSeen.toInt).guiCoords.y - (r / 2), r, r)
+      g.drawOval(controller.getStations()(mrx.lastSeen.toInt).guiCoordinates.x - (r / 2),
+        controller.getStations()(mrx.lastSeen.toInt).guiCoordinates.y - (r / 2), r, r)
     }
 
     for (p <- controller.getPlayersList().drop(1)) {
       g.setColor(p.color)
-      g.drawOval(p.station.guiCoords.x - (r / 2), p.station.guiCoords.y - (r / 2), r, r)
+      g.drawOval(p.station.guiCoordinates.x - (r / 2), p.station.guiCoordinates.y - (r / 2), r, r)
     }
   }
 }

@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.playersComponent
+package de.htwg.se.scotlandyard.model.players
 
 import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType}
 import org.scalatest._

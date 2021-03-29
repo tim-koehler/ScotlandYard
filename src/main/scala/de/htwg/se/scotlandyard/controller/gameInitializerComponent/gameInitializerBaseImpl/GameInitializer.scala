@@ -5,7 +5,7 @@ import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
-import de.htwg.se.scotlandyard.model.playersComponent.{Detective, MrX, Player}
+import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import play.api.libs.json.{JsArray, JsValue, Json}
@@ -72,7 +72,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     // First loop over json file to create all Station objects
     for(jsonStation <- jsonStations ) {
       val stationType = StationType.fromString((jsonStation \ "type").as[String])
-      val station = Station(number = (jsonStation \ "number").as[Int], stationType = stationType, tuiCoords = new Point((jsonStation \ "tuiCoordinates" \ "x").as[Int], (jsonStation \ "tuiCoordinates" \ "y").as[Int]), guiCoords = new Point((jsonStation \ "guiCoordinates" \ "x").as[Int], (jsonStation \ "guiCoordinates" \ "y").as[Int]))
+      val station = Station(number = (jsonStation \ "number").as[Int], stationType = stationType, tuiCoordinates = new Point((jsonStation \ "tuiCoordinates" \ "x").as[Int], (jsonStation \ "tuiCoordinates" \ "y").as[Int]), guiCoordinates = new Point((jsonStation \ "guiCoordinates" \ "x").as[Int], (jsonStation \ "guiCoordinates" \ "y").as[Int]))
       stationsBuffer += station
     }
 

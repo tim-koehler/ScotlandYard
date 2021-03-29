@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapBaseImpl
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.Player
+import de.htwg.se.scotlandyard.model.players.Player
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -76,16 +76,16 @@ class TuiMap extends TuiMapInterface {
   private def updateMapString(controller: ControllerInterface): Option[List[String]] ={
 
     for(s <- controller.getStations()){
-      map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x - 1, ' ')))
-      map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x, ' ')))
-      map = Some(map.get.updated(s.tuiCoords.y - 1, map.get(s.tuiCoords.y - 1).updated(s.tuiCoords.x + 1, ' ')))
+      map = Some(map.get.updated(s.tuiCoordinates.y - 1, map.get(s.tuiCoordinates.y - 1).updated(s.tuiCoordinates.x - 1, ' ')))
+      map = Some(map.get.updated(s.tuiCoordinates.y - 1, map.get(s.tuiCoordinates.y - 1).updated(s.tuiCoordinates.x, ' ')))
+      map = Some(map.get.updated(s.tuiCoordinates.y - 1, map.get(s.tuiCoordinates.y - 1).updated(s.tuiCoordinates.x + 1, ' ')))
     }
 
     for(p <- controller.getPlayersList()) {
       if(!p.name.equals("MrX")) {
-        map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x - 1, p.name(0))))
-        map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x, p.name(1))))
-        map = Some(map.get.updated(p.station.tuiCoords.y - 1, map.get(p.station.tuiCoords.y - 1).updated(p.station.tuiCoords.x + 1, p.name(2))))
+        map = Some(map.get.updated(p.station.tuiCoordinates.y - 1, map.get(p.station.tuiCoordinates.y - 1).updated(p.station.tuiCoordinates.x - 1, p.name(0))))
+        map = Some(map.get.updated(p.station.tuiCoordinates.y - 1, map.get(p.station.tuiCoordinates.y - 1).updated(p.station.tuiCoordinates.x, p.name(1))))
+        map = Some(map.get.updated(p.station.tuiCoordinates.y - 1, map.get(p.station.tuiCoordinates.y - 1).updated(p.station.tuiCoordinates.x + 1, p.name(2))))
       }
     }
     map

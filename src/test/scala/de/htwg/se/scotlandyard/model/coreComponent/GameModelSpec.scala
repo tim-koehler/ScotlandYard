@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.model.coreComponent
 
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.playersComponent.MrX
+import de.htwg.se.scotlandyard.model.players.MrX
 import org.scalatest._
 
 class gameModelSpec extends WordSpec with Matchers with PrivateMethodTester {

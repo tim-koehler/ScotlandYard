@@ -4,7 +4,7 @@ import de.htwg.se.scotlandyard.model.{GameModel, Station}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.playersComponent.{MrX, Player}
+import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
 import java.awt.Color
 import scala.swing.Publisher

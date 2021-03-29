@@ -8,7 +8,7 @@ import de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOJsonImpl.FileIO
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.playersComponent.{Detective, MrX}
+import de.htwg.se.scotlandyard.model.players.{Detective, MrX}
 import net.codingwell.scalaguice.ScalaModule
 
 class ScotlandYardModule extends AbstractModule with ScalaModule {

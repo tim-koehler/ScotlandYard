@@ -9,13 +9,11 @@ case class Station(number: Integer = -1,
                    neighbourTaxis: Set[Station] = Set(),
                    neighbourBuses: Set[Station] = Set(),
                    neighbourUndergrounds: Set[Station] = Set(),
-                   tuiCoords: Point = new Point(1, 1),
-                   guiCoords: Point = new Point(1, 1))
+                   tuiCoordinates: Point = new Point(1, 1),
+                   guiCoordinates: Point = new Point(1, 1))
 {
+
   def setNeighbourTaxis(station: Station, neighbours: Set[Station]): Station = {
-    if(neighbours.isEmpty) {
-      return station
-    }
     station.copy(neighbourTaxis = neighbours)
   }
 
@@ -23,7 +21,7 @@ case class Station(number: Integer = -1,
     if(neighbours.isEmpty) {
       return station
     }
-    if(stationType < StationType.Bus) {
+    if(station.stationType < StationType.Bus) {
       throw new Exception("Taxi stations can't have Bus neighbours")
     }
     station.copy(neighbourBuses = neighbours)
@@ -33,7 +31,7 @@ case class Station(number: Integer = -1,
     if(neighbours.isEmpty) {
       return station
     }
-    if(stationType < StationType.Underground) {
+    if(station.stationType < StationType.Underground) {
       throw new Exception("Bus or Taxi stations can't have Underground neighbours")
     }
     station.copy(neighbourUndergrounds = neighbours)
@@ -42,8 +40,8 @@ case class Station(number: Integer = -1,
   override def equals(obj: Any): Boolean = {
     val comparedStation = obj.asInstanceOf[Station]
     if(number != comparedStation.number) return false
-    if(tuiCoords != comparedStation.tuiCoords) return false
-    if(guiCoords != comparedStation.guiCoords) return false
+    if(tuiCoordinates != comparedStation.tuiCoordinates) return false
+    if(guiCoordinates != comparedStation.guiCoordinates) return false
     true
   }
 }
