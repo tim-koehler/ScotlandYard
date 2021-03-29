@@ -45,10 +45,8 @@ case class GameModel(
 
   def updatePlayerPosition(gameModel: GameModel, newPosition: Int): GameModel = {
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
-    println("old:" + currentPlayer.station.number)
     val newPlayer = currentPlayer.setPlayerStation(currentPlayer, stations(newPosition))
     val newPlayers = gameModel.players.updated(getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer)
-    println("new:" + newPlayer)
     gameModel.copy(players = newPlayers)
   }
 
