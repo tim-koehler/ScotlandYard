@@ -45,8 +45,10 @@ case class GameModel(
 
   def updatePlayerPosition(gameModel: GameModel, newPosition: Int): GameModel = {
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+    println("old:" + currentPlayer.station.number)
     val newPlayer = currentPlayer.setPlayerStation(currentPlayer, stations(newPosition))
     val newPlayers = gameModel.players.updated(getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer)
+    println("new:" + newPlayer)
     gameModel.copy(players = newPlayers)
   }
 
@@ -60,8 +62,10 @@ case class GameModel(
     gameModel.copy(stuckPlayers = gameModel.stuckPlayers + player)
   }
 
-  def setAllPlayerStuck(gameModel: GameModel): GameModel = {
-    gameModel.copy(allPlayerStuck = true)
+  val setAllPlayerStuck: GameModel => GameModel = setPlayerStuck(_: GameModel, true)
+
+  private def setPlayerStuck(gameModel: GameModel, allPlayerStuck: Boolean): GameModel = {
+    gameModel.copy(allPlayerStuck = allPlayerStuck)
   }
 
   val winGame: (GameModel, Player) => GameModel = setWin(_: GameModel, _: Player, true, true)

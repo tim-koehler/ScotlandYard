@@ -87,10 +87,20 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+    println(currentPlayer)
+    println(newPosition)
+    println(ticketType)
+    println("t: " + currentPlayer.station.neighbourTaxis.map(_.number))
+    println("b: " + currentPlayer.station.neighbourBuses.map(_.number))
+    println("u: " + currentPlayer.station.neighbourUndergrounds.map(_.number))
     if (!isTargetStationInBounds(newPosition)) return false
+    println("inbounds")
     if (currentPlayer.station.number == newPosition) return false
+    println("not same position")
     if (!isMeanOfTransportValid(currentPlayer, newPosition, ticketType)) return false
+    println("mean of transport is valid")
     if (!isTargetStationEmpty(currentPlayer, newPosition)) return false
+    println("is empty")
     true
   }
 
@@ -126,7 +136,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   private def isTransportMoveValid(newPosition: Int)(tickets: Int, neighbours: Set[Station]): Boolean = {
     if (tickets <= 0) return false
-    neighbours.contains(gameModel.stations(newPosition))
+    neighbours.exists(_.number == newPosition)
   }
 
   private def isBlackMoveValid(currentPlayer: Player,newPosition: Int): Boolean = {
