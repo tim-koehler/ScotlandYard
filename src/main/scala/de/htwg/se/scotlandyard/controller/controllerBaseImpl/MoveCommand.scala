@@ -26,7 +26,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     if (!checkIfPlayerIsAbleToMove(gameModelTmp)) {
       gameModelTmp = gameModelTmp.addStuckPlayer(gameModelTmp, gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round))
       if (gameModelTmp.stuckPlayers.size == gameModelTmp.players.size - 1) {
-        gameModelTmp = gameModelTmp.setAllPlayerStuck(gameModelTmp)
+        gameModelTmp = gameModelTmp.setAllPlayersStuck(gameModelTmp)
       } else {
         gameModelTmp = nextRound(gameModelTmp)
       }

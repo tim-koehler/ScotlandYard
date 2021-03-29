@@ -60,7 +60,7 @@ case class GameModel(
     gameModel.copy(stuckPlayers = gameModel.stuckPlayers + player)
   }
 
-  val setAllPlayerStuck: GameModel => GameModel = setPlayerStuck(_: GameModel, true)
+  val setAllPlayersStuck: GameModel => GameModel = setPlayerStuck(_: GameModel, true)
 
   private def setPlayerStuck(gameModel: GameModel, allPlayerStuck: Boolean): GameModel = {
     gameModel.copy(allPlayerStuck = allPlayerStuck)

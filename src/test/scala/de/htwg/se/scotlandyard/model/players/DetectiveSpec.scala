@@ -9,24 +9,34 @@ import java.awt.Color
 
 class DetectiveSpec extends WordSpec with Matchers {
   "A Detective" when {
-    "new" should {
+    "should" should {
       var detective = Detective()
-      detective = detective.setPlayerTickets(Tickets(10, 5, 3)).asInstanceOf[Detective]
-      detective = detective.setPlayerStation(Station(0, StationType.Taxi)).asInstanceOf[Detective]
-      "have a name" in {
-        detective.setPlayerName("Bobbie") should be(true)
-        detective.setPlayerName("g") should be(false)
-        detective.setPlayerName("qwertzuiopüasdfghjklöäyxcvbnmd") should be(true) //30 characters
+      detective = detective.setPlayerTickets(detective, Tickets(10, 5, 3)).asInstanceOf[Detective]
+      "have correct tickets" in {
+        detective.tickets.taxiTickets should be (10)
+        detective.tickets.busTickets should be (5)
+        detective.tickets.undergroundTickets should be (3)
       }
-      "have a nice String representation" in {
+
+      detective = detective.setPlayerStation(detective, Station(1, StationType.Taxi)).asInstanceOf[Detective]
+      "have the correct station" in {
+        detective.station.number should be (1)
+      }
+
+      "have a name" in {
+        detective = detective.setPlayerName(detective, "Bobbie").asInstanceOf[Detective]
+        detective.name should be("Bobbie")
         detective.toString() should (include("Bobbie") and include("TICKETS->"))
+        //detective.setPlayerName("g") should be(false)
+        //detective.setPlayerName("qwertzuiopüasdfghjklöäyxcvbnmd") should be(true) //30 characters
       }
     }
     "setPlayerColor is called" should {
       "return old color" in {
-        val detective = Detective()
-        detective.setPlayerColor(Color.BLUE)
-        detective.setPlayerColor("#ffffff") should be(Color.BLUE)
+        var detective = Detective()
+        detective.setPlayerColor(detective, Color.BLUE).color should be (Color.BLUE)
+        detective = detective.setPlayerColor(detective, Color.BLUE).asInstanceOf[Detective]
+        detective.setPlayerColor(detective, "#ffffff").color should be(Color.WHITE)
       }
     }
   }
