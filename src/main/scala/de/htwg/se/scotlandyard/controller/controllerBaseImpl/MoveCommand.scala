@@ -1,10 +1,8 @@
 package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
-import de.htwg.se.scotlandyard.ScotlandYard.injector
-import de.htwg.se.scotlandyard.controller.{ControllerInterface, PlayerWin}
 import de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
+import de.htwg.se.scotlandyard.model.{GameModel, StationType}
 
 class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command {
 

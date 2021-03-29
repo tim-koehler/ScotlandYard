@@ -52,8 +52,8 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
   }
 
   def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: Vector[Station]): Player = {
-    val st = stations(stationNumber)
-    Detective(name = name, station = st, color = color, tickets = tickets)
+    val station = stations(stationNumber)
+    Detective(station, name, color, tickets)
   }
 
   override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType], stations: Vector[Station]): MrX = {
@@ -66,7 +66,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     val jsonStations = json.as[JsArray].value
     val stationsBuffer = new ListBuffer[Station]()
 
-    stationsBuffer += new Station(0, StationType.Taxi)
+    stationsBuffer += Station(0, StationType.Taxi)
 
     // First loop over json file to create all Station objects
     for(jsonStation <- jsonStations ) {
@@ -111,18 +111,12 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     players.toVector
   }
 
-  private def drawMisterXPosition(nonRandomPosition: Integer = -1): Int = {
-    if(nonRandomPosition != -1) {
-      return nonRandomPosition
-    }
+  private def drawMisterXPosition(): Int = {
     val startPosIndex = r.nextInt(MAX_MISTERX_LIST_INDEX)
     misterXStartPositions(startPosIndex)
   }
 
-  private def drawDetectivePosition(nonRandomPosition: Integer = -1): Int = {
-    if (nonRandomPosition != -1) {
-      return nonRandomPosition
-    }
+  private def drawDetectivePosition(): Int = {
     var startPosIndex = 0
     do {
       startPosIndex = r.nextInt(MAX_DETECTIVE_LIST_INDEX)

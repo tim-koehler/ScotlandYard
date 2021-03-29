@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.model.{Station, TicketType}
+import de.htwg.se.scotlandyard.model.{GameModel, TicketType}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import org.scalatest._
@@ -10,19 +10,19 @@ import org.scalatest._
 import java.awt.Color
 import scala.io.Source
 
-class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester with BeforeAndAfter {
+class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester with BeforeAndAfterEach {
 
   val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
   val gameInitializer = new GameInitializer()
   val controller = new Controller(gameInitializer, new FileIO(gameInitializer))
   controller.initializeStations(stationsSource)
+  var gameModel = GameModel()
 
-  before {
-     controller.initialize(3)
+  override def beforeEach(): Unit = {
+    gameModel = controller.initialize(3)
   }
 
   "Controller" when {
-    var gameModel = controller.initialize()
     "initialize" should {
       "return a gameModel" in {
         controller.initialize(3).players.length should be(3)
@@ -30,7 +30,8 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
     }
     "load" should {
       "return true" in {
-        controller.load() should be(true)
+        controller.load().round should be(1)
+        controller.load().totalRound should be(1)
       }
     }
 

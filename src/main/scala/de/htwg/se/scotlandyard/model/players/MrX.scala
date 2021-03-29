@@ -35,22 +35,15 @@ case class MrX(override val station: Station = Station(),
   }
 
   override def setPlayerName(player: Player, newName: String): Player = {
-    val mrX = player.asInstanceOf[MrX]
-    if (newName.length < 3) {
-      this
-    } else if (newName.length > 25) {
-      mrX.copy(name = newName.substring(0, 25))
-    } else {
-      mrX.copy(name = newName)
-    }
+    player.asInstanceOf[MrX]
   }
 
   override def setPlayerColor(player: Player, newColor: String): Player = {
-    this.setPlayerColor(player, Color.decode(newColor))
+    player.asInstanceOf[MrX]
   }
 
   override def setPlayerColor(player: Player, newColor: Color): Player = {
-    player.asInstanceOf[MrX].copy(color = newColor)
+    player.asInstanceOf[MrX]
   }
 
   override def setPlayerStation(player: Player, newStation: Station): Player = {

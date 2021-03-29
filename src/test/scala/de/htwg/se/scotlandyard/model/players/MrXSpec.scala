@@ -3,11 +3,12 @@ package de.htwg.se.scotlandyard.model.players
 import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType}
 import org.scalatest._
 
+import java.awt.Color
 import scala.collection.mutable
 
 class MrXSpec extends WordSpec with Matchers {
   "MrX" when {
-    "should" should {
+    "created" should {
       var mrX = MrX(station = Station(1, StationType.Underground))
 
       "have a station number" in {
@@ -16,11 +17,11 @@ class MrXSpec extends WordSpec with Matchers {
       "have a station Type" in {
         mrX.station.stationType should be (StationType.Underground)
       }
-      "should have a nice String representation when visible" in {
+      "have a nice String representation when visible" in {
         mrX = MrX(isVisible = true)
         mrX.toString() should (include("BLACKTICKETS") and include("MrX") and include("is at"))
       }
-      "should have a nice String representation when hidden" in {
+      "have a nice String representation when hidden" in {
         mrX = MrX()
         mrX.toString() should (include("BLACKTICKETS") and include("MrX") and include("(hidden) was"))
       }
@@ -30,6 +31,9 @@ class MrXSpec extends WordSpec with Matchers {
         mrX = MrX(history = List(TicketType.Taxi, TicketType.Underground, TicketType.Bus))
         mrX.history(1) should be (TicketType.Underground)
       }
+      "update last seen" in {
+        mrX.updateLastSeen(mrX, "newLastSeen").lastSeen should be ("newLastSeen")
+      }
       "addToHistory should add a Ticket to history" in {
         mrX = MrX()
         mrX.addToHistory(mrX, TicketType.Taxi).history.head should be(TicketType.Taxi)
@@ -37,6 +41,19 @@ class MrXSpec extends WordSpec with Matchers {
       "removeFromHistory should remove Ticket" in {
         mrX = MrX(history = List(TicketType.Taxi, TicketType.Underground, TicketType.Bus))
         mrX.removeFromHistory(mrX).history.size should be(2)
+      }
+      "removeFromHistory should remove nothing when history empty" in {
+        mrX = mrX.copy(history = List())
+        mrX.removeFromHistory(mrX).history.size should be(0)
+      }
+      "not set the name" in {
+        mrX.setPlayerName(mrX, "newName").name should be("MrX")
+      }
+      "not set the color from String" in {
+        mrX.setPlayerColor(mrX, Color.BLUE).color should be (Color.BLACK)
+      }
+      "not set the color from Color" in {
+        mrX.setPlayerColor(mrX, "#ffffff").color should be (Color.BLACK)
       }
     }
   }
