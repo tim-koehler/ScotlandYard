@@ -64,8 +64,10 @@ case class GameModel(
     gameModel.copy(allPlayerStuck = true)
   }
 
-  def winGame(gameModel: GameModel, winningPlayer: Player): GameModel = {
-    gameModel.copy(winningPlayer = winningPlayer, gameRunning = false, win = true)
+  val winGame: (GameModel, Player) => GameModel = setWin(_: GameModel, _: Player, true, true)
+
+  private def setWin(gameModel: GameModel, winningPlayer: Player, gameRunning: Boolean, win: Boolean): GameModel = {
+    gameModel.copy(winningPlayer = winningPlayer, gameRunning = gameRunning, win = win)
   }
 
   def incrementValue(x: Int): Int = {x + 1}

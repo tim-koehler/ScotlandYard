@@ -98,7 +98,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     newPosition < gameModel.stations.size && newPosition > 0
   }
 
-  private def isMeanOfTransportValid(player: Player,newPosition: Integer, ticketType: TicketType): Boolean = {
+  private def isMeanOfTransportValid(player: Player, newPosition: Integer, ticketType: TicketType): Boolean = {
     ticketType match {
       case TicketType.Taxi =>
         isTransportMoveValid(newPosition)(player.tickets.taxiTickets, player.station.neighbourTaxis)
