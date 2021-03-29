@@ -37,10 +37,7 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     val undergroundTickets = (json \ "mrX" \ "undergroundTickets").get.toString().toInt
     val historyJs: JsArray = (json \ "mrX" \ "history").as[JsArray]
     var history: List[TicketType] = List()
-    for(transport <- historyJs.value) {
-      val s = (transport \ "transport").get.toString()
-      history = TicketType.withName(formatString(s)) :: history
-    }
+    historyJs.value.foreach(transport => history = TicketType.withName(formatString((transport \ "transport").get.toString())) :: history)
 
     val tickets = Tickets(taxiTickets, busTickets, undergroundTickets, blackTickets)
     val mrx = gameInitializer.initMrXFromLoad(formatString(name), stationNumber, isVisible, lastSeen.get, tickets, history, gameModel.stations)

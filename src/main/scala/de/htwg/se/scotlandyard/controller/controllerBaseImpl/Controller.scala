@@ -171,13 +171,13 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def setPlayerName(inputName: String, index: Int): Boolean = {
-    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.players(index).setPlayerName(inputName)))
+    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.players(index).setPlayerName(gameModel.players(index), inputName)))
     publish(new PlayerNameChanged)
     gameModel.players(index).name == inputName
   }
 
   def setPlayerColor(newColor: String, index: Int): Color = {
-    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.players(index).setPlayerColor(newColor)))
+    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.players(index).setPlayerColor(gameModel.players(index), newColor)))
     publish(new PlayerColorChanged)
     gameModel.players(index).color
   }

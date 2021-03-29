@@ -11,7 +11,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   private def defaultDo(gameModel: GameModel): GameModel = {
     var gameModelTmp = gameModel
     if (gameModelTmp.getCurrentPlayerIndex(gameModelTmp.players, gameModelTmp.round) == 0) {
-      val newMrX = gameModelTmp.getMrX(gameModelTmp.players).addToHistory(ticketType)
+      val newMrX = gameModelTmp.getMrX(gameModelTmp.players).addToHistory(gameModelTmp.getMrX(gameModelTmp.players), ticketType)
       gameModelTmp = gameModelTmp.copy(players = gameModelTmp.players.updated(0, newMrX))
     }
     gameModelTmp = gameModelTmp.updatePlayerPosition(gameModelTmp, newPosition)
@@ -34,17 +34,11 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     gameModelTmp
   }
 
-  def previousRound(gameModel: GameModel): GameModel = {
-    var gameModelTmp = gameModel
-    gameModelTmp = updateMrXVisibility(gameModelTmp)
-    gameModelTmp = gameModelTmp.updateRound(gameModelTmp, gameModelTmp.decrementValue)
-    gameModelTmp
-  }
 
   private def updateMrXVisibility(gameModel: GameModel): GameModel = {
-    var mrX = gameModel.getMrX(gameModel.players).updateVisibility(gameModel.MRX_VISIBLE_ROUNDS.contains(gameModel.totalRound))
+    var mrX = gameModel.getMrX(gameModel.players).updateVisibility(gameModel.getMrX(gameModel.players), gameModel.MRX_VISIBLE_ROUNDS.contains(gameModel.totalRound))
     if (mrX.isVisible) {
-      mrX = mrX.updateLastSeen(gameModel.players.head.station.number.toString)
+      mrX = mrX.updateLastSeen(mrX, gameModel.players.head.station.number.toString)
     }
     gameModel.copy(players = gameModel.players.updated(0, mrX))
   }
@@ -66,16 +60,23 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   }
 
   override def undoStep(gameModel: GameModel): GameModel = {
-    var gameModelTmp = previousRound(gameModel)
-    if (gameModelTmp.totalRound == 1 && gameModelTmp.round == 1) {
-      return gameModelTmp
+    if (gameModel.totalRound == 1 && gameModel.round == 1) {
+      return gameModel
     }
-    if (gameModelTmp.getCurrentPlayerIndex(gameModelTmp.players, gameModelTmp.round) == 1) {
-      val newMrX = gameModelTmp.getMrX(gameModelTmp.players).removeFromHistory()
+    var gameModelTmp = previousRound(gameModel)
+    if (gameModelTmp.getCurrentPlayerIndex(gameModelTmp.players, gameModelTmp.round) == 0) {
+      val newMrX = gameModelTmp.getMrX(gameModelTmp.players).removeFromHistory(gameModelTmp.getMrX(gameModelTmp.players))
       gameModelTmp = gameModelTmp.copy(players = gameModelTmp.players.updated(0, newMrX))
     }
     gameModelTmp = gameModelTmp.updatePlayerPosition(gameModelTmp, currentPosition)
     gameModelTmp = gameModelTmp.updateTickets(gameModelTmp, ticketType)(gameModelTmp.incrementValue)
+    gameModelTmp
+  }
+
+  def previousRound(gameModel: GameModel): GameModel = {
+    var gameModelTmp = gameModel
+    gameModelTmp = updateMrXVisibility(gameModelTmp)
+    gameModelTmp = gameModelTmp.updateRound(gameModelTmp, gameModelTmp.decrementValue)
     gameModelTmp
   }
 
