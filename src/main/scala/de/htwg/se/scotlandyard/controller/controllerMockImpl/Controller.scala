@@ -18,7 +18,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   override def initialize(nPlayer: Int): GameModel = GameModel()
 
-  override def load(): Boolean = true
+  override def load(): GameModel = GameModel()
 
   override def save(): Boolean = true
 
