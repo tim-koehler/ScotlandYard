@@ -36,11 +36,4 @@ case class Station(number: Integer = -1,
     }
     station.copy(neighbourUndergrounds = neighbours)
   }
-
-
-  def isSameStation(station1: Station, station2: Station): Boolean = {
-    station1.number != station2.number
-  }
-
-
 }
