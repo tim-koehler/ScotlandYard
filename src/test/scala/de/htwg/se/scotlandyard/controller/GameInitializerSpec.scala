@@ -1,14 +1,12 @@
-package de.htwg.se.scotlandyard.model.coreComponent
+package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapMockImpl.TuiMap
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.{Station, StationType, TicketType, Tickets}
-
-import java.awt.Color
 import org.scalatest._
 
+import java.awt.Color
 import scala.collection.mutable
-import scala.swing.Point
 
 class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameInitializer" should {

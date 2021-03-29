@@ -1,10 +1,10 @@
-package de.htwg.se.scotlandyard.model.coreComponent
+package de.htwg.se.scotlandyard.model
 
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.players.MrX
 import org.scalatest._
 
-class gameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
+class GameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameMaster Object" when {
     val gameInitializer = new GameInitializer
     val gameModel = gameInitializer.initialize(3)

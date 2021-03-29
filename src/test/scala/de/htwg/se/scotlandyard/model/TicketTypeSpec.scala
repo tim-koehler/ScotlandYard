@@ -1,6 +1,5 @@
-package de.htwg.se.scotlandyard.model.coreComponent
+package de.htwg.se.scotlandyard.model
 
-import de.htwg.se.scotlandyard.model.TicketType
 import org.scalatest._
 
 class TicketTypeSpec extends WordSpec with Matchers with PrivateMethodTester {

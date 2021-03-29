@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.model.coreComponent
+package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapBaseImpl.TuiMap
 import org.scalatest._
