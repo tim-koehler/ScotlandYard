@@ -7,7 +7,7 @@ import scala.collection.mutable
 
 case class GameModel(
                       stations: Vector[Station] = Vector[Station](),
-                      players: Vector[Player] = Vector[Player](),
+                      players: Vector[Player] = Vector[Player](MrX(), Detective(name = "Dt1"), Detective(name = "Dt2")),
                       round: Int = 1, // counter of moves (increases by 1 when a player moved)
                       totalRound: Int = 1, // number of total rounds (increases by 1 when every player has moved once)
                       win: Boolean = false,

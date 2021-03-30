@@ -71,7 +71,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     gameModelTmp
   }
 
-  def previousRound(gameModel: GameModel): GameModel = {
+  private def previousRound(gameModel: GameModel): GameModel = {
     var gameModelTmp = gameModel
     gameModelTmp = updateMrXVisibility(gameModelTmp)
     gameModelTmp = gameModelTmp.updateRound(gameModelTmp, gameModelTmp.decrementValue)
