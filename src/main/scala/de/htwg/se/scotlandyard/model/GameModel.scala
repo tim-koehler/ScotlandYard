@@ -32,6 +32,11 @@ case class GameModel(
     }
   }
 
+  def startGame(gameModel: GameModel): GameModel = {
+    val gameModelTmp = gameModel.copy(gameRunning = true)
+    gameModelTmp
+  }
+
   def getMrX(players: Vector[Player]): MrX = players.head.asInstanceOf[MrX]
   def getDetectives(players: Vector[Player]): Vector[Player] = players.drop(1)
 

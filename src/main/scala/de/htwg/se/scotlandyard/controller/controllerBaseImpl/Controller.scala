@@ -89,8 +89,9 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def startGame(): Boolean = {
+    this.gameModel = gameModel.startGame(this.gameModel)
     publish(new StartGame)
-    true
+    this.gameModel.gameRunning
   }
 
   def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {

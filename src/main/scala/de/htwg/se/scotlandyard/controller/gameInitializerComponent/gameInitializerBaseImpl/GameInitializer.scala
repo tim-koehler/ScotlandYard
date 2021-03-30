@@ -44,7 +44,7 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
 
   override def initialize(nPlayers: Int = 3, stationsSource: String): GameModel = {
     val stations = initStations(stationsSource)
-    GameModel(stations = stations, players = initPlayers(nPlayers, stations), gameRunning = true, stuckPlayers = Set[Player]())
+    GameModel(stations = stations, players = initPlayers(nPlayers, stations), stuckPlayers = Set[Player]())
   }
   
   def getColorList(): Vector[Color] = {
