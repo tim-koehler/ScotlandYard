@@ -71,7 +71,7 @@ case class GameModel(
     gameModel.copy(allPlayerStuck = allPlayerStuck)
   }
 
-  val winGame: (GameModel, Player) => GameModel = setWin(_: GameModel, _: Player, true, true)
+  val winGame: (GameModel, Player) => GameModel = setWin(_: GameModel, _: Player, false, true)
 
   private def setWin(gameModel: GameModel, winningPlayer: Player, gameRunning: Boolean, win: Boolean): GameModel = {
     gameModel.copy(winningPlayer = winningPlayer, gameRunning = gameRunning, win = win)
