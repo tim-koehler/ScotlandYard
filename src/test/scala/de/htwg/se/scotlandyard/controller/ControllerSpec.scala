@@ -72,9 +72,10 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
       }
       "win detectives" in {
         controller.move(9, TicketType.Taxi).players(0).station.number should be (9)
+        controller.move(18, TicketType.Taxi)
         val gameModel = controller.move(9, TicketType.Taxi)
-        gameModel.round should be(2)
-        //gameModel.win should be (true)
+        gameModel.round should be(4)
+        gameModel.win should be (true)
       }
     }
 

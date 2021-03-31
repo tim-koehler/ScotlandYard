@@ -24,7 +24,7 @@ class GameInitializer() extends GameInitializerInterface{
   override val DT5_COLOR: Color = Color.YELLOW
   override val DT6_COLOR: Color = Color.CYAN
   override val detectiveStartPositions = Vector(8, 19, 20)
-  override val misterXStartPositions: Vector[Int] = Vector(3)
+  override val misterXStartPositions: Vector[Int] = Vector(1)
   override var drawnPositions: Vector[Int] = _
   override val numberOfTaxiTickets: Int = 5
   override val numberOfBusTickets: Int = 3
