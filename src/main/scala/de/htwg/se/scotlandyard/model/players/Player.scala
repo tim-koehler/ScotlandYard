@@ -11,6 +11,9 @@ abstract class Player(
                        val tickets: Tickets = Tickets(),
                      ) {
 
+  def setPlayerName(player: Player, newName: String): Player
+  def setPlayerColor(player: Player, newColor: String): Player
+  def setPlayerColor(player: Player, newColor: Color): Player
   def setPlayerStation(player: Player, newStation: Station): Player
   def setPlayerTickets(player: Player, newTickets: Tickets): Player
 }

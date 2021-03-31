@@ -34,6 +34,19 @@ case class MrX(override val station: Station = Station(),
     mrX.copy(lastSeen = lastSeen)
   }
 
+  override def setPlayerName(player: Player, newName: String): Player = {
+    player.asInstanceOf[MrX]
+  }
+
+  override def setPlayerColor(player: Player, newColor: String): Player = {
+    player.asInstanceOf[MrX]
+  }
+
+  override def setPlayerColor(player: Player, newColor: Color): Player = {
+    player.asInstanceOf[MrX]
+  }
+
+
   override def setPlayerStation(player: Player, newStation: Station): Player = {
     player.asInstanceOf[MrX].copy(station = newStation)
   }

@@ -9,7 +9,7 @@ case class Detective(override val station: Station = Station(),
                      override val color: Color = Color.LIGHT_GRAY,
                      override val tickets: Tickets  = Tickets()) extends Player(station, name, color, tickets) {
 
-  def setPlayerName(player: Player, newName: String): Player = {
+  override def setPlayerName(player: Player, newName: String): Player = {
     val detective = player.asInstanceOf[Detective]
     if (newName.length < 3) {
       detective
@@ -20,11 +20,11 @@ case class Detective(override val station: Station = Station(),
     }
   }
 
-  def setPlayerColor(player: Player, newColor: String): Player = {
+  override def setPlayerColor(player: Player, newColor: String): Player = {
     this.setPlayerColor(player, Color.decode(newColor))
   }
 
-  def setPlayerColor(player: Player, newColor: Color): Player = {
+  override def setPlayerColor(player: Player, newColor: Color): Player = {
     player.asInstanceOf[Detective].copy(color = newColor)
   }
 
