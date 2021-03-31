@@ -2,6 +2,7 @@
     {
         "number": 1,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 9,
@@ -27,6 +28,7 @@
     {
         "number": 2,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 20,
@@ -47,6 +49,7 @@
     {
         "number": 3,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 11,
@@ -71,6 +74,7 @@
     {
         "number": 4,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 3,
@@ -91,6 +95,7 @@
     {
         "number": 5,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 15,
@@ -111,6 +116,7 @@
     {
         "number": 6,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 29,
@@ -131,6 +137,7 @@
     {
         "number": 7,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 6,
@@ -153,6 +160,7 @@
     {
         "number": 8,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 1,
@@ -174,6 +182,7 @@
     {
         "number": 9,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 1,
@@ -195,6 +204,7 @@
     {
         "number": 10,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 2,
@@ -217,6 +227,7 @@
     {
         "number": 11,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 3,
@@ -238,6 +249,7 @@
     {
         "number": 12,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 3,
@@ -258,6 +270,7 @@
     {
         "number": 13,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 4,
@@ -287,6 +300,7 @@
     {
         "number": 14,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 13,
@@ -311,6 +325,7 @@
     {
         "number": 15,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 5,
@@ -338,6 +353,7 @@
     {
         "number": 16,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 5,
@@ -360,6 +376,7 @@
     {
         "number": 17,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 7,
@@ -381,6 +398,7 @@
     {
         "number": 18,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 8,
@@ -402,6 +420,7 @@
     {
         "number": 19,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 8,
@@ -423,6 +442,7 @@
     {
         "number": 20,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 2,
@@ -444,6 +464,7 @@
     {
         "number": 21,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 10,
@@ -464,6 +485,7 @@
     {
         "number": 22,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 11,
@@ -491,6 +513,7 @@
     {
         "number": 23,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 12,
@@ -518,6 +541,7 @@
     {
         "number": 24,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 37,
@@ -538,6 +562,7 @@
     {
         "number": 25,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 14,
@@ -559,6 +584,7 @@
     {
         "number": 26,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 15,
@@ -580,6 +606,7 @@
     {
         "number": 27,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 26,
@@ -601,6 +628,7 @@
     {
         "number": 28,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 15,
@@ -623,6 +651,7 @@
     {
         "number": 29,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 6,
@@ -651,6 +680,7 @@
     {
         "number": 30,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 17,
@@ -671,6 +701,7 @@
     {
         "number": 31,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 18,
@@ -692,6 +723,7 @@
     {
         "number": 32,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 19,
@@ -714,6 +746,7 @@
     {
         "number": 33,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 20,
@@ -736,6 +769,7 @@
     {
         "number": 34,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 10,
@@ -762,6 +796,7 @@
     {
         "number": 35,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 22,
@@ -784,6 +819,7 @@
     {
         "number": 36,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 35,
@@ -805,6 +841,7 @@
     {
         "number": 37,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 23,
@@ -827,6 +864,7 @@
     {
         "number": 38,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 24,
@@ -849,6 +887,7 @@
     {
         "number": 39,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 25,
@@ -871,6 +910,7 @@
     {
         "number": 40,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 27,
@@ -893,6 +933,7 @@
     {
         "number": 41,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 28,
@@ -920,6 +961,7 @@
     {
         "number": 42,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 29,
@@ -946,6 +988,7 @@
     {
         "number": 43,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 18,
@@ -967,6 +1010,7 @@
     {
         "number": 44,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 31,
@@ -988,6 +1032,7 @@
     {
         "number": 45,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 32,
@@ -1011,6 +1056,7 @@
     {
         "number": 46,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 33,
@@ -1043,6 +1089,7 @@
     {
         "number": 47,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 34,
@@ -1064,6 +1111,7 @@
     {
         "number": 48,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 34,
@@ -1086,6 +1134,7 @@
     {
         "number": 49,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 36,
@@ -1107,6 +1156,7 @@
     {
         "number": 50,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 37,
@@ -1128,6 +1178,7 @@
     {
         "number": 51,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 38,
@@ -1151,6 +1202,7 @@
     {
         "number": 52,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 39,
@@ -1178,6 +1230,7 @@
     {
         "number": 53,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 40,
@@ -1199,6 +1252,7 @@
     {
         "number": 54,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 41,
@@ -1221,6 +1275,7 @@
     {
         "number": 55,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 54,
@@ -1244,6 +1299,7 @@
     {
         "number": 56,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 42,
@@ -1264,6 +1320,7 @@
     {
         "number": 57,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 43,
@@ -1285,6 +1342,7 @@
     {
         "number": 58,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 44,
@@ -1313,6 +1371,7 @@
     {
         "number": 59,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 45,
@@ -1335,6 +1394,7 @@
     {
         "number": 60,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 45,
@@ -1356,6 +1416,7 @@
     {
         "number": 61,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 46,
@@ -1379,6 +1440,7 @@
     {
         "number": 62,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 47,
@@ -1401,6 +1463,7 @@
     {
         "number": 63,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 48,
@@ -1428,6 +1491,7 @@
     {
         "number": 64,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 63,
@@ -1449,6 +1513,7 @@
     {
         "number": 65,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 35,
@@ -1476,6 +1541,7 @@
     {
         "number": 66,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 49,
@@ -1498,6 +1564,7 @@
     {
         "number": 67,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 51,
@@ -1531,6 +1598,7 @@
     {
         "number": 68,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 51,
@@ -1553,6 +1621,7 @@
     {
         "number": 69,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 52,
@@ -1575,6 +1644,7 @@
     {
         "number": 70,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 54,
@@ -1596,6 +1666,7 @@
     {
         "number": 71,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 55,
@@ -1618,6 +1689,7 @@
     {
         "number": 72,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 42,
@@ -1644,6 +1716,7 @@
     {
         "number": 73,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 57,
@@ -1665,6 +1738,7 @@
     {
         "number": 74,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 58,
@@ -1692,6 +1766,7 @@
     {
         "number": 75,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 59,
@@ -1713,6 +1788,7 @@
     {
         "number": 76,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 59,
@@ -1735,6 +1811,7 @@
     {
         "number": 77,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 76,
@@ -1762,6 +1839,7 @@
     {
         "number": 78,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 61,
@@ -1788,6 +1866,7 @@
     {
         "number": 79,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 62,
@@ -1818,6 +1897,7 @@
     {
         "number": 80,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 63,
@@ -1839,6 +1919,7 @@
     {
         "number": 81,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 64,
@@ -1860,6 +1941,7 @@
     {
         "number": 82,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 65,
@@ -1887,6 +1969,7 @@
     {
         "number": 83,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 101,
@@ -1907,6 +1990,7 @@
     {
         "number": 84,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 67,
@@ -1927,6 +2011,7 @@
     {
         "number": 85,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 68,
@@ -1948,6 +2033,7 @@
     {
         "number": 86,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 69,
@@ -1974,6 +2060,7 @@
     {
         "number": 87,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 70,
@@ -1998,6 +2085,7 @@
     {
         "number": 88,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 87,
@@ -2019,6 +2107,7 @@
     {
         "number": 89,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 71,
@@ -2048,6 +2137,7 @@
     {
         "number": 90,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 72,
@@ -2069,6 +2159,7 @@
     {
         "number": 91,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 56,
@@ -2092,6 +2183,7 @@
     {
         "number": 92,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 73,
@@ -2113,6 +2205,7 @@
     {
         "number": 93,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 92,
@@ -2137,6 +2230,7 @@
     {
         "number": 94,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 75,
@@ -2162,6 +2256,7 @@
     {
         "number": 95,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 77,
@@ -2183,6 +2278,7 @@
     {
         "number": 96,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 77,
@@ -2204,6 +2300,7 @@
     {
         "number": 97,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 78,
@@ -2226,6 +2323,7 @@
     {
         "number": 98,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 79,
@@ -2248,6 +2346,7 @@
     {
         "number": 99,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 80,
@@ -2270,6 +2369,7 @@
     {
         "number": 100,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 80,
@@ -2297,6 +2397,7 @@
     {
         "number": 101,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 82,
@@ -2319,6 +2420,7 @@
     {
         "number": 102,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 83,
@@ -2344,6 +2446,7 @@
     {
         "number": 103,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 85,
@@ -2365,6 +2468,7 @@
     {
         "number": 104,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 86,
@@ -2385,6 +2489,7 @@
     {
         "number": 105,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 89,
@@ -2414,6 +2519,7 @@
     {
         "number": 106,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 105,
@@ -2434,6 +2540,7 @@
     {
         "number": 107,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 91,
@@ -2459,6 +2566,7 @@
     {
         "number": 108,
         "type": "Bus",
+        "blackStation": true,
         "neighbours": {
             "taxi": [
                 105,
@@ -2484,6 +2592,7 @@
     {
         "number": 109,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 96,
@@ -2506,6 +2615,7 @@
     {
         "number": 110,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 98,
@@ -2528,6 +2638,7 @@
     {
         "number": 111,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 110,
@@ -2557,6 +2668,7 @@
     {
         "number": 112,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 99,
@@ -2579,6 +2691,7 @@
     {
         "number": 113,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 100,
@@ -2600,6 +2713,7 @@
     {
         "number": 114,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 101,
@@ -2624,6 +2738,7 @@
     {
         "number": 115,
         "type": "Taxi",
+        "blackStation": true,
         "neighbours": {
             "taxi": [
                 102,
@@ -2646,6 +2761,7 @@
     {
         "number": 116,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 104,
@@ -2673,6 +2789,7 @@
     {
         "number": 117,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 88,
@@ -2695,6 +2812,7 @@
     {
         "number": 118,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 116,
@@ -2717,6 +2835,7 @@
     {
         "number": 119,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 107,
@@ -2738,6 +2857,7 @@
     {
         "number": 120,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 121,
@@ -2758,6 +2878,7 @@
     {
         "number": 121,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 120,
@@ -2779,6 +2900,7 @@
     {
         "number": 122,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 95,
@@ -2804,6 +2926,7 @@
     {
         "number": 123,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 122,
@@ -2832,6 +2955,7 @@
     {
         "number": 124,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 109,
@@ -2860,6 +2984,7 @@
     {
         "number": 125,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 112,
@@ -2881,6 +3006,7 @@
     {
         "number": 126,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 114,
@@ -2903,6 +3029,7 @@
     {
         "number": 127,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 115,
@@ -2930,6 +3057,7 @@
     {
         "number": 128,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 142,
@@ -2963,6 +3091,7 @@
     {
         "number": 129,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 117,
@@ -2986,6 +3115,7 @@
     {
         "number": 130,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 124,
@@ -3007,6 +3137,7 @@
     {
         "number": 131,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 114,
@@ -3028,6 +3159,7 @@
     {
         "number": 132,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 114,
@@ -3048,6 +3180,7 @@
     {
         "number": 133,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 127,
@@ -3073,6 +3206,7 @@
     {
         "number": 134,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 118,
@@ -3095,6 +3229,7 @@
     {
         "number": 135,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 129,
@@ -3121,6 +3256,7 @@
     {
         "number": 136,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 119,
@@ -3142,6 +3278,7 @@
     {
         "number": 137,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 123,
@@ -3162,6 +3299,7 @@
     {
         "number": 138,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 124,
@@ -3183,6 +3321,7 @@
     {
         "number": 139,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 130,
@@ -3205,6 +3344,7 @@
     {
         "number": 140,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 126,
@@ -3238,6 +3378,7 @@
     {
         "number": 141,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 133,
@@ -3260,6 +3401,7 @@
     {
         "number": 142,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 118,
@@ -3289,6 +3431,7 @@
     {
         "number": 143,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 128,
@@ -3312,6 +3455,7 @@
     {
         "number": 144,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 120,
@@ -3337,6 +3481,7 @@
     {
         "number": 145,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 121,
@@ -3358,6 +3503,7 @@
     {
         "number": 146,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 122,
@@ -3380,6 +3526,7 @@
     {
         "number": 147,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 137,
@@ -3401,6 +3548,7 @@
     {
         "number": 148,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 123,
@@ -3422,6 +3570,7 @@
     {
         "number": 149,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 123,
@@ -3444,6 +3593,7 @@
     {
         "number": 150,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 138,
@@ -3465,6 +3615,7 @@
     {
         "number": 151,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 150,
@@ -3487,6 +3638,7 @@
     {
         "number": 152,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 138,
@@ -3508,6 +3660,7 @@
     {
         "number": 153,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 139,
@@ -3541,6 +3694,7 @@
     {
         "number": 154,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 139,
@@ -3567,6 +3721,7 @@
     {
         "number": 155,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 154,
@@ -3589,6 +3744,7 @@
     {
         "number": 156,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 140,
@@ -3616,6 +3772,7 @@
     {
         "number": 157,
         "type": "Bus",
+        "blackStation": true,
         "neighbours": {
             "taxi": [
                 156,
@@ -3642,6 +3799,7 @@
     {
         "number": 158,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 141,
@@ -3664,6 +3822,7 @@
     {
         "number": 159,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 158,
@@ -3687,6 +3846,7 @@
     {
         "number": 160,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 128,
@@ -3709,6 +3869,7 @@
     {
         "number": 161,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 135,
@@ -3735,6 +3896,7 @@
     {
         "number": 162,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 136,
@@ -3755,6 +3917,7 @@
     {
         "number": 163,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 146,
@@ -3782,6 +3945,7 @@
     {
         "number": 164,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 147,
@@ -3804,6 +3968,7 @@
     {
         "number": 165,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 149,
@@ -3830,6 +3995,7 @@
     {
         "number": 166,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 151,
@@ -3852,6 +4018,7 @@
     {
         "number": 167,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 153,
@@ -3874,6 +4041,7 @@
     {
         "number": 168,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 155,
@@ -3895,6 +4063,7 @@
     {
         "number": 169,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 156,
@@ -3915,6 +4084,7 @@
     {
         "number": 170,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 157,
@@ -3936,6 +4106,7 @@
     {
         "number": 171,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 173,
@@ -3957,6 +4128,7 @@
     {
         "number": 172,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 128,
@@ -3978,6 +4150,7 @@
     {
         "number": 173,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 160,
@@ -4000,6 +4173,7 @@
     {
         "number": 174,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 161,
@@ -4021,6 +4195,7 @@
     {
         "number": 175,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 162,
@@ -4042,6 +4217,7 @@
     {
         "number": 176,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 177,
@@ -4065,6 +4241,7 @@
     {
         "number": 177,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 144,
@@ -4086,6 +4263,7 @@
     {
         "number": 178,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 164,
@@ -4107,6 +4285,7 @@
     {
         "number": 179,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 164,
@@ -4128,6 +4307,7 @@
     {
         "number": 180,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 165,
@@ -4154,6 +4334,7 @@
     {
         "number": 181,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 166,
@@ -4176,6 +4357,7 @@
     {
         "number": 182,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 181,
@@ -4197,6 +4379,7 @@
     {
         "number": 183,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 166,
@@ -4219,6 +4402,7 @@
     {
         "number": 184,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 168,
@@ -4247,6 +4431,7 @@
     {
         "number": 185,
         "type": "Underground",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 170,
@@ -4275,6 +4460,7 @@
     {
         "number": 186,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 159,
@@ -4296,6 +4482,7 @@
     {
         "number": 187,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 172,
@@ -4320,6 +4507,7 @@
     {
         "number": 188,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 128,
@@ -4342,6 +4530,7 @@
     {
         "number": 189,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 176,
@@ -4363,6 +4552,7 @@
     {
         "number": 190,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 189,
@@ -4388,6 +4578,7 @@
     {
         "number": 191,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 178,
@@ -4414,6 +4605,7 @@
     {
         "number": 192,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 190,
@@ -4435,6 +4627,7 @@
     {
         "number": 193,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 180,
@@ -4456,6 +4649,7 @@
     {
         "number": 194,
         "type": "Taxi",
+        "blackStation": true,
         "neighbours": {
             "taxi": [
                 192,
@@ -4477,6 +4671,7 @@
     {
         "number": 195,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 182,
@@ -4498,6 +4693,7 @@
     {
         "number": 196,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 183,
@@ -4519,6 +4715,7 @@
     {
         "number": 197,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 184,
@@ -4540,6 +4737,7 @@
     {
         "number": 198,
         "type": "Taxi",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 159,
@@ -4562,6 +4760,7 @@
     {
         "number": 199,
         "type": "Bus",
+        "blackStation": false,
         "neighbours": {
             "taxi": [
                 171,

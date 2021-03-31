@@ -6,6 +6,7 @@ import scala.swing.Point
 
 case class Station(number: Integer = -1,
                    stationType: StationType = StationType.Taxi,
+                   blackStation: Boolean = false,
                    neighbourTaxis: Set[Station] = Set(),
                    neighbourBuses: Set[Station] = Set(),
                    neighbourUndergrounds: Set[Station] = Set(),

@@ -136,11 +136,14 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   private def isBlackMoveValid(currentPlayer: Player, newPosition: Int): Boolean = {
-
     if (currentPlayer.asInstanceOf[MrX].tickets.blackTickets <= 0) return false
-    currentPlayer.station.neighbourTaxis.exists(_.number == newPosition) ||
-      currentPlayer.station.neighbourBuses.exists(_.number == newPosition) ||
-      currentPlayer.station.neighbourUndergrounds.exists(_.number == newPosition)
+    if (gameModel.stations(newPosition).blackStation && currentPlayer.station.blackStation) {
+      true
+    } else {
+      currentPlayer.station.neighbourTaxis.exists(_.number == newPosition) ||
+        currentPlayer.station.neighbourBuses.exists(_.number == newPosition) ||
+        currentPlayer.station.neighbourUndergrounds.exists(_.number == newPosition)
+    }
   }
 
   // Getters and Setters
