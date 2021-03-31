@@ -46,15 +46,6 @@ class MrXSpec extends WordSpec with Matchers {
         mrX = mrX.copy(history = List())
         mrX.removeFromHistory(mrX).history.size should be(0)
       }
-      "not set the name" in {
-        mrX.setPlayerName(mrX, "newName").name should be("MrX")
-      }
-      "not set the color from String" in {
-        mrX.setPlayerColor(mrX, Color.BLUE).color should be (Color.BLACK)
-      }
-      "not set the color from Color" in {
-        mrX.setPlayerColor(mrX, "#ffffff").color should be (Color.BLACK)
-      }
     }
   }
 }
