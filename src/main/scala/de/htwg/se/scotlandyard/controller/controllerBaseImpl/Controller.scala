@@ -1,8 +1,6 @@
 package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
 import com.google.inject.Inject
-import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
-import de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
@@ -11,7 +9,6 @@ import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializ
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
 import java.awt.Color
-import scala.io.Source
 import scala.swing.Publisher
 import scala.util.control.Breaks.{break, breakable}
 
@@ -180,13 +177,13 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def setPlayerName(inputName: String, index: Int): Boolean = {
-    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.players(index).setPlayerName(gameModel.players(index), inputName)))
+    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.getDetectives(gameModel.players)(index).setPlayerName(gameModel.players(index), inputName)))
     publish(new PlayerNameChanged)
     gameModel.players(index).name == inputName
   }
 
   def setPlayerColor(newColor: String, index: Int): Color = {
-    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.players(index).setPlayerColor(gameModel.players(index), newColor)))
+    gameModel = gameModel.copy(players = gameModel.players.updated(index, gameModel.getDetectives(gameModel.players)(index).setPlayerColor(gameModel.players(index), newColor)))
     publish(new PlayerColorChanged)
     gameModel.players(index).color
   }

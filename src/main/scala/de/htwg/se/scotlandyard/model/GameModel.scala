@@ -38,7 +38,7 @@ case class GameModel(
   }
 
   def getMrX(players: Vector[Player]): MrX = players.head.asInstanceOf[MrX]
-  def getDetectives(players: Vector[Player]): Vector[Player] = players.drop(1)
+  def getDetectives(players: Vector[Player]): Vector[Detective] = players.drop(1).asInstanceOf[Vector[Detective]]
 
   def getCurrentPlayerIndex(players: Vector[Player], round: Int): Int = {
     if (round % players.length == 0) {
