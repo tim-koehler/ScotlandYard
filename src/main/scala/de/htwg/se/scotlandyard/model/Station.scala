@@ -14,27 +14,27 @@ case class Station(number: Integer = -1,
                    guiCoordinates: Point = new Point(1, 1))
 {
 
-  def setNeighbourTaxis(station: Station, neighbours: Set[Station]): Station = {
-    station.copy(neighbourTaxis = neighbours)
+  def setNeighbourTaxis(station: Station, neighbours: Set[Station]): Option[Station] = {
+    Some(station.copy(neighbourTaxis = neighbours))
   }
 
-  def setNeighbourBuses(station: Station, neighbours: Set[Station]): Station = {
+  def setNeighbourBuses(station: Station, neighbours: Set[Station]): Option[Station] = {
     if(neighbours.isEmpty) {
-      return station
+      return Some(station)
     }
     if(station.stationType < StationType.Bus) {
-      throw new Exception("Taxi stations can't have Bus neighbours")
+      return None
     }
-    station.copy(neighbourBuses = neighbours)
+    Some(station.copy(neighbourBuses = neighbours))
   }
 
-  def setNeighbourUndergrounds(station: Station, neighbours: Set[Station]): Station = {
+  def setNeighbourUndergrounds(station: Station, neighbours: Set[Station]): Option[Station] = {
     if(neighbours.isEmpty) {
-      return station
+      return Some(station)
     }
     if(station.stationType < StationType.Underground) {
-      throw new Exception("Bus or Taxi stations can't have Underground neighbours")
+      return None
     }
-    station.copy(neighbourUndergrounds = neighbours)
+    Some(station.copy(neighbourUndergrounds = neighbours))
   }
 }
