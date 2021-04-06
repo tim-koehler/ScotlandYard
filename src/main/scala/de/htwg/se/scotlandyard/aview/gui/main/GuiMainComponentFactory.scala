@@ -86,10 +86,10 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
       contents += new Menu("File") {
         contents += new MenuItem(Action("Save") {
           //TODO: Fancy Select Folder menu
-          Try(controller.save()) match {
-            case Success(v) => Dialog.showMessage(this, "Game successfully saved!", "Saved")
-            case Failure(e) => Dialog.showMessage(this, "An Error occured! The game was not saved!", "Save", Dialog.Message.Error);
-              e.printStackTrace() // for debug purpose
+          if(controller.save()) {
+            Dialog.showMessage(this, "Game successfully saved!", "Saved")
+          } else {
+            Dialog.showMessage(this, "An Error occurred! The game was not saved!", "Save", Dialog.Message.Error)
           }
         })
         contents += new MenuItem(Action("Exit") {

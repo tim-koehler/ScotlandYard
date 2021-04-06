@@ -14,14 +14,15 @@ class fileIOSpec extends WordSpec with Matchers with PrivateMethodTester {
     val players = Vector(MrX(), Detective(name = "Dt1"), Detective(name = "Dt2"))
     val gameModel = GameModel(players = players)
 
+    "load" should {
+      "return a gameModel" in {
+        fileIOJson.load().players(1).station.number should be(-1)
+      }
+    }
+
     "save" should {
       "return true" in {
         fileIOJson.save(gameModel, gameModel.getMrX(gameModel.players)) should be(true)
-      }
-      "load" should {
-        "return a gameModel" in {
-          fileIOJson.load().players(1).station.number should be(-1)
-        }
       }
     }
   }
