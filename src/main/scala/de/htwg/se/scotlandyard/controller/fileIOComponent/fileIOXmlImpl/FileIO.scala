@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOXmlImpl
 
 import java.awt.Color
 import java.io._
-import com.google.inject.{Guice, Inject}
+import com.google.inject.{Inject}
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
@@ -10,13 +10,12 @@ import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
-import scala.::
-import scala.collection.mutable
 import scala.io.Source
 import scala.swing.Color
+import scala.util.{Failure, Success, Try}
 import scala.xml._
 
-class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) extends FileIOInterface {
+class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) extends FileIOInterface {
 
   var pathname = "ScotlandYard.xml"
 
@@ -39,8 +38,8 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
 
     val his = (xmlFile \\ "game" \ "mrX" \ "history")
     var history: List[TicketType] = List()
-    if(!(his \\ "transport")(0).text.toString.equals("empty")) {
-      for(i <- 0 to (his \\ "transport").length - 1) {
+    if (!(his \\ "transport")(0).text.toString.equals("empty")) {
+      for (i <- 0 to (his \\ "transport").length - 1) {
         val s: String = (his \\ "transport")(i).text.toString
         history = TicketType.withName(s) :: history
       }
@@ -52,7 +51,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
     val detectivesXML = (xmlFile \\ "game" \ "detectives")
     var detectives: List[Player] = List()
 
-    for(i <- 0 to nPlayer - 2) {
+    for (i <- 0 to nPlayer - 2) {
       val name = (detectivesXML \\ "detective" \ "name")(i).text.toString
       val stationNumber = (detectivesXML \\ "detective" \ "stationNumber")(i).text.toInt
       val taxiTickets = (detectivesXML \\ "detective" \ "taxiTickets")(i).text.toInt
@@ -68,13 +67,18 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
   }
 
   override def save(gameModel: GameModel, mrX: MrX): Boolean = {
-    val pw = new PrintWriter(new File(pathname))
+
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(gametoXML(gameModel, mrX))
-    pw.write(xml)
-    pw.close
 
-    true
+    Try {
+      val pw = new PrintWriter(new File(pathname))
+      pw.write(xml)
+      pw.close()
+    } match {
+      case Success(v) => true
+      case Failure(e) => false
+    }
   }
 
   def gametoXML(gameModel: GameModel, mrX: MrX): Elem = {
@@ -116,7 +120,7 @@ class FileIO @Inject() (override var gameInitializer: GameInitializerInterface) 
 
   private def allDetectivesToXml(gameModel: GameModel): Elem = {
     var detectiveString = ""
-    for(i <- 1 to gameModel.players.length - 1) {
+    for (i <- 1 to gameModel.players.length - 1) {
       detectiveString = detectiveString + detectiveToXmlString(gameModel.players(i).name, gameModel.players(i).station.number, gameModel.players(i).tickets, gameModel.players(i).color)
     }
     detectiveString = "<detectives>" + detectiveString + "</detectives>"
