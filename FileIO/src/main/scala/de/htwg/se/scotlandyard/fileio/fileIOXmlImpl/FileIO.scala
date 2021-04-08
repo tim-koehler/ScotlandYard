@@ -1,13 +1,13 @@
-package de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOXmlImpl
+package de.htwg.se.scotlandyard.fileio.fileIOXmlImpl
 
 import java.awt.Color
 import java.io._
-import com.google.inject.{Inject}
+import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
-import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.fileio.FileIOInterface
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
 import scala.io.Source

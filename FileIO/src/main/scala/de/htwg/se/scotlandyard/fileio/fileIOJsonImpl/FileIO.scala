@@ -1,14 +1,14 @@
-package de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOJsonImpl
+package de.htwg.se.scotlandyard.fileIOJsonImpl
 
 import java.awt.Color
 import java.io._
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.ScotlandYardModule
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
-import de.htwg.se.scotlandyard.controller.fileIOComponent.FileIOInterface
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.fileio.FileIOInterface
 import de.htwg.se.scotlandyard.model.players.MrX
 import de.htwg.se.scotlandyard.model.players.Player
 import play.api.libs.json._
