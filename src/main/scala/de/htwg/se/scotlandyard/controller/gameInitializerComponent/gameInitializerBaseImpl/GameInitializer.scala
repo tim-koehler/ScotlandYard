@@ -80,13 +80,31 @@ class GameInitializer @Inject()(override val tuiMap: TuiMapInterface) extends Ga
     // Second loop over json file to set all neighbours. This needs to run after the first loop because all stations need to be created before getting assigned as neighbours
     for((jsonStation, index) <- jsonStations.zipWithIndex) {
       var station = stations(index + 1)
-      station = station.setNeighbourTaxis(station, getNeighboursFor("taxi", jsonStation, stations))
+      var optStation = station.setNeighbourTaxis(station, getNeighboursFor("taxi", jsonStation, stations))
+      optStation match {
+        case Some(value) => station = value
+        case None =>
+          println("Error setting neighbour buses for station: " + station.number)
+          System.exit(-1)
+      }
       stations = stations.updated(index + 1, station)
 
-      station = station.setNeighbourBuses(station, getNeighboursFor("bus", jsonStation, stations))
+      optStation = station.setNeighbourBuses(station, getNeighboursFor("bus", jsonStation, stations))
+      optStation match {
+        case Some(value) => station = value
+        case None =>
+          println("Error setting neighbour buses for station: " + station.number)
+          System.exit(-1)
+      }
       stations = stations.updated(index + 1, station)
 
-      station = station.setNeighbourUndergrounds(station, getNeighboursFor("underground", jsonStation, stations))
+      optStation = station.setNeighbourUndergrounds(station, getNeighboursFor("underground", jsonStation, stations))
+      optStation match {
+        case Some(value) => station = value
+        case None =>
+          println("Error setting neighbour buses for station: " + station.number)
+          System.exit(-1)
+      }
       stations = stations.updated(index + 1, station)
     }
     stations

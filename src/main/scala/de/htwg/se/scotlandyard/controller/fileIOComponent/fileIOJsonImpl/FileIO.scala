@@ -15,6 +15,8 @@ import play.api.libs.json._
 
 import scala.collection.mutable
 import scala.io.Source
+import scala.swing.Dialog
+import scala.util.{Failure, Success, Try}
 
 class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) extends FileIOInterface {
 
@@ -47,7 +49,7 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     val detectivesJson: JsArray = (json \ "detectives").as[JsArray]
     var detectives: Vector[Player] = Vector()
 
-    for(detective <- detectivesJson.value) {
+    for (detective <- detectivesJson.value) {
       val name = (detective \ "name").get.toString()
       val stationNumber = (detective \ "stationNumber").get.toString().toInt
       val taxiTickets = (detective \ "taxiTickets").get.toString().toInt
@@ -64,48 +66,52 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
   override def save(gameModel: GameModel, mrX: MrX): Boolean = {
     var history = new JsArray()
 
-    for(h <- mrX.history) {
+    for (h <- mrX.history) {
       history = history.append(Json.obj(
         "transport" -> h
       ))
     }
     val mrx = Json.obj(
-      "name"         ->  mrX.name,
-      "stationNumber"       ->  mrX.station.number.toInt,
-      "isVisible"           ->  mrX.isVisible,
-      "lastSeen"            ->  mrX.lastSeen,
-      "blackTickets"        ->  mrX.tickets.blackTickets,
-      "taxiTickets"         ->  mrX.tickets.taxiTickets,
-      "busTickets"          ->  mrX.tickets.busTickets,
-      "undergroundTickets"  ->  mrX.tickets.undergroundTickets,
-      "history"             ->  history
+      "name" -> mrX.name,
+      "stationNumber" -> mrX.station.number.toInt,
+      "isVisible" -> mrX.isVisible,
+      "lastSeen" -> mrX.lastSeen,
+      "blackTickets" -> mrX.tickets.blackTickets,
+      "taxiTickets" -> mrX.tickets.taxiTickets,
+      "busTickets" -> mrX.tickets.busTickets,
+      "undergroundTickets" -> mrX.tickets.undergroundTickets,
+      "history" -> history
     )
 
     var detectives = new JsArray()
-    for(i <- 1 to gameModel.players.length - 1) {
+    for (i <- 1 to gameModel.players.length - 1) {
       detectives = detectives.append(Json.obj(
-        "name"         -> gameModel.players(i).name,
-        "stationNumber"       -> gameModel.players(i).station.number.toInt,
-        "taxiTickets"         -> gameModel.players(i).tickets.taxiTickets,
-        "busTickets"          -> gameModel.players(i).tickets.busTickets,
-        "undergroundTickets"  -> gameModel.players(i).tickets.undergroundTickets,
-        "color"               -> String.valueOf(gameModel.players(i).color.getRGB)
+        "name" -> gameModel.players(i).name,
+        "stationNumber" -> gameModel.players(i).station.number.toInt,
+        "taxiTickets" -> gameModel.players(i).tickets.taxiTickets,
+        "busTickets" -> gameModel.players(i).tickets.busTickets,
+        "undergroundTickets" -> gameModel.players(i).tickets.undergroundTickets,
+        "color" -> String.valueOf(gameModel.players(i).color.getRGB)
       ))
     }
 
     val gameStateJson = Json.obj(
       "round" -> gameModel.round,
-      "totalRound"   -> gameModel.totalRound,
-      "nPlayer"      -> gameModel.players.length,
-      "mrX"          -> mrx,
-      "detectives"   -> detectives
+      "totalRound" -> gameModel.totalRound,
+      "nPlayer" -> gameModel.players.length,
+      "mrX" -> mrx,
+      "detectives" -> detectives
     )
 
-    val pw = new PrintWriter(new File(pathname))
-    pw.write(Json.prettyPrint(Json.toJson(gameStateJson)))
-    pw.close()
-
-    true
+    Try {
+      val pw = new PrintWriter(new File(pathname))
+      pw.write(Json.prettyPrint(Json.toJson(gameStateJson)))
+      pw.close()
+    } match
+    {
+      case Success(v) => return true
+      case Failure(e) => return false
+    }
   }
 
   def formatString(s: String): String = {
