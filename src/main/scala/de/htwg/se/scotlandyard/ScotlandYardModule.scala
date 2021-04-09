@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapBaseImpl.TuiMap
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.fileio.fileIOJsonImpl.FileIO
+import de.htwg.se.scotlandyard.fileio.fileIOJsonImpl.{FileIO}
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.fileio.FileIOInterface

@@ -1,6 +1,9 @@
 package de.htwg.se.scotlandyard.model
 
 import org.scalatest.{Matchers, WordSpec}
+import de.htwg.se.scotlandyard.model.Station
+import de.htwg.se.scotlandyard.model.StationType
+
 
 class StationSpec extends WordSpec with Matchers {
   "Station" should {

@@ -2,20 +2,16 @@ package de.htwg.se.scotlandyard.fileio.fileIOJsonImpl
 
 import java.awt.Color
 import java.io._
-import com.google.inject.{Guice, Inject}
-import de.htwg.se.scotlandyard.ScotlandYardModule
-import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
-import TicketType.TicketType
+import com.google.inject.Inject
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.fileio.FileIOInterface
-import de.htwg.se.scotlandyard.model.players.MrX
-import de.htwg.se.scotlandyard.model.players.Player
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.players.{MrX, Player}
+import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import play.api.libs.json._
 
-import scala.collection.mutable
 import scala.io.Source
-import scala.swing.Dialog
 import scala.util.{Failure, Success, Try}
 
 class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) extends FileIOInterface {

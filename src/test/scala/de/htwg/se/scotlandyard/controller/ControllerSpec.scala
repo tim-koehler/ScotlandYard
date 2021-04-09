@@ -3,8 +3,8 @@ package de.htwg.se.scotlandyard.controller
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.controllerBaseImpl.Controller
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType}
-import de.htwg.se.scotlandyard.controller.fileIOComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
+import de.htwg.se.scotlandyard.fileio.fileIOMockImpl.FileIO
 import org.scalatest._
 
 import java.awt.Color
