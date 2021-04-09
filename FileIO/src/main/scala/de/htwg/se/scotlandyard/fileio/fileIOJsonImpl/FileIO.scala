@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.fileIOJsonImpl
+package de.htwg.se.scotlandyard.fileio.fileIOJsonImpl
 
 import java.awt.Color
 import java.io._

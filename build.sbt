@@ -18,7 +18,8 @@ parallelExecution in Test := false
 coverageExcludedPackages := "<empty>;.*aview.*;.*ScotlandYard;.*controllerMockImpl.*;.*gameInitializerMockImpl.*"
 coverageEnabled.in(Test, test) := true
 
-lazy val scotlandYardBase = (project in file(".")).settings(
+lazy val fileIO = (project in file("FileIO"))
+lazy val scotlandYardBase = (project in file(".")).aggregate(fileIO).settings(
   name := "ScotlandYard",
   libraryDependencies ++= commonDependencies,
   assemblyMergeStrategy in assembly := {
