@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.controller.gameInitializerComponent
 
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
-import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
+import de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.{Station, StationType, Tickets}
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
 

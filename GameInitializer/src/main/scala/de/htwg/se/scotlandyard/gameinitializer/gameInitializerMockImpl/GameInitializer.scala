@@ -1,12 +1,11 @@
-package de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerMockImpl
+package de.htwg.se.scotlandyard.gameinitializer.gameInitializerMockImpl
 
+import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
 
 import java.awt.Color
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
-import play.api.libs.json.{JsArray, JsValue, Json}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

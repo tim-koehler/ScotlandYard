@@ -1,12 +1,11 @@
-package de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl
+package de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl
 
 import java.awt.Color
 import com.google.inject.{Guice, Inject}
-import de.htwg.se.scotlandyard.ScotlandYardModule
+import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 import play.api.libs.json.{JsArray, JsValue, Json}
 
 import scala.collection.mutable
@@ -14,7 +13,7 @@ import scala.collection.mutable.ListBuffer
 import scala.io.Source
 import scala.swing.Point
 
-class GameInitializer @Inject()() extends GameInitializerInterface {
+class GameInitializer() extends GameInitializerInterface {
   val stationsJsonFilePath = "./resources/stations.json"
   val MRX_COLOR: Color = Color.BLACK
   val DT1_COLOR: Color = Color.BLUE
@@ -39,8 +38,6 @@ class GameInitializer @Inject()() extends GameInitializerInterface {
   override var MAX_DETECTIVE_LIST_INDEX: Int = detectiveStartPositions.length - 1
   override var MAX_MISTERX_LIST_INDEX: Int = misterXStartPositions.length - 1
 
-  val injector = Guice.createInjector(new ScotlandYardModule)
-
   override def initialize(nPlayers: Int = 3, stationsSource: String): GameModel = {
     val stations = initStations(stationsSource)
     GameModel(stations = stations, players = initPlayers(nPlayers, stations), stuckPlayers = Set[Player]())
@@ -55,7 +52,7 @@ class GameInitializer @Inject()() extends GameInitializerInterface {
     Detective(station, name, color, tickets)
   }
 
-  override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType], stations: Vector[Station]): MrX = {
+   def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType], stations: Vector[Station]): MrX = {
     MrX(station = stations(stationNumber), name = name, isVisible = isVisible, lastSeen = lastSeen, tickets = tickets, history = history)
   }
 

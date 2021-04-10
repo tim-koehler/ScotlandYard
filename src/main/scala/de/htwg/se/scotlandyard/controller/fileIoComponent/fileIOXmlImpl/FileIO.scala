@@ -7,7 +7,7 @@ import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.fileIoComponent.FileIOInterface
-import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
 import scala.io.Source

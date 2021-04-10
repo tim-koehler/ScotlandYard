@@ -1,12 +1,10 @@
-package de.htwg.se.scotlandyard.controller.gameInitializerComponent
+package de.htwg.se.scotlandyard.gameinitializer
 
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 import de.htwg.se.scotlandyard.model.{GameModel, Station, Tickets}
 
 import java.awt.Color
-import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.players.{MrX, Player}
-
-import scala.collection.mutable
 
 trait GameInitializerInterface {
 
@@ -31,6 +29,8 @@ trait GameInitializerInterface {
   def initialize(nPlayer: Int, stationsSource: String): GameModel
 
   def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: Vector[Station]): Player
+
   def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType], stations: Vector[Station]): MrX
+
   def getColorList(): Vector[Color]
 }

@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.controller.fileIoComponent
 
-import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
+import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.model.players.MrX
 

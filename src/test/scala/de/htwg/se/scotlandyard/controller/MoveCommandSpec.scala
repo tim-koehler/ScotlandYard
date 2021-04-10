@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.controllerBaseImpl.MoveCommand
-import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
+import de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import de.htwg.se.scotlandyard.model.{GameModel, Station, TicketType, Tickets}
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec, color}
