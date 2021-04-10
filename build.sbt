@@ -15,12 +15,13 @@ val commonDependencies = Seq(
 )
 
 parallelExecution in Test := false
-coverageExcludedPackages := "<empty>;.*aview.*;.*ScotlandYard;.*controllerMockImpl.*;.*gameInitializerMockImpl.*"
+coverageExcludedPackages := "<empty>;.*ScotlandYard;.*controllerMockImpl.*;.*gameInitializerMockImpl.*"
 coverageEnabled.in(Test, test) := true
 
 ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
 
 lazy val model = (project in file("Model"))
+lazy val tui = (project in file("Tui")).dependsOn(scotlandYardBase).aggregate(scotlandYardBase)
 lazy val scotlandYardBase = (project in file(".")).dependsOn(model).aggregate(model).settings(
   name := "ScotlandYard",
   libraryDependencies ++= commonDependencies,

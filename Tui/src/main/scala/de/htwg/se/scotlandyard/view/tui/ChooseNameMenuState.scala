@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.aview.tui
+package de.htwg.se.scotlandyard.view.tui
 
 class ChooseNameMenuState(tui: Tui) extends State {
   override def evaluateInput(input: String): Int = {

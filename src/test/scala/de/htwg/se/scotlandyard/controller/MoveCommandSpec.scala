@@ -1,7 +1,6 @@
 package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
-import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapMockImpl.TuiMap
 import de.htwg.se.scotlandyard.controller.controllerBaseImpl.MoveCommand
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
@@ -14,7 +13,7 @@ class MoveCommandSpec extends WordSpec with Matchers with PrivateMethodTester {
 
   "MoveCommand" when {
     val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
-    val gameInitializer = new GameInitializer(new TuiMap())
+    val gameInitializer = new GameInitializer()
     var gameModel = gameInitializer.initialize(3, stationsSource)
     val moveCommand = new MoveCommand(1, 9, TicketType.Taxi)
     "doStep" should {

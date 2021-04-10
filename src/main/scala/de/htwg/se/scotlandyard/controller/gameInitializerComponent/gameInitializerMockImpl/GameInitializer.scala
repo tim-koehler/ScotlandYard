@@ -1,7 +1,5 @@
 package de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerMockImpl
 
-import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
-import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapMockImpl.TuiMap
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
 
 import java.awt.Color
@@ -60,5 +58,4 @@ class GameInitializer() extends GameInitializerInterface{
   override def getColorList(): Vector[Color] = Vector(MRX_COLOR, DT1_COLOR)
 
   override def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType], stations: Vector[Station]): MrX = MrX()
-  override val tuiMap: TuiMapInterface = new TuiMap()
 }

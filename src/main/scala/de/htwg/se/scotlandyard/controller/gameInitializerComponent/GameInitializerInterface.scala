@@ -1,6 +1,5 @@
 package de.htwg.se.scotlandyard.controller.gameInitializerComponent
 
-import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, Tickets}
 
 import java.awt.Color
@@ -10,7 +9,6 @@ import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 import scala.collection.mutable
 
 trait GameInitializerInterface {
-  val tuiMap: TuiMapInterface
 
   val MRX_COLOR: Color
   val DT1_COLOR: Color

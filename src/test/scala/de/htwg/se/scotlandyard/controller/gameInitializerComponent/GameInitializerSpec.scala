@@ -1,7 +1,6 @@
 package de.htwg.se.scotlandyard.controller.gameInitializerComponent
 
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
-import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapBaseImpl.TuiMap
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.{Station, StationType, Tickets}
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
@@ -14,7 +13,7 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
   val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
 
   "GameInitializer" when {
-    val gameInitializer = new GameInitializer(new TuiMap)
+    val gameInitializer = new GameInitializer()
     "initialize" should {
       "return an initialized gameModel" in {
         val gameModel = gameInitializer.initialize(3, stationsSource)

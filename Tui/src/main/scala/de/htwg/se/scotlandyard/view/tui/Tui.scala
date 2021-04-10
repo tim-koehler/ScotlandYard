@@ -1,6 +1,6 @@
-package de.htwg.se.scotlandyard.aview.tui
+package de.htwg.se.scotlandyard.view.tui
 
-import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
+import de.htwg.se.scotlandyard.view.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.controller._
 import de.htwg.se.scotlandyard.model.TicketType
 

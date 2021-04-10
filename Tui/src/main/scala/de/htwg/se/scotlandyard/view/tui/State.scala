@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.aview.tui
+package de.htwg.se.scotlandyard.view.tui
 
 import scala.util.{Failure, Success, Try}
 

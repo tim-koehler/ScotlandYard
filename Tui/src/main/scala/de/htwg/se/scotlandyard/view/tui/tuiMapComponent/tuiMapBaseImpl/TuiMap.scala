@@ -1,8 +1,8 @@
-package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapBaseImpl
+package de.htwg.se.scotlandyard.view.tui.tuiMapComponent.tuiMapBaseImpl
 
-import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.players.Player
+import de.htwg.se.scotlandyard.view.tui.tuiMapComponent.TuiMapInterface
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
