@@ -18,8 +18,10 @@ parallelExecution in Test := false
 coverageExcludedPackages := "<empty>;.*aview.*;.*ScotlandYard;.*controllerMockImpl.*;.*gameInitializerMockImpl.*"
 coverageEnabled.in(Test, test) := true
 
+ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
+
 lazy val model = (project in file("Model"))
-lazy val scotlandYardBase = (project in file(".")).aggregate(model).settings(
+lazy val scotlandYardBase = (project in file(".")).dependsOn(model).aggregate(model).settings(
   name := "ScotlandYard",
   libraryDependencies ++= commonDependencies,
   assemblyMergeStrategy in assembly := {
