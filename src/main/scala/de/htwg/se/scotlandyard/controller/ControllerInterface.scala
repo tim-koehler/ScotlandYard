@@ -1,9 +1,9 @@
 package de.htwg.se.scotlandyard.controller
 
+import de.htwg.se.scotlandyard.controller.fileIoComponent.FileIOInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
-import de.htwg.se.scotlandyard.fileio.FileIOInterface
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
 import java.awt.Color

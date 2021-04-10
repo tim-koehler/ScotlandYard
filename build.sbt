@@ -3,7 +3,7 @@ import sbt.Keys.libraryDependencies
 name          := "scotland-yard"
 organization  := "de.htwg.se"
 version       := "0.1.0"
-scalaVersion  := "2.13.0"
+scalaVersion  := "2.13.3"
 
 val commonDependencies = Seq(
   "org.scalatest" %% "scalatest" % "3.0.8",
@@ -18,8 +18,8 @@ parallelExecution in Test := false
 coverageExcludedPackages := "<empty>;.*aview.*;.*ScotlandYard;.*controllerMockImpl.*;.*gameInitializerMockImpl.*"
 coverageEnabled.in(Test, test) := true
 
-lazy val fileIO = (project in file("FileIO"))
-lazy val scotlandYardBase = (project in file(".")).aggregate(fileIO).settings(
+lazy val model = (project in file("Model"))
+lazy val scotlandYardBase = (project in file(".")).aggregate(model).settings(
   name := "ScotlandYard",
   libraryDependencies ++= commonDependencies,
   assemblyMergeStrategy in assembly := {

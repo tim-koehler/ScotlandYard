@@ -3,9 +3,8 @@ package de.htwg.se.scotlandyard.aview
 import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.tuiMapMockImpl.TuiMap
 import de.htwg.se.scotlandyard.aview.tui.{ChooseNameMenuState, EnterNameState, RevealMrX1State, RevealMrX2State, RunningState, SelectNumberOfPlayerMenuState, Tui, WinningState}
 import de.htwg.se.scotlandyard.controller.controllerMockImpl.Controller
-import de.htwg.se.scotlandyard.model.GameModel
+import de.htwg.se.scotlandyard.controller.fileIoComponent.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.controller.gameInitializerComponent.gameInitializerMockImpl.GameInitializer
-import de.htwg.se.scotlandyard.fileio.fileIOMockImpl.FileIO
 import org.scalatest._
 
 class TuiSpec extends WordSpec with Matchers {
