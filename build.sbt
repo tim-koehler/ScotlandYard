@@ -3,7 +3,7 @@ import sbt.Keys.libraryDependencies
 name          := "scotland-yard"
 organization  := "de.htwg.se"
 version       := "0.1.0"
-scalaVersion  := "2.13.3"
+scalaVersion  := "2.13.0"
 
 val commonDependencies = Seq(
   "org.scalatest" %% "scalatest" % "3.0.8",
