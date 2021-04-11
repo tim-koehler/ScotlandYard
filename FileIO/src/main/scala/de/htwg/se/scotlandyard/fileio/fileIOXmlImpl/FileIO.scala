@@ -1,12 +1,11 @@
-package de.htwg.se.scotlandyard.controller.fileIoComponent.fileIOXmlImpl
+package de.htwg.se.scotlandyard.fileio.fileIOXmlImpl
 
 import java.awt.Color
 import java.io._
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import TicketType.TicketType
-import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
-import de.htwg.se.scotlandyard.controller.fileIoComponent.FileIOInterface
+import de.htwg.se.scotlandyard.fileio.FileIOInterface
 import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
@@ -19,7 +18,7 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
 
   var pathname = "ScotlandYard.xml"
 
-  override def load(): GameModel = {
+  override def load(stationsJsonFilePath: String): GameModel = {
     val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
     val gameModel = gameInitializer.initialize(3, stationsSource)
 

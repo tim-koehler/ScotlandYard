@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.controller.fileIoComponent
+package de.htwg.se.scotlandyard.fileio
 
 import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.GameModel
@@ -7,7 +7,7 @@ import de.htwg.se.scotlandyard.model.players.MrX
 trait FileIOInterface {
   var gameInitializer: GameInitializerInterface
 
-  def load(): GameModel
+  def load(stationsJsonFilePath: String): GameModel
 
   def save(gameModel: GameModel, mrX: MrX): Boolean
 }

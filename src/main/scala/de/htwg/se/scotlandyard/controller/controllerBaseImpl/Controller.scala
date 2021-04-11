@@ -1,8 +1,9 @@
 package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
 import com.google.inject.Inject
-import de.htwg.se.scotlandyard.controller.fileIoComponent.FileIOInterface
+import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
+import de.htwg.se.scotlandyard.fileio.FileIOInterface
 import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
@@ -32,7 +33,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def load(): GameModel = {
-    gameModel = fileIO.load()
+    gameModel = fileIO.load(stationsJsonFilePath)
     gameModel
   }
 

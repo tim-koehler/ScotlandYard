@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.controller.fileIoComponent.fileIOMockImpl.FileIO
+import de.htwg.se.scotlandyard.fileio.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType}
 import de.htwg.se.scotlandyard.gameinitializer.gameInitializerMockImpl.GameInitializer
 import org.scalatest._
