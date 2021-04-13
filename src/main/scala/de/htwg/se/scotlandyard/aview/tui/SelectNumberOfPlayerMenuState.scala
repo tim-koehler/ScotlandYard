@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.view.tui
+package de.htwg.se.scotlandyard.aview.tui
 
 class SelectNumberOfPlayerMenuState(tui: Tui) extends State {
   override def evaluateInput(input: String): Int = {

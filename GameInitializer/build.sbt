@@ -1,8 +1,5 @@
+import sbt.Keys.organization
 
-name          := "scotland-yard-gameinitializer"
-organization  := "de.htwg.se"
-version       := "0.1.0"
-scalaVersion  := "2.13.0"
 
 val commonDependencies = Seq(
   "org.scalatest" %% "scalatest" % "3.0.8",
@@ -13,4 +10,17 @@ val commonDependencies = Seq(
   "org.scala-lang.modules" %% "scala-xml" % "1.2.0"
 )
 
-libraryDependencies ++= commonDependencies
+/*name          := "scotland-yard-gameinitializer"
+organization  := "de.htwg.se"
+version       := "0.1.0"
+scalaVersion  := "2.13.0"
+libraryDependencies ++= commonDependencies*/
+
+lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git#microservices-modules"), "model")
+lazy val gameInitializer = (project in file(".")).dependsOn(model).aggregate(model).settings(
+  name          := "scotland-yard-gameinitializer",
+  organization  := "de.htwg.se",
+  version       := "0.1.0",
+  scalaVersion  := "2.13.0",
+  libraryDependencies ++= commonDependencies,
+)

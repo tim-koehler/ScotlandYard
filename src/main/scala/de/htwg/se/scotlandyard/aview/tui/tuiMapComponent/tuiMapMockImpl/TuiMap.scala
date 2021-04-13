@@ -1,8 +1,8 @@
-package de.htwg.se.scotlandyard.view.tui.tuiMapComponent.tuiMapMockImpl
+package de.htwg.se.scotlandyard.aview.tui.tuiMapMockImpl
 
 import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.players.Player
-import de.htwg.se.scotlandyard.view.tui.tuiMapComponent.TuiMapInterface
+import de.htwg.se.scotlandyard.aview.tui.tuiMapComponent.TuiMapInterface
 
 import scala.collection.mutable
 

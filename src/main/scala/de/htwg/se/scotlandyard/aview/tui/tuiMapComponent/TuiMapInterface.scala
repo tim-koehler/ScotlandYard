@@ -1,4 +1,4 @@
-package de.htwg.se.scotlandyard.view.tui.tuiMapComponent
+package de.htwg.se.scotlandyard.aview.tui.tuiMapComponent
 
 import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.players.Player
