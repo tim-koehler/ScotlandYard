@@ -1,16 +1,23 @@
-package de.htwg.se.scotlandyard.controller.gameInitializerComponent
+package de.htwg.se.scotlandyard.gameinitializer
 
-import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.{Station, StationType, Tickets}
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
 
 import java.awt.{Color, Point}
 import scala.io.Source
+import scala.util.{Failure, Success, Try}
 
 class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTester{
 
-  val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
+  var stationsSource = ""
+  Try {
+    stationsSource = Source.fromFile("./resources/stations.json").getLines.mkString
+  } match {
+    case Success(value) =>
+    case Failure(e) =>
+      stationsSource = Source.fromFile("../resources/stations.json").getLines.mkString
+  }
 
   "GameInitializer" when {
     val gameInitializer = new GameInitializer()

@@ -18,9 +18,8 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
 
   var pathname = "ScotlandYard.xml"
 
-  override def load(stationsJsonFilePath: String): GameModel = {
-    val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
-    val gameModel = gameInitializer.initialize(3, stationsSource)
+  override def load(stationsFileContent: String): GameModel = {
+    val gameModel = gameInitializer.initialize(3, stationsFileContent)
 
     val xmlFile = scala.xml.XML.loadFile(pathname)
     val round = (xmlFile \\ "game" \ "round").text.toInt

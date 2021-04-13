@@ -33,7 +33,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def load(): GameModel = {
-    gameModel = fileIO.load(stationsJsonFilePath)
+    gameModel = fileIO.load(this.stationsSource)
     gameModel
   }
 

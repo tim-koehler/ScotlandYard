@@ -17,9 +17,8 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
 
   var pathname = "ScotlandYard.json"
 
-  override def load(stationsJsonFilePath: String): GameModel = {
-    val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
-    val gameModel = gameInitializer.initialize(3, stationsSource)
+  override def load(stationsFileContent: String): GameModel = {
+    val gameModel = gameInitializer.initialize(3, stationsFileContent)
 
     val source: String = Source.fromFile(pathname).getLines.mkString
     val json = Json.parse(source)

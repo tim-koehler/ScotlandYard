@@ -7,7 +7,7 @@ import de.htwg.se.scotlandyard.model.players.MrX
 trait FileIOInterface {
   var gameInitializer: GameInitializerInterface
 
-  def load(stationsJsonFilePath: String): GameModel
+  def load(stationsFileContent: String): GameModel
 
   def save(gameModel: GameModel, mrX: MrX): Boolean
 }
