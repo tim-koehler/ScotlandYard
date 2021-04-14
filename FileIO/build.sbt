@@ -7,8 +7,8 @@ val commonDependencies = Seq(
   "org.scala-lang.modules" %% "scala-xml" % "1.2.0"
 )
 
-lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git#microservices-modules"), "model")
-lazy val gameInitializer = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git#microservices-modules"), "gameInitializer")
+lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git#dev"), "model")
+lazy val gameInitializer = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git#dev"), "gameInitializer")
 lazy val fileIO = (project in file(".")).dependsOn(model, gameInitializer).aggregate(model, gameInitializer).settings(
   name          := "scotland-yard-fileio",
   organization  := "de.htwg.se",
