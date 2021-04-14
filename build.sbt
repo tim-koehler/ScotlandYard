@@ -15,7 +15,7 @@ val commonDependencies = Seq(
 )
 
 parallelExecution in Test := false
-coverageExcludedPackages := "<empty>;.*ScotlandYard;.*controllerMockImpl.*;.*gameInitializerMockImpl.*"
+coverageExcludedPackages := "<empty>;.*aview.*;.*ScotlandYard;.*controllerMockImpl.*;.*fileIOMockImpl.*;.*gameInitializerMockImpl.*"
 coverageEnabled.in(Test, test) := true
 
 ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
