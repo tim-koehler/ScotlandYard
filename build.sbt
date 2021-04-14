@@ -21,8 +21,9 @@ coverageEnabled.in(Test, test) := true
 ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
 
 lazy val model = (project in file("Model"))
-lazy val tui = (project in file("Tui")).dependsOn(scotlandYardBase).aggregate(scotlandYardBase)
-lazy val scotlandYardBase = (project in file(".")).dependsOn(model).aggregate(model).settings(
+lazy val gameInitializer = (project in file("GameInitializer"))
+lazy val fileIO = (project in file("FileIO"))
+lazy val scotlandYardBase = (project in file(".")).dependsOn(model, gameInitializer, fileIO).aggregate(model, gameInitializer, fileIO).settings(
   name := "ScotlandYard",
   libraryDependencies ++= commonDependencies,
   assemblyMergeStrategy in assembly := {

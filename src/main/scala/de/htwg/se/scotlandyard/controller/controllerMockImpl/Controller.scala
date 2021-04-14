@@ -2,11 +2,11 @@ package de.htwg.se.scotlandyard.controller.controllerMockImpl
 
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.controller.fileIoComponent.FileIOInterface
+import de.htwg.se.scotlandyard.fileio.FileIOInterface
+import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.controller.gameInitializerComponent.GameInitializerInterface
 
 import java.awt.Color
 import scala.swing.Publisher
