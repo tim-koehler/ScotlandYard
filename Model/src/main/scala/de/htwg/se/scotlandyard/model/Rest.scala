@@ -11,52 +11,12 @@ import scala.concurrent.Future
 import scala.io.StdIn
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX}
-import spray.json.{DefaultJsonProtocol, DeserializationException, JsArray, JsNumber, JsObject, JsString, JsValue, JsonFormat, RootJsonFormat}
+import spray.json.{DefaultJsonProtocol, DeserializationException, JsArray, JsBoolean, JsNumber, JsObject, JsString, JsValue, JsonFormat, RootJsonFormat}
+import ScotlandYardJsonProtocol._
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
-object ScotlandYardJsonProtocol extends DefaultJsonProtocol {
-  implicit val ticketsFormat = jsonFormat4(Tickets)
-  implicit val stationsFormat = jsonFormat8(Station)
-  ///implicit val mrxFormat = jsonFormat7(MrX)
-  //implicit val colorFormat = jsonFormat1(Col)
-  //implicit val detectiveFormat = jsonFormat4(Detective)
-}
-
-object Rest {
-  def main(args: Array[String]): Unit = {
-
-    implicit val system = ActorSystem(Behaviors.empty, "my-system")
-    // needed for the future flatMap/onComplete in the end
-    implicit val executionContext = system.executionContext
-
-    implicit val ticketsFormat = jsonFormat4(Tickets)
-
-    def fetchTicket(itemId: Int): Future[Option[Tickets]] = Future {
-      Some(Tickets(itemId.asInstanceOf[Int], 3, 4))
-    }
-
-    val route =
-      concat(
-        get {
-          pathPrefix("item" / IntNumber) { id =>
-            // there might be no item for a given id
-            val maybeItem: Future[Option[Tickets]] = fetchTicket(id)
-
-            onSuccess(maybeItem) {
-              case Some(item) => complete(item)
-              case None       => complete(StatusCodes.NotFound)
-            }
-          }
-        }
-      )
-
-    val bindingFuture = Http().newServerAt("localhost", 8080).bind(route)
-    println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
-    StdIn.readLine() // let it run until user presses return
-    bindingFuture
-      .flatMap(_.unbind()) // trigger unbinding from the port
-      .onComplete(_ => system.terminate()) // and shutdown when done
-  }
-}
+import java.awt.Color
+import scala.swing.Point
 
 object ScotlandYardJsonProtocol extends DefaultJsonProtocol {
   implicit object TicketsJsonFormat extends RootJsonFormat[Tickets] {
@@ -78,18 +38,15 @@ object ScotlandYardJsonProtocol extends DefaultJsonProtocol {
     def write(station: Station): JsObject = JsObject(
       "number" -> JsNumber(station.number),
       "stationType" -> JsString(station.stationType.toString),
-      "blackStation" -> JsString(station.blackStation.toString),
+      "blackStation" -> JsBoolean(station.blackStation),
       "neighbourTaxis" -> JsArray(station.neighbourTaxis.asInstanceOf[JsArray]),
       "neighbourBuses" -> JsArray(station.neighbourBuses.asInstanceOf[JsArray]),
       "neighbourUndergrounds" -> JsArray(station.neighbourUndergrounds.asInstanceOf[JsArray]),
-      "tuiCoordinates" -> JsObject(
-        "x" -> JsNumber(station.tuiCoordinates.x),
-        "y" -> JsNumber(station.tuiCoordinates.y)
-      ),
-      "guiCoordinates" -> JsObject(
-        "x" -> JsNumber(station.guiCoordinates.x),
-        "y" -> JsNumber(station.guiCoordinates.y)
-      ))
+      "tuiCoordinatesX" -> JsNumber(station.tuiCoordinates.x),
+      "tuiCoordinatesY" -> JsNumber(station.tuiCoordinates.y),
+      "guiCoordinatesX" -> JsNumber(station.guiCoordinates.x),
+      "guiCoordinatesY" -> JsNumber(station.guiCoordinates.y)
+      )
     def read(value: JsValue): Station = {
       value.asJsObject.getFields(
         "number",
@@ -98,20 +55,121 @@ object ScotlandYardJsonProtocol extends DefaultJsonProtocol {
         "neighbourTaxis",
         "neighbourBuses",
         "neighbourUndergrounds",
-        "tuiCoordinates",
-        "guiCoordinates",
+        "tuiCoordinatesX",
+        "tuiCoordinatesY",
+        "guiCoordinatesX",
+        "guiCoordinatesY"
       ) match {
-        case Seq(JsNumber(number),
+        case Seq(
+        JsNumber(number),
         JsString(stationType),
-        JsString(blackStation),
+        JsBoolean(blackStation),
         JsArray(neighbourTaxis),
         JsArray(neighbourBuses),
         JsArray(neighbourUndergrounds),
-        JsObject(tuiCoordinates),
-        JsObject(guiCoordinates)) =>
-          Station(number.toInt, stationType, blackStation, neighbourTaxis, neighbourBuses, neighbourUndergrounds, tuiCoordinates, guiCoordinates)
+        JsNumber(tuiCoordinatesX),
+        JsNumber(tuiCoordinatesY),
+        JsNumber(guiCoordinatesX),
+        JsNumber(guiCoordinatesY)) =>
+          Station(
+            number.toInt,
+            StationType.fromString(stationType),
+            blackStation,
+            neighbourTaxis.asInstanceOf[Set[Int]],
+            neighbourBuses.asInstanceOf[Set[Int]],
+            neighbourUndergrounds.asInstanceOf[Set[Int]],
+            new Point(tuiCoordinatesX.toInt, tuiCoordinatesY.toInt),
+            new Point(guiCoordinatesX.toInt, guiCoordinatesY.toInt)
+          )
         case _ => throw DeserializationException("Station expected")
       }
     }
+  }
+  implicit object MrXJsonFormat extends RootJsonFormat[MrX] {
+    def write(mrx: MrX): JsObject = JsObject(
+      "station" -> JsObject[Station](mrx.station),
+      "tickets" -> JsObject[Tickets](mrx.tickets),
+      "name" -> JsString(mrx.name),
+      "color" -> JsString(mrx.color.toString),
+      "isVisible" -> JsBoolean(mrx.isVisible),
+      "lastSeen" -> JsString(mrx.lastSeen),
+      "history" -> JsArray(mrx.history.asInstanceOf[JsArray]))
+    def read(value: JsValue): MrX = {
+      value.asJsObject.getFields(
+        "station",
+        "tickets",
+        "name",
+        "color",
+        "isVisible",
+        "lastSeen",
+        "history",
+      ) match {
+        case Seq(JsObject(station),
+        JsObject(tickets),
+        JsString(name),
+        JsObject(color),
+        JsBoolean(isVisible),
+        JsString(lastSeen),
+        JsArray(history)) =>
+          MrX(station.asInstanceOf[Station], tickets.asInstanceOf[Tickets], name, color.asInstanceOf[Color], isVisible, lastSeen, history.asInstanceOf[List[TicketType]])
+        case _ => throw DeserializationException("Station expected")
+      }
+    }
+  }
+  implicit object DetectiveJsonFormat extends RootJsonFormat[Detective] {
+    def write(detective: Detective): JsObject = JsObject(
+      "tickets" -> JsObject[Tickets](detective.tickets),
+      "name" -> JsString(detective.name),
+      "color" -> JsString(detective.color.toString),
+      "station" -> JsObject[Station](detective.station))
+    def read(value: JsValue): Detective = {
+      value.asJsObject.getFields(
+        "station",
+        "name",
+        "color",
+        "tickets",
+      ) match {
+        case Seq(JsObject(station),
+        JsString(name),
+        JsObject(color),
+        JsObject(tickets)) =>
+          Detective(station.asInstanceOf[Station], name, color.asInstanceOf[Color], tickets.asInstanceOf[Tickets])
+        case _ => throw DeserializationException("Station expected")
+      }
+    }
+  }
+}
+
+object Rest {
+  def main(args: Array[String]): Unit = {
+
+    implicit val system = ActorSystem(Behaviors.empty, "my-system")
+    // needed for the future flatMap/onComplete in the end
+    implicit val executionContext = system.executionContext
+
+    def fetchTicket(itemId: Int): Future[Option[Station]] = Future {
+      Some(Station(itemId.asInstanceOf[Int]))
+    }
+
+    val route =
+      concat(
+        get {
+          pathPrefix("item" / IntNumber) { id =>
+            // there might be no item for a given id
+            val maybeItem: Future[Option[Station]] = fetchTicket(id)
+            onSuccess(maybeItem) {
+              case Some(item) => complete(item)
+              case None       => complete(StatusCodes.NotFound)
+            }
+          }
+        }
+      )
+
+    val bindingFuture = Http().newServerAt("localhost", 8080).bind(route)
+    println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
+    StdIn.readLine() // let it run until user presses return
+    bindingFuture
+      .flatMap(_.unbind()) // trigger unbinding from the port
+      .onComplete(_ => system.terminate()) // and shutdown when done
   }
 }
