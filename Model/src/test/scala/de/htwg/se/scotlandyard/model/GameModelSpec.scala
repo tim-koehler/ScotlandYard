@@ -5,8 +5,8 @@ import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
 
 class GameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
   "GameModel" when {
-    val st1 = Station(1, StationType.Taxi, blackStation = false, Set(Station(2)))
-    val st2 = Station(2, StationType.Bus, blackStation = false, Set(Station(1)))
+    val st1 = Station(1, StationType.Taxi, blackStation = false, Set(2))
+    val st2 = Station(2, StationType.Bus, blackStation = false, Set(1))
     val gameModel = GameModel(stations = Vector(st1, st2, Station(3, StationType.Underground)), players = Vector(MrX(st1), Detective(name = "Dt1"), Detective(name = "Dt2")), gameRunning = true)
 
     "getCurrentPlayer is called" should {
