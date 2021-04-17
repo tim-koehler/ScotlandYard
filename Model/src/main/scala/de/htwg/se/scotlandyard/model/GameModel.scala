@@ -77,9 +77,6 @@ case class GameModel(
     gameModel.copy(winningPlayer = winningPlayer, gameRunning = gameRunning, win = win)
   }
 
-  def incrementValue(x: Int): Int = {x + 1}
-  def decrementValue(x: Int): Int = {x - 1}
-
   def updateTickets(gameModel: GameModel, ticketType: TicketType)(modFunc:Int => Int): GameModel = {
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
     ticketType match {

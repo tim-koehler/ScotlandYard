@@ -131,9 +131,9 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     true
   }
 
-  private def isTransportMoveValid(newPosition: Int)(tickets: Int, neighbours: Set[Station]): Boolean = {
+  private def isTransportMoveValid(newPosition: Int)(tickets: Int, neighbours: Set[Int]): Boolean = {
     if (tickets <= 0) return false
-    neighbours.exists(_.number == newPosition)
+    neighbours.contains(newPosition)
   }
 
   private def isBlackMoveValid(currentPlayer: Player, newPosition: Int): Boolean = {
@@ -141,9 +141,9 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     if (gameModel.stations(newPosition).blackStation && currentPlayer.station.blackStation) {
       true
     } else {
-      currentPlayer.station.neighbourTaxis.exists(_.number == newPosition) ||
-        currentPlayer.station.neighbourBuses.exists(_.number == newPosition) ||
-        currentPlayer.station.neighbourUndergrounds.exists(_.number == newPosition)
+      currentPlayer.station.neighbourTaxis.contains(newPosition) ||
+        currentPlayer.station.neighbourBuses.contains(newPosition) ||
+        currentPlayer.station.neighbourUndergrounds.contains(newPosition)
     }
   }
 

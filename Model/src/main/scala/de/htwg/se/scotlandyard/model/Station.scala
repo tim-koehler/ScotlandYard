@@ -7,18 +7,18 @@ import scala.swing.Point
 case class Station(number: Integer = -1,
                    stationType: StationType = StationType.Taxi,
                    blackStation: Boolean = false,
-                   neighbourTaxis: Set[Station] = Set(),
-                   neighbourBuses: Set[Station] = Set(),
-                   neighbourUndergrounds: Set[Station] = Set(),
+                   neighbourTaxis: Set[Int] = Set(),
+                   neighbourBuses: Set[Int] = Set(),
+                   neighbourUndergrounds: Set[Int] = Set(),
                    tuiCoordinates: Point = new Point(1, 1),
                    guiCoordinates: Point = new Point(1, 1))
 {
 
-  def setNeighbourTaxis(station: Station, neighbours: Set[Station]): Option[Station] = {
+  def setNeighbourTaxis(station: Station, neighbours: Set[Int]): Option[Station] = {
     Some(station.copy(neighbourTaxis = neighbours))
   }
 
-  def setNeighbourBuses(station: Station, neighbours: Set[Station]): Option[Station] = {
+  def setNeighbourBuses(station: Station, neighbours: Set[Int]): Option[Station] = {
     if(neighbours.isEmpty) {
       return Some(station)
     }
@@ -28,7 +28,7 @@ case class Station(number: Integer = -1,
     Some(station.copy(neighbourBuses = neighbours))
   }
 
-  def setNeighbourUndergrounds(station: Station, neighbours: Set[Station]): Option[Station] = {
+  def setNeighbourUndergrounds(station: Station, neighbours: Set[Int]): Option[Station] = {
     if(neighbours.isEmpty) {
       return Some(station)
     }

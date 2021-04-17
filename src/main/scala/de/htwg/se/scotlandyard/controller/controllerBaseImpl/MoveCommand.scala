@@ -6,6 +6,9 @@ import de.htwg.se.scotlandyard.model.{GameModel, StationType}
 
 class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command {
 
+  def incrementValue(x: Int): Int = {x + 1}
+  def decrementValue(x: Int): Int = {x - 1}
+
   private def defaultDo(gameModel: GameModel): GameModel = {
     var gameModelTmp = gameModel
     if (gameModelTmp.getCurrentPlayerIndex(gameModelTmp.players, gameModelTmp.round) == 0) {
@@ -13,14 +16,14 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
       gameModelTmp = gameModelTmp.copy(players = gameModelTmp.players.updated(0, newMrX))
     }
     gameModelTmp = gameModelTmp.updatePlayerPosition(gameModelTmp, newPosition)
-    gameModelTmp = gameModelTmp.updateTickets(gameModelTmp, ticketType)(gameModelTmp.decrementValue)
+    gameModelTmp = gameModelTmp.updateTickets(gameModelTmp, ticketType)(decrementValue)
     nextRound(gameModelTmp)
   }
 
   private def nextRound(gameModel: GameModel): GameModel = {
     var gameModelTmp = gameModel
     gameModelTmp = updateMrXVisibility(gameModelTmp)
-    gameModelTmp = gameModelTmp.updateRound(gameModelTmp, gameModelTmp.incrementValue)
+    gameModelTmp = gameModelTmp.updateRound(gameModelTmp, incrementValue)
     if (!checkIfPlayerIsAbleToMove(gameModelTmp)) {
       gameModelTmp = gameModelTmp.addStuckPlayer(gameModelTmp, gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round))
       if (gameModelTmp.stuckPlayers.size == gameModelTmp.players.size - 1) {
@@ -67,14 +70,14 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
       gameModelTmp = gameModelTmp.copy(players = gameModelTmp.players.updated(0, newMrX))
     }
     gameModelTmp = gameModelTmp.updatePlayerPosition(gameModelTmp, currentPosition)
-    gameModelTmp = gameModelTmp.updateTickets(gameModelTmp, ticketType)(gameModelTmp.incrementValue)
+    gameModelTmp = gameModelTmp.updateTickets(gameModelTmp, ticketType)(incrementValue)
     gameModelTmp
   }
 
   private def previousRound(gameModel: GameModel): GameModel = {
     var gameModelTmp = gameModel
     gameModelTmp = updateMrXVisibility(gameModelTmp)
-    gameModelTmp = gameModelTmp.updateRound(gameModelTmp, gameModelTmp.decrementValue)
+    gameModelTmp = gameModelTmp.updateRound(gameModelTmp, decrementValue)
     gameModelTmp
   }
 
