@@ -64,55 +64,22 @@ class GameInitializer() extends GameInitializerInterface {
 
     stationsBuffer += Station(0, StationType.Taxi)
 
-    // First loop over json file to create all Station objects
     for(jsonStation <- jsonStations ) {
       val stationType = StationType.fromString((jsonStation \ "type").as[String])
-      val station = Station(number = (jsonStation \ "number").as[Int], blackStation = (jsonStation \ "blackStation").as[Boolean], stationType = stationType, tuiCoordinates = new Point((jsonStation \ "tuiCoordinates" \ "x").as[Int], (jsonStation \ "tuiCoordinates" \ "y").as[Int]), guiCoordinates = new Point((jsonStation \ "guiCoordinates" \ "x").as[Int], (jsonStation \ "guiCoordinates" \ "y").as[Int]))
+      val station = Station(number = (jsonStation \ "number").as[Int],
+        blackStation = (jsonStation \ "blackStation").as[Boolean],
+        stationType = stationType,
+        tuiCoordinates = new Point((jsonStation \ "tuiCoordinates" \ "x").as[Int],
+          (jsonStation \ "tuiCoordinates" \ "y").as[Int]),
+        guiCoordinates = new Point((jsonStation \ "guiCoordinates" \ "x").as[Int],
+          (jsonStation \ "guiCoordinates" \ "y").as[Int]),
+        neighbourTaxis = (jsonStation \ "neighbours" \ "taxi").as[Set[Int]],
+        neighbourBuses = (jsonStation \ "neighbours" \ "bus").as[Set[Int]],
+        neighbourUndergrounds = (jsonStation \ "neighbours" \ "underground").as[Set[Int]])
       stationsBuffer += station
     }
 
-    var stations = stationsBuffer.toVector.sortWith((s: Station, t: Station) => s.number < t.number)
-
-    // Second loop over json file to set all neighbours. This needs to run after the first loop because all stations need to be created before getting assigned as neighbours
-    for((jsonStation, index) <- jsonStations.zipWithIndex) {
-      var station = stations(index + 1)
-      var optStation = station.setNeighbourTaxis(station, getNeighboursFor("taxi", jsonStation, stations))
-      optStation match {
-        case Some(value) => station = value
-        case None =>
-          println("Error setting neighbour buses for station: " + station.number)
-          System.exit(-1)
-      }
-      stations = stations.updated(index + 1, station)
-
-      optStation = station.setNeighbourBuses(station, getNeighboursFor("bus", jsonStation, stations))
-      optStation match {
-        case Some(value) => station = value
-        case None =>
-          println("Error setting neighbour buses for station: " + station.number)
-          System.exit(-1)
-      }
-      stations = stations.updated(index + 1, station)
-
-      optStation = station.setNeighbourUndergrounds(station, getNeighboursFor("underground", jsonStation, stations))
-      optStation match {
-        case Some(value) => station = value
-        case None =>
-          println("Error setting neighbour buses for station: " + station.number)
-          System.exit(-1)
-      }
-      stations = stations.updated(index + 1, station)
-    }
-    stations
-  }
-
-  private def getNeighboursFor(transportType: String, jsonStation: JsValue, stations: Vector[Station]): Set[Station] = {
-    val neighboursIntList = (jsonStation \ "neighbours" \ transportType).as[List[Int]]
-    var neighboursSet = Set[Station]()
-    for(number <- neighboursIntList) {
-      neighboursSet += stations(number)
-    }
-    neighboursSet
+    stationsBuffer.toVector.sortWith((s: Station, t: Station) => s.number < t.number)
   }
 
   private def initPlayers(nPlayer: Int, stations: Vector[Station]): Vector[Player] = {
