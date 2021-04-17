@@ -76,8 +76,10 @@ class GameInitializer() extends GameInitializerInterface {
         neighbourTaxis = (jsonStation \ "neighbours" \ "taxi").as[Set[Int]],
         neighbourBuses = (jsonStation \ "neighbours" \ "bus").as[Set[Int]],
         neighbourUndergrounds = (jsonStation \ "neighbours" \ "underground").as[Set[Int]])
+      println(station)
       stationsBuffer += station
     }
+
 
     stationsBuffer.toVector.sortWith((s: Station, t: Station) => s.number < t.number)
   }
