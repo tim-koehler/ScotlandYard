@@ -19,6 +19,8 @@ import spray.json.enrichAny
 object Rest {
   def main(args: Array[String]): Unit = {
 
+    var gameModel = GameModel()
+
     implicit val system = ActorSystem(Behaviors.empty, "my-system")
     // needed for the future flatMap/onComplete in the end
     implicit val executionContext = system.executionContext
@@ -34,18 +36,43 @@ object Rest {
 
     val route = Route.seal(
       concat(
-          path("station") {
-            complete(Station(neighbourTaxis = Set(4,6,7)))
-          },
-          path("tickets") {
-            complete(Tickets())
-          },
-          path("detective") {
-            complete(Detective())
-          },
-          path("mrx") {
-            complete(MrX())
+        path("currentPlayer") {
+          val player = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+          player match {
+            case x: MrX =>
+              complete(x)
+            case _ =>
+              complete(player.asInstanceOf[Detective])
           }
+        },
+        path("previousPlayer") {
+          val player = gameModel.getPreviousPlayer(gameModel.players, gameModel.round)
+          player match {
+            case x: MrX =>
+              complete(x)
+            case _ =>
+              complete(player.asInstanceOf[Detective])
+          }
+        },
+        path("station") {
+          val station = Station(number = 99, stationType = StationType.Taxi, neighbourTaxis = Set(1,2,3))
+          val station2 = station.toJson.convertTo[Station]
+          complete(station2)
+        },
+        path("tickets") {
+          val tickets = Tickets(1, 2, 3, 4)
+          val tickets2 = tickets.toJson.convertTo[Tickets]
+          complete(tickets2)
+        },
+        path("detective") {
+          val station = Station(number = 99, stationType = StationType.Taxi, neighbourTaxis = Set(1,2,3))
+          val detective = Detective(station = station)
+          val detective2 = detective.toJson.convertTo[Detective]
+          complete(detective2)
+        },
+        path("mrx") {
+          complete(MrX())
+        }
       )
     )
 

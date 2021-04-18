@@ -54,9 +54,9 @@ object JsonProtocol extends DefaultJsonProtocol {
         JsNumber(number),
         JsString(stationType),
         JsBoolean(blackStation),
-        JsArray(neighbourTaxis),
-        JsArray(neighbourBuses),
-        JsArray(neighbourUndergrounds),
+        neighbourTaxis,
+        neighbourBuses,
+        neighbourUndergrounds,
         JsNumber(tuiCoordinatesX),
         JsNumber(tuiCoordinatesY),
         JsNumber(guiCoordinatesX),
@@ -65,9 +65,9 @@ object JsonProtocol extends DefaultJsonProtocol {
             number.toInt,
             StationType.fromString(stationType),
             blackStation,
-            neighbourTaxis.asInstanceOf[Set[Int]],
-            neighbourBuses.asInstanceOf[Set[Int]],
-            neighbourUndergrounds.asInstanceOf[Set[Int]],
+            neighbourTaxis.convertTo[Set[Int]],
+            neighbourBuses.convertTo[Set[Int]],
+            neighbourUndergrounds.convertTo[Set[Int]],
             new Point(tuiCoordinatesX.toInt, tuiCoordinatesY.toInt),
             new Point(guiCoordinatesX.toInt, guiCoordinatesY.toInt)
           )
@@ -120,11 +120,11 @@ object JsonProtocol extends DefaultJsonProtocol {
         "color",
         "tickets",
       ) match {
-        case Seq(JsObject(station),
+        case Seq(station,
         JsString(name),
         JsObject(color),
         JsObject(tickets)) =>
-          Detective(station.asInstanceOf[Station], name, color.asInstanceOf[Color], tickets.asInstanceOf[Tickets])
+          Detective(station.convertTo[Station], name, color.asInstanceOf[Color], tickets.asInstanceOf[Tickets])
         case _ => throw DeserializationException("Station expected")
       }
     }
