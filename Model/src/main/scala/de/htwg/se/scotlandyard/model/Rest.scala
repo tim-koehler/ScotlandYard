@@ -71,9 +71,6 @@ object Rest {
         path("startGame") {
           complete(gameModel.startGame(gameModel))
         },
-        path("startGame") {
-          complete(gameModel.startGame(gameModel))
-        },
         path("getMrX") {
           complete(gameModel.getMrX(gameModel.players))
         },
@@ -92,9 +89,11 @@ object Rest {
             entity(as[String]) {
               functionType =>
                 if (functionType == "increase") {
-                  complete(gameModel.updateRound(gameModel, incrementValue))
+                  gameModel = gameModel.updateRound(gameModel, incrementValue)
+                  complete(gameModel)
                 } else if (functionType == "decrease") {
-                  complete(gameModel.updateRound(gameModel, decrementValue))
+                  gameModel = gameModel.updateRound(gameModel, decrementValue)
+                  complete(gameModel)
                 } else {
                   complete(StatusCode.int2StatusCode(500))
                 }
@@ -104,28 +103,36 @@ object Rest {
         post {
           path("increaseTickets") {
             entity(as[String]) {
-              ticketType => complete(gameModel.updateTickets(gameModel, TicketType.parse(ticketType))(incrementValue))
+              ticketType =>
+                gameModel = gameModel.updateTickets(gameModel, TicketType.parse(ticketType))(incrementValue)
+                complete(gameModel)
             }
           }
         },
         post {
           path("decreaseTickets") {
             entity(as[String]) {
-              ticketType => complete(gameModel.updateTickets(gameModel, TicketType.parse(ticketType))(decrementValue))
+              ticketType =>
+                gameModel = gameModel.updateTickets(gameModel, TicketType.parse(ticketType))(decrementValue)
+                complete(gameModel)
             }
           }
         },
         post {
           path("updatePlayerPosition") {
             entity(as[JsValue]) {
-              newPosition => complete(gameModel.updatePlayerPosition(gameModel, newPosition.convertTo[Int]))
+              newPosition =>
+                gameModel = gameModel.updatePlayerPosition(gameModel, newPosition.convertTo[Int])
+                complete(gameModel)
             }
           }
         },
         post {
           path("addStuckPlayer") {
             entity(as[Detective]) {
-              detective => complete(gameModel.addStuckPlayer(gameModel, detective))
+              detective =>
+                gameModel = gameModel.addStuckPlayer(gameModel, detective)
+                complete(gameModel)
             }
           }
         },
@@ -134,7 +141,8 @@ object Rest {
             entity(as[String]) {
               winningPlayerName =>
                 val filteredWinningPlayers = gameModel.players.filter(p => p.name == winningPlayerName)
-                complete(gameModel.addStuckPlayer(gameModel, filteredWinningPlayers.head.asInstanceOf[Detective]))
+                gameModel = gameModel.winGame(gameModel, filteredWinningPlayers.head.asInstanceOf[Detective])
+                complete(gameModel)
             }
           }
         },
