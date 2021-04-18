@@ -9,6 +9,7 @@ import java.awt.Color
 import scala.swing.Point
 
 object JsonProtocol extends DefaultJsonProtocol {
+
   implicit object TicketsJsonFormat extends RootJsonFormat[Tickets] {
     def write(tickets: Tickets): JsObject = JsObject(
       "taxiTickets" -> JsNumber(tickets.taxiTickets),

@@ -38,7 +38,7 @@ case class GameModel(
   }
 
   def getMrX(players: Vector[Player]): MrX = players.head.asInstanceOf[MrX]
-  def getDetectives(players: Vector[Player]): Vector[Player] = players.drop(1)
+  def getDetectives(players: Vector[Player]): Vector[Detective] = players.drop(1).asInstanceOf[Vector[Detective]]
 
   def getCurrentPlayerIndex(players: Vector[Player], round: Int): Int = {
     if (round % players.length == 0) {
@@ -65,16 +65,12 @@ case class GameModel(
     gameModel.copy(stuckPlayers = gameModel.stuckPlayers + player)
   }
 
-  val setAllPlayersStuck: GameModel => GameModel = setPlayerStuck(_: GameModel, true)
-
-  private def setPlayerStuck(gameModel: GameModel, allPlayerStuck: Boolean): GameModel = {
-    gameModel.copy(allPlayerStuck = allPlayerStuck)
+  def setAllPlayersStuck(gameModel: GameModel): GameModel = {
+    gameModel.copy(allPlayerStuck = true)
   }
 
-  val winGame: (GameModel, Player) => GameModel = setWin(_: GameModel, _: Player, false, true)
-
-  private def setWin(gameModel: GameModel, winningPlayer: Player, gameRunning: Boolean, win: Boolean): GameModel = {
-    gameModel.copy(winningPlayer = winningPlayer, gameRunning = gameRunning, win = win)
+  def winGame(gameModel: GameModel, winningPlayer: Player): GameModel = {
+    gameModel.copy(winningPlayer = winningPlayer, gameRunning = false, win = true)
   }
 
   def updateTickets(gameModel: GameModel, ticketType: TicketType)(modFunc:Int => Int): GameModel = {
