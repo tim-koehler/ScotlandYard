@@ -14,6 +14,17 @@ object TicketType extends Enumeration {
     }
   }
 
+  def parse(ticket: String): TicketType = {
+    println(ticket)
+    ticket match {
+      case "Taxi" => TicketType.Taxi
+      case "Bus" => TicketType.Bus
+      case "Underground" => TicketType.Underground
+      case "Black" => TicketType.Black
+      case _ => TicketType.Invalid
+    }
+  }
+
   def of(ticket: Char): TicketType = {
     ticket match {
       case 't' => TicketType.Taxi

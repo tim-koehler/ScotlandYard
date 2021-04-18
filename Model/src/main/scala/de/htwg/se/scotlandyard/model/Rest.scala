@@ -15,6 +15,9 @@ import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX}
 import spray.json.enrichAny
 
+import java.awt.Color
+import scala.swing.Point
+
 
 object Rest {
   def main(args: Array[String]): Unit = {
@@ -29,7 +32,7 @@ object Rest {
       ExceptionHandler {
         case e: Exception =>
           println("---------------- exception log start")
-          println(e.getMessage, e)
+          e.printStackTrace()
           println("---------------- exception log end")
           complete("server made a boo boo")
       }
@@ -65,13 +68,16 @@ object Rest {
           complete(tickets2)
         },
         path("detective") {
-          val station = Station(number = 99, stationType = StationType.Taxi, neighbourTaxis = Set(1,2,3))
-          val detective = Detective(station = station)
+          val station = Station(number = 99, stationType = StationType.Taxi, neighbourTaxis = Set(1,2,3), neighbourBuses = Set(2,3,4), neighbourUndergrounds = Set(3,4,5), tuiCoordinates = new Point(5,5), guiCoordinates = new Point(6,6))
+          val detective = Detective(station = station, name = "Dt1", color = Color.green, tickets = Tickets(1,2,3,4))
           val detective2 = detective.toJson.convertTo[Detective]
           complete(detective2)
         },
         path("mrx") {
-          complete(MrX())
+          val station = Station(number = 99, stationType = StationType.Taxi, neighbourTaxis = Set(1,2,3), neighbourBuses = Set(2,3,4), neighbourUndergrounds = Set(3,4,5), tuiCoordinates = new Point(5,5), guiCoordinates = new Point(6,6))
+          val mrx = MrX(station = station, color = Color.black, tickets = Tickets(1,2,3,4), history = List(TicketType.Taxi, TicketType.Bus, TicketType.Underground, TicketType.Black))
+          val mrx2 = mrx.toJson.convertTo[MrX]
+          complete(mrx2)
         }
       )
     )
