@@ -40,7 +40,7 @@ class GameInitializer() extends GameInitializerInterface {
 
   override def initialize(nPlayers: Int = 3, stationsSource: String): GameModel = {
     val stations = initStations(stationsSource)
-    GameModel(stations = stations, players = initPlayers(nPlayers, stations), stuckPlayers = Set[Player]())
+    GameModel(stations = stations, players = initPlayers(nPlayers, stations), stuckPlayers = Set[Detective]())
   }
   
   def getColorList(): Vector[Color] = {
