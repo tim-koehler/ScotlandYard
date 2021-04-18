@@ -2,6 +2,7 @@ package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
 import de.htwg.se.scotlandyard.model
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.players.Detective
 import de.htwg.se.scotlandyard.model.{GameModel, StationType}
 
 class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType) extends Command {
@@ -25,7 +26,7 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     gameModelTmp = updateMrXVisibility(gameModelTmp)
     gameModelTmp = gameModelTmp.updateRound(gameModelTmp, incrementValue)
     if (!checkIfPlayerIsAbleToMove(gameModelTmp)) {
-      gameModelTmp = gameModelTmp.addStuckPlayer(gameModelTmp, gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round))
+      gameModelTmp = gameModelTmp.addStuckPlayer(gameModelTmp, gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round).asInstanceOf[Detective])
       if (gameModelTmp.stuckPlayers.size == gameModelTmp.players.size - 1) {
         gameModelTmp = gameModelTmp.setAllPlayersStuck(gameModelTmp)
       } else {

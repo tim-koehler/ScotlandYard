@@ -68,9 +68,6 @@ object Rest {
               complete(player.asInstanceOf[Detective])
           }
         },
-        path("startGame") {
-          complete(gameModel.startGame(gameModel))
-        },
         path("getMrX") {
           complete(gameModel.getMrX(gameModel.players))
         },
@@ -80,10 +77,17 @@ object Rest {
         path("currentPlayerIndex") {
           complete(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round).toJson)
         },
-        path("setAllPlayerStuck") {
-          complete(gameModel.setAllPlayersStuck(gameModel))
+        // POST REQUESTS (CHANGES THE STATE)
+        post {
+          path("startGame") {
+            complete(gameModel.startGame(gameModel))
+          }
         },
-        // POST REQUESTS
+        post {
+          path("setAllPlayerStuck") {
+            complete(gameModel.setAllPlayersStuck(gameModel))
+          }
+        },
         post {
           path("updateRound") {
             entity(as[String]) {
