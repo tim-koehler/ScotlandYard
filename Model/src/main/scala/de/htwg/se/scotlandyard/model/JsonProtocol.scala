@@ -146,7 +146,7 @@ object JsonProtocol extends DefaultJsonProtocol {
       "totalRound" -> JsNumber(gameModel.totalRound),
       "win" -> JsBoolean(gameModel.win),
       "gameRunning" -> JsBoolean(gameModel.gameRunning),
-      "winningPlayer" -> gameModel.winningPlayer.toJson,
+      "winningPlayerName" -> JsString(gameModel.winningPlayer.name),
       "stuckPlayers" -> gameModel.stuckPlayers.toJson,
       "allPlayerStuck" -> JsBoolean(gameModel.allPlayerStuck),
       "winningRound" -> JsNumber(gameModel.WINNING_ROUND),
@@ -161,7 +161,7 @@ object JsonProtocol extends DefaultJsonProtocol {
         "totalRound",
         "win",
         "gameRunning",
-        "winningPlayer",
+        "winningPlayerName",
         "stuckPlayers",
         "allPlayerStuck",
         "winningRound",
@@ -174,12 +174,13 @@ object JsonProtocol extends DefaultJsonProtocol {
         JsNumber(totalRound),
         JsBoolean(win),
         JsBoolean(gameRunning),
-        winningPlayer,
+        JsString(winningPlayerName),
         stuckPlayers,
         JsBoolean(allPlayerStuck),
         JsNumber(winningRound),
         mrxVisibleRounds) =>
-          GameModel(stations.convertTo[Vector[Station]], players = Vector(mrx.convertTo[MrX], detectives.convertTo[Vector[Detective]]).asInstanceOf[Vector[Player]], round.toInt, totalRound.toInt, win, gameRunning, winningPlayer, stuckPlayers, allPlayerStuck, WINNING_ROUND = winningRound, MRX_VISIBLE_ROUNDS = mrxVisibleRounds)
+          val players = Vector(mrx.convertTo[MrX], detectives.convertTo[Vector[Detective]]).asInstanceOf[Vector[Player]]
+          GameModel(stations.convertTo[Vector[Station]], players = players, round.toInt, totalRound.toInt, win, gameRunning, winningPlayer = players.filter(p => p.name == winningPlayerName).head, stuckPlayers.convertTo[Set[Detective]], allPlayerStuck, WINNING_ROUND = winningRound.toInt, MRX_VISIBLE_ROUNDS = mrxVisibleRounds.convertTo[Vector[Int]])
         case _ => throw DeserializationException("GameModel expected")
       }
     }

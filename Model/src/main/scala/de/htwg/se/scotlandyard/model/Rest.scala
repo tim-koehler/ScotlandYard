@@ -57,6 +57,11 @@ object Rest {
               complete(player.asInstanceOf[Detective])
           }
         },
+        path("gameModel") {
+          val gameModelOne = gameModel
+          val gameModel2 = gameModelOne.toJson.convertTo[GameModel]
+          complete(gameModel2)
+        },
         path("station") {
           val station = Station(number = 99, stationType = StationType.Taxi, neighbourTaxis = Set(1,2,3))
           val station2 = station.toJson.convertTo[Station]

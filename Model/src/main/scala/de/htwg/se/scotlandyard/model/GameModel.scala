@@ -13,7 +13,7 @@ case class GameModel(
                       win: Boolean = false,
                       gameRunning: Boolean = false,
                       winningPlayer: Player = Detective(),
-                      stuckPlayers: Set[Player] = Set(),
+                      stuckPlayers: Set[Detective] = Set(),
                       allPlayerStuck: Boolean = false,
                       WINNING_ROUND: Int = 24, //24
                       MRX_VISIBLE_ROUNDS: Vector[Int] = Vector(3, 8, 13, 18, 24)
@@ -61,7 +61,7 @@ case class GameModel(
     gameModel.copy(round = round, totalRound = totalRound)
   }
 
-  def addStuckPlayer(gameModel: GameModel, player: Player): GameModel = {
+  def addStuckPlayer(gameModel: GameModel, player: Detective): GameModel = {
     gameModel.copy(stuckPlayers = gameModel.stuckPlayers + player)
   }
 
