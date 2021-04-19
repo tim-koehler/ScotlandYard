@@ -64,10 +64,10 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     gameModel.copy(players = players.toVector, round = round, totalRound = totalRound)
   }
 
-  override def save(gameModel: GameModel, mrX: MrX): Boolean = {
+  override def save(gameModel: GameModel): Boolean = {
 
     val prettyPrinter = new PrettyPrinter(120, 4)
-    val xml = prettyPrinter.format(gametoXML(gameModel, mrX))
+    val xml = prettyPrinter.format(gametoXML(gameModel))
 
     Try {
       val pw = new PrintWriter(new File(pathname))
@@ -79,12 +79,12 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     }
   }
 
-  def gametoXML(gameModel: GameModel, mrX: MrX): Elem = {
+  def gametoXML(gameModel: GameModel): Elem = {
     <game>
       <round>{gameModel.round}</round>
       <totalRound>{gameModel.totalRound}</totalRound>
       <nPlayer>{gameModel.players.length}</nPlayer>
-      {mrXtoXml(gameModel, mrX)}
+      {mrXtoXml(gameModel, gameModel.getMrX(gameModel.players))}
       {allDetectivesToXml(gameModel)}
     </game>
   }

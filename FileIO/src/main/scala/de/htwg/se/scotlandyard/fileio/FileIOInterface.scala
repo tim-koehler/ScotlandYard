@@ -9,5 +9,5 @@ trait FileIOInterface {
 
   def load(stationsFileContent: String): GameModel
 
-  def save(gameModel: GameModel, mrX: MrX): Boolean
+  def save(gameModel: GameModel): Boolean
 }

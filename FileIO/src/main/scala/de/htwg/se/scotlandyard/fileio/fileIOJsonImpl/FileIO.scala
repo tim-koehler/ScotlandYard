@@ -57,10 +57,11 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
     gameModel.copy(players = players, round = round, totalRound = totalRound)
   }
 
-  override def save(gameModel: GameModel, mrX: MrX): Boolean = {
+  override def save(gameModel: GameModel): Boolean = {
+    val mrX = gameModel.getMrX(gameModel.players)
     var history = new JsArray()
 
-    for (h <- mrX.history) {
+    for (h <- gameModel.getMrX(gameModel.players).history) {
       history = history.append(Json.obj(
         "transport" -> h
       ))
