@@ -9,7 +9,7 @@
     "lastSeen" : "never",
     "blackTickets" : 5,
     "taxiTickets" : 99,
-    "busTickets" : 99,
+    "busTickets" : 100,
     "undergroundTickets" : 99,
     "history" : [ ]
   },
