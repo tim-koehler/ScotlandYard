@@ -7,7 +7,7 @@ import de.htwg.se.scotlandyard.fileio.FileIOInterface
 import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.players.{MrX, Player}
+import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 
 import java.awt.Color
 import scala.swing.Publisher
@@ -156,15 +156,15 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     gameModel.getMrX(gameModel.players)
   }
 
-  def getPlayersList(): Vector[Player] = {
-    gameModel.players
+  def getDetectives: Vector[Detective] = {
+    gameModel.getDetectives(gameModel.players)
   }
 
   def getStations(): Vector[Station] = {
     gameModel.stations
   }
 
-  def getTotalRound(): Integer = {
+  def getTotalRound(): Int = {
     gameModel.totalRound
   }
 

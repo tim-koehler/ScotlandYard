@@ -26,7 +26,7 @@ class GuiMainMapDrawer(controller: ControllerInterface) {
         controller.getStations()(mrx.lastSeen.toInt).guiCoordinates.y - (r / 2), r, r)
     }
 
-    for (p <- controller.getPlayersList().drop(1)) {
+    for (p <- controller.getDetectives) {
       g.setColor(p.color)
       g.drawOval(p.station.guiCoordinates.x - (r / 2), p.station.guiCoordinates.y - (r / 2), r, r)
     }

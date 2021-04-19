@@ -106,13 +106,13 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   def evaluateSettings(input: String): Int = {
     changeState(new ChooseNameMenuState(this))
     controller.initialize(input.toInt)
-    controller.getPlayersList().size
+    controller.getDetectives.length + 1
   }
 
   def evaluateNameMenu(input: String): Int = {
     if (input.toInt == 1) {
       controller.startGame()
-    } else if (input.toInt > 1 &&  input.toInt <= controller.getPlayersList().length) {
+    } else if (input.toInt > 1 &&  input.toInt <= controller.getDetectives.length + 1) {
       changeState(new EnterNameState(this))
       updateScreen()
       indexOfPlayerWhichNameToChange = input.toInt - 1 // -1 because 1 is Start and 2 is the first Player
@@ -150,7 +150,8 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
       outputString = outputString + t.toString + ", "
     }
     outputString = outputString + "\n"
-    for(p <- controller.getPlayersList()) {
+    val players = Vector(controller.getMrX, controller.getDetectives)
+    for(p <- players) {
       outputString = outputString + p.toString + "\n"
     }
     outputString = outputString + "\n" + "Player" + " " + controller.getCurrentPlayer.name.substring(0, 3) + " " + "Enter your next Station:"
@@ -170,7 +171,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
     var outputString = chooseNameMenuString
     outputString = outputString + "1" + ": " + chooseNameMenuEntries(0) + "\n"
 
-    for((x,i) <- controller.getPlayersList().drop(1).view.zipWithIndex) {
+    for((x,i) <- controller.getDetectives.view.zipWithIndex) {
       outputString = outputString + (i + 2).toString + ": " + chooseNameMenuEntries(i + 1) + ": " + x.name + "\n"
     }
     outputString
@@ -179,12 +180,12 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   def buildOutputStringWin(): String = {
     if (controller.getWinningPlayer().name.equals("MrX")) {
       mrXWinningBanner + "\n\n" +
-        controller.getPlayersList()(0).name +
+        controller.getMrX.name +
         " was at Station " + controller.getWinningPlayer().station.number + " !!!\n\n" +
         "Enter any key to exit..."
     } else {
       detectiveWinningBanner + "\n\n" +
-        controller.getWinningPlayer().name + " has caught " + controller.getPlayersList()(0).name +
+        controller.getWinningPlayer().name + " has caught " + controller.getMrX.name +
         " at Station " + controller.getWinningPlayer().station.number + " !!!\n\n" +
         "Enter any key to exit..."
     }

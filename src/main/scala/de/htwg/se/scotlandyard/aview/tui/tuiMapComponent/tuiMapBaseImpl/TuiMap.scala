@@ -67,7 +67,8 @@ class TuiMap extends TuiMapInterface {
   }
 
   private def setPlayerPositions(controller: ControllerInterface): mutable.Map[Player, Int] = {
-    for (p <- controller.getPlayersList()){
+    val players: Vector[Player] = Vector(controller.getMrX).asInstanceOf[Vector[Player]] ++ controller.getDetectives
+    for (p <- players){
       playerPositions += (p -> p.station.number)
     }
     playerPositions
@@ -81,7 +82,8 @@ class TuiMap extends TuiMapInterface {
       map = Some(map.get.updated(s.tuiCoordinates.y - 1, map.get(s.tuiCoordinates.y - 1).updated(s.tuiCoordinates.x + 1, ' ')))
     }
 
-    for(p <- controller.getPlayersList()) {
+    val players: Vector[Player] = Vector(controller.getMrX).asInstanceOf[Vector[Player]] ++ controller.getDetectives
+    for(p <- players) {
       if(!p.name.equals("MrX")) {
         map = Some(map.get.updated(p.station.tuiCoordinates.y - 1, map.get(p.station.tuiCoordinates.y - 1).updated(p.station.tuiCoordinates.x - 1, p.name(0))))
         map = Some(map.get.updated(p.station.tuiCoordinates.y - 1, map.get(p.station.tuiCoordinates.y - 1).updated(p.station.tuiCoordinates.x, p.name(1))))

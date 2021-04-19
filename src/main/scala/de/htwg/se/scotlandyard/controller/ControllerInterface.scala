@@ -4,7 +4,7 @@ import de.htwg.se.scotlandyard.fileio.FileIOInterface
 import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.players.{MrX, Player}
+import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 
 import java.awt.Color
 import scala.swing.Publisher
@@ -25,9 +25,9 @@ trait ControllerInterface extends Publisher {
   def getGameRunning(): Boolean
   def getCurrentPlayer: Player
   def getMrX: MrX
-  def getPlayersList(): Vector[Player]
+  def getDetectives: Vector[Detective]
   def getStations(): Vector[Station]
-  def getTotalRound(): Integer
+  def getTotalRound(): Int
   def getWin(): Boolean
   def getWinningPlayer(): Player
   def setPlayerName(inputName: String, index: Int): Boolean

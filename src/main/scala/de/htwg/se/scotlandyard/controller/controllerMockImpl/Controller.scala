@@ -30,11 +30,11 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
 
   override def getMrX: MrX = MrX()
 
-  override def getPlayersList(): Vector[Player] = Vector(MrX(), Detective(), Detective())
+  override def getDetectives(): Vector[Detective] = Vector(Detective(), Detective())
 
   override def getStations(): Vector[Station] = Vector(Station(0, StationType.Taxi))
 
-  override def getTotalRound(): Integer = 3
+  override def getTotalRound(): Int = 3
 
   override def getWin(): Boolean = true
 

@@ -101,7 +101,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
         controller.getMrX should be(gameModel.getMrX(gameModel.players))
       }
       "return 3 from getPlayerList method" in {
-        controller.getPlayersList().length shouldBe 3
+        controller.getDetectives.length shouldBe 2
       }
       "return stations from getStations method" in {
         controller.getStations().length shouldBe 6
