@@ -86,7 +86,8 @@ object JsonProtocol extends DefaultJsonProtocol {
       "color" -> JsString(String.format("#%02x%02x%02x", mrx.color.getRed, mrx.color.getGreen, mrx.color.getBlue)),
       "isVisible" -> JsBoolean(mrx.isVisible),
       "lastSeen" -> JsString(mrx.lastSeen),
-      "history" -> mrx.history.map(e => e.toString).toJson)
+      "history" -> mrx.history.map(e => e.toString).toJson,
+      "playerType" -> mrx.playerType.get.toString.toJson)
 
     def read(value: JsValue): MrX = {
       value.asJsObject.getFields(
@@ -117,7 +118,8 @@ object JsonProtocol extends DefaultJsonProtocol {
       "station" -> detective.station.toJson,
       "name" -> JsString(detective.name),
       "color" -> JsString(String.format("#%02x%02x%02x", detective.color.getRed, detective.color.getGreen, detective.color.getBlue)),
-      "tickets" -> detective.tickets.toJson)
+      "tickets" -> detective.tickets.toJson,
+      "playerType" -> detective.playerType.get.toString.toJson)
 
     def read(value: JsValue): Detective = {
       value.asJsObject.getFields(
