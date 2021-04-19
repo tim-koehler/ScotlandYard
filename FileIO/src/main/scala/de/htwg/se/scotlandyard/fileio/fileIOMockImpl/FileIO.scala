@@ -8,5 +8,5 @@ import de.htwg.se.scotlandyard.model.players.MrX
 class FileIO(override var gameInitializer: GameInitializerInterface) extends FileIOInterface{
   override def load(stationsFileContent: String): GameModel = GameModel()
 
-  override def save(gameModel: GameModel, mrX: MrX): Boolean = true
+  override def save(gameModel: GameModel): Boolean = true
 }
