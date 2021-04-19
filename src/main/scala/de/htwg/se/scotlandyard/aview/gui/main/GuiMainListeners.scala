@@ -3,9 +3,10 @@ package de.htwg.se.scotlandyard.aview.gui.main
 import java.awt.event.AdjustmentEvent
 import de.htwg.se.scotlandyard.aview.Gui
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.{Station, TicketType}
-import TicketType.TicketType
+import de.htwg.se.scotlandyard.model.{Coordinate, Station, TicketType}
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
 
+import java.awt.geom.Point2D
 import scala.swing.event.MouseClicked
 import scala.swing.{Point, Reactions, ScrollPane}
 
@@ -35,7 +36,7 @@ class GuiMainListeners(controller: ControllerInterface, gui: Gui) {
     var distance = 9999.0
     var guessedStation: Station = controller.getStations()(0)
     for(station <- controller.getStations()) {
-      val clickedPoint = new Point(xPos, yPos)
+      val clickedPoint = Coordinate(xPos, yPos)
       if(station.guiCoordinates.distance(clickedPoint) < distance) {
         distance = station.guiCoordinates.distance(clickedPoint)
         guessedStation = station

@@ -7,7 +7,6 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import de.htwg.se.scotlandyard.fileio.fileIOJsonImpl.FileIO
-import de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat
 import de.htwg.se.scotlandyard.model.{GameModel, Station}
 import de.htwg.se.scotlandyard.model.JsonProtocol._
@@ -31,8 +30,7 @@ object Rest {
           complete("server shit its pants, big time")
       }
 
-    val gameInitializer = new GameInitializer()
-    val fileIoJson = new de.htwg.se.scotlandyard.fileio.fileIOJsonImpl.FileIO(gameInitializer)
+    val fileIoJson = new de.htwg.se.scotlandyard.fileio.fileIOJsonImpl.FileIO()
 
     val route = Route.seal(
       concat(

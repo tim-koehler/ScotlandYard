@@ -1,6 +1,5 @@
 package de.htwg.se.scotlandyard.fileio
 
-import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.model.players.MrX
 
