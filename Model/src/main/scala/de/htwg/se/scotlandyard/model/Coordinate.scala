@@ -5,9 +5,9 @@ case class Coordinate(
                      y: Int = 1
                      )
 {
-  def distance (px: Int, py: Int): Double = {
-    val ppx = px - this.x
-    val ppy = py - this.y
-    Math.sqrt (ppx * ppx + ppy * ppy)
+  def distance (coordinate: Coordinate): Double = {
+    val px = coordinate.x - this.x
+    val py = coordinate.y - this.y
+    Math.sqrt (px * px + py * py)
   }
 }
