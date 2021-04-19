@@ -5,9 +5,6 @@ import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.model.players.MrX
 
 trait FileIOInterface {
-  var gameInitializer: GameInitializerInterface
-
   def load(stationsFileContent: String): GameModel
-
   def save(gameModel: GameModel): Boolean
 }

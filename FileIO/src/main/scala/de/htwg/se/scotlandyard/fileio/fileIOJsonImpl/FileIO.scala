@@ -10,33 +10,17 @@ import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import play.api.libs.json._
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
-import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import spray.json.enrichAny
 import spray.json._
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
-class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) extends FileIOInterface {
-
+class FileIO() extends FileIOInterface {
   var pathname = "ScotlandYard.json"
 
   override def load(stationsFileContent: String): GameModel = {
-    val gameModel = gameInitializer.initialize(3, stationsFileContent)
-
     val source: String = Source.fromFile(pathname).getLines.mkString
-    val loadedGameModel = source.parseJson.convertTo[GameModel]
-    gameModel.copy(
-      players = loadedGameModel.players,
-      round = loadedGameModel.round,
-      totalRound = loadedGameModel.totalRound,
-      win = loadedGameModel.win,
-      gameRunning = loadedGameModel.gameRunning,
-      winningPlayer = loadedGameModel.winningPlayer,
-      stuckPlayers = loadedGameModel.stuckPlayers,
-      allPlayerStuck = loadedGameModel.allPlayerStuck,
-      WINNING_ROUND = loadedGameModel.WINNING_ROUND,
-      MRX_VISIBLE_ROUNDS = loadedGameModel.MRX_VISIBLE_ROUNDS
-    )
+    source.parseJson.convertTo[GameModel]
   }
 
   override def save(gameModel: GameModel): Boolean = {

@@ -14,8 +14,7 @@ val commonDependencies = Seq(
 )
 
 lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "model")
-lazy val gameInitializer = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "gameInitializer")
-lazy val fileIO = (project in file(".")).dependsOn(model, gameInitializer).aggregate(model, gameInitializer).settings(
+lazy val fileIO = (project in file(".")).dependsOn(model).aggregate(model).settings(
   name          := "scotland-yard-fileio",
   organization  := "de.htwg.se",
   version       := "0.1.0",

@@ -48,10 +48,8 @@ object JsonProtocol extends DefaultJsonProtocol {
       "neighbourTaxis" -> station.neighbourTaxis.toJson,
       "neighbourBuses" -> station.neighbourBuses.toJson,
       "neighbourUndergrounds" -> station.neighbourUndergrounds.toJson,
-      "tuiCoordinatesX" -> JsNumber(station.tuiCoordinates.x),
-      "tuiCoordinatesY" -> JsNumber(station.tuiCoordinates.y),
-      "guiCoordinatesX" -> JsNumber(station.guiCoordinates.x),
-      "guiCoordinatesY" -> JsNumber(station.guiCoordinates.y)
+      "tuiCoordinates" -> station.tuiCoordinates.toJson,
+      "guiCoordinates" -> station.guiCoordinates.toJson
     )
 
     def read(value: JsValue): Station = {
@@ -62,10 +60,8 @@ object JsonProtocol extends DefaultJsonProtocol {
         "neighbourTaxis",
         "neighbourBuses",
         "neighbourUndergrounds",
-        "tuiCoordinatesX",
-        "tuiCoordinatesY",
-        "guiCoordinatesX",
-        "guiCoordinatesY"
+        "tuiCoordinates",
+        "guiCoordinates"
       ) match {
         case Seq(
         JsNumber(number),
@@ -74,10 +70,8 @@ object JsonProtocol extends DefaultJsonProtocol {
         neighbourTaxis,
         neighbourBuses,
         neighbourUndergrounds,
-        JsNumber(tuiCoordinatesX),
-        JsNumber(tuiCoordinatesY),
-        JsNumber(guiCoordinatesX),
-        JsNumber(guiCoordinatesY)) =>
+        tuiCoordinates,
+        guiCoordinates) =>
           Station(
             number.toInt,
             StationType.fromString(stationType),
@@ -85,8 +79,8 @@ object JsonProtocol extends DefaultJsonProtocol {
             neighbourTaxis.convertTo[Set[Int]],
             neighbourBuses.convertTo[Set[Int]],
             neighbourUndergrounds.convertTo[Set[Int]],
-            Coordinate(tuiCoordinatesX.toInt, tuiCoordinatesY.toInt),
-            Coordinate(guiCoordinatesX.toInt, guiCoordinatesY.toInt)
+            tuiCoordinates = tuiCoordinates.convertTo[Coordinate],
+            guiCoordinates = guiCoordinates.convertTo[Coordinate],
           )
         case _ => throw DeserializationException("Station expected")
       }

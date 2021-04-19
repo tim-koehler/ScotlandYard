@@ -6,7 +6,6 @@ import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import TicketType.TicketType
 import de.htwg.se.scotlandyard.fileio.FileIOInterface
-import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 
 import scala.io.Source
@@ -14,14 +13,14 @@ import scala.swing.Color
 import scala.util.{Failure, Success, Try}
 import scala.xml._
 
-class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) extends FileIOInterface {
+class FileIO @Inject()() extends FileIOInterface {
 
   var pathname = "ScotlandYard.xml"
 
   override def load(stationsFileContent: String): GameModel = {
-    val gameModel = gameInitializer.initialize(3, stationsFileContent)
+    GameModel()
 
-    val xmlFile = scala.xml.XML.loadFile(pathname)
+    /*val xmlFile = scala.xml.XML.loadFile(pathname)
     val round = (xmlFile \\ "game" \ "round").text.toInt
     val totalRound = (xmlFile \\ "game" \ "totalRound").text.toInt
     val nPlayer = (xmlFile \\ "game" \ "nPlayer").text.toInt
@@ -61,7 +60,7 @@ class FileIO @Inject()(override var gameInitializer: GameInitializerInterface) e
 
     val players = mrx :: detectives
 
-    gameModel.copy(players = players.toVector, round = round, totalRound = totalRound)
+    gameModel.copy(players = players.toVector, round = round, totalRound = totalRound)*/
   }
 
   override def save(gameModel: GameModel): Boolean = {
