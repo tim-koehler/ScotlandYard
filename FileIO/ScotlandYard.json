@@ -1,31 +1,80 @@
 {
-  "round" : 1,
-  "totalRound" : 1,
-  "nPlayer" : 3,
-  "mrX" : {
-    "name" : "MrX",
-    "stationNumber" : -1,
-    "isVisible" : false,
-    "lastSeen" : "never",
-    "blackTickets" : 5,
-    "taxiTickets" : 99,
-    "busTickets" : 100,
-    "undergroundTickets" : 99,
-    "history" : [ ]
-  },
-  "detectives" : [ {
-    "name" : "Dt1",
-    "stationNumber" : -1,
-    "taxiTickets" : 0,
-    "busTickets" : 0,
-    "undergroundTickets" : 0,
-    "color" : "-4144960"
+  "allPlayerStuck": false,
+  "detectives": [{
+    "color": "#c0c0c0",
+    "name": "Dt1",
+    "station": {
+      "blackStation": false,
+      "guiCoordinatesX": 1,
+      "guiCoordinatesY": 1,
+      "neighbourBuses": [],
+      "neighbourTaxis": [],
+      "neighbourUndergrounds": [],
+      "number": -1,
+      "stationType": "Taxi",
+      "tuiCoordinatesX": 1,
+      "tuiCoordinatesY": 1
+    },
+    "tickets": {
+      "blackTickets": 0,
+      "busTickets": 0,
+      "taxiTickets": 0,
+      "undergroundTickets": 0
+    }
   }, {
-    "name" : "Dt2",
-    "stationNumber" : -1,
-    "taxiTickets" : 0,
-    "busTickets" : 0,
-    "undergroundTickets" : 0,
-    "color" : "-4144960"
-  } ]
+    "color": "#c0c0c0",
+    "name": "Dt2",
+    "station": {
+      "blackStation": false,
+      "guiCoordinatesX": 1,
+      "guiCoordinatesY": 1,
+      "neighbourBuses": [],
+      "neighbourTaxis": [],
+      "neighbourUndergrounds": [],
+      "number": -1,
+      "stationType": "Taxi",
+      "tuiCoordinatesX": 1,
+      "tuiCoordinatesY": 1
+    },
+    "tickets": {
+      "blackTickets": 0,
+      "busTickets": 3,
+      "taxiTickets": 12,
+      "undergroundTickets": 2
+    }
+  }],
+  "gameRunning": false,
+  "mrx": {
+    "color": "#000000",
+    "history": [],
+    "isVisible": false,
+    "lastSeen": "never",
+    "name": "MrX",
+    "station": {
+      "blackStation": false,
+      "guiCoordinatesX": 1,
+      "guiCoordinatesY": 1,
+      "neighbourBuses": [],
+      "neighbourTaxis": [],
+      "neighbourUndergrounds": [],
+      "number": -1,
+      "stationType": "Taxi",
+      "tuiCoordinatesX": 1,
+      "tuiCoordinatesY": 1
+    },
+    "tickets": {
+      "blackTickets": 5,
+      "busTickets": 100,
+      "taxiTickets": 99,
+      "undergroundTickets": 99
+    }
+  },
+  "mrxVisibleRounds": [3, 8, 13, 18, 24],
+  "round": 1,
+  "stations": [],
+  "stuckPlayers": [],
+  "totalRound": 1,
+  "win": false,
+  "winningPlayerName": "DtX",
+  "winningRound": 24
 }

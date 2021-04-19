@@ -6,12 +6,13 @@ import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import play.api.libs.json.{JsArray, JsValue, Json}
-
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.io.Source
 import scala.swing.Point
+import spray.json._
+import de.htwg.se.scotlandyard.model.JsonProtocol._
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 
 class GameInitializer() extends GameInitializerInterface {
   val stationsJsonFilePath = "./resources/stations.json"
@@ -57,31 +58,8 @@ class GameInitializer() extends GameInitializerInterface {
   }
 
   private def initStations(stationsSource: String): Vector[Station] = {
-    val json = Json.parse(stationsSource)
-
-    val jsonStations = json.as[JsArray].value
-    val stationsBuffer = new ListBuffer[Station]()
-
-    stationsBuffer += Station(0, StationType.Taxi)
-
-    for(jsonStation <- jsonStations ) {
-      val stationType = StationType.fromString((jsonStation \ "type").as[String])
-      val station = Station(number = (jsonStation \ "number").as[Int],
-        blackStation = (jsonStation \ "blackStation").as[Boolean],
-        stationType = stationType,
-        tuiCoordinates = new Point((jsonStation \ "tuiCoordinates" \ "x").as[Int],
-          (jsonStation \ "tuiCoordinates" \ "y").as[Int]),
-        guiCoordinates = new Point((jsonStation \ "guiCoordinates" \ "x").as[Int],
-          (jsonStation \ "guiCoordinates" \ "y").as[Int]),
-        neighbourTaxis = (jsonStation \ "neighbours" \ "taxi").as[Set[Int]],
-        neighbourBuses = (jsonStation \ "neighbours" \ "bus").as[Set[Int]],
-        neighbourUndergrounds = (jsonStation \ "neighbours" \ "underground").as[Set[Int]])
-      println(station)
-      stationsBuffer += station
-    }
-
-
-    stationsBuffer.toVector.sortWith((s: Station, t: Station) => s.number < t.number)
+    val stations = stationsSource.parseJson.convertTo[Vector[Station]]
+    stations.sortWith((s: Station, t: Station) => s.number < t.number)
   }
 
   private def initPlayers(nPlayer: Int, stations: Vector[Station]): Vector[Player] = {

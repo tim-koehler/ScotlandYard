@@ -37,13 +37,13 @@ object Rest {
     val route = Route.seal(
       concat(
         post {
-          path("save") {
+          path("fileio" / "save") {
             entity(as[GameModel]) { gameModel =>
               complete(fileIoJson.save(gameModel).toString)
             }
           }
         },
-        path("load") {
+        path("fileio" / "load") {
           get {
             complete(fileIoJson.load("stations.json"))
           }
