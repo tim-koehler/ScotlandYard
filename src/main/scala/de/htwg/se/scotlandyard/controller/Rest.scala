@@ -8,8 +8,8 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import de.htwg.se.scotlandyard.model.TicketType
-import de.htwg.se.scotlandyard.model.JsonProtocol._
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX}
+import de.htwg.se.scotlandyard.model.JsonProtocol._
 
 import scala.io.{Source, StdIn}
 
@@ -49,7 +49,7 @@ object Rest {
           }
         },
         path("mrX") {
-          Directives.complete(controller.getMrX)
+          complete(controller.getMrX)
         },
         path("playersList") {
           complete(controller.getPlayersList())
