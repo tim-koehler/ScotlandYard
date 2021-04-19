@@ -156,13 +156,12 @@ object JsonProtocol extends DefaultJsonProtocol {
   implicit object GameModelJsonFormat extends RootJsonFormat[GameModel] {
     def write(gameModel: GameModel): JsObject = JsObject(
       "stations" -> gameModel.stations.toJson,
-      "mrx" -> gameModel.players.head.asInstanceOf[MrX].toJson,
-      "detectives" -> gameModel.getDetectives(gameModel.players).asInstanceOf[Vector[Detective]].toJson,
+      "players" -> gameModel.players.toJson,
       "round" -> JsNumber(gameModel.round),
       "totalRound" -> JsNumber(gameModel.totalRound),
       "win" -> JsBoolean(gameModel.win),
       "gameRunning" -> JsBoolean(gameModel.gameRunning),
-      "winningPlayerName" -> JsString(gameModel.winningPlayer.name),
+      "winningPlayer" -> gameModel.winningPlayer.toJson,
       "stuckPlayers" -> gameModel.stuckPlayers.toJson,
       "allPlayerStuck" -> JsBoolean(gameModel.allPlayerStuck),
       "winningRound" -> JsNumber(gameModel.WINNING_ROUND),
@@ -171,43 +170,35 @@ object JsonProtocol extends DefaultJsonProtocol {
     def read(value: JsValue): GameModel = {
       value.asJsObject.getFields(
         "stations",
-        "mrx",
-        "detectives",
+        "players",
         "round",
         "totalRound",
         "win",
         "gameRunning",
-        "winningPlayerName",
+        "winningPlayer",
         "stuckPlayers",
         "allPlayerStuck",
         "winningRound",
         "mrxVisibleRounds",
       ) match {
         case Seq(stations,
-        mrx,
-        detectives,
+        players,
         JsNumber(round),
         JsNumber(totalRound),
         JsBoolean(win),
         JsBoolean(gameRunning),
-        JsString(winningPlayerName),
+        winningPlayer,
         stuckPlayers,
         JsBoolean(allPlayerStuck),
         JsNumber(winningRound),
         mrxVisibleRounds) =>
-          val players: Vector[Player] = Vector(mrx.convertTo[MrX]).asInstanceOf[Vector[Player]] ++ detectives.convertTo[Vector[Detective]]
-          var winningPlayer: Option[Player] = None
-          val filteredWinningPlayer = players.filter(p => p.name == winningPlayerName)
-          if (filteredWinningPlayer.size == 1) {
-            winningPlayer = Some(filteredWinningPlayer.head)
-          }
           GameModel(
             stations.convertTo[Vector[Station]],
-            players = players, round.toInt,
+            players.convertTo[Vector[Player]], round.toInt,
             totalRound.toInt,
             win,
             gameRunning,
-            winningPlayer = winningPlayer.getOrElse(Detective()),
+            winningPlayer.convertTo[Player],
             stuckPlayers.convertTo[Set[Detective]],
             allPlayerStuck,
             WINNING_ROUND = winningRound.toInt,
