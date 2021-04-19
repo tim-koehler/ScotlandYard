@@ -1,8 +1,6 @@
 package de.htwg.se.scotlandyard.model
 
-import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
-import spray.json.DefaultJsonProtocol.listFormat
 import spray.json.{DefaultJsonProtocol, DeserializationException, JsArray, JsBoolean, JsNumber, JsObject, JsString, JsValue, RootJsonFormat, enrichAny}
 
 import java.awt.Color

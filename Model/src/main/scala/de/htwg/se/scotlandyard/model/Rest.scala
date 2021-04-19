@@ -8,13 +8,11 @@ import akka.http.scaladsl.server.Directives._
 
 import scala.io.StdIn
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
-import akka.event.Logging
 import JsonProtocol._
-import akka.http.scaladsl.model.StatusCodes.InternalServerError
+
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
-import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX}
-import spray.json.{JsNumber, JsValue, enrichAny}
+import spray.json.{enrichAny}
 
 import java.awt.Color
 import scala.swing.Point
@@ -31,8 +29,6 @@ object Rest {
   }
 
   def main(args: Array[String]): Unit = {
-
-    var gameModel = GameModel()
 
     implicit val system = ActorSystem(Behaviors.empty, "my-system")
     // needed for the future flatMap/onComplete in the end
@@ -51,102 +47,132 @@ object Rest {
       concat(
         // GET REQUESTS
         path("currentPlayer") {
-          val player = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
-          player match {
-            case x: MrX =>
-              complete(x)
-            case _ =>
-              complete(player.asInstanceOf[Detective])
+          entity(as[GameModel]) {
+            gameModel =>
+              val player = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+              player match {
+                case x: MrX =>
+                  complete(x)
+                case _ =>
+                  complete(player.asInstanceOf[Detective])
+              }
           }
         },
         path("previousPlayer") {
-          val player = gameModel.getPreviousPlayer(gameModel.players, gameModel.round)
-          player match {
-            case x: MrX =>
-              complete(x)
-            case _ =>
-              complete(player.asInstanceOf[Detective])
+          entity(as[GameModel]) {
+            gameModel =>
+              val player = gameModel.getPreviousPlayer(gameModel.players, gameModel.round)
+              player match {
+                case x: MrX =>
+                  complete(x)
+                case _ =>
+                  complete(player.asInstanceOf[Detective])
+              }
           }
         },
         path("getMrX") {
-          complete(gameModel.getMrX(gameModel.players))
+          entity(as[GameModel]) {
+            gameModel =>
+              complete(gameModel.getMrX(gameModel.players))
+          }
         },
         path("getDetectives") {
-          complete(gameModel.getDetectives(gameModel.players))
+          entity(as[GameModel]) {
+            gameModel =>
+              complete(gameModel.getDetectives(gameModel.players))
+          }
         },
         path("currentPlayerIndex") {
-          complete(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round).toJson)
+          entity(as[GameModel]) {
+            gameModel =>
+              complete(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round).toJson)
+          }
         },
         // POST REQUESTS (CHANGES THE STATE)
         post {
           path("startGame") {
-            complete(gameModel.startGame(gameModel))
+            entity(as[GameModel]) {
+              gameModel =>
+                complete(gameModel.startGame(gameModel))
+            }
           }
         },
         post {
           path("setAllPlayerStuck") {
-            complete(gameModel.setAllPlayersStuck(gameModel))
+            entity(as[GameModel]) {
+              gameModel =>
+                complete(gameModel.setAllPlayersStuck(gameModel))
+            }
           }
         },
         post {
           path("updateRound") {
-            entity(as[String]) {
-              functionType =>
-                if (functionType == "increase") {
-                  gameModel = gameModel.updateRound(gameModel, incrementValue)
-                  complete(gameModel)
-                } else if (functionType == "decrease") {
-                  gameModel = gameModel.updateRound(gameModel, decrementValue)
-                  complete(gameModel)
-                } else {
-                  complete(StatusCode.int2StatusCode(500))
-                }
+            parameters("functionType") { (functionType) => {
+              entity(as[GameModel]) {
+                gameModel =>
+                  if (functionType == "increase") {
+                    complete(gameModel.updateRound(gameModel, incrementValue))
+                  } else if (functionType == "decrease") {
+                    complete(gameModel.updateRound(gameModel, decrementValue))
+                  } else {
+                    complete(StatusCode.int2StatusCode(500))
+                  }
+              }
+            }
             }
           }
         },
+
         post {
-          path("increaseTickets") {
-            entity(as[String]) {
-              ticketType =>
-                gameModel = gameModel.updateTickets(gameModel, TicketType.parse(ticketType))(incrementValue)
-                complete(gameModel)
+          path("updateTickets") {
+            parameters("functionType", "ticketType") { (functionType, ticketType) => {
+              entity(as[GameModel]) {
+                gameModel =>
+                  if (functionType == "increase") {
+                    complete(gameModel.updateTickets(gameModel, TicketType.parse(ticketType))(incrementValue))
+                  } else if (functionType == "decrease") {
+                    complete(gameModel.updateTickets(gameModel, TicketType.parse(ticketType))(decrementValue))
+                  } else {
+                    complete(StatusCode.int2StatusCode(500))
+                  }
+              }
+            }
             }
           }
         },
-        post {
-          path("decreaseTickets") {
-            entity(as[String]) {
-              ticketType =>
-                gameModel = gameModel.updateTickets(gameModel, TicketType.parse(ticketType))(decrementValue)
-                complete(gameModel)
-            }
-          }
-        },
+
         post {
           path("updatePlayerPosition") {
-            entity(as[JsValue]) {
-              newPosition =>
-                gameModel = gameModel.updatePlayerPosition(gameModel, newPosition.convertTo[Int])
-                complete(gameModel)
+            parameters("newPosition") { (newPosition) => {
+              entity(as[GameModel]) {
+                gameModel =>
+                  complete(gameModel.updatePlayerPosition(gameModel, newPosition.toInt))
+              }
+            }
             }
           }
         },
         post {
           path("addStuckPlayer") {
-            entity(as[Detective]) {
-              detective =>
-                gameModel = gameModel.addStuckPlayer(gameModel, detective)
-                complete(gameModel)
+            parameters("stuckPlayerName") { (stuckPlayerName) => {
+              entity(as[GameModel]) {
+                gameModel =>
+                  val stuckPlayerFiltered = gameModel.players.filter(p => p.name == stuckPlayerName)
+                  complete(gameModel.addStuckPlayer(gameModel, stuckPlayerFiltered.head.asInstanceOf[Detective]))
+              }
+            }
             }
           }
         },
         post {
           path("winGame") {
-            entity(as[String]) {
-              winningPlayerName =>
-                val filteredWinningPlayers = gameModel.players.filter(p => p.name == winningPlayerName)
-                gameModel = gameModel.winGame(gameModel, filteredWinningPlayers.head.asInstanceOf[Detective])
-                complete(gameModel)
+            parameters("winningPlayerName") { (winningPlayerName) => {
+              entity(as[GameModel]) {
+                gameModel =>
+                  val filteredWinningPlayers = gameModel.players.filter(p => p.name == winningPlayerName)
+                  complete(gameModel.winGame(gameModel, filteredWinningPlayers.head.asInstanceOf[Detective]))
+              }
+            }
             }
           }
         },
