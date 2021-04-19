@@ -1,16 +1,17 @@
 package de.htwg.se.scotlandyard.aview.rest
 
+import akka.http.scaladsl.server.Directives.{complete, concat, parameters, path, post}
+import de.htwg.se.scotlandyard.ScotlandYard.{injector, stationsJsonFilePath}
+import de.htwg.se.scotlandyard.controller.ControllerInterface
+import de.htwg.se.scotlandyard.model.JsonProtocol.{DetectiveJsonFormat, GameModelJsonFormat, MrXJsonFormat, PlayerJsonFormat, StationJsonFormat}
+import de.htwg.se.scotlandyard.model.TicketType
+import de.htwg.se.scotlandyard.model.players.Player
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
-import akka.http.scaladsl.server.Directives.{complete, concat, parameters, path, post}
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
-import de.htwg.se.scotlandyard.ScotlandYard.{injector, stationsJsonFilePath}
-import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.JsonProtocol.{DetectiveJsonFormat, GameModelJsonFormat, MrXJsonFormat, StationJsonFormat}
-import de.htwg.se.scotlandyard.model.TicketType
-import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, vectorFormat}
 import spray.json.enrichAny
 
@@ -44,70 +45,57 @@ object Rest {
         // GET REQUESTS
 
         path("currentPlayer") {
-          val currentPlayer = controller.getCurrentPlayer
-          if (currentPlayer.isInstanceOf[MrX]) {
-            complete(HttpEntity(ContentTypes.`application/json`, controller.getCurrentPlayer.asInstanceOf[MrX].toJson.toString()))
-          } else {
-            complete(HttpEntity(ContentTypes.`application/json`, controller.getCurrentPlayer.asInstanceOf[Detective].toJson.toString()))
-          }
+          complete(controller.getCurrentPlayer)
         },
         path("load") {
-          complete(HttpEntity(ContentTypes.`application/json`, controller.load().toJson.toString()))
+          complete(controller.load())
         },
         path("save") {
-          complete(HttpEntity(ContentTypes.`application/json`, controller.save().toJson.toString()))
+          complete(controller.save().toJson)
         },
         path("mrX") {
-          complete(HttpEntity(ContentTypes.`application/json`, controller.getMrX.toJson.toString()))
+          complete(controller.getMrX)
         },
         path("detectives") {
-          complete(HttpEntity(ContentTypes.`application/json`, controller.getDetectives.toJson.toString()))
+          complete(controller.getDetectives)
         },
         path("stations") {
-          complete(HttpEntity(ContentTypes.`application/json`, controller.getStations().toJson.toString()))
+          complete(controller.getStations())
         },
         path("totalRound") {
-          complete(HttpEntity(ContentTypes.`application/json`, controller.getTotalRound().toJson.toString()))
+          complete(controller.getTotalRound().toJson)
         },
         path("win") {
-          complete(HttpEntity(ContentTypes.`application/json`, controller.getWin().toJson.toString()))
+          complete(controller.getWin().toJson)
         },
         path("gameRunning") {
-          complete(HttpEntity(ContentTypes.`application/json`, controller.getGameRunning().toJson.toString()))
+          complete(controller.getGameRunning().toJson)
         },
         path("winningPlayer") {
-          if (controller.getWinningPlayer().isInstanceOf[MrX]) {
-            complete(HttpEntity(ContentTypes.`application/json`, controller.getWinningPlayer().asInstanceOf[MrX].toJson.toString()))
-          } else {
-            complete(HttpEntity(ContentTypes.`application/json`, controller.getWinningPlayer().asInstanceOf[Detective].toJson.toString()))
-          }
+          complete(controller.getWinningPlayer())
         },
 
         // POST REQUESTS (CHANGES THE STATE)
         post {
           path("move") {
             parameters("newPosition", "ticketType") { (newPosition, ticketType) => {
-              complete(HttpEntity(ContentTypes.`application/json`, controller.move(newPosition.toInt, TicketType.parse(ticketType)).toJson.toString()))
+              complete(controller.move(newPosition.toInt, TicketType.parse(ticketType)))
             }
             }
           }
         },
         post {
           path("winGame") {
-            parameters("winningPlayerName") { (winningPlayerName) => {
-              var filteredWinningPlayer: Player = controller.getMrX
-              if (controller.getMrX.name != winningPlayerName) {
-                filteredWinningPlayer = controller.getDetectives.filter(p => p.name == winningPlayerName).head
-              }
-              complete(HttpEntity(ContentTypes.`application/json`, controller.winGame(filteredWinningPlayer).toJson.toString()))
-            }
+            entity(as[Player]) {
+              player =>
+                complete(controller.winGame(player).toJson)
             }
           }
         },
         post {
           path("initialize") {
             parameters("numberOfPlayer") { (numberOfPlayer) => {
-              complete(HttpEntity(ContentTypes.`application/json`, controller.initialize(numberOfPlayer.toInt).toJson.toString()))
+              complete(controller.initialize(numberOfPlayer.toInt))
             }
             }
           }

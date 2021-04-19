@@ -136,6 +136,23 @@ object JsonProtocol extends DefaultJsonProtocol {
     }
   }
 
+  implicit object PlayerJsonFormat extends RootJsonFormat[Player] {
+    def write(player: Player): JsValue = player match {
+      case mrx: MrX => mrx.toJson
+      case detective: Detective => detective.toJson
+    }
+
+    def read(playerJsonObj: JsValue): Player = playerJsonObj match {
+      case JsObject(fields) =>
+        fields.get("playerType") match {
+          case Some(JsString("mrx")) => playerJsonObj.convertTo[MrX]
+          case Some(JsString("detective")) => playerJsonObj.convertTo[Detective]
+          case playerType => throw DeserializationException("Unknown player type")
+        }
+      case _ => throw DeserializationException("Invalid Player Json")
+    }
+  }
+
   implicit object GameModelJsonFormat extends RootJsonFormat[GameModel] {
     def write(gameModel: GameModel): JsObject = JsObject(
       "stations" -> gameModel.stations.toJson,

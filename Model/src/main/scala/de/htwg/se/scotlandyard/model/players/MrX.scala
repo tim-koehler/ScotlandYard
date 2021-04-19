@@ -10,7 +10,7 @@ case class MrX(override val station: Station = Station(),
                override val color: Color = Color.BLACK,
                isVisible: Boolean = false,
                lastSeen: String = "never",
-               history: List[TicketType] = List()) extends Player(station,name,color,tickets)
+               history: List[TicketType] = List()) extends Player(station,name,color,tickets, playerType = Some(PlayerTypes.MRX))
 {
   val lastSeenColor: Color = Color.GRAY
 

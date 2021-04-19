@@ -38,7 +38,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def save(): Boolean = {
-    fileIO.save(gameModel, gameModel.getMrX(gameModel.players))
+    fileIO.save(gameModel)
   }
 
   private def checkDetectiveWin(): Boolean = {

@@ -33,7 +33,7 @@ class fileIoXmlSpec extends WordSpec with Matchers with PrivateMethodTester {
 
     "save" should {
       "return true" in {
-        fileIOJson.save(gameModel, gameModel.getMrX(gameModel.players)) should be(true)
+        fileIOJson.save(gameModel) should be(true)
       }
     }
   }

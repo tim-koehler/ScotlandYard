@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.model
 
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.players.PlayerTypes.PlayerTypes
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 
 import scala.collection.mutable
