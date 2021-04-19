@@ -10,5 +10,5 @@ case class Station(number: Integer = -1,
                    neighbourTaxis: Set[Int] = Set(),
                    neighbourBuses: Set[Int] = Set(),
                    neighbourUndergrounds: Set[Int] = Set(),
-                   tuiCoordinates: Point = new Point(1, 1),
-                   guiCoordinates: Point = new Point(1, 1))
+                   tuiCoordinates: Coordinate =  Coordinate(),
+                   guiCoordinates: Coordinate = Coordinate())

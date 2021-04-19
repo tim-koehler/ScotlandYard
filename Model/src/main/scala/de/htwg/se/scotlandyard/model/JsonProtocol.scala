@@ -25,6 +25,21 @@ object JsonProtocol extends DefaultJsonProtocol {
     }
   }
 
+  implicit object CoordinateJsonFormat extends RootJsonFormat[Coordinate] {
+    def write(coordinate: Coordinate): JsObject = JsObject(
+      "x" -> JsNumber(coordinate.x),
+      "y" -> JsNumber(coordinate.y)
+    )
+
+    def read(value: JsValue): Coordinate = {
+      value.asJsObject.getFields("x", "y") match {
+        case Seq(JsNumber(x), JsNumber(y)) =>
+          Coordinate(x.toInt, y.toInt)
+        case _ => throw DeserializationException("Coordinate expected")
+      }
+    }
+  }
+
   implicit object StationJsonFormat extends RootJsonFormat[Station] {
     def write(station: Station): JsObject = JsObject(
       "number" -> JsNumber(station.number),
@@ -70,8 +85,8 @@ object JsonProtocol extends DefaultJsonProtocol {
             neighbourTaxis.convertTo[Set[Int]],
             neighbourBuses.convertTo[Set[Int]],
             neighbourUndergrounds.convertTo[Set[Int]],
-            new Point(tuiCoordinatesX.toInt, tuiCoordinatesY.toInt),
-            new Point(guiCoordinatesX.toInt, guiCoordinatesY.toInt)
+            Coordinate(tuiCoordinatesX.toInt, tuiCoordinatesY.toInt),
+            Coordinate(guiCoordinatesX.toInt, guiCoordinatesY.toInt)
           )
         case _ => throw DeserializationException("Station expected")
       }
@@ -196,7 +211,8 @@ object JsonProtocol extends DefaultJsonProtocol {
         mrxVisibleRounds) =>
           GameModel(
             stations.convertTo[Vector[Station]],
-            players.convertTo[Vector[Player]], round.toInt,
+            players.convertTo[Vector[Player]],
+            round.toInt,
             totalRound.toInt,
             win,
             gameRunning,
