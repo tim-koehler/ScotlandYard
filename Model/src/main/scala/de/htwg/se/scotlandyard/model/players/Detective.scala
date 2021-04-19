@@ -11,7 +11,7 @@ case class Detective(override val station: Station = Station(),
 
   override def setPlayerName(player: Player, newName: String): Player = {
     val detective = player.asInstanceOf[Detective]
-    if (newName.length < 3) {
+    if (newName.length < 3 || newName.equals("MrX")) {
       detective
     } else if (newName.length > 25) {
       detective.copy(name = newName.substring(0, 25))

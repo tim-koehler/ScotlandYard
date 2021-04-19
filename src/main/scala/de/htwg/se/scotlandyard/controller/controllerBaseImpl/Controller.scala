@@ -92,7 +92,7 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
     this.gameModel.gameRunning
   }
 
-  def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
+  private def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
     if (!isTargetStationInBounds(newPosition)) return false
     if (currentPlayer.station.number == newPosition) return false

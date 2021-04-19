@@ -53,6 +53,15 @@ object Rest {
         path("save") {
           complete(controller.save().toJson)
         },
+        path("undo") {
+          complete(controller.undoMove())
+        },
+        path("redo") {
+          complete(controller.redoMove())
+        },
+        path("startGame") {
+          complete(controller.startGame().toJson)
+        },
         path("mrX") {
           complete(controller.getMrX)
         },
@@ -96,6 +105,22 @@ object Rest {
           path("initialize") {
             parameters("numberOfPlayer") { (numberOfPlayer) => {
               complete(controller.initialize(numberOfPlayer.toInt))
+            }
+            }
+          }
+        },
+        post {
+          path("setPlayerName") {
+            parameters("newName", "index") { (newName, index) => {
+              complete(controller.setPlayerName(newName, index.toInt).toJson)
+            }
+            }
+          }
+        },
+        post {
+          path("setPlayerColor") {
+            parameters("newColor", "index") { (newColor, index) => {
+              complete(controller.setPlayerName(newColor, index.toInt).toJson)
             }
             }
           }
