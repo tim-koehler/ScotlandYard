@@ -13,8 +13,8 @@ object ScotlandYard {
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
   def main(args: Array[String]): Unit = {
-    val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
-    controller.initializeStations(stationsSource)
+    //val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
+    //controller.initializeStations(stationsSource)
     controller.initialize(3)
     Rest.startRestService(controller)
     new Gui(controller)

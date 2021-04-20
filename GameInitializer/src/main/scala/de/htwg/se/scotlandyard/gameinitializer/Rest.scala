@@ -43,7 +43,7 @@ object Rest {
         path("initialize") {
           parameters("nPlayer") { (nPlayer) => {
             val stationsSource: String = Source.fromFile("./resources/stations.json").getLines.mkString
-            complete(gameInitializer.initialize(nPlayer.toInt, stationsSource))
+            complete(gameInitializer.initialize(nPlayer.toInt, stationsSource).toJson)
           }
           }
         }
@@ -51,7 +51,7 @@ object Rest {
     )
 
 
-    Http().newServerAt("localhost", 8080).bind(route)
+    Http().newServerAt("localhost", 8082).bind(route)
     println(s"Server online at http://localhost:8082/")
   }
 }

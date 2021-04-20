@@ -40,7 +40,7 @@ class Controller extends ControllerInterface with Publisher {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
-    val response = Await.result(Http().singleRequest(HttpRequest(uri = "http://localhost:8082/initialize/load?" + nPlayers)), 10.seconds)
+    val response = Await.result(Http().singleRequest(HttpRequest(uri = "http://localhost:8082/initialize?nPlayer=" + nPlayers)), 10.seconds)
     this.gameModel = Unmarshal(response).to[GameModel].value.get.get
     publish(new NumberOfPlayersChanged)
     this.gameModel
