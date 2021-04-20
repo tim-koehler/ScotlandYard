@@ -1,7 +1,6 @@
 package de.htwg.se.scotlandyard.fileio
 
 import de.htwg.se.scotlandyard.fileio.fileIOXmlImpl.FileIO
-import de.htwg.se.scotlandyard.gameinitializer.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX}
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
@@ -12,8 +11,7 @@ import scala.util.{Failure, Success, Try}
 
 class fileIoXmlSpec extends WordSpec with Matchers with PrivateMethodTester {
   "FileIOXml" when {
-    val gameInitializer = new GameInitializer()
-    val fileIOJson = new FileIO(gameInitializer)
+    val fileIOJson = new FileIO()
     val players = Vector(MrX(), Detective(name = "Dt1"), Detective(name = "Dt2"))
     val gameModel = GameModel(players = players)
 

@@ -1,7 +1,6 @@
 package de.htwg.se.scotlandyard.fileio
 
 import de.htwg.se.scotlandyard.fileio.fileIOJsonImpl.FileIO
-import de.htwg.se.scotlandyard.gameinitializer.gameInitializerMockImpl.GameInitializer
 import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX}
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
@@ -13,8 +12,7 @@ class fileIoJsonSpec extends WordSpec with Matchers with PrivateMethodTester {
 
   "FileIOJson" when {
 
-    val gameInitializer = new GameInitializer()
-    val fileIOJson = new FileIO(gameInitializer)
+    val fileIOJson = new FileIO()
     val players = Vector(MrX(), Detective(name = "Dt1"), Detective(name = "Dt2"))
     val gameModel = GameModel(players = players)
 

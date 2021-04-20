@@ -17,110 +17,105 @@
       "isVisible": false,
       "lastSeen": "never",
       "name": "MrX",
+      "playerType": "mrx",
       "station": {
         "blackStation": false,
-        "guiCoordinatesX": 1852,
-        "guiCoordinatesY": 984,
-        "neighbourBuses": [
-          86,
-          108,
-          127,
-          142
-        ],
+        "guiCoordinates": {
+          "x": 1400,
+          "y": 464
+        },
+        "neighbourBuses": [],
         "neighbourTaxis": [
-          104,
-          117,
-          118,
-          127
+          37,
+          38,
+          49
         ],
         "neighbourUndergrounds": [],
-        "number": 116,
-        "stationType": "Bus",
-        "tuiCoordinatesX": 194,
-        "tuiCoordinatesY": 105
+        "number": 50,
+        "stationType": "Taxi",
+        "tuiCoordinates": {
+          "x": 151,
+          "y": 57
+        }
       },
       "tickets": {
         "blackTickets": 4,
         "busTickets": 99,
         "taxiTickets": 99,
         "undergroundTickets": 99
-      },
-      "playerType": "mrx"
+      }
     },
     {
       "color": "#0000ff",
       "name": "Dt1",
+      "playerType": "detective",
       "station": {
         "blackStation": false,
-        "guiCoordinatesX": 1060,
-        "guiCoordinatesY": 975,
+        "guiCoordinates": {
+          "x": 1850,
+          "y": 812
+        },
         "neighbourBuses": [],
         "neighbourTaxis": [
-          99,
-          100,
-          111,
-          125
+          86,
+          116
         ],
         "neighbourUndergrounds": [],
-        "number": 112,
+        "number": 104,
         "stationType": "Taxi",
-        "tuiCoordinatesX": 112,
-        "tuiCoordinatesY": 106
+        "tuiCoordinates": {
+          "x": 193,
+          "y": 88
+        }
       },
       "tickets": {
         "blackTickets": 0,
         "busTickets": 8,
         "taxiTickets": 11,
         "undergroundTickets": 4
-      },
-      "playerType": "detective"
+      }
     },
     {
       "color": "#1c8c1c",
       "name": "Dt2",
+      "playerType": "detective",
       "station": {
         "blackStation": false,
-        "guiCoordinatesX": 844,
-        "guiCoordinatesY": 1240,
+        "guiCoordinates": {
+          "x": 1048,
+          "y": 1254
+        },
         "neighbourBuses": [],
         "neighbourTaxis": [
-          124,
-          150,
-          152
+          130,
+          140,
+          153,
+          154
         ],
         "neighbourUndergrounds": [],
-        "number": 138,
+        "number": 139,
         "stationType": "Taxi",
-        "tuiCoordinatesX": 91,
-        "tuiCoordinatesY": 144
+        "tuiCoordinates": {
+          "x": 111,
+          "y": 139
+        }
       },
       "tickets": {
         "blackTickets": 0,
         "busTickets": 8,
         "taxiTickets": 11,
         "undergroundTickets": 4
-      },
-      "playerType": "detective"
+      }
     }
   ],
   "round": 2,
   "stations": [
     {
       "blackStation": false,
-      "guiCoordinatesX": 1,
-      "guiCoordinatesY": 1,
-      "neighbourBuses": [],
-      "neighbourTaxis": [],
-      "neighbourUndergrounds": [],
-      "number": 0,
-      "stationType": "Taxi",
-      "tuiCoordinatesX": 1,
-      "tuiCoordinatesY": 1
-    },
-    {
-      "blackStation": false,
-      "guiCoordinatesX": 318,
-      "guiCoordinatesY": 78,
+      "guiCoordinates": {
+        "x": 318,
+        "y": 78
+      },
       "neighbourBuses": [
         46,
         58
@@ -134,13 +129,17 @@
       ],
       "number": 1,
       "stationType": "Underground",
-      "tuiCoordinatesX": 46,
-      "tuiCoordinatesY": 6
+      "tuiCoordinates": {
+        "x": 46,
+        "y": 6
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 782,
-      "guiCoordinatesY": 42,
+      "guiCoordinates": {
+        "x": 782,
+        "y": 42
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         20,
@@ -149,13 +148,17 @@
       "neighbourUndergrounds": [],
       "number": 2,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 81,
-      "tuiCoordinatesY": 7
+      "tuiCoordinates": {
+        "x": 81,
+        "y": 7
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1082,
-      "guiCoordinatesY": 48,
+      "guiCoordinates": {
+        "x": 1082,
+        "y": 48
+      },
       "neighbourBuses": [
         23,
         22
@@ -168,13 +171,17 @@
       "neighbourUndergrounds": [],
       "number": 3,
       "stationType": "Bus",
-      "tuiCoordinatesX": 123,
-      "tuiCoordinatesY": 6
+      "tuiCoordinates": {
+        "x": 123,
+        "y": 6
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1268,
-      "guiCoordinatesY": 36,
+      "guiCoordinates": {
+        "x": 1268,
+        "y": 36
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         3,
@@ -183,13 +190,17 @@
       "neighbourUndergrounds": [],
       "number": 4,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 140,
-      "tuiCoordinatesY": 11
+      "tuiCoordinates": {
+        "x": 140,
+        "y": 11
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1996,
-      "guiCoordinatesY": 58,
+      "guiCoordinates": {
+        "x": 1996,
+        "y": 58
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         15,
@@ -198,13 +209,17 @@
       "neighbourUndergrounds": [],
       "number": 5,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 214,
-      "tuiCoordinatesY": 5
+      "tuiCoordinates": {
+        "x": 214,
+        "y": 5
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2224,
-      "guiCoordinatesY": 58,
+      "guiCoordinates": {
+        "x": 2224,
+        "y": 58
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         29,
@@ -213,13 +228,17 @@
       "neighbourUndergrounds": [],
       "number": 6,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 238,
-      "tuiCoordinatesY": 8
+      "tuiCoordinates": {
+        "x": 238,
+        "y": 8
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2444,
-      "guiCoordinatesY": 74,
+      "guiCoordinates": {
+        "x": 2444,
+        "y": 74
+      },
       "neighbourBuses": [
         42
       ],
@@ -230,13 +249,17 @@
       "neighbourUndergrounds": [],
       "number": 7,
       "stationType": "Bus",
-      "tuiCoordinatesX": 259,
-      "tuiCoordinatesY": 11
+      "tuiCoordinates": {
+        "x": 259,
+        "y": 11
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 212,
-      "guiCoordinatesY": 186,
+      "guiCoordinates": {
+        "x": 212,
+        "y": 186
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         1,
@@ -246,13 +269,17 @@
       "neighbourUndergrounds": [],
       "number": 8,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 31,
-      "tuiCoordinatesY": 13
+      "tuiCoordinates": {
+        "x": 31,
+        "y": 13
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 402,
-      "guiCoordinatesY": 190,
+      "guiCoordinates": {
+        "x": 402,
+        "y": 190
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         1,
@@ -262,13 +289,17 @@
       "neighbourUndergrounds": [],
       "number": 9,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 53,
-      "tuiCoordinatesY": 14
+      "tuiCoordinates": {
+        "x": 53,
+        "y": 14
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 934,
-      "guiCoordinatesY": 176,
+      "guiCoordinates": {
+        "x": 934,
+        "y": 176
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         2,
@@ -279,13 +310,17 @@
       "neighbourUndergrounds": [],
       "number": 10,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 97,
-      "tuiCoordinatesY": 14
+      "tuiCoordinates": {
+        "x": 97,
+        "y": 14
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1072,
-      "guiCoordinatesY": 200,
+      "guiCoordinates": {
+        "x": 1072,
+        "y": 200
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         3,
@@ -295,13 +330,17 @@
       "neighbourUndergrounds": [],
       "number": 11,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 114,
-      "tuiCoordinatesY": 17
+      "tuiCoordinates": {
+        "x": 114,
+        "y": 17
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1186,
-      "guiCoordinatesY": 176,
+      "guiCoordinates": {
+        "x": 1186,
+        "y": 176
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         3,
@@ -310,13 +349,17 @@
       "neighbourUndergrounds": [],
       "number": 12,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 130,
-      "tuiCoordinatesY": 19
+      "tuiCoordinates": {
+        "x": 130,
+        "y": 19
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1398,
-      "guiCoordinatesY": 170,
+      "guiCoordinates": {
+        "x": 1398,
+        "y": 170
+      },
       "neighbourBuses": [
         23,
         14,
@@ -334,13 +377,17 @@
       ],
       "number": 13,
       "stationType": "Underground",
-      "tuiCoordinatesX": 154,
-      "tuiCoordinatesY": 18
+      "tuiCoordinates": {
+        "x": 154,
+        "y": 18
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1614,
-      "guiCoordinatesY": 124,
+      "guiCoordinates": {
+        "x": 1614,
+        "y": 124
+      },
       "neighbourBuses": [
         13,
         15
@@ -353,13 +400,17 @@
       "neighbourUndergrounds": [],
       "number": 14,
       "stationType": "Bus",
-      "tuiCoordinatesX": 171,
-      "tuiCoordinatesY": 15
+      "tuiCoordinates": {
+        "x": 171,
+        "y": 15
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1832,
-      "guiCoordinatesY": 104,
+      "guiCoordinates": {
+        "x": 1832,
+        "y": 104
+      },
       "neighbourBuses": [
         14,
         41,
@@ -375,13 +426,17 @@
       "neighbourUndergrounds": [],
       "number": 15,
       "stationType": "Bus",
-      "tuiCoordinatesX": 194,
-      "tuiCoordinatesY": 13
+      "tuiCoordinates": {
+        "x": 194,
+        "y": 13
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2040,
-      "guiCoordinatesY": 182,
+      "guiCoordinates": {
+        "x": 2040,
+        "y": 182
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         5,
@@ -392,13 +447,17 @@
       "neighbourUndergrounds": [],
       "number": 16,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 219,
-      "tuiCoordinatesY": 16
+      "tuiCoordinates": {
+        "x": 219,
+        "y": 16
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2428,
-      "guiCoordinatesY": 250,
+      "guiCoordinates": {
+        "x": 2428,
+        "y": 250
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         7,
@@ -408,13 +467,17 @@
       "neighbourUndergrounds": [],
       "number": 17,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 256,
-      "tuiCoordinatesY": 27
+      "tuiCoordinates": {
+        "x": 256,
+        "y": 27
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 110,
-      "guiCoordinatesY": 268,
+      "guiCoordinates": {
+        "x": 110,
+        "y": 268
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         8,
@@ -424,13 +487,17 @@
       "neighbourUndergrounds": [],
       "number": 18,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 18,
-      "tuiCoordinatesY": 20
+      "tuiCoordinates": {
+        "x": 18,
+        "y": 20
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 288,
-      "guiCoordinatesY": 290,
+      "guiCoordinates": {
+        "x": 288,
+        "y": 290
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         8,
@@ -440,13 +507,17 @@
       "neighbourUndergrounds": [],
       "number": 19,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 38,
-      "tuiCoordinatesY": 21
+      "tuiCoordinates": {
+        "x": 38,
+        "y": 21
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 500,
-      "guiCoordinatesY": 236,
+      "guiCoordinates": {
+        "x": 500,
+        "y": 236
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         2,
@@ -456,13 +527,17 @@
       "neighbourUndergrounds": [],
       "number": 20,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 66,
-      "tuiCoordinatesY": 19
+      "tuiCoordinates": {
+        "x": 66,
+        "y": 19
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 724,
-      "guiCoordinatesY": 326,
+      "guiCoordinates": {
+        "x": 724,
+        "y": 326
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         10,
@@ -471,13 +546,17 @@
       "neighbourUndergrounds": [],
       "number": 21,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 84,
-      "tuiCoordinatesY": 24
+      "tuiCoordinates": {
+        "x": 84,
+        "y": 24
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1082,
-      "guiCoordinatesY": 360,
+      "guiCoordinates": {
+        "x": 1082,
+        "y": 360
+      },
       "neighbourBuses": [
         3,
         23,
@@ -493,13 +572,17 @@
       "neighbourUndergrounds": [],
       "number": 22,
       "stationType": "Bus",
-      "tuiCoordinatesX": 115,
-      "tuiCoordinatesY": 30
+      "tuiCoordinates": {
+        "x": 115,
+        "y": 30
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1252,
-      "guiCoordinatesY": 270,
+      "guiCoordinates": {
+        "x": 1252,
+        "y": 270
+      },
       "neighbourBuses": [
         3,
         13,
@@ -515,13 +598,17 @@
       "neighbourUndergrounds": [],
       "number": 23,
       "stationType": "Bus",
-      "tuiCoordinatesX": 136,
-      "tuiCoordinatesY": 26
+      "tuiCoordinates": {
+        "x": 136,
+        "y": 26
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1522,
-      "guiCoordinatesY": 282,
+      "guiCoordinates": {
+        "x": 1522,
+        "y": 282
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         37,
@@ -530,13 +617,17 @@
       "neighbourUndergrounds": [],
       "number": 24,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 157,
-      "tuiCoordinatesY": 35
+      "tuiCoordinates": {
+        "x": 157,
+        "y": 35
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1640,
-      "guiCoordinatesY": 310,
+      "guiCoordinates": {
+        "x": 1640,
+        "y": 310
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         14,
@@ -546,13 +637,17 @@
       "neighbourUndergrounds": [],
       "number": 25,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 173,
-      "tuiCoordinatesY": 37
+      "tuiCoordinates": {
+        "x": 173,
+        "y": 37
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1814,
-      "guiCoordinatesY": 178,
+      "guiCoordinates": {
+        "x": 1814,
+        "y": 178
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         15,
@@ -562,13 +657,17 @@
       "neighbourUndergrounds": [],
       "number": 26,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 191,
-      "tuiCoordinatesY": 23
+      "tuiCoordinates": {
+        "x": 191,
+        "y": 23
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1846,
-      "guiCoordinatesY": 282,
+      "guiCoordinates": {
+        "x": 1846,
+        "y": 282
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         26,
@@ -578,13 +677,17 @@
       "neighbourUndergrounds": [],
       "number": 27,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 196,
-      "tuiCoordinatesY": 37
+      "tuiCoordinates": {
+        "x": 196,
+        "y": 37
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1924,
-      "guiCoordinatesY": 242,
+      "guiCoordinates": {
+        "x": 1924,
+        "y": 242
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         15,
@@ -595,13 +698,17 @@
       "neighbourUndergrounds": [],
       "number": 28,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 207,
-      "tuiCoordinatesY": 31
+      "tuiCoordinates": {
+        "x": 207,
+        "y": 31
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2220,
-      "guiCoordinatesY": 304,
+      "guiCoordinates": {
+        "x": 2220,
+        "y": 304
+      },
       "neighbourBuses": [
         15,
         41,
@@ -618,13 +725,17 @@
       "neighbourUndergrounds": [],
       "number": 29,
       "stationType": "Bus",
-      "tuiCoordinatesX": 236,
-      "tuiCoordinatesY": 30
+      "tuiCoordinates": {
+        "x": 236,
+        "y": 30
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2506,
-      "guiCoordinatesY": 290,
+      "guiCoordinates": {
+        "x": 2506,
+        "y": 290
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         17,
@@ -633,13 +744,17 @@
       "neighbourUndergrounds": [],
       "number": 30,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 269,
-      "tuiCoordinatesY": 32
+      "tuiCoordinates": {
+        "x": 269,
+        "y": 32
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 188,
-      "guiCoordinatesY": 350,
+      "guiCoordinates": {
+        "x": 188,
+        "y": 350
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         18,
@@ -649,13 +764,17 @@
       "neighbourUndergrounds": [],
       "number": 31,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 26,
-      "tuiCoordinatesY": 28
+      "tuiCoordinates": {
+        "x": 26,
+        "y": 28
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 440,
-      "guiCoordinatesY": 410,
+      "guiCoordinates": {
+        "x": 440,
+        "y": 410
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         19,
@@ -666,13 +785,17 @@
       "neighbourUndergrounds": [],
       "number": 32,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 49,
-      "tuiCoordinatesY": 33
+      "tuiCoordinates": {
+        "x": 49,
+        "y": 33
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 626,
-      "guiCoordinatesY": 378,
+      "guiCoordinates": {
+        "x": 626,
+        "y": 378
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         20,
@@ -683,13 +806,17 @@
       "neighbourUndergrounds": [],
       "number": 33,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 72,
-      "tuiCoordinatesY": 30
+      "tuiCoordinates": {
+        "x": 72,
+        "y": 30
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 948,
-      "guiCoordinatesY": 410,
+      "guiCoordinates": {
+        "x": 948,
+        "y": 410
+      },
       "neighbourBuses": [
         22,
         46,
@@ -704,13 +831,17 @@
       "neighbourUndergrounds": [],
       "number": 34,
       "stationType": "Bus",
-      "tuiCoordinatesX": 99,
-      "tuiCoordinatesY": 33
+      "tuiCoordinates": {
+        "x": 99,
+        "y": 33
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1134,
-      "guiCoordinatesY": 458,
+      "guiCoordinates": {
+        "x": 1134,
+        "y": 458
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         22,
@@ -721,13 +852,17 @@
       "neighbourUndergrounds": [],
       "number": 35,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 119,
-      "tuiCoordinatesY": 43
+      "tuiCoordinates": {
+        "x": 119,
+        "y": 43
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1212,
-      "guiCoordinatesY": 468,
+      "guiCoordinates": {
+        "x": 1212,
+        "y": 468
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         35,
@@ -737,13 +872,17 @@
       "neighbourUndergrounds": [],
       "number": 36,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 131,
-      "tuiCoordinatesY": 52
+      "tuiCoordinates": {
+        "x": 131,
+        "y": 52
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1326,
-      "guiCoordinatesY": 368,
+      "guiCoordinates": {
+        "x": 1326,
+        "y": 368
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         23,
@@ -754,13 +893,17 @@
       "neighbourUndergrounds": [],
       "number": 37,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 145,
-      "tuiCoordinatesY": 44
+      "tuiCoordinates": {
+        "x": 145,
+        "y": 44
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1578,
-      "guiCoordinatesY": 376,
+      "guiCoordinates": {
+        "x": 1578,
+        "y": 376
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         24,
@@ -771,13 +914,17 @@
       "neighbourUndergrounds": [],
       "number": 38,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 163,
-      "tuiCoordinatesY": 45
+      "tuiCoordinates": {
+        "x": 163,
+        "y": 45
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1692,
-      "guiCoordinatesY": 358,
+      "guiCoordinates": {
+        "x": 1692,
+        "y": 358
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         25,
@@ -788,13 +935,17 @@
       "neighbourUndergrounds": [],
       "number": 39,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 181,
-      "tuiCoordinatesY": 46
+      "tuiCoordinates": {
+        "x": 181,
+        "y": 46
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1892,
-      "guiCoordinatesY": 440,
+      "guiCoordinates": {
+        "x": 1892,
+        "y": 440
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         27,
@@ -805,13 +956,17 @@
       "neighbourUndergrounds": [],
       "number": 40,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 198,
-      "tuiCoordinatesY": 48
+      "tuiCoordinates": {
+        "x": 198,
+        "y": 48
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1976,
-      "guiCoordinatesY": 404,
+      "guiCoordinates": {
+        "x": 1976,
+        "y": 404
+      },
       "neighbourBuses": [
         15,
         29,
@@ -827,13 +982,17 @@
       "neighbourUndergrounds": [],
       "number": 41,
       "stationType": "Bus",
-      "tuiCoordinatesX": 214,
-      "tuiCoordinatesY": 41
+      "tuiCoordinates": {
+        "x": 214,
+        "y": 41
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2434,
-      "guiCoordinatesY": 406,
+      "guiCoordinates": {
+        "x": 2434,
+        "y": 406
+      },
       "neighbourBuses": [
         7,
         29,
@@ -848,13 +1007,17 @@
       "neighbourUndergrounds": [],
       "number": 42,
       "stationType": "Bus",
-      "tuiCoordinatesX": 260,
-      "tuiCoordinatesY": 46
+      "tuiCoordinates": {
+        "x": 260,
+        "y": 46
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 68,
-      "guiCoordinatesY": 444,
+      "guiCoordinates": {
+        "x": 68,
+        "y": 444
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         18,
@@ -864,13 +1027,17 @@
       "neighbourUndergrounds": [],
       "number": 43,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 9,
-      "tuiCoordinatesY": 32
+      "tuiCoordinates": {
+        "x": 9,
+        "y": 32
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 320,
-      "guiCoordinatesY": 496,
+      "guiCoordinates": {
+        "x": 320,
+        "y": 496
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         31,
@@ -880,13 +1047,17 @@
       "neighbourUndergrounds": [],
       "number": 44,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 34,
-      "tuiCoordinatesY": 42
+      "tuiCoordinates": {
+        "x": 34,
+        "y": 42
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 506,
-      "guiCoordinatesY": 526,
+      "guiCoordinates": {
+        "x": 506,
+        "y": 526
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         46,
@@ -898,13 +1069,17 @@
       "neighbourUndergrounds": [],
       "number": 45,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 56,
-      "tuiCoordinatesY": 44
+      "tuiCoordinates": {
+        "x": 56,
+        "y": 44
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 660,
-      "guiCoordinatesY": 480,
+      "guiCoordinates": {
+        "x": 660,
+        "y": 480
+      },
       "neighbourBuses": [
         1,
         34,
@@ -925,13 +1100,17 @@
       ],
       "number": 46,
       "stationType": "Underground",
-      "tuiCoordinatesX": 76,
-      "tuiCoordinatesY": 41
+      "tuiCoordinates": {
+        "x": 76,
+        "y": 41
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 782,
-      "guiCoordinatesY": 444,
+      "guiCoordinates": {
+        "x": 782,
+        "y": 444
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         34,
@@ -941,13 +1120,17 @@
       "neighbourUndergrounds": [],
       "number": 47,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 89,
-      "tuiCoordinatesY": 39
+      "tuiCoordinates": {
+        "x": 89,
+        "y": 39
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 982,
-      "guiCoordinatesY": 536,
+      "guiCoordinates": {
+        "x": 982,
+        "y": 536
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         34,
@@ -958,13 +1141,17 @@
       "neighbourUndergrounds": [],
       "number": 48,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 101,
-      "tuiCoordinatesY": 56
+      "tuiCoordinates": {
+        "x": 101,
+        "y": 56
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1278,
-      "guiCoordinatesY": 542,
+      "guiCoordinates": {
+        "x": 1278,
+        "y": 542
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         36,
@@ -974,13 +1161,17 @@
       "neighbourUndergrounds": [],
       "number": 49,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 137,
-      "tuiCoordinatesY": 61
+      "tuiCoordinates": {
+        "x": 137,
+        "y": 61
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1400,
-      "guiCoordinatesY": 464,
+      "guiCoordinates": {
+        "x": 1400,
+        "y": 464
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         37,
@@ -990,13 +1181,17 @@
       "neighbourUndergrounds": [],
       "number": 50,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 151,
-      "tuiCoordinatesY": 57
+      "tuiCoordinates": {
+        "x": 151,
+        "y": 57
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1648,
-      "guiCoordinatesY": 488,
+      "guiCoordinates": {
+        "x": 1648,
+        "y": 488
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         52,
@@ -1008,13 +1203,17 @@
       "neighbourUndergrounds": [],
       "number": 51,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 170,
-      "tuiCoordinatesY": 56
+      "tuiCoordinates": {
+        "x": 170,
+        "y": 56
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1774,
-      "guiCoordinatesY": 456,
+      "guiCoordinates": {
+        "x": 1774,
+        "y": 456
+      },
       "neighbourBuses": [
         13,
         41,
@@ -1030,13 +1229,17 @@
       "neighbourUndergrounds": [],
       "number": 52,
       "stationType": "Bus",
-      "tuiCoordinatesX": 187,
-      "tuiCoordinatesY": 53
+      "tuiCoordinates": {
+        "x": 187,
+        "y": 53
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1912,
-      "guiCoordinatesY": 534,
+      "guiCoordinates": {
+        "x": 1912,
+        "y": 534
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         40,
@@ -1046,13 +1249,17 @@
       "neighbourUndergrounds": [],
       "number": 53,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 203,
-      "tuiCoordinatesY": 57
+      "tuiCoordinates": {
+        "x": 203,
+        "y": 57
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2008,
-      "guiCoordinatesY": 502,
+      "guiCoordinates": {
+        "x": 2008,
+        "y": 502
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         41,
@@ -1063,13 +1270,17 @@
       "neighbourUndergrounds": [],
       "number": 54,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 214,
-      "tuiCoordinatesY": 49
+      "tuiCoordinates": {
+        "x": 214,
+        "y": 49
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2228,
-      "guiCoordinatesY": 498,
+      "guiCoordinates": {
+        "x": 2228,
+        "y": 498
+      },
       "neighbourBuses": [
         29,
         89
@@ -1081,13 +1292,17 @@
       "neighbourUndergrounds": [],
       "number": 55,
       "stationType": "Bus",
-      "tuiCoordinatesX": 236,
-      "tuiCoordinatesY": 45
+      "tuiCoordinates": {
+        "x": 236,
+        "y": 45
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2516,
-      "guiCoordinatesY": 526,
+      "guiCoordinates": {
+        "x": 2516,
+        "y": 526
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         42,
@@ -1096,13 +1311,17 @@
       "neighbourUndergrounds": [],
       "number": 56,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 276,
-      "tuiCoordinatesY": 60
+      "tuiCoordinates": {
+        "x": 276,
+        "y": 60
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 152,
-      "guiCoordinatesY": 542,
+      "guiCoordinates": {
+        "x": 152,
+        "y": 542
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         43,
@@ -1112,13 +1331,17 @@
       "neighbourUndergrounds": [],
       "number": 57,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 16,
-      "tuiCoordinatesY": 47
+      "tuiCoordinates": {
+        "x": 16,
+        "y": 47
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 396,
-      "guiCoordinatesY": 570,
+      "guiCoordinates": {
+        "x": 396,
+        "y": 570
+      },
       "neighbourBuses": [
         1,
         46,
@@ -1135,13 +1358,17 @@
       "neighbourUndergrounds": [],
       "number": 58,
       "stationType": "Bus",
-      "tuiCoordinatesX": 41,
-      "tuiCoordinatesY": 51
+      "tuiCoordinates": {
+        "x": 41,
+        "y": 51
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 442,
-      "guiCoordinatesY": 628,
+      "guiCoordinates": {
+        "x": 442,
+        "y": 628
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         45,
@@ -1152,13 +1379,17 @@
       "neighbourUndergrounds": [],
       "number": 59,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 51,
-      "tuiCoordinatesY": 61
+      "tuiCoordinates": {
+        "x": 51,
+        "y": 61
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 538,
-      "guiCoordinatesY": 614,
+      "guiCoordinates": {
+        "x": 538,
+        "y": 614
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         45,
@@ -1168,13 +1399,17 @@
       "neighbourUndergrounds": [],
       "number": 60,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 64,
-      "tuiCoordinatesY": 59
+      "tuiCoordinates": {
+        "x": 64,
+        "y": 59
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 706,
-      "guiCoordinatesY": 638,
+      "guiCoordinates": {
+        "x": 706,
+        "y": 638
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         60,
@@ -1186,13 +1421,17 @@
       "neighbourUndergrounds": [],
       "number": 61,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 79,
-      "tuiCoordinatesY": 62
+      "tuiCoordinates": {
+        "x": 79,
+        "y": 62
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 792,
-      "guiCoordinatesY": 610,
+      "guiCoordinates": {
+        "x": 792,
+        "y": 610
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         47,
@@ -1203,13 +1442,17 @@
       "neighbourUndergrounds": [],
       "number": 62,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 89,
-      "tuiCoordinatesY": 59
+      "tuiCoordinates": {
+        "x": 89,
+        "y": 59
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1004,
-      "guiCoordinatesY": 716,
+      "guiCoordinates": {
+        "x": 1004,
+        "y": 716
+      },
       "neighbourBuses": [
         34,
         65,
@@ -1225,13 +1468,17 @@
       "neighbourUndergrounds": [],
       "number": 63,
       "stationType": "Bus",
-      "tuiCoordinatesX": 104,
-      "tuiCoordinatesY": 76
+      "tuiCoordinates": {
+        "x": 104,
+        "y": 76
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1132,
-      "guiCoordinatesY": 690,
+      "guiCoordinates": {
+        "x": 1132,
+        "y": 690
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         63,
@@ -1241,13 +1488,17 @@
       "neighbourUndergrounds": [],
       "number": 64,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 118,
-      "tuiCoordinatesY": 74
+      "tuiCoordinates": {
+        "x": 118,
+        "y": 74
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1264,
-      "guiCoordinatesY": 666,
+      "guiCoordinates": {
+        "x": 1264,
+        "y": 666
+      },
       "neighbourBuses": [
         22,
         63,
@@ -1263,13 +1514,17 @@
       "neighbourUndergrounds": [],
       "number": 65,
       "stationType": "Bus",
-      "tuiCoordinatesX": 132,
-      "tuiCoordinatesY": 72
+      "tuiCoordinates": {
+        "x": 132,
+        "y": 72
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1344,
-      "guiCoordinatesY": 648,
+      "guiCoordinates": {
+        "x": 1344,
+        "y": 648
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         49,
@@ -1280,13 +1535,17 @@
       "neighbourUndergrounds": [],
       "number": 66,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 141,
-      "tuiCoordinatesY": 71
+      "tuiCoordinates": {
+        "x": 141,
+        "y": 71
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1492,
-      "guiCoordinatesY": 622,
+      "guiCoordinates": {
+        "x": 1492,
+        "y": 622
+      },
       "neighbourBuses": [
         52,
         102,
@@ -1308,13 +1567,17 @@
       ],
       "number": 67,
       "stationType": "Underground",
-      "tuiCoordinatesX": 157,
-      "tuiCoordinatesY": 69
+      "tuiCoordinates": {
+        "x": 157,
+        "y": 69
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1666,
-      "guiCoordinatesY": 586,
+      "guiCoordinates": {
+        "x": 1666,
+        "y": 586
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         51,
@@ -1325,13 +1588,17 @@
       "neighbourUndergrounds": [],
       "number": 68,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 179,
-      "tuiCoordinatesY": 66
+      "tuiCoordinates": {
+        "x": 179,
+        "y": 66
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1826,
-      "guiCoordinatesY": 574,
+      "guiCoordinates": {
+        "x": 1826,
+        "y": 574
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         52,
@@ -1342,13 +1609,17 @@
       "neighbourUndergrounds": [],
       "number": 69,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 193,
-      "tuiCoordinatesY": 63
+      "tuiCoordinates": {
+        "x": 193,
+        "y": 63
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2016,
-      "guiCoordinatesY": 606,
+      "guiCoordinates": {
+        "x": 2016,
+        "y": 606
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         54,
@@ -1358,13 +1629,17 @@
       "neighbourUndergrounds": [],
       "number": 70,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 214,
-      "tuiCoordinatesY": 61
+      "tuiCoordinates": {
+        "x": 214,
+        "y": 61
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2198,
-      "guiCoordinatesY": 608,
+      "guiCoordinates": {
+        "x": 2198,
+        "y": 608
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         55,
@@ -1375,13 +1650,17 @@
       "neighbourUndergrounds": [],
       "number": 71,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 235,
-      "tuiCoordinatesY": 61
+      "tuiCoordinates": {
+        "x": 235,
+        "y": 61
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2384,
-      "guiCoordinatesY": 628,
+      "guiCoordinates": {
+        "x": 2384,
+        "y": 628
+      },
       "neighbourBuses": [
         42,
         105,
@@ -1396,13 +1675,17 @@
       "neighbourUndergrounds": [],
       "number": 72,
       "stationType": "Bus",
-      "tuiCoordinatesX": 260,
-      "tuiCoordinatesY": 64
+      "tuiCoordinates": {
+        "x": 260,
+        "y": 64
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 150,
-      "guiCoordinatesY": 642,
+      "guiCoordinates": {
+        "x": 150,
+        "y": 642
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         57,
@@ -1412,13 +1695,17 @@
       "neighbourUndergrounds": [],
       "number": 73,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 12,
-      "tuiCoordinatesY": 59
+      "tuiCoordinates": {
+        "x": 12,
+        "y": 59
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 232,
-      "guiCoordinatesY": 740,
+      "guiCoordinates": {
+        "x": 232,
+        "y": 740
+      },
       "neighbourBuses": [
         58,
         94
@@ -1434,13 +1721,17 @@
       ],
       "number": 74,
       "stationType": "Underground",
-      "tuiCoordinatesX": 24,
-      "tuiCoordinatesY": 73
+      "tuiCoordinates": {
+        "x": 24,
+        "y": 73
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 356,
-      "guiCoordinatesY": 704,
+      "guiCoordinates": {
+        "x": 356,
+        "y": 704
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         59,
@@ -1450,13 +1741,17 @@
       "neighbourUndergrounds": [],
       "number": 75,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 41,
-      "tuiCoordinatesY": 68
+      "tuiCoordinates": {
+        "x": 41,
+        "y": 68
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 510,
-      "guiCoordinatesY": 704,
+      "guiCoordinates": {
+        "x": 510,
+        "y": 704
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         59,
@@ -1467,13 +1762,17 @@
       "neighbourUndergrounds": [],
       "number": 76,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 58,
-      "tuiCoordinatesY": 71
+      "tuiCoordinates": {
+        "x": 58,
+        "y": 71
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 610,
-      "guiCoordinatesY": 790,
+      "guiCoordinates": {
+        "x": 610,
+        "y": 790
+      },
       "neighbourBuses": [
         58,
         78,
@@ -1489,13 +1788,17 @@
       "neighbourUndergrounds": [],
       "number": 77,
       "stationType": "Bus",
-      "tuiCoordinatesX": 67,
-      "tuiCoordinatesY": 81
+      "tuiCoordinates": {
+        "x": 67,
+        "y": 81
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 742,
-      "guiCoordinatesY": 766,
+      "guiCoordinates": {
+        "x": 742,
+        "y": 766
+      },
       "neighbourBuses": [
         46,
         77,
@@ -1510,13 +1813,17 @@
       "neighbourUndergrounds": [],
       "number": 78,
       "stationType": "Bus",
-      "tuiCoordinatesX": 82,
-      "tuiCoordinatesY": 80
+      "tuiCoordinates": {
+        "x": 82,
+        "y": 80
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 832,
-      "guiCoordinatesY": 750,
+      "guiCoordinates": {
+        "x": 832,
+        "y": 750
+      },
       "neighbourBuses": [
         63,
         78
@@ -1535,13 +1842,17 @@
       ],
       "number": 79,
       "stationType": "Underground",
-      "tuiCoordinatesX": 93,
-      "tuiCoordinatesY": 79
+      "tuiCoordinates": {
+        "x": 93,
+        "y": 79
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1038,
-      "guiCoordinatesY": 792,
+      "guiCoordinates": {
+        "x": 1038,
+        "y": 792
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         63,
@@ -1551,13 +1862,17 @@
       "neighbourUndergrounds": [],
       "number": 80,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 109,
-      "tuiCoordinatesY": 84
+      "tuiCoordinates": {
+        "x": 109,
+        "y": 84
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1224,
-      "guiCoordinatesY": 820,
+      "guiCoordinates": {
+        "x": 1224,
+        "y": 820
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         64,
@@ -1567,13 +1882,17 @@
       "neighbourUndergrounds": [],
       "number": 81,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 126,
-      "tuiCoordinatesY": 87
+      "tuiCoordinates": {
+        "x": 126,
+        "y": 87
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1294,
-      "guiCoordinatesY": 776,
+      "guiCoordinates": {
+        "x": 1294,
+        "y": 776
+      },
       "neighbourBuses": [
         65,
         67,
@@ -1589,13 +1908,17 @@
       "neighbourUndergrounds": [],
       "number": 82,
       "stationType": "Bus",
-      "tuiCoordinatesX": 135,
-      "tuiCoordinatesY": 83
+      "tuiCoordinates": {
+        "x": 135,
+        "y": 83
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1460,
-      "guiCoordinatesY": 746,
+      "guiCoordinates": {
+        "x": 1460,
+        "y": 746
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         101,
@@ -1604,13 +1927,17 @@
       "neighbourUndergrounds": [],
       "number": 83,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 149,
-      "tuiCoordinatesY": 80
+      "tuiCoordinates": {
+        "x": 149,
+        "y": 80
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1578,
-      "guiCoordinatesY": 696,
+      "guiCoordinates": {
+        "x": 1578,
+        "y": 696
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         67,
@@ -1619,13 +1946,17 @@
       "neighbourUndergrounds": [],
       "number": 84,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 164,
-      "tuiCoordinatesY": 76
+      "tuiCoordinates": {
+        "x": 164,
+        "y": 76
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1676,
-      "guiCoordinatesY": 664,
+      "guiCoordinates": {
+        "x": 1676,
+        "y": 664
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         68,
@@ -1635,13 +1966,17 @@
       "neighbourUndergrounds": [],
       "number": 85,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 178,
-      "tuiCoordinatesY": 73
+      "tuiCoordinates": {
+        "x": 178,
+        "y": 73
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1848,
-      "guiCoordinatesY": 728,
+      "guiCoordinates": {
+        "x": 1848,
+        "y": 728
+      },
       "neighbourBuses": [
         52,
         87,
@@ -1656,13 +1991,17 @@
       "neighbourUndergrounds": [],
       "number": 86,
       "stationType": "Bus",
-      "tuiCoordinatesX": 193,
-      "tuiCoordinatesY": 79
+      "tuiCoordinates": {
+        "x": 193,
+        "y": 79
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2030,
-      "guiCoordinatesY": 776,
+      "guiCoordinates": {
+        "x": 2030,
+        "y": 776
+      },
       "neighbourBuses": [
         41,
         86,
@@ -1675,13 +2014,17 @@
       "neighbourUndergrounds": [],
       "number": 87,
       "stationType": "Bus",
-      "tuiCoordinatesX": 210,
-      "tuiCoordinatesY": 82
+      "tuiCoordinates": {
+        "x": 210,
+        "y": 82
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2116,
-      "guiCoordinatesY": 792,
+      "guiCoordinates": {
+        "x": 2116,
+        "y": 792
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         87,
@@ -1691,13 +2034,17 @@
       "neighbourUndergrounds": [],
       "number": 88,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 226,
-      "tuiCoordinatesY": 90
+      "tuiCoordinates": {
+        "x": 226,
+        "y": 90
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2186,
-      "guiCoordinatesY": 730,
+      "guiCoordinates": {
+        "x": 2186,
+        "y": 730
+      },
       "neighbourBuses": [
         55,
         105
@@ -1715,13 +2062,17 @@
       ],
       "number": 89,
       "stationType": "Underground",
-      "tuiCoordinatesX": 233,
-      "tuiCoordinatesY": 78
+      "tuiCoordinates": {
+        "x": 233,
+        "y": 78
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2308,
-      "guiCoordinatesY": 734,
+      "guiCoordinates": {
+        "x": 2308,
+        "y": 734
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         72,
@@ -1731,13 +2082,17 @@
       "neighbourUndergrounds": [],
       "number": 90,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 253,
-      "tuiCoordinatesY": 78
+      "tuiCoordinates": {
+        "x": 253,
+        "y": 78
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2490,
-      "guiCoordinatesY": 740,
+      "guiCoordinates": {
+        "x": 2490,
+        "y": 740
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         56,
@@ -1749,13 +2104,17 @@
       "neighbourUndergrounds": [],
       "number": 91,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 270,
-      "tuiCoordinatesY": 79
+      "tuiCoordinates": {
+        "x": 270,
+        "y": 79
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 84,
-      "guiCoordinatesY": 834,
+      "guiCoordinates": {
+        "x": 84,
+        "y": 834
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         73,
@@ -1765,13 +2124,17 @@
       "neighbourUndergrounds": [],
       "number": 92,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 5,
-      "tuiCoordinatesY": 78
+      "tuiCoordinates": {
+        "x": 5,
+        "y": 78
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 96,
-      "guiCoordinatesY": 900,
+      "guiCoordinates": {
+        "x": 96,
+        "y": 900
+      },
       "neighbourBuses": [
         94
       ],
@@ -1784,13 +2147,17 @@
       ],
       "number": 93,
       "stationType": "Underground",
-      "tuiCoordinatesX": 9,
-      "tuiCoordinatesY": 89
+      "tuiCoordinates": {
+        "x": 9,
+        "y": 89
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 250,
-      "guiCoordinatesY": 870,
+      "guiCoordinates": {
+        "x": 250,
+        "y": 870
+      },
       "neighbourBuses": [
         74,
         77,
@@ -1804,13 +2171,17 @@
       "neighbourUndergrounds": [],
       "number": 94,
       "stationType": "Bus",
-      "tuiCoordinatesX": 27,
-      "tuiCoordinatesY": 87
+      "tuiCoordinates": {
+        "x": 27,
+        "y": 87
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 328,
-      "guiCoordinatesY": 854,
+      "guiCoordinates": {
+        "x": 328,
+        "y": 854
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         77,
@@ -1820,13 +2191,17 @@
       "neighbourUndergrounds": [],
       "number": 95,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 36,
-      "tuiCoordinatesY": 85
+      "tuiCoordinates": {
+        "x": 36,
+        "y": 85
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 708,
-      "guiCoordinatesY": 900,
+      "guiCoordinates": {
+        "x": 708,
+        "y": 900
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         77,
@@ -1836,13 +2211,17 @@
       "neighbourUndergrounds": [],
       "number": 96,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 73,
-      "tuiCoordinatesY": 97
+      "tuiCoordinates": {
+        "x": 73,
+        "y": 97
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 772,
-      "guiCoordinatesY": 880,
+      "guiCoordinates": {
+        "x": 772,
+        "y": 880
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         78,
@@ -1853,13 +2232,17 @@
       "neighbourUndergrounds": [],
       "number": 97,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 83,
-      "tuiCoordinatesY": 94
+      "tuiCoordinates": {
+        "x": 83,
+        "y": 94
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 878,
-      "guiCoordinatesY": 842,
+      "guiCoordinates": {
+        "x": 878,
+        "y": 842
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         79,
@@ -1870,13 +2253,17 @@
       "neighbourUndergrounds": [],
       "number": 98,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 97,
-      "tuiCoordinatesY": 90
+      "tuiCoordinates": {
+        "x": 97,
+        "y": 90
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 988,
-      "guiCoordinatesY": 854,
+      "guiCoordinates": {
+        "x": 988,
+        "y": 854
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         80,
@@ -1887,13 +2274,17 @@
       "neighbourUndergrounds": [],
       "number": 99,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 109,
-      "tuiCoordinatesY": 93
+      "tuiCoordinates": {
+        "x": 109,
+        "y": 93
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1158,
-      "guiCoordinatesY": 912,
+      "guiCoordinates": {
+        "x": 1158,
+        "y": 912
+      },
       "neighbourBuses": [
         63,
         82,
@@ -1909,13 +2300,17 @@
       "neighbourUndergrounds": [],
       "number": 100,
       "stationType": "Bus",
-      "tuiCoordinatesX": 121,
-      "tuiCoordinatesY": 101
+      "tuiCoordinates": {
+        "x": 121,
+        "y": 101
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1332,
-      "guiCoordinatesY": 848,
+      "guiCoordinates": {
+        "x": 1332,
+        "y": 848
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         82,
@@ -1926,13 +2321,17 @@
       "neighbourUndergrounds": [],
       "number": 101,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 138,
-      "tuiCoordinatesY": 90
+      "tuiCoordinates": {
+        "x": 138,
+        "y": 90
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1558,
-      "guiCoordinatesY": 762,
+      "guiCoordinates": {
+        "x": 1558,
+        "y": 762
+      },
       "neighbourBuses": [
         67,
         86,
@@ -1946,13 +2345,17 @@
       "neighbourUndergrounds": [],
       "number": 102,
       "stationType": "Bus",
-      "tuiCoordinatesX": 159,
-      "tuiCoordinatesY": 84
+      "tuiCoordinates": {
+        "x": 159,
+        "y": 84
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1704,
-      "guiCoordinatesY": 742,
+      "guiCoordinates": {
+        "x": 1704,
+        "y": 742
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         85,
@@ -1962,13 +2365,17 @@
       "neighbourUndergrounds": [],
       "number": 103,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 178,
-      "tuiCoordinatesY": 84
+      "tuiCoordinates": {
+        "x": 178,
+        "y": 84
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1850,
-      "guiCoordinatesY": 812,
+      "guiCoordinates": {
+        "x": 1850,
+        "y": 812
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         86,
@@ -1977,13 +2384,17 @@
       "neighbourUndergrounds": [],
       "number": 104,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 193,
-      "tuiCoordinatesY": 88
+      "tuiCoordinates": {
+        "x": 193,
+        "y": 88
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2256,
-      "guiCoordinatesY": 846,
+      "guiCoordinates": {
+        "x": 2256,
+        "y": 846
+      },
       "neighbourBuses": [
         89,
         108,
@@ -2001,13 +2412,17 @@
       "neighbourUndergrounds": [],
       "number": 105,
       "stationType": "Bus",
-      "tuiCoordinatesX": 246,
-      "tuiCoordinatesY": 91
+      "tuiCoordinates": {
+        "x": 246,
+        "y": 91
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2410,
-      "guiCoordinatesY": 868,
+      "guiCoordinates": {
+        "x": 2410,
+        "y": 868
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         105,
@@ -2016,13 +2431,17 @@
       "neighbourUndergrounds": [],
       "number": 106,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 261,
-      "tuiCoordinatesY": 93
+      "tuiCoordinates": {
+        "x": 261,
+        "y": 93
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2526,
-      "guiCoordinatesY": 872,
+      "guiCoordinates": {
+        "x": 2526,
+        "y": 872
+      },
       "neighbourBuses": [
         72,
         105,
@@ -2036,13 +2455,17 @@
       "neighbourUndergrounds": [],
       "number": 107,
       "stationType": "Bus",
-      "tuiCoordinatesX": 275,
-      "tuiCoordinatesY": 93
+      "tuiCoordinates": {
+        "x": 275,
+        "y": 93
+      }
     },
     {
-      "blackStation": true,
-      "guiCoordinatesX": 2218,
-      "guiCoordinatesY": 1016,
+      "blackStation": false,
+      "guiCoordinates": {
+        "x": 2218,
+        "y": 1016
+      },
       "neighbourBuses": [
         105,
         116,
@@ -2056,13 +2479,17 @@
       "neighbourUndergrounds": [],
       "number": 108,
       "stationType": "Bus",
-      "tuiCoordinatesX": 245,
-      "tuiCoordinatesY": 106
+      "tuiCoordinates": {
+        "x": 245,
+        "y": 106
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 814,
-      "guiCoordinatesY": 1034,
+      "guiCoordinates": {
+        "x": 814,
+        "y": 1034
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         96,
@@ -2073,13 +2500,17 @@
       "neighbourUndergrounds": [],
       "number": 109,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 84,
-      "tuiCoordinatesY": 115
+      "tuiCoordinates": {
+        "x": 84,
+        "y": 115
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 940,
-      "guiCoordinatesY": 918,
+      "guiCoordinates": {
+        "x": 940,
+        "y": 918
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         98,
@@ -2090,13 +2521,17 @@
       "neighbourUndergrounds": [],
       "number": 110,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 101,
-      "tuiCoordinatesY": 99
+      "tuiCoordinates": {
+        "x": 101,
+        "y": 99
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1016,
-      "guiCoordinatesY": 1002,
+      "guiCoordinates": {
+        "x": 1016,
+        "y": 1002
+      },
       "neighbourBuses": [
         100,
         124
@@ -2114,13 +2549,17 @@
       ],
       "number": 111,
       "stationType": "Underground",
-      "tuiCoordinatesX": 106,
-      "tuiCoordinatesY": 112
+      "tuiCoordinates": {
+        "x": 106,
+        "y": 112
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1060,
-      "guiCoordinatesY": 975,
+      "guiCoordinates": {
+        "x": 1060,
+        "y": 975
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         99,
@@ -2131,13 +2570,17 @@
       "neighbourUndergrounds": [],
       "number": 112,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 112,
-      "tuiCoordinatesY": 106
+      "tuiCoordinates": {
+        "x": 112,
+        "y": 106
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1232,
-      "guiCoordinatesY": 986,
+      "guiCoordinates": {
+        "x": 1232,
+        "y": 986
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         100,
@@ -2147,13 +2590,17 @@
       "neighbourUndergrounds": [],
       "number": 113,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 127,
-      "tuiCoordinatesY": 109
+      "tuiCoordinates": {
+        "x": 127,
+        "y": 109
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1356,
-      "guiCoordinatesY": 942,
+      "guiCoordinates": {
+        "x": 1356,
+        "y": 942
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         101,
@@ -2166,13 +2613,17 @@
       "neighbourUndergrounds": [],
       "number": 114,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 141,
-      "tuiCoordinatesY": 104
+      "tuiCoordinates": {
+        "x": 141,
+        "y": 104
+      }
     },
     {
-      "blackStation": true,
-      "guiCoordinatesX": 1556,
-      "guiCoordinatesY": 882,
+      "blackStation": false,
+      "guiCoordinates": {
+        "x": 1556,
+        "y": 882
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         102,
@@ -2183,13 +2634,17 @@
       "neighbourUndergrounds": [],
       "number": 115,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 156,
-      "tuiCoordinatesY": 95
+      "tuiCoordinates": {
+        "x": 156,
+        "y": 95
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1852,
-      "guiCoordinatesY": 984,
+      "guiCoordinates": {
+        "x": 1852,
+        "y": 984
+      },
       "neighbourBuses": [
         86,
         108,
@@ -2205,13 +2660,17 @@
       "neighbourUndergrounds": [],
       "number": 116,
       "stationType": "Bus",
-      "tuiCoordinatesX": 194,
-      "tuiCoordinatesY": 105
+      "tuiCoordinates": {
+        "x": 194,
+        "y": 105
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2058,
-      "guiCoordinatesY": 1060,
+      "guiCoordinates": {
+        "x": 2058,
+        "y": 1060
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         88,
@@ -2222,13 +2681,17 @@
       "neighbourUndergrounds": [],
       "number": 117,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 224,
-      "tuiCoordinatesY": 106
+      "tuiCoordinates": {
+        "x": 224,
+        "y": 106
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1856,
-      "guiCoordinatesY": 1104,
+      "guiCoordinates": {
+        "x": 1856,
+        "y": 1104
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         116,
@@ -2239,13 +2702,17 @@
       "neighbourUndergrounds": [],
       "number": 118,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 194,
-      "tuiCoordinatesY": 115
+      "tuiCoordinates": {
+        "x": 194,
+        "y": 115
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2474,
-      "guiCoordinatesY": 1142,
+      "guiCoordinates": {
+        "x": 2474,
+        "y": 1142
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         107,
@@ -2255,13 +2722,17 @@
       "neighbourUndergrounds": [],
       "number": 119,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 271,
-      "tuiCoordinatesY": 110
+      "tuiCoordinates": {
+        "x": 271,
+        "y": 110
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 80,
-      "guiCoordinatesY": 1218,
+      "guiCoordinates": {
+        "x": 80,
+        "y": 1218
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         121,
@@ -2270,13 +2741,17 @@
       "neighbourUndergrounds": [],
       "number": 120,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 4,
-      "tuiCoordinatesY": 135
+      "tuiCoordinates": {
+        "x": 4,
+        "y": 135
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 168,
-      "guiCoordinatesY": 1222,
+      "guiCoordinates": {
+        "x": 168,
+        "y": 1222
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         120,
@@ -2286,13 +2761,17 @@
       "neighbourUndergrounds": [],
       "number": 121,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 15,
-      "tuiCoordinatesY": 135
+      "tuiCoordinates": {
+        "x": 15,
+        "y": 135
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 292,
-      "guiCoordinatesY": 1214,
+      "guiCoordinates": {
+        "x": 292,
+        "y": 1214
+      },
       "neighbourBuses": [
         123,
         144
@@ -2306,13 +2785,17 @@
       "neighbourUndergrounds": [],
       "number": 122,
       "stationType": "Bus",
-      "tuiCoordinatesX": 31,
-      "tuiCoordinatesY": 135
+      "tuiCoordinates": {
+        "x": 31,
+        "y": 135
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 610,
-      "guiCoordinatesY": 1208,
+      "guiCoordinates": {
+        "x": 610,
+        "y": 1208
+      },
       "neighbourBuses": [
         122,
         124,
@@ -2329,13 +2812,17 @@
       "neighbourUndergrounds": [],
       "number": 123,
       "stationType": "Bus",
-      "tuiCoordinatesX": 63,
-      "tuiCoordinatesY": 135
+      "tuiCoordinates": {
+        "x": 63,
+        "y": 135
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 788,
-      "guiCoordinatesY": 1164,
+      "guiCoordinates": {
+        "x": 788,
+        "y": 1164
+      },
       "neighbourBuses": [
         77,
         111,
@@ -2352,13 +2839,17 @@
       "neighbourUndergrounds": [],
       "number": 124,
       "stationType": "Bus",
-      "tuiCoordinatesX": 80,
-      "tuiCoordinatesY": 131
+      "tuiCoordinates": {
+        "x": 80,
+        "y": 131
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1118,
-      "guiCoordinatesY": 1058,
+      "guiCoordinates": {
+        "x": 1118,
+        "y": 1058
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         112,
@@ -2368,13 +2859,17 @@
       "neighbourUndergrounds": [],
       "number": 125,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 118,
-      "tuiCoordinatesY": 118
+      "tuiCoordinates": {
+        "x": 118,
+        "y": 118
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1440,
-      "guiCoordinatesY": 1004,
+      "guiCoordinates": {
+        "x": 1440,
+        "y": 1004
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         114,
@@ -2385,13 +2880,17 @@
       "neighbourUndergrounds": [],
       "number": 126,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 148,
-      "tuiCoordinatesY": 119
+      "tuiCoordinates": {
+        "x": 148,
+        "y": 119
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1676,
-      "guiCoordinatesY": 1060,
+      "guiCoordinates": {
+        "x": 1676,
+        "y": 1060
+      },
       "neighbourBuses": [
         102,
         116,
@@ -2407,13 +2906,17 @@
       "neighbourUndergrounds": [],
       "number": 127,
       "stationType": "Bus",
-      "tuiCoordinatesX": 177,
-      "tuiCoordinatesY": 113
+      "tuiCoordinates": {
+        "x": 177,
+        "y": 113
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1974,
-      "guiCoordinatesY": 1406,
+      "guiCoordinates": {
+        "x": 1974,
+        "y": 1406
+      },
       "neighbourBuses": [
         142,
         161,
@@ -2435,13 +2938,17 @@
       ],
       "number": 128,
       "stationType": "Underground",
-      "tuiCoordinatesX": 211,
-      "tuiCoordinatesY": 151
+      "tuiCoordinates": {
+        "x": 211,
+        "y": 151
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2042,
-      "guiCoordinatesY": 1128,
+      "guiCoordinates": {
+        "x": 2042,
+        "y": 1128
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         142,
@@ -2453,13 +2960,17 @@
       "neighbourUndergrounds": [],
       "number": 129,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 220,
-      "tuiCoordinatesY": 115
+      "tuiCoordinates": {
+        "x": 220,
+        "y": 115
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1062,
-      "guiCoordinatesY": 1178,
+      "guiCoordinates": {
+        "x": 1062,
+        "y": 1178
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         124,
@@ -2469,13 +2980,17 @@
       "neighbourUndergrounds": [],
       "number": 130,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 111,
-      "tuiCoordinatesY": 130
+      "tuiCoordinates": {
+        "x": 111,
+        "y": 130
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1160,
-      "guiCoordinatesY": 1112,
+      "guiCoordinates": {
+        "x": 1160,
+        "y": 1112
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         114,
@@ -2485,13 +3000,17 @@
       "neighbourUndergrounds": [],
       "number": 131,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 128,
-      "tuiCoordinatesY": 125
+      "tuiCoordinates": {
+        "x": 128,
+        "y": 125
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1362,
-      "guiCoordinatesY": 1108,
+      "guiCoordinates": {
+        "x": 1362,
+        "y": 1108
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         114,
@@ -2500,13 +3019,17 @@
       "neighbourUndergrounds": [],
       "number": 132,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 140,
-      "tuiCoordinatesY": 125
+      "tuiCoordinates": {
+        "x": 140,
+        "y": 125
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1582,
-      "guiCoordinatesY": 1214,
+      "guiCoordinates": {
+        "x": 1582,
+        "y": 1214
+      },
       "neighbourBuses": [
         127,
         140,
@@ -2520,13 +3043,17 @@
       "neighbourUndergrounds": [],
       "number": 133,
       "stationType": "Bus",
-      "tuiCoordinatesX": 170,
-      "tuiCoordinatesY": 140
+      "tuiCoordinates": {
+        "x": 170,
+        "y": 140
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1744,
-      "guiCoordinatesY": 1162,
+      "guiCoordinates": {
+        "x": 1744,
+        "y": 1162
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         118,
@@ -2537,13 +3064,17 @@
       "neighbourUndergrounds": [],
       "number": 134,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 187,
-      "tuiCoordinatesY": 122
+      "tuiCoordinates": {
+        "x": 187,
+        "y": 122
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2118,
-      "guiCoordinatesY": 1200,
+      "guiCoordinates": {
+        "x": 2118,
+        "y": 1200
+      },
       "neighbourBuses": [
         108,
         128,
@@ -2558,13 +3089,17 @@
       "neighbourUndergrounds": [],
       "number": 135,
       "stationType": "Bus",
-      "tuiCoordinatesX": 232,
-      "tuiCoordinatesY": 125
+      "tuiCoordinates": {
+        "x": 232,
+        "y": 125
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2412,
-      "guiCoordinatesY": 1312,
+      "guiCoordinates": {
+        "x": 2412,
+        "y": 1312
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         119,
@@ -2574,13 +3109,17 @@
       "neighbourUndergrounds": [],
       "number": 136,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 271,
-      "tuiCoordinatesY": 128
+      "tuiCoordinates": {
+        "x": 271,
+        "y": 128
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 498,
-      "guiCoordinatesY": 1310,
+      "guiCoordinates": {
+        "x": 498,
+        "y": 1310
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         123,
@@ -2589,13 +3128,17 @@
       "neighbourUndergrounds": [],
       "number": 137,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 57,
-      "tuiCoordinatesY": 147
+      "tuiCoordinates": {
+        "x": 57,
+        "y": 147
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 844,
-      "guiCoordinatesY": 1240,
+      "guiCoordinates": {
+        "x": 844,
+        "y": 1240
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         124,
@@ -2605,13 +3148,17 @@
       "neighbourUndergrounds": [],
       "number": 138,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 91,
-      "tuiCoordinatesY": 144
+      "tuiCoordinates": {
+        "x": 91,
+        "y": 144
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1048,
-      "guiCoordinatesY": 1254,
+      "guiCoordinates": {
+        "x": 1048,
+        "y": 1254
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         130,
@@ -2622,13 +3169,17 @@
       "neighbourUndergrounds": [],
       "number": 139,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 111,
-      "tuiCoordinatesY": 139
+      "tuiCoordinates": {
+        "x": 111,
+        "y": 139
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1356,
-      "guiCoordinatesY": 1228,
+      "guiCoordinates": {
+        "x": 1356,
+        "y": 1228
+      },
       "neighbourBuses": [
         82,
         133,
@@ -2650,13 +3201,17 @@
       ],
       "number": 140,
       "stationType": "Underground",
-      "tuiCoordinatesX": 141,
-      "tuiCoordinatesY": 141
+      "tuiCoordinates": {
+        "x": 141,
+        "y": 141
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1642,
-      "guiCoordinatesY": 1252,
+      "guiCoordinates": {
+        "x": 1642,
+        "y": 1252
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         133,
@@ -2667,13 +3222,17 @@
       "neighbourUndergrounds": [],
       "number": 141,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 184,
-      "tuiCoordinatesY": 140
+      "tuiCoordinates": {
+        "x": 184,
+        "y": 140
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1852,
-      "guiCoordinatesY": 1294,
+      "guiCoordinates": {
+        "x": 1852,
+        "y": 1294
+      },
       "neighbourBuses": [
         116,
         128,
@@ -2691,13 +3250,17 @@
       "neighbourUndergrounds": [],
       "number": 142,
       "stationType": "Bus",
-      "tuiCoordinatesX": 198,
-      "tuiCoordinatesY": 135
+      "tuiCoordinates": {
+        "x": 198,
+        "y": 135
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2042,
-      "guiCoordinatesY": 1268,
+      "guiCoordinates": {
+        "x": 2042,
+        "y": 1268
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         142,
@@ -2709,13 +3272,17 @@
       "neighbourUndergrounds": [],
       "number": 143,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 219,
-      "tuiCoordinatesY": 136
+      "tuiCoordinates": {
+        "x": 219,
+        "y": 136
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 110,
-      "guiCoordinatesY": 1438,
+      "guiCoordinates": {
+        "x": 110,
+        "y": 1438
+      },
       "neighbourBuses": [
         122,
         123,
@@ -2729,13 +3296,17 @@
       "neighbourUndergrounds": [],
       "number": 144,
       "stationType": "Bus",
-      "tuiCoordinatesX": 6,
-      "tuiCoordinatesY": 164
+      "tuiCoordinates": {
+        "x": 6,
+        "y": 164
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 198,
-      "guiCoordinatesY": 1428,
+      "guiCoordinates": {
+        "x": 198,
+        "y": 1428
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         121,
@@ -2745,13 +3316,17 @@
       "neighbourUndergrounds": [],
       "number": 145,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 19,
-      "tuiCoordinatesY": 164
+      "tuiCoordinates": {
+        "x": 19,
+        "y": 164
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 320,
-      "guiCoordinatesY": 1420,
+      "guiCoordinates": {
+        "x": 320,
+        "y": 1420
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         122,
@@ -2762,13 +3337,17 @@
       "neighbourUndergrounds": [],
       "number": 146,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 34,
-      "tuiCoordinatesY": 164
+      "tuiCoordinates": {
+        "x": 34,
+        "y": 164
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 410,
-      "guiCoordinatesY": 1398,
+      "guiCoordinates": {
+        "x": 410,
+        "y": 1398
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         137,
@@ -2778,13 +3357,17 @@
       "neighbourUndergrounds": [],
       "number": 147,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 43,
-      "tuiCoordinatesY": 161
+      "tuiCoordinates": {
+        "x": 43,
+        "y": 161
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 538,
-      "guiCoordinatesY": 1378,
+      "guiCoordinates": {
+        "x": 538,
+        "y": 1378
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         123,
@@ -2794,13 +3377,17 @@
       "neighbourUndergrounds": [],
       "number": 148,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 61,
-      "tuiCoordinatesY": 159
+      "tuiCoordinates": {
+        "x": 61,
+        "y": 159
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 644,
-      "guiCoordinatesY": 1364,
+      "guiCoordinates": {
+        "x": 644,
+        "y": 1364
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         123,
@@ -2811,13 +3398,17 @@
       "neighbourUndergrounds": [],
       "number": 149,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 71,
-      "tuiCoordinatesY": 161
+      "tuiCoordinates": {
+        "x": 71,
+        "y": 161
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 764,
-      "guiCoordinatesY": 1318,
+      "guiCoordinates": {
+        "x": 764,
+        "y": 1318
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         138,
@@ -2827,13 +3418,17 @@
       "neighbourUndergrounds": [],
       "number": 150,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 83,
-      "tuiCoordinatesY": 154
+      "tuiCoordinates": {
+        "x": 83,
+        "y": 154
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 824,
-      "guiCoordinatesY": 1382,
+      "guiCoordinates": {
+        "x": 824,
+        "y": 1382
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         150,
@@ -2844,13 +3439,17 @@
       "neighbourUndergrounds": [],
       "number": 151,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 93,
-      "tuiCoordinatesY": 165
+      "tuiCoordinates": {
+        "x": 93,
+        "y": 165
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 912,
-      "guiCoordinatesY": 1320,
+      "guiCoordinates": {
+        "x": 912,
+        "y": 1320
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         138,
@@ -2860,13 +3459,17 @@
       "neighbourUndergrounds": [],
       "number": 152,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 103,
-      "tuiCoordinatesY": 158
+      "tuiCoordinates": {
+        "x": 103,
+        "y": 158
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 958,
-      "guiCoordinatesY": 1392,
+      "guiCoordinates": {
+        "x": 958,
+        "y": 1392
+      },
       "neighbourBuses": [
         124,
         154,
@@ -2888,13 +3491,17 @@
       ],
       "number": 153,
       "stationType": "Underground",
-      "tuiCoordinatesX": 116,
-      "tuiCoordinatesY": 175
+      "tuiCoordinates": {
+        "x": 116,
+        "y": 175
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1172,
-      "guiCoordinatesY": 1346,
+      "guiCoordinates": {
+        "x": 1172,
+        "y": 1346
+      },
       "neighbourBuses": [
         140,
         153,
@@ -2909,13 +3516,17 @@
       "neighbourUndergrounds": [],
       "number": 154,
       "stationType": "Bus",
-      "tuiCoordinatesX": 132,
-      "tuiCoordinatesY": 158
+      "tuiCoordinates": {
+        "x": 132,
+        "y": 158
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1244,
-      "guiCoordinatesY": 1438,
+      "guiCoordinates": {
+        "x": 1244,
+        "y": 1438
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         154,
@@ -2926,13 +3537,17 @@
       "neighbourUndergrounds": [],
       "number": 155,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 136,
-      "tuiCoordinatesY": 175
+      "tuiCoordinates": {
+        "x": 136,
+        "y": 175
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1386,
-      "guiCoordinatesY": 1438,
+      "guiCoordinates": {
+        "x": 1386,
+        "y": 1438
+      },
       "neighbourBuses": [
         140,
         154,
@@ -2948,13 +3563,17 @@
       "neighbourUndergrounds": [],
       "number": 156,
       "stationType": "Bus",
-      "tuiCoordinatesX": 150,
-      "tuiCoordinatesY": 166
+      "tuiCoordinates": {
+        "x": 150,
+        "y": 166
+      }
     },
     {
-      "blackStation": true,
-      "guiCoordinatesX": 1510,
-      "guiCoordinatesY": 1448,
+      "blackStation": false,
+      "guiCoordinates": {
+        "x": 1510,
+        "y": 1448
+      },
       "neighbourBuses": [
         133,
         156,
@@ -2969,13 +3588,17 @@
       "neighbourUndergrounds": [],
       "number": 157,
       "stationType": "Bus",
-      "tuiCoordinatesX": 171,
-      "tuiCoordinatesY": 165
+      "tuiCoordinates": {
+        "x": 171,
+        "y": 165
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1712,
-      "guiCoordinatesY": 1366,
+      "guiCoordinates": {
+        "x": 1712,
+        "y": 1366
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         141,
@@ -2986,13 +3609,17 @@
       "neighbourUndergrounds": [],
       "number": 158,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 187,
-      "tuiCoordinatesY": 153
+      "tuiCoordinates": {
+        "x": 187,
+        "y": 153
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1720,
-      "guiCoordinatesY": 1644,
+      "guiCoordinates": {
+        "x": 1720,
+        "y": 1644
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         170,
@@ -3004,13 +3631,17 @@
       "neighbourUndergrounds": [],
       "number": 159,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 187,
-      "tuiCoordinatesY": 192
+      "tuiCoordinates": {
+        "x": 187,
+        "y": 192
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2128,
-      "guiCoordinatesY": 1440,
+      "guiCoordinates": {
+        "x": 2128,
+        "y": 1440
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         128,
@@ -3021,13 +3652,17 @@
       "neighbourUndergrounds": [],
       "number": 160,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 229,
-      "tuiCoordinatesY": 154
+      "tuiCoordinates": {
+        "x": 229,
+        "y": 154
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2294,
-      "guiCoordinatesY": 1422,
+      "guiCoordinates": {
+        "x": 2294,
+        "y": 1422
+      },
       "neighbourBuses": [
         107,
         128,
@@ -3042,13 +3677,17 @@
       "neighbourUndergrounds": [],
       "number": 161,
       "stationType": "Bus",
-      "tuiCoordinatesX": 256,
-      "tuiCoordinatesY": 151
+      "tuiCoordinates": {
+        "x": 256,
+        "y": 151
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2530,
-      "guiCoordinatesY": 1424,
+      "guiCoordinates": {
+        "x": 2530,
+        "y": 1424
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         136,
@@ -3057,13 +3696,17 @@
       "neighbourUndergrounds": [],
       "number": 162,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 276,
-      "tuiCoordinatesY": 147
+      "tuiCoordinates": {
+        "x": 276,
+        "y": 147
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 308,
-      "guiCoordinatesY": 1486,
+      "guiCoordinates": {
+        "x": 308,
+        "y": 1486
+      },
       "neighbourBuses": [
         144,
         176,
@@ -3079,13 +3722,17 @@
       ],
       "number": 163,
       "stationType": "Underground",
-      "tuiCoordinatesX": 31,
-      "tuiCoordinatesY": 176
+      "tuiCoordinates": {
+        "x": 31,
+        "y": 176
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 436,
-      "guiCoordinatesY": 1486,
+      "guiCoordinates": {
+        "x": 436,
+        "y": 1486
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         147,
@@ -3096,13 +3743,17 @@
       "neighbourUndergrounds": [],
       "number": 164,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 48,
-      "tuiCoordinatesY": 176
+      "tuiCoordinates": {
+        "x": 48,
+        "y": 176
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 674,
-      "guiCoordinatesY": 1524,
+      "guiCoordinates": {
+        "x": 674,
+        "y": 1524
+      },
       "neighbourBuses": [
         123,
         180,
@@ -3117,13 +3768,17 @@
       "neighbourUndergrounds": [],
       "number": 165,
       "stationType": "Bus",
-      "tuiCoordinatesX": 74,
-      "tuiCoordinatesY": 182
+      "tuiCoordinates": {
+        "x": 74,
+        "y": 182
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 924,
-      "guiCoordinatesY": 1470,
+      "guiCoordinates": {
+        "x": 924,
+        "y": 1470
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         151,
@@ -3134,13 +3789,17 @@
       "neighbourUndergrounds": [],
       "number": 166,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 110,
-      "tuiCoordinatesY": 186
+      "tuiCoordinates": {
+        "x": 110,
+        "y": 186
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1122,
-      "guiCoordinatesY": 1508,
+      "guiCoordinates": {
+        "x": 1122,
+        "y": 1508
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         153,
@@ -3151,13 +3810,17 @@
       "neighbourUndergrounds": [],
       "number": 167,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 130,
-      "tuiCoordinatesY": 196
+      "tuiCoordinates": {
+        "x": 130,
+        "y": 196
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1192,
-      "guiCoordinatesY": 1560,
+      "guiCoordinates": {
+        "x": 1192,
+        "y": 1560
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         155,
@@ -3167,13 +3830,17 @@
       "neighbourUndergrounds": [],
       "number": 168,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 138,
-      "tuiCoordinatesY": 202
+      "tuiCoordinates": {
+        "x": 138,
+        "y": 202
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1382,
-      "guiCoordinatesY": 1536,
+      "guiCoordinates": {
+        "x": 1382,
+        "y": 1536
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         156,
@@ -3182,13 +3849,17 @@
       "neighbourUndergrounds": [],
       "number": 169,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 153,
-      "tuiCoordinatesY": 180
+      "tuiCoordinates": {
+        "x": 153,
+        "y": 180
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1492,
-      "guiCoordinatesY": 1552,
+      "guiCoordinates": {
+        "x": 1492,
+        "y": 1552
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         157,
@@ -3198,13 +3869,17 @@
       "neighbourUndergrounds": [],
       "number": 170,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 172,
-      "tuiCoordinatesY": 181
+      "tuiCoordinates": {
+        "x": 172,
+        "y": 181
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2244,
-      "guiCoordinatesY": 1820,
+      "guiCoordinates": {
+        "x": 2244,
+        "y": 1820
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         173,
@@ -3214,13 +3889,17 @@
       "neighbourUndergrounds": [],
       "number": 171,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 257,
-      "tuiCoordinatesY": 202
+      "tuiCoordinates": {
+        "x": 257,
+        "y": 202
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1910,
-      "guiCoordinatesY": 1542,
+      "guiCoordinates": {
+        "x": 1910,
+        "y": 1542
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         128,
@@ -3230,13 +3909,17 @@
       "neighbourUndergrounds": [],
       "number": 172,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 208,
-      "tuiCoordinatesY": 168
+      "tuiCoordinates": {
+        "x": 208,
+        "y": 168
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2170,
-      "guiCoordinatesY": 1620,
+      "guiCoordinates": {
+        "x": 2170,
+        "y": 1620
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         160,
@@ -3247,13 +3930,17 @@
       "neighbourUndergrounds": [],
       "number": 173,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 246,
-      "tuiCoordinatesY": 184
+      "tuiCoordinates": {
+        "x": 246,
+        "y": 184
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2388,
-      "guiCoordinatesY": 1556,
+      "guiCoordinates": {
+        "x": 2388,
+        "y": 1556
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         161,
@@ -3263,13 +3950,17 @@
       "neighbourUndergrounds": [],
       "number": 174,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 264,
-      "tuiCoordinatesY": 162
+      "tuiCoordinates": {
+        "x": 264,
+        "y": 162
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2504,
-      "guiCoordinatesY": 1648,
+      "guiCoordinates": {
+        "x": 2504,
+        "y": 1648
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         162,
@@ -3279,13 +3970,17 @@
       "neighbourUndergrounds": [],
       "number": 175,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 276,
-      "tuiCoordinatesY": 168
+      "tuiCoordinates": {
+        "x": 276,
+        "y": 168
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 72,
-      "guiCoordinatesY": 1612,
+      "guiCoordinates": {
+        "x": 72,
+        "y": 1612
+      },
       "neighbourBuses": [
         163,
         190
@@ -3297,13 +3992,17 @@
       "neighbourUndergrounds": [],
       "number": 176,
       "stationType": "Bus",
-      "tuiCoordinatesX": 5,
-      "tuiCoordinatesY": 196
+      "tuiCoordinates": {
+        "x": 5,
+        "y": 196
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 176,
-      "guiCoordinatesY": 1588,
+      "guiCoordinates": {
+        "x": 176,
+        "y": 1588
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         144,
@@ -3313,13 +4012,17 @@
       "neighbourUndergrounds": [],
       "number": 177,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 16,
-      "tuiCoordinatesY": 191
+      "tuiCoordinates": {
+        "x": 16,
+        "y": 191
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 364,
-      "guiCoordinatesY": 1572,
+      "guiCoordinates": {
+        "x": 364,
+        "y": 1572
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         164,
@@ -3329,13 +4032,17 @@
       "neighbourUndergrounds": [],
       "number": 178,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 41,
-      "tuiCoordinatesY": 195
+      "tuiCoordinates": {
+        "x": 41,
+        "y": 195
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 582,
-      "guiCoordinatesY": 1596,
+      "guiCoordinates": {
+        "x": 582,
+        "y": 1596
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         164,
@@ -3345,13 +4052,17 @@
       "neighbourUndergrounds": [],
       "number": 179,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 69,
-      "tuiCoordinatesY": 194
+      "tuiCoordinates": {
+        "x": 69,
+        "y": 194
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 720,
-      "guiCoordinatesY": 1624,
+      "guiCoordinates": {
+        "x": 720,
+        "y": 1624
+      },
       "neighbourBuses": [
         153,
         165,
@@ -3366,13 +4077,17 @@
       "neighbourUndergrounds": [],
       "number": 180,
       "stationType": "Bus",
-      "tuiCoordinatesX": 83,
-      "tuiCoordinatesY": 203
+      "tuiCoordinates": {
+        "x": 83,
+        "y": 203
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 864,
-      "guiCoordinatesY": 1586,
+      "guiCoordinates": {
+        "x": 864,
+        "y": 1586
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         166,
@@ -3383,13 +4098,17 @@
       "neighbourUndergrounds": [],
       "number": 181,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 100,
-      "tuiCoordinatesY": 201
+      "tuiCoordinates": {
+        "x": 100,
+        "y": 201
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 930,
-      "guiCoordinatesY": 1604,
+      "guiCoordinates": {
+        "x": 930,
+        "y": 1604
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         181,
@@ -3399,13 +4118,17 @@
       "neighbourUndergrounds": [],
       "number": 182,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 110,
-      "tuiCoordinatesY": 208
+      "tuiCoordinates": {
+        "x": 110,
+        "y": 208
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1062,
-      "guiCoordinatesY": 1546,
+      "guiCoordinates": {
+        "x": 1062,
+        "y": 1546
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         166,
@@ -3416,13 +4139,17 @@
       "neighbourUndergrounds": [],
       "number": 183,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 120,
-      "tuiCoordinatesY": 202
+      "tuiCoordinates": {
+        "x": 120,
+        "y": 202
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1310,
-      "guiCoordinatesY": 1646,
+      "guiCoordinates": {
+        "x": 1310,
+        "y": 1646
+      },
       "neighbourBuses": [
         153,
         156,
@@ -3439,13 +4166,17 @@
       "neighbourUndergrounds": [],
       "number": 184,
       "stationType": "Bus",
-      "tuiCoordinatesX": 146,
-      "tuiCoordinatesY": 208
+      "tuiCoordinates": {
+        "x": 146,
+        "y": 208
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1450,
-      "guiCoordinatesY": 1746,
+      "guiCoordinates": {
+        "x": 1450,
+        "y": 1746
+      },
       "neighbourBuses": [
         157,
         184,
@@ -3462,13 +4193,17 @@
       ],
       "number": 185,
       "stationType": "Underground",
-      "tuiCoordinatesX": 166,
-      "tuiCoordinatesY": 215
+      "tuiCoordinates": {
+        "x": 166,
+        "y": 215
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1610,
-      "guiCoordinatesY": 1712,
+      "guiCoordinates": {
+        "x": 1610,
+        "y": 1712
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         159,
@@ -3478,13 +4213,17 @@
       "neighbourUndergrounds": [],
       "number": 186,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 181,
-      "tuiCoordinatesY": 207
+      "tuiCoordinates": {
+        "x": 181,
+        "y": 207
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1842,
-      "guiCoordinatesY": 1658,
+      "guiCoordinates": {
+        "x": 1842,
+        "y": 1658
+      },
       "neighbourBuses": [
         128,
         185
@@ -3497,13 +4236,17 @@
       "neighbourUndergrounds": [],
       "number": 187,
       "stationType": "Bus",
-      "tuiCoordinatesX": 200,
-      "tuiCoordinatesY": 192
+      "tuiCoordinates": {
+        "x": 200,
+        "y": 192
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2074,
-      "guiCoordinatesY": 1662,
+      "guiCoordinates": {
+        "x": 2074,
+        "y": 1662
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         128,
@@ -3514,13 +4257,17 @@
       "neighbourUndergrounds": [],
       "number": 188,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 222,
-      "tuiCoordinatesY": 190
+      "tuiCoordinates": {
+        "x": 222,
+        "y": 190
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 180,
-      "guiCoordinatesY": 1758,
+      "guiCoordinates": {
+        "x": 180,
+        "y": 1758
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         176,
@@ -3530,13 +4277,17 @@
       "neighbourUndergrounds": [],
       "number": 189,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 20,
-      "tuiCoordinatesY": 220
+      "tuiCoordinates": {
+        "x": 20,
+        "y": 220
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 290,
-      "guiCoordinatesY": 1824,
+      "guiCoordinates": {
+        "x": 290,
+        "y": 1824
+      },
       "neighbourBuses": [
         176,
         180,
@@ -3550,13 +4301,17 @@
       "neighbourUndergrounds": [],
       "number": 190,
       "stationType": "Bus",
-      "tuiCoordinatesX": 35,
-      "tuiCoordinatesY": 238
+      "tuiCoordinates": {
+        "x": 35,
+        "y": 238
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 438,
-      "guiCoordinatesY": 1706,
+      "guiCoordinates": {
+        "x": 438,
+        "y": 1706
+      },
       "neighbourBuses": [
         163,
         165,
@@ -3571,13 +4326,17 @@
       "neighbourUndergrounds": [],
       "number": 191,
       "stationType": "Bus",
-      "tuiCoordinatesX": 59,
-      "tuiCoordinatesY": 211
+      "tuiCoordinates": {
+        "x": 59,
+        "y": 211
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 472,
-      "guiCoordinatesY": 1858,
+      "guiCoordinates": {
+        "x": 472,
+        "y": 1858
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         190,
@@ -3587,13 +4346,17 @@
       "neighbourUndergrounds": [],
       "number": 192,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 54,
-      "tuiCoordinatesY": 248
+      "tuiCoordinates": {
+        "x": 54,
+        "y": 248
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 818,
-      "guiCoordinatesY": 1718,
+      "guiCoordinates": {
+        "x": 818,
+        "y": 1718
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         180,
@@ -3603,13 +4366,17 @@
       "neighbourUndergrounds": [],
       "number": 193,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 90,
-      "tuiCoordinatesY": 228
+      "tuiCoordinates": {
+        "x": 90,
+        "y": 228
+      }
     },
     {
-      "blackStation": true,
-      "guiCoordinatesX": 860,
-      "guiCoordinatesY": 1768,
+      "blackStation": false,
+      "guiCoordinates": {
+        "x": 860,
+        "y": 1768
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         192,
@@ -3619,13 +4386,17 @@
       "neighbourUndergrounds": [],
       "number": 194,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 99,
-      "tuiCoordinatesY": 236
+      "tuiCoordinates": {
+        "x": 99,
+        "y": 236
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 966,
-      "guiCoordinatesY": 1760,
+      "guiCoordinates": {
+        "x": 966,
+        "y": 1760
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         182,
@@ -3635,13 +4406,17 @@
       "neighbourUndergrounds": [],
       "number": 195,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 117,
-      "tuiCoordinatesY": 236
+      "tuiCoordinates": {
+        "x": 117,
+        "y": 236
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1116,
-      "guiCoordinatesY": 1680,
+      "guiCoordinates": {
+        "x": 1116,
+        "y": 1680
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         183,
@@ -3651,13 +4426,17 @@
       "neighbourUndergrounds": [],
       "number": 196,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 130,
-      "tuiCoordinatesY": 221
+      "tuiCoordinates": {
+        "x": 130,
+        "y": 221
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1138,
-      "guiCoordinatesY": 1784,
+      "guiCoordinates": {
+        "x": 1138,
+        "y": 1784
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         184,
@@ -3667,13 +4446,17 @@
       "neighbourUndergrounds": [],
       "number": 197,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 136,
-      "tuiCoordinatesY": 232
+      "tuiCoordinates": {
+        "x": 136,
+        "y": 232
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 1714,
-      "guiCoordinatesY": 1872,
+      "guiCoordinates": {
+        "x": 1714,
+        "y": 1872
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [
         159,
@@ -3684,13 +4467,17 @@
       "neighbourUndergrounds": [],
       "number": 198,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 189,
-      "tuiCoordinatesY": 222
+      "tuiCoordinates": {
+        "x": 189,
+        "y": 222
+      }
     },
     {
       "blackStation": false,
-      "guiCoordinatesX": 2102,
-      "guiCoordinatesY": 1858,
+      "guiCoordinates": {
+        "x": 2102,
+        "y": 1858
+      },
       "neighbourBuses": [
         128,
         161
@@ -3703,8 +4490,10 @@
       "neighbourUndergrounds": [],
       "number": 199,
       "stationType": "Bus",
-      "tuiCoordinatesX": 226,
-      "tuiCoordinatesY": 210
+      "tuiCoordinates": {
+        "x": 226,
+        "y": 210
+      }
     }
   ],
   "stuckPlayers": [],
@@ -3713,25 +4502,29 @@
   "winningPlayer": {
     "color": "#c0c0c0",
     "name": "DtX",
+    "playerType": "detective",
     "station": {
       "blackStation": false,
-      "guiCoordinatesX": 1,
-      "guiCoordinatesY": 1,
+      "guiCoordinates": {
+        "x": 1,
+        "y": 1
+      },
       "neighbourBuses": [],
       "neighbourTaxis": [],
       "neighbourUndergrounds": [],
       "number": -1,
       "stationType": "Taxi",
-      "tuiCoordinatesX": 1,
-      "tuiCoordinatesY": 1
+      "tuiCoordinates": {
+        "x": 1,
+        "y": 1
+      }
     },
     "tickets": {
       "blackTickets": 0,
       "busTickets": 0,
       "taxiTickets": 0,
       "undergroundTickets": 0
-    },
-    "playerType": "detective"
+    }
   },
   "winningRound": 24
 }

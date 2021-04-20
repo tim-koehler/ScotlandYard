@@ -14,7 +14,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
 
   val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
   val gameInitializer = new GameInitializer()
-  val controller = new Controller(gameInitializer, new FileIO(gameInitializer))
+  val controller = new Controller(gameInitializer, new FileIO())
   controller.initializeStations(stationsSource)
   var gameModel = GameModel()
 
