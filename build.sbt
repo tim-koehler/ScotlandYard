@@ -1,5 +1,3 @@
-import sbt.Keys.libraryDependencies
-
 name          := "scotland-yard"
 organization  := "de.htwg.se"
 version       := "0.1.0"
