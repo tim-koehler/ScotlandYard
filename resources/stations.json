@@ -1,5 +1,21 @@
 [
     {
+        "number": 0,
+        "stationType": "Taxi",
+        "blackStation": false,
+        "neighbourTaxis": [],
+        "neighbourBuses": [],
+        "neighbourUndergrounds": [],
+        "tuiCoordinates": {
+            "x": 1,
+            "y": 1
+        },
+        "guiCoordinates": {
+            "x": 1,
+            "y": 1
+        }
+    },
+    {
         "number": 1,
         "stationType": "Underground",
         "blackStation": false,

@@ -7,7 +7,6 @@ import de.htwg.se.scotlandyard.fileio.FileIOInterface
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
-import play.api.libs.json._
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import spray.json.enrichAny

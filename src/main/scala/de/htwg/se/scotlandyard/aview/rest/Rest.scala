@@ -19,13 +19,7 @@ import scala.io.{Source, StdIn}
 
 object Rest {
 
-  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
-
-  def main(args: Array[String]): Unit = {
-
-    val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
-    controller.initializeStations(stationsSource)
-    controller.initialize(3)
+  def startRestService(controller: ControllerInterface): Unit = {
 
     implicit val system = ActorSystem(Behaviors.empty, "my-system")
     // needed for the future flatMap/onComplete in the end
@@ -128,11 +122,7 @@ object Rest {
       )
     )
 
-    val bindingFuture = Http().newServerAt("localhost", 8080).bind(route)
-    println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
-    StdIn.readLine() // let it run until user presses return
-    bindingFuture
-      .flatMap(_.unbind()) // trigger unbinding from the port
-      .onComplete(_ => system.terminate()) // and shutdown when done
+    Http().newServerAt("localhost", 8080).bind(route)
+    println(s"Server online at http://localhost:8080/")
   }
 }
