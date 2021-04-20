@@ -18,6 +18,5 @@ object ScotlandYard {
     controller.initialize(3)
     Rest.startRestService(controller)
     new Gui(controller)
-
   }
 }
