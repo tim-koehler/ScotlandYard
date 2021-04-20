@@ -51,7 +51,8 @@ class Controller extends ControllerInterface with Publisher {
     implicit val executionContext = system.executionContext
 
     val response = Await.result(Http().singleRequest(HttpRequest(uri = "http://localhost:8081/fileio/load")), 10.seconds)
-    Unmarshal(response).to[GameModel].value.get.get
+    this.gameModel = Unmarshal(response).to[GameModel].value.get.get
+    this.gameModel
   }
 
   def save(): Boolean = {

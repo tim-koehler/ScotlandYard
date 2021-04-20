@@ -17,7 +17,7 @@ import scala.util.{Failure, Success, Try}
 class FileIO() extends FileIOInterface {
   var pathname = "ScotlandYard.json"
 
-  override def load(stationsFileContent: String): GameModel = {
+  override def load(): GameModel = {
     val source: String = Source.fromFile(pathname).getLines.mkString
     source.parseJson.convertTo[GameModel]
   }

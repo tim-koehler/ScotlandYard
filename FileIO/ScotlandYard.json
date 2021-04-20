@@ -1,10 +1,10 @@
 {
   "allPlayerStuck": false,
-  "gameRunning": false,
+  "gameRunning": true,
   "mrxVisibleRounds": [3, 8, 13, 18, 24],
   "players": [{
     "color": "#000000",
-    "history": ["Black"],
+    "history": ["Taxi"],
     "isVisible": false,
     "lastSeen": "never",
     "name": "MrX",
@@ -12,23 +12,23 @@
     "station": {
       "blackStation": false,
       "guiCoordinates": {
-        "x": 1400,
-        "y": 464
+        "x": 1510,
+        "y": 1448
       },
-      "neighbourBuses": [],
-      "neighbourTaxis": [37, 38, 49],
+      "neighbourBuses": [133, 156, 185, 142],
+      "neighbourTaxis": [156, 158, 170],
       "neighbourUndergrounds": [],
-      "number": 50,
-      "stationType": "Taxi",
+      "number": 157,
+      "stationType": "Bus",
       "tuiCoordinates": {
-        "x": 151,
-        "y": 57
+        "x": 171,
+        "y": 165
       }
     },
     "tickets": {
-      "blackTickets": 4,
+      "blackTickets": 5,
       "busTickets": 99,
-      "taxiTickets": 99,
+      "taxiTickets": 98,
       "undergroundTickets": 99
     }
   }, {
@@ -38,23 +38,23 @@
     "station": {
       "blackStation": false,
       "guiCoordinates": {
-        "x": 1850,
-        "y": 812
+        "x": 328,
+        "y": 854
       },
       "neighbourBuses": [],
-      "neighbourTaxis": [86, 116],
+      "neighbourTaxis": [77, 94, 122],
       "neighbourUndergrounds": [],
-      "number": 104,
+      "number": 95,
       "stationType": "Taxi",
       "tuiCoordinates": {
-        "x": 193,
-        "y": 88
+        "x": 36,
+        "y": 85
       }
     },
     "tickets": {
       "blackTickets": 0,
       "busTickets": 8,
-      "taxiTickets": 420,
+      "taxiTickets": 10,
       "undergroundTickets": 4
     }
   }, {
@@ -64,17 +64,69 @@
     "station": {
       "blackStation": false,
       "guiCoordinates": {
-        "x": 1048,
-        "y": 1254
+        "x": 1278,
+        "y": 542
       },
       "neighbourBuses": [],
-      "neighbourTaxis": [130, 140, 153, 154],
+      "neighbourTaxis": [36, 50, 66],
       "neighbourUndergrounds": [],
-      "number": 139,
+      "number": 49,
       "stationType": "Taxi",
       "tuiCoordinates": {
-        "x": 111,
-        "y": 139
+        "x": 137,
+        "y": 61
+      }
+    },
+    "tickets": {
+      "blackTickets": 0,
+      "busTickets": 8,
+      "taxiTickets": 10,
+      "undergroundTickets": 4
+    }
+  }, {
+    "color": "#de991b",
+    "name": "Dt3",
+    "playerType": "detective",
+    "station": {
+      "blackStation": false,
+      "guiCoordinates": {
+        "x": 788,
+        "y": 1164
+      },
+      "neighbourBuses": [77, 111, 123, 153],
+      "neighbourTaxis": [138, 109, 130, 123, 111],
+      "neighbourUndergrounds": [],
+      "number": 124,
+      "stationType": "Bus",
+      "tuiCoordinates": {
+        "x": 80,
+        "y": 131
+      }
+    },
+    "tickets": {
+      "blackTickets": 0,
+      "busTickets": 8,
+      "taxiTickets": 10,
+      "undergroundTickets": 4
+    }
+  }, {
+    "color": "#ff00ff",
+    "name": "Dt4",
+    "playerType": "detective",
+    "station": {
+      "blackStation": false,
+      "guiCoordinates": {
+        "x": 610,
+        "y": 1208
+      },
+      "neighbourBuses": [122, 124, 144, 165],
+      "neighbourTaxis": [137, 124, 122, 148, 149],
+      "neighbourUndergrounds": [],
+      "number": 123,
+      "stationType": "Bus",
+      "tuiCoordinates": {
+        "x": 63,
+        "y": 135
       }
     },
     "tickets": {
@@ -84,8 +136,23 @@
       "undergroundTickets": 4
     }
   }],
-  "round": 2,
+  "round": 5,
   "stations": [{
+    "blackStation": false,
+    "guiCoordinates": {
+      "x": 1,
+      "y": 1
+    },
+    "neighbourBuses": [],
+    "neighbourTaxis": [],
+    "neighbourUndergrounds": [],
+    "number": 0,
+    "stationType": "Taxi",
+    "tuiCoordinates": {
+      "x": 1,
+      "y": 1
+    }
+  }, {
     "blackStation": false,
     "guiCoordinates": {
       "x": 318,
