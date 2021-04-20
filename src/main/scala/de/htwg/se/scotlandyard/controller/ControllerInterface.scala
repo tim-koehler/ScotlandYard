@@ -10,9 +10,6 @@ import java.awt.Color
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
-  val gameInitializer: GameInitializerInterface
-  val fileIO: FileIOInterface
-
   def initializeStations(stationsSource: String): Boolean
   def initialize(nPlayer: Int = 3): GameModel
   def load(): GameModel

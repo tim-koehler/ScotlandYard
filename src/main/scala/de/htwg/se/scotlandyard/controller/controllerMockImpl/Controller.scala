@@ -11,9 +11,7 @@ import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import java.awt.Color
 import scala.swing.Publisher
 
-class Controller @Inject()(override val gameInitializer: GameInitializerInterface,
-                           override val fileIO: FileIOInterface) extends ControllerInterface with Publisher {
-
+class Controller extends ControllerInterface with Publisher {
   override def initializeStations(stationsSource: String): Boolean = true
 
   override def initialize(nPlayer: Int): GameModel = GameModel()

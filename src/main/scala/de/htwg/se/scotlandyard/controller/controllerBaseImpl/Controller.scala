@@ -1,5 +1,7 @@
 package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
+import akka.actor.typed.ActorSystem
+import akka.actor.typed.scaladsl.Behaviors
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
@@ -8,13 +10,24 @@ import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.model.{HttpMethod, HttpMethods, HttpRequest, HttpResponse}
+import akka.http.scaladsl.server.Directives.as
 
 import java.awt.Color
+import scala.concurrent.{Await, Future}
 import scala.swing.Publisher
+import scala.util.{Failure, Success}
 import scala.util.control.Breaks.{break, breakable}
+import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, vectorFormat}
+import spray.json.enrichAny
+import de.htwg.se.scotlandyard.model.JsonProtocol._
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+import akka.http.scaladsl.unmarshalling.Unmarshal
 
-class Controller @Inject()(override val gameInitializer: GameInitializerInterface,
-                           override val fileIO: FileIOInterface) extends ControllerInterface with Publisher {
+import scala.concurrent.duration.DurationInt
+
+class Controller extends ControllerInterface with Publisher {
 
   private var stationsSource: String = ""
   private var gameModel: GameModel = _
@@ -33,12 +46,24 @@ class Controller @Inject()(override val gameInitializer: GameInitializerInterfac
   }
 
   def load(): GameModel = {
-    gameModel = fileIO.load(this.stationsSource)
-    gameModel
+    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
+    implicit val executionContext = system.executionContext
+
+    val response = Await.result(Http().singleRequest(HttpRequest(uri = "http://localhost:8081/fileio/load")), 10.seconds)
+    Unmarshal(response).to[GameModel].value.get.get
   }
 
   def save(): Boolean = {
-    fileIO.save(gameModel)
+    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
+    implicit val executionContext = system.executionContext
+
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8081/fileio/save", method = HttpMethods.POST, entity = this.gameModel))
+    responseFuture
+      .onComplete {
+        case Success(res) => println(res)
+        case Failure(_)   => sys.error("Error in FileIO service")
+      }
+    true
   }
 
   private def checkDetectiveWin(): Boolean = {
