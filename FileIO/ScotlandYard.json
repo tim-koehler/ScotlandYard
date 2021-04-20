@@ -12,17 +12,17 @@
     "station": {
       "blackStation": false,
       "guiCoordinates": {
-        "x": 1510,
-        "y": 1448
+        "x": 2186,
+        "y": 730
       },
-      "neighbourBuses": [133, 156, 185, 142],
-      "neighbourTaxis": [156, 158, 170],
-      "neighbourUndergrounds": [],
-      "number": 157,
-      "stationType": "Bus",
+      "neighbourBuses": [55, 105],
+      "neighbourTaxis": [71, 88, 105],
+      "neighbourUndergrounds": [13, 67, 128, 140],
+      "number": 89,
+      "stationType": "Underground",
       "tuiCoordinates": {
-        "x": 171,
-        "y": 165
+        "x": 233,
+        "y": 78
       }
     },
     "tickets": {
@@ -38,17 +38,17 @@
     "station": {
       "blackStation": false,
       "guiCoordinates": {
-        "x": 328,
-        "y": 854
+        "x": 1852,
+        "y": 1294
       },
-      "neighbourBuses": [],
-      "neighbourTaxis": [77, 94, 122],
+      "neighbourBuses": [116, 128, 157],
+      "neighbourTaxis": [141, 129, 118, 143, 158, 134, 128],
       "neighbourUndergrounds": [],
-      "number": 95,
-      "stationType": "Taxi",
+      "number": 142,
+      "stationType": "Bus",
       "tuiCoordinates": {
-        "x": 36,
-        "y": 85
+        "x": 198,
+        "y": 135
       }
     },
     "tickets": {
@@ -64,79 +64,27 @@
     "station": {
       "blackStation": false,
       "guiCoordinates": {
-        "x": 1278,
-        "y": 542
+        "x": 96,
+        "y": 900
       },
-      "neighbourBuses": [],
-      "neighbourTaxis": [36, 50, 66],
-      "neighbourUndergrounds": [],
-      "number": 49,
-      "stationType": "Taxi",
+      "neighbourBuses": [94],
+      "neighbourTaxis": [92, 94],
+      "neighbourUndergrounds": [79],
+      "number": 93,
+      "stationType": "Underground",
       "tuiCoordinates": {
-        "x": 137,
-        "y": 61
+        "x": 9,
+        "y": 89
       }
     },
     "tickets": {
       "blackTickets": 0,
       "busTickets": 8,
       "taxiTickets": 10,
-      "undergroundTickets": 4
-    }
-  }, {
-    "color": "#de991b",
-    "name": "Dt3",
-    "playerType": "detective",
-    "station": {
-      "blackStation": false,
-      "guiCoordinates": {
-        "x": 788,
-        "y": 1164
-      },
-      "neighbourBuses": [77, 111, 123, 153],
-      "neighbourTaxis": [138, 109, 130, 123, 111],
-      "neighbourUndergrounds": [],
-      "number": 124,
-      "stationType": "Bus",
-      "tuiCoordinates": {
-        "x": 80,
-        "y": 131
-      }
-    },
-    "tickets": {
-      "blackTickets": 0,
-      "busTickets": 8,
-      "taxiTickets": 10,
-      "undergroundTickets": 4
-    }
-  }, {
-    "color": "#ff00ff",
-    "name": "Dt4",
-    "playerType": "detective",
-    "station": {
-      "blackStation": false,
-      "guiCoordinates": {
-        "x": 610,
-        "y": 1208
-      },
-      "neighbourBuses": [122, 124, 144, 165],
-      "neighbourTaxis": [137, 124, 122, 148, 149],
-      "neighbourUndergrounds": [],
-      "number": 123,
-      "stationType": "Bus",
-      "tuiCoordinates": {
-        "x": 63,
-        "y": 135
-      }
-    },
-    "tickets": {
-      "blackTickets": 0,
-      "busTickets": 8,
-      "taxiTickets": 11,
       "undergroundTickets": 4
     }
   }],
-  "round": 5,
+  "round": 4,
   "stations": [{
     "blackStation": false,
     "guiCoordinates": {
@@ -3139,7 +3087,7 @@
     }
   }],
   "stuckPlayers": [],
-  "totalRound": 1,
+  "totalRound": 2,
   "win": false,
   "winningPlayer": {
     "color": "#c0c0c0",

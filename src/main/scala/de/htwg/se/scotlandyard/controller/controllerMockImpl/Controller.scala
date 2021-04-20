@@ -14,7 +14,7 @@ class Controller extends ControllerInterface with Publisher {
 
   override def initialize(nPlayer: Int): GameModel = GameModel()
 
-  override def load(): GameModel = GameModel()
+  override def load(): Option[GameModel] = Some(GameModel())
 
   override def save(): Boolean = true
 

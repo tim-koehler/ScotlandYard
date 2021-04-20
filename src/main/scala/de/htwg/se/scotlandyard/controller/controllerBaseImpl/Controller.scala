@@ -15,7 +15,7 @@ import akka.http.scaladsl.server.Directives.as
 import java.awt.Color
 import scala.concurrent.{Await, Future}
 import scala.swing.Publisher
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Success, Try}
 import scala.util.control.Breaks.{break, breakable}
 import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, vectorFormat}
 import spray.json.enrichAny
@@ -24,6 +24,7 @@ import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 
 import scala.concurrent.duration.DurationInt
+
 
 class Controller extends ControllerInterface with Publisher {
 
@@ -40,30 +41,55 @@ class Controller extends ControllerInterface with Publisher {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
-    val response = Await.result(Http().singleRequest(HttpRequest(uri = "http://localhost:8082/initialize?nPlayer=" + nPlayers)), 10.seconds)
+    var response = HttpResponse()
+    try {
+      response = Await.result(Http().singleRequest(HttpRequest(
+        uri = "http://localhost:8082/initialize?nPlayer=" + nPlayers)),
+        5.seconds)
+    } catch {
+      case _: Exception =>
+        println("\n\n!!!GameInitializer service unavailable!!!\n\n")
+        System.exit(-1)
+    }
     this.gameModel = Unmarshal(response).to[GameModel].value.get.get
     publish(new NumberOfPlayersChanged)
     this.gameModel
   }
 
-  def load(): GameModel = {
+  def load(): Option[GameModel] = {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
-    val response = Await.result(Http().singleRequest(HttpRequest(uri = "http://localhost:8081/fileio/load")), 10.seconds)
+    var response = HttpResponse()
+    try {
+      response = Await.result(Http().singleRequest(HttpRequest(
+        uri = "http://localhost:8081/fileio/load")),
+        5.seconds)
+    } catch {
+      case _: Exception =>
+        return None
+    }
     this.gameModel = Unmarshal(response).to[GameModel].value.get.get
-    this.gameModel
+    Some(this.gameModel)
   }
 
   def save(): Boolean = {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
-    Http().singleRequest(HttpRequest(uri = "http://localhost:8081/fileio/save", method = HttpMethods.POST, entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toJson.toString)))
-      .onComplete {
-        case Success(res) => println(res)
-        case Failure(_)   => sys.error("Error in FileIO service")
-      }
+    var response = HttpResponse()
+    try {
+      response = Await.result(Http().singleRequest(HttpRequest(
+        uri = "http://localhost:8081/fileio/save",
+        method = HttpMethods.POST,
+        entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toJson.toString)
+      )), 5.seconds)
+    } catch {
+      case _: Exception =>
+        return false
+    }
+    if(!Unmarshal(response).to[String].value.get.get.equalsIgnoreCase("true"))
+      return false
     true
   }
 

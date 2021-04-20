@@ -10,7 +10,7 @@ import scala.swing.Publisher
 trait ControllerInterface extends Publisher {
   def initializeStations(stationsSource: String): Boolean
   def initialize(nPlayer: Int = 3): GameModel
-  def load(): GameModel
+  def load(): Option[GameModel]
   def save(): Boolean
   def move(newPosition: Int, ticketType: TicketType): GameModel
   def undoMove(): GameModel

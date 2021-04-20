@@ -89,7 +89,7 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
           if(controller.save()) {
             Dialog.showMessage(this, "Game successfully saved!", "Saved")
           } else {
-            Dialog.showMessage(this, "An Error occurred! The game was not saved!", "Save", Dialog.Message.Error)
+            Dialog.showMessage(this, "An Error occurred! The game was not saved!\nIs the FileIO service running?", "Save", Dialog.Message.Error)
           }
         })
         contents += new MenuItem(Action("Exit") {

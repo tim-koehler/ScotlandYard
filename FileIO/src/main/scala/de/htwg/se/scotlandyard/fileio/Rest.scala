@@ -43,7 +43,7 @@ object Rest {
         },
         path("fileio" / "load") {
           get {
-            complete(fileIoJson.load("stations.json"))
+            complete(fileIoJson.load())
           }
         }
       )

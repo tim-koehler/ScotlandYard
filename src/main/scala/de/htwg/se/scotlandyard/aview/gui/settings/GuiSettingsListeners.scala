@@ -62,12 +62,12 @@ class GuiSettingsListeners(controller: ControllerInterface, gui: Gui) {
   def addLoadButtonListener(reactions: Reactions): Unit = {
     reactions += {
       case e: ButtonClicked =>
-        Try(controller.load()) match {
-          case Success(v) => Dialog.showMessage(gui, "Game successfully Loaded!", "Load");
-
+        controller.load() match {
+          case Some(s) =>
+            Dialog.showMessage(gui, "Game successfully Loaded!", "Load");
             controller.startGame()
-          case Failure(e) => Dialog.showMessage(gui, "An Error occured! The game was not loaded!", "Load", Dialog.Message.Error);
-            e.printStackTrace() // for debug purpose
+          case None =>
+            Dialog.showMessage(gui, "An Error occured! The game was not loaded!\nIs the FileIO service running?", "Load", Dialog.Message.Error);
         }
     }
   }
