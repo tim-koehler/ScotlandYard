@@ -5,13 +5,11 @@ import akka.actor.typed.scaladsl.Behaviors
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-import de.htwg.se.scotlandyard.fileio.FileIOInterface
-import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{HttpMethod, HttpMethods, HttpRequest, HttpResponse}
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethod, HttpMethods, HttpRequest, HttpResponse}
 import akka.http.scaladsl.server.Directives.as
 
 import java.awt.Color
@@ -39,10 +37,13 @@ class Controller extends ControllerInterface with Publisher {
   }
 
   def initialize(nPlayers: Int = 3): GameModel = {
-    gameModel = gameInitializer.initialize(nPlayers, this.stationsSource)
+    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
+    implicit val executionContext = system.executionContext
+
+    val response = Await.result(Http().singleRequest(HttpRequest(uri = "http://localhost:8082/initialize/load?" + nPlayers)), 10.seconds)
+    this.gameModel = Unmarshal(response).to[GameModel].value.get.get
     publish(new NumberOfPlayersChanged)
-    this.gameModel = gameModel
-    gameModel
+    this.gameModel
   }
 
   def load(): GameModel = {
@@ -57,8 +58,7 @@ class Controller extends ControllerInterface with Publisher {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8081/fileio/save", method = HttpMethods.POST, entity = this.gameModel))
-    responseFuture
+    Http().singleRequest(HttpRequest(uri = "http://localhost:8081/fileio/save", method = HttpMethods.POST, entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toJson.toString)))
       .onComplete {
         case Success(res) => println(res)
         case Failure(_)   => sys.error("Error in FileIO service")

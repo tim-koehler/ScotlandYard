@@ -1,7 +1,5 @@
 package de.htwg.se.scotlandyard.controller
 
-import de.htwg.se.scotlandyard.fileio.FileIOInterface
-import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.model.{GameModel, Station}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
