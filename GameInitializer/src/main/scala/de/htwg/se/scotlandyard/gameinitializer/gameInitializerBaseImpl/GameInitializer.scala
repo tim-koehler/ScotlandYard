@@ -48,15 +48,6 @@ class GameInitializer() extends GameInitializerInterface {
     this.colorList
   }
 
-  def initDetectiveFromLoad(name: String, stationNumber: Int, tickets: Tickets, color: Color, stations: Vector[Station]): Player = {
-    val station = stations(stationNumber)
-    Detective(station, name, color, tickets)
-  }
-
-   def initMrXFromLoad(name: String, stationNumber: Int, isVisible: Boolean, lastSeen: String, tickets: Tickets, history: List[TicketType], stations: Vector[Station]): MrX = {
-    MrX(station = stations(stationNumber), name = name, isVisible = isVisible, lastSeen = lastSeen, tickets = tickets, history = history)
-  }
-
   private def initStations(stationsSource: String): Vector[Station] = {
     val stations = stationsSource.parseJson.convertTo[Vector[Station]]
     stations.sortWith((s: Station, t: Station) => s.number < t.number)
