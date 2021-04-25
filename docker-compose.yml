@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  gameinitializer:
+    build: "./GameInitializer"
+    restart: "no"
+    expose:
+      - "8080"
+    volumes:
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+  fileio:
+      build: "./FileIO"
+      restart: "no"
+      expose:
+        - "8080"
+      volumes:
+          - "/etc/timezone:/etc/timezone:ro"
+          - "/etc/localtime:/etc/localtime:ro"
+  main:
+      build: "."
+      restart: "no"
+      expose:
+        - "8080"
+      environment:
+          DISPLAY: unix$DISPLAY
+      volumes:
+          - "/etc/timezone:/etc/timezone:ro"
+          - "/etc/localtime:/etc/localtime:ro"
+          - "/tmp/.X11-unix:/tmp/.X11-unix"
