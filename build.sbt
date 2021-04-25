@@ -35,8 +35,7 @@ lazy val fileIoProject = (project in file("FileIO")).settings(
   name := "fileIoProject",
 )
 
-//lazy val modelRef = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "modelProject")
-lazy val scotlandYardBase = (project in file("."))./*dependsOn(modelProject).aggregate(modelProject).*/settings(
+lazy val scotlandYardBase = (project in file(".")).dependsOn(modelProject).aggregate(modelProject).settings(
   name := "ScotlandYard",
   libraryDependencies ++= commonDependencies,
   assemblyMergeStrategy in assembly := {
