@@ -21,18 +21,19 @@ parallelExecution in Test := false
 coverageExcludedPackages := "<empty>;.*aview.*;.*ScotlandYard;.*controllerMockImpl.*;.*fileIOMockImpl.*;.*gameInitializerMockImpl.*"
 coverageEnabled.in(Test, test) := true
 
-//ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
+ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
 
-/*lazy val gameInitializerProject = (project in file("GameInitializer")).settings(
+lazy val gameInitializerProject = (project in file("GameInitializer")).settings(
   name := "gameInitializerProject",
-)*/
+)
+
 lazy val modelProject = (project in file("Model")).settings(
   name := "modelProject",
 )
 
-/*lazy val fileIoProject = (project in file("FileIO")).settings(
+lazy val fileIoProject = (project in file("FileIO")).settings(
   name := "fileIoProject",
-)*/
+)
 
 //lazy val modelRef = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "modelProject")
 lazy val scotlandYardBase = (project in file("."))./*dependsOn(modelProject).aggregate(modelProject).*/settings(

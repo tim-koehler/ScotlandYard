@@ -12,7 +12,7 @@ val commonDependencies = Seq(
   "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion
 )
 
-lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "model")
+lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "modelProject")
 lazy val gameInitializer = (project in file(".")).dependsOn(model).aggregate(model).settings(
   name          := "scotland-yard-gameinitializer",
   organization  := "de.htwg.se",
