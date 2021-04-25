@@ -23,6 +23,11 @@ coverageEnabled.in(Test, test) := true
 
 ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
 
+lazy val gameInitializerProject = (project in file("./GameInitializer"))
+lazy val modelProject = (project in file("./Model"))
+lazy val fileIoProject = (project in file("./Fileio"))
+
+
 lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "model")
 lazy val scotlandYardBase = (project in file(".")).dependsOn(model).aggregate(model).settings(
   name := "ScotlandYard",
