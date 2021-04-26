@@ -39,19 +39,21 @@ object Rest {
     val route = Route.seal(
       concat(
         // GET REQUESTS
-
         path("initialize") {
           parameters("nPlayer") { (nPlayer) => {
             val stationsSource: String = Source.fromFile("./resources/stations.json").getLines.mkString
             complete(gameInitializer.initialize(nPlayer.toInt, stationsSource).toJson)
           }
           }
+        },
+        path("health") {
+          complete("Alive")
         }
       )
     )
 
 
-    Http().newServerAt("localhost", 8082).bind(route)
-    println(s"Server online at http://localhost:8082/")
+    Http().newServerAt("0.0.0.0", 8080).bind(route)
+    println(s"Server online at http://localhost:8080/")
   }
 }

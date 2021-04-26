@@ -7,24 +7,40 @@ services:
     expose:
       - "8080"
     volumes:
-        - "/etc/timezone:/etc/timezone:ro"
-        - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   fileio:
       build: "./FileIO"
       restart: "no"
       expose:
         - "8080"
       volumes:
-          - "/etc/timezone:/etc/timezone:ro"
-          - "/etc/localtime:/etc/localtime:ro"
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+      healthcheck:
+        test: [ "CMD", "curl", "-f", "http://localhost:8080/health" ]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
   main:
       build: "."
-      restart: "no"
-      expose:
-        - "8080"
+      restart: "on-failure"
+      ports:
+        - "8080:8080"
+      depends_on:
+        - gameinitializer
+        - fileio
+
       environment:
           DISPLAY: unix$DISPLAY
       volumes:
-          - "/etc/timezone:/etc/timezone:ro"
-          - "/etc/localtime:/etc/localtime:ro"
-          - "/tmp/.X11-unix:/tmp/.X11-unix"
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+        - "/tmp/.X11-unix:/tmp/.X11-unix"

@@ -44,7 +44,7 @@ class Controller extends ControllerInterface with Publisher {
     var response = HttpResponse()
     try {
       response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://localhost:8082/initialize?nPlayer=" + nPlayers)),
+        uri = "http://gameinitializer:8080/initialize?nPlayer=" + nPlayers)),
         5.seconds)
     } catch {
       case _: Exception =>
@@ -63,7 +63,7 @@ class Controller extends ControllerInterface with Publisher {
     var response = HttpResponse()
     try {
       response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://localhost:8081/fileio/load")),
+        uri = "http://fileio:8080/fileio/load")),
         5.seconds)
     } catch {
       case _: Exception =>
@@ -80,7 +80,7 @@ class Controller extends ControllerInterface with Publisher {
     var response = HttpResponse()
     try {
       response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://localhost:8081/fileio/save",
+        uri = "http://fileio:8080/fileio/save",
         method = HttpMethods.POST,
         entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toJson.toString)
       )), 5.seconds)
