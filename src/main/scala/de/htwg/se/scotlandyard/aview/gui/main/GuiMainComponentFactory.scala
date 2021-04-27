@@ -93,7 +93,7 @@ class GuiMainComponentFactory(controller: ControllerInterface, gui: Gui) {
           }
         })
         contents += new MenuItem(Action("Exit") {
-          System.exit(0)
+          Runtime.getRuntime().halt(0)
         })
       }
       contents += new Menu("Options") {

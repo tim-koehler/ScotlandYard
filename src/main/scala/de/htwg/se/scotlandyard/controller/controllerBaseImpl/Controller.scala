@@ -49,7 +49,7 @@ class Controller extends ControllerInterface with Publisher {
     } catch {
       case _: Exception =>
         println("\n\n!!!GameInitializer service unavailable!!!\n\n")
-        System.exit(-1)
+        Runtime.getRuntime().halt(-1)
     }
     this.gameModel = Unmarshal(response).to[GameModel].value.get.get
     publish(new NumberOfPlayersChanged)
