@@ -1,20 +1,21 @@
-package de.htwg.se.scotlandyard.fileio.fileIOJsonImpl
+package de.htwg.se.scotlandyard.persistence.fileio.fileIOJsonImpl
 
 import java.awt.Color
 import java.io._
 import com.google.inject.Inject
-import de.htwg.se.scotlandyard.fileio.FileIOInterface
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+import de.htwg.se.scotlandyard.persistence.PersistenceInterface
 import spray.json.enrichAny
 import spray.json._
+
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
-class FileIO() extends FileIOInterface {
+class FileIO() extends PersistenceInterface {
   var pathname = "ScotlandYard.json"
 
   override def load(): GameModel = {

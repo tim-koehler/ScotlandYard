@@ -1,19 +1,11 @@
-package de.htwg.se.scotlandyard.fileio
+package de.htwg.se.scotlandyard.persistence
 
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
-import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Directives.{as, complete, concat, entity, get, path, post}
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
-import de.htwg.se.scotlandyard.fileio.fileIOJsonImpl.FileIO
-import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat
-import de.htwg.se.scotlandyard.model.{GameModel, Station}
-import de.htwg.se.scotlandyard.model.JsonProtocol._
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
-import spray.json.enrichAny
-
-import scala.io.{Source, StdIn}
+import de.htwg.se.scotlandyard.model.GameModel
 
 object Rest {
   def main(args: Array[String]): Unit = {
@@ -30,7 +22,7 @@ object Rest {
           complete("server shit its pants, big time")
       }
 
-    val fileIoJson = new de.htwg.se.scotlandyard.fileio.fileIOJsonImpl.FileIO()
+    val fileIoJson = new de.htwg.se.scotlandyard.persistence.fileio.fileIOJsonImpl.FileIO()
 
     val route = Route.seal(
       concat(

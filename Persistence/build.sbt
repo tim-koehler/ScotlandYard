@@ -14,7 +14,7 @@ val commonDependencies = Seq(
 
 lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "modelProject")
 lazy val fileIO = (project in file(".")).dependsOn(model).aggregate(model).settings(
-  name          := "scotland-yard-fileio",
+  name          := "scotland-yard-persistence",
   organization  := "de.htwg.se",
   version       := "0.1.0",
   scalaVersion  := "2.13.0",
