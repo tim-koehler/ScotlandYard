@@ -37,7 +37,9 @@ object Rest {
     val route = Route.seal(
       concat(
         // GET REQUESTS
-
+        path("health") {
+          complete("alive")
+        },
         path("currentPlayer") {
           complete(controller.getCurrentPlayer)
         },

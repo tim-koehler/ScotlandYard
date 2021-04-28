@@ -47,6 +47,7 @@ object Rest {
           }
         },
         path("health") {
+          println("Healtcheck hit")
           complete("Alive")
         }
       )
