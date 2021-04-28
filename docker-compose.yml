@@ -15,8 +15,8 @@ services:
       timeout: 3s
       retries: 3
 
-  fileio:
-    build: "./FileIO"
+  persistence:
+    build: "./Persistence"
     restart: "on-failure"
     expose:
       - "8080"
@@ -29,6 +29,16 @@ services:
       timeout: 3s
       retries: 3
 
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: scotty4life
+      PGDATA: /data
+    ports:
+      - 5432:5432
+    volumes:
+      - "/tmp/ScottyPostgres:/data"
+
   main:
     build: "."
     restart: "on-failure"
@@ -36,7 +46,7 @@ services:
       - "8080:8080"
     depends_on:
       - gameinitializer
-      - fileio
+      - persistence
     environment:
       DISPLAY: unix$DISPLAY
     volumes:
