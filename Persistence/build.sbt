@@ -1,7 +1,7 @@
 val AkkaVersion = "2.6.8"
 val AkkaHttpVersion = "10.2.4"
 
-val reslver = Seq(
+val resolver = Seq(
   ("Typesafe Releases" at "http://repo.typesafe.com/typesafe/maven-releases/").withAllowInsecureProtocol(true)
 )
 
@@ -16,15 +16,17 @@ val commonDependencies = Seq(
   "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
   "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion,
   "com.typesafe.slick" %% "slick" % "3.3.3",
-  "org.postgresql" % "postgresql" % "42.2.14"
+  "org.slf4j" % "slf4j-nop" % "1.6.4",
+  "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3",
+  "org.postgresql" % "postgresql" % "42.2.14",
 )
 
 lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "modelProject")
-lazy val fileIO = (project in file(".")).dependsOn(model).aggregate(model).settings(
+lazy val persistence = (project in file(".")).dependsOn(model).aggregate(model).settings(
   name          := "scotland-yard-persistence",
   organization  := "de.htwg.se",
   version       := "0.1.0",
   scalaVersion  := "2.13.0",
-  resolvers     ++= reslver,
+  resolvers     ++= resolver,
   libraryDependencies ++= commonDependencies,
 )
