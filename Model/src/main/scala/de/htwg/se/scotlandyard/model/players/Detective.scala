@@ -7,6 +7,7 @@ import java.awt.Color
 case class Detective(override val station: Station = Station(),
                      override val name: String = "DtX",
                      override val color: Color = Color.LIGHT_GRAY,
+                     isStuck: Boolean = false,
                      override val tickets: Tickets = Tickets()) extends Player(station, name, color, tickets, playerType = Some(PlayerTypes.DETECTIVE)) {
 
   override def setPlayerName(player: Player, newName: String): Player = {

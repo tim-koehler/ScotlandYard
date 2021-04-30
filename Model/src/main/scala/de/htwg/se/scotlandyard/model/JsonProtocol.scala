@@ -128,6 +128,7 @@ object JsonProtocol extends DefaultJsonProtocol {
       "name" -> JsString(detective.name),
       "color" -> JsString(String.format("#%02x%02x%02x", detective.color.getRed, detective.color.getGreen, detective.color.getBlue)),
       "tickets" -> detective.tickets.toJson,
+      "isStuck" -> detective.isStuck.toJson,
       "playerType" -> detective.playerType.get.toString.toJson)
 
     def read(value: JsValue): Detective = {
@@ -136,12 +137,14 @@ object JsonProtocol extends DefaultJsonProtocol {
         "name",
         "color",
         "tickets",
+        "isStuck"
       ) match {
         case Seq(station,
         JsString(name),
         JsString(color),
-        tickets) =>
-          Detective(station.convertTo[Station], name, Color.decode(color), tickets.convertTo[Tickets])
+        tickets,
+        JsBoolean(isStuck)) =>
+          Detective(station.convertTo[Station], name, Color.decode(color), isStuck, tickets.convertTo[Tickets])
         case _ => throw DeserializationException("Detective expected")
       }
     }
@@ -173,7 +176,6 @@ object JsonProtocol extends DefaultJsonProtocol {
       "win" -> JsBoolean(gameModel.win),
       "gameRunning" -> JsBoolean(gameModel.gameRunning),
       "winningPlayer" -> gameModel.winningPlayer.toJson,
-      "stuckPlayers" -> gameModel.stuckPlayers.toJson,
       "allPlayerStuck" -> JsBoolean(gameModel.allPlayerStuck),
       "winningRound" -> JsNumber(gameModel.WINNING_ROUND),
       "mrxVisibleRounds" -> gameModel.MRX_VISIBLE_ROUNDS.toJson)
@@ -211,7 +213,6 @@ object JsonProtocol extends DefaultJsonProtocol {
             win,
             gameRunning,
             winningPlayer.convertTo[Player],
-            stuckPlayers.convertTo[Set[Detective]],
             allPlayerStuck,
             WINNING_ROUND = winningRound.toInt,
             MRX_VISIBLE_ROUNDS = mrxVisibleRounds.convertTo[Vector[Int]])

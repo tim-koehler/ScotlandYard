@@ -14,7 +14,6 @@ case class GameModel(
                       win: Boolean = false,
                       gameRunning: Boolean = false,
                       winningPlayer: Player = Detective(),
-                      stuckPlayers: Set[Detective] = Set(),
                       allPlayerStuck: Boolean = false,
                       WINNING_ROUND: Int = 24, //24
                       MRX_VISIBLE_ROUNDS: Vector[Int] = Vector(3, 8, 13, 18, 24)
@@ -60,10 +59,6 @@ case class GameModel(
     val round = modFunc(gameModel.round)
     val totalRound = (round.toDouble / gameModel.players.length.toDouble).ceil.toInt
     gameModel.copy(round = round, totalRound = totalRound)
-  }
-
-  def addStuckPlayer(gameModel: GameModel, player: Detective): GameModel = {
-    gameModel.copy(stuckPlayers = gameModel.stuckPlayers + player)
   }
 
   def setAllPlayersStuck(gameModel: GameModel): GameModel = {
