@@ -92,7 +92,7 @@ class Postgres extends PersistenceInterface {
   override def load(): GameModel = ???
 
   override def save(gameModel: GameModel): Boolean = {
-    val db = Database.forURL("jdbc:postgresql://localhost/scotlandyard", user = "postgres", password = "scotty4life", driver = "org.postgresql.Driver")
+    val db = Database.forURL("jdbc:postgresql://postgres/scotlandyard", user = "postgres", password = "scotty4life", driver = "org.postgresql.Driver")
 
     var playersSeq: Seq[(Int, Int, String, String, String, Boolean)] = Seq()
     var ticketsSeq: Seq[(Int, Int, Int, Int, Int)] = Seq()

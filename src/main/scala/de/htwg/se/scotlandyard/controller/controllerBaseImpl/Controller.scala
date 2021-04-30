@@ -63,7 +63,7 @@ class Controller extends ControllerInterface with Publisher {
     var response = HttpResponse()
     try {
       response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://persistence:8080/fileio/load")),
+        uri = "http://persistence:8080/load")),
         5.seconds)
     } catch {
       case _: Exception =>
@@ -80,7 +80,7 @@ class Controller extends ControllerInterface with Publisher {
     var response = HttpResponse()
     try {
       response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://persistence:8080/fileio/save",
+        uri = "http://persistence:8080/save",
         method = HttpMethods.POST,
         entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toJson.toString)
       )), 5.seconds)
