@@ -26,8 +26,8 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     gameModelTmp = updateMrXVisibility(gameModelTmp)
     gameModelTmp = gameModelTmp.updateRound(gameModelTmp, incrementValue)
     if (!checkIfPlayerIsAbleToMove(gameModelTmp)) {
-      gameModelTmp = gameModelTmp.addStuckPlayer(gameModelTmp, gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round).asInstanceOf[Detective])
-      if (gameModelTmp.stuckPlayers.size == gameModelTmp.players.size - 1) {
+      gameModelTmp.players(gameModelTmp.getCurrentPlayerIndex(gameModelTmp.players, gameModelTmp.round)).asInstanceOf[Detective].copy(isStuck = true)
+      if (gameModelTmp.getDetectives(gameModelTmp.players).count(p => p.isStuck) == gameModelTmp.players.size - 1) {
         gameModelTmp = gameModelTmp.setAllPlayersStuck(gameModelTmp)
       } else {
         gameModelTmp = nextRound(gameModelTmp)
