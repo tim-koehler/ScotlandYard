@@ -15,7 +15,6 @@ object TicketType extends Enumeration {
   }
 
   def parse(ticket: String): TicketType = {
-    println(ticket)
     ticket match {
       case "Taxi" => TicketType.Taxi
       case "Bus" => TicketType.Bus

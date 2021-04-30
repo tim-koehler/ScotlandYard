@@ -10,119 +10,95 @@ import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class Postgres extends PersistenceInterface{
+class Postgres extends PersistenceInterface {
 
-    class StuckPlayers(tag: Tag) extends Table[(Int, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean)](tag, "Stations") {
-      def id = column[Int]("ID")
+  class Stations(tag: Tag) extends Table[(Int, Boolean, Int, Int, Int, Int)](tag, "Stations") {
+    def number = column[Int]("STATION_NUMBER", O.PrimaryKey) // This is the primary key column
 
-      def mrx = column[Boolean]("MRX")
-      def detective1 = column[Boolean]("DETECTIVE1")
-      def detective2 = column[Boolean]("DETECTIVE2")
-      def detective3 = column[Boolean]("DETECTIVE3")
-      def detective4 = column[Boolean]("DETECTIVE4")
-      def detective5 = column[Boolean]("DETECTIVE5")
-      def detective6 = column[Boolean]("DETECTIVE6")
+    def blackStation = column[Boolean]("BLACK_STATION")
 
-      def * = (id, mrx, detective1, detective2, detective3, detective4, detective5, detective6)
-    }
+    def tuiX = column[Int]("TUIX")
 
-    val stuckPlayers = TableQuery[StuckPlayers]
+    def tuiY = column[Int]("TUIY")
 
-    class Stations(tag: Tag) extends Table[(Int, Boolean, Int, Int, Int, Int)](tag, "Stations") {
-      def number = column[Int]("STATION_NUMBER", O.PrimaryKey) // This is the primary key column
+    def guiX = column[Int]("GUIX")
 
-      def blackStation = column[Boolean]("BLACK_STATION")
+    def guiY = column[Int]("GUIY")
 
-      def tuiX = column[Int]("TUIX")
+    // Every table needs a * projection with the same type as the table's type parameter
+    def * = (number, blackStation, tuiX, tuiY, guiX, guiY)
+  }
 
-      def tuiY = column[Int]("TUIY")
+  val stations = TableQuery[Stations]
 
-      def guiX = column[Int]("GUIX")
+  class GeneralData(tag: Tag) extends Table[(Int, Int, Int, Boolean, Boolean, Int, Boolean, Int)](tag, "GeneralData") {
+    def id = column[Int]("ID")
 
-      def guiY = column[Int]("GUIY")
+    def round = column[Int]("ROUND")
 
-      // Every table needs a * projection with the same type as the table's type parameter
-      def * = (number, blackStation, tuiX, tuiY, guiX, guiY)
-    }
+    def totalRound = column[Int]("TOTALROUND")
 
-    val stations = TableQuery[Stations]
+    def win = column[Boolean]("WIN")
 
-    class GeneralData(tag: Tag) extends Table[(Int, Int, Int, Boolean, Boolean, Int, Boolean, Int)](tag, "Stations") {
-      def id = column[Int]("ID")
+    def gameRunning = column[Boolean]("GAMERUNNING")
 
-      def round = column[Int]("ROUND")
+    def winningPlayer = column[Int]("WINNINGPLAYER")
 
-      def totalRound = column[Int]("TOTALROUND")
+    def allPlayerStuck = column[Boolean]("ALLPLAYERSTUCK")
 
-      def win = column[Boolean]("WIN")
+    def winningRound = column[Int]("WINNINGROUND")
 
-      def gameRunning = column[Boolean]("GAMERUNNING")
-
-      def winningPlayer = column[Int]("WINNINGPLAYER")
-
-      def allPlayerStuck = column[Boolean]("ALLPLAYERSTUCK")
-
-      def winningRound = column[Int]("WINNINGROUND")
-
-      def * = (id, round, totalRound, win, gameRunning, winningPlayer, allPlayerStuck, winningRound)
-
-      def stuckPlayer = foreignKey("STUCKPLAYERS_FK", id, stuckPlayers)(_.id)
-    }
+    def * = (id, round, totalRound, win, gameRunning, winningPlayer, allPlayerStuck, winningRound)
+  }
 
   val generalData = TableQuery[GeneralData]
 
-    class Tickets(tag: Tag) extends Table[(Int, Int, Int, Int, Int)](tag, "Stations") {
-      def id = column[Int]("ID", O.PrimaryKey)
+  class Tickets(tag: Tag) extends Table[(Int, Int, Int, Int, Int)](tag, "Tickets") {
+    def id = column[Int]("ID", O.PrimaryKey)
 
-      def taxiTickets = column[Int]("TAXITICKETS")
+    def taxiTickets = column[Int]("TAXITICKETS")
 
-      def busTickets = column[Int]("BUSTICKETS")
+    def busTickets = column[Int]("BUSTICKETS")
 
-      def undergroundTickets = column[Int]("UNDERGROUNDTICKETS")
+    def undergroundTickets = column[Int]("UNDERGROUNDTICKETS")
 
-      def blackTickets = column[Int]("BLACKTICKETS")
+    def blackTickets = column[Int]("BLACKTICKETS")
 
-      def * = (id, taxiTickets, busTickets, undergroundTickets, blackTickets)
-    }
+    def * = (id, taxiTickets, busTickets, undergroundTickets, blackTickets)
+  }
 
-    val tickets = TableQuery[Tickets]
+  val tickets = TableQuery[Tickets]
 
-    class Players(tag: Tag) extends Table[(Int, Int, String, String, String)](tag, "Stations") {
-      def id = column[Int]("ID")
+  class Players(tag: Tag) extends Table[(Int, Int, String, String, String, Boolean)](tag, "Players") {
+    def id = column[Int]("ID")
 
-      def station = column[Int]("STATION")
+    def station = column[Int]("STATION")
 
-      def name = column[String]("NAME")
+    def name = column[String]("NAME")
 
-      def color = column[String]("COLOR")
+    def color = column[String]("COLOR")
 
-      def playerType = column[String]("PLAYERTYPE")
+    def playerType = column[String]("PLAYERTYPE")
 
-      def * = (id, station, name, color, playerType)
+    def isStuck = column[Boolean]("ISSTUCK")
 
-      def playerTickets = foreignKey("TICKETS_FK", id, tickets)(_.id)
-    }
+    def * = (id, station, name, color, playerType, isStuck)
 
-    val players = TableQuery[Players]
+    def playerTickets = foreignKey("TICKETS_FK", id, tickets)(_.id)
+  }
 
-
-
-
-  val db = Database.forConfig("postgres")
+  val players = TableQuery[Players]
 
   override def load(): GameModel = ???
 
   override def save(gameModel: GameModel): Boolean = {
+    val db = Database.forURL("jdbc:postgresql://localhost/scotlandyard", user = "postgres", password = "scotty4life", driver = "org.postgresql.Driver")
 
-    var playersSeq: Seq[(Int, Int, String, String, String)] = Seq()
+    var playersSeq: Seq[(Int, Int, String, String, String, Boolean)] = Seq()
     var ticketsSeq: Seq[(Int, Int, Int, Int, Int)] = Seq()
 
     for ((p, index) <- gameModel.players.zipWithIndex) {
-      playersSeq = playersSeq ++ Seq((index, p.station.number, p.name, String.format("#%02x%02x%02x", p.color.getRed, p.color.getGreen, p.color.getBlue), p.playerType.get.toString))
-    }
-
-    for ((p, index) <- gameModel.players.zipWithIndex) {
-      ticketsSeq = ticketsSeq ++ Seq((index, p.tickets.taxiTickets, p.tickets.busTickets, p.tickets.undergroundTickets, p.tickets.blackTickets))
+      playersSeq = playersSeq ++ Seq((index, p.station.number, p.name, String.format("#%02x%02x%02x", p.color.getRed, p.color.getGreen, p.color.getBlue), p.playerType.get.toString, false))
     }
 
     for ((p, index) <- gameModel.players.zipWithIndex) {
@@ -130,23 +106,21 @@ class Postgres extends PersistenceInterface{
     }
 
     val setup = DBIO.seq(
-      generalData.schema.create,
+      generalData.schema.createIfNotExists,
       //stations.schema.create,
-      players.schema.create,
-      tickets.schema.create,
-      stuckPlayers.schema.create,
+      tickets.schema.createIfNotExists,
+      players.schema.createIfNotExists,
 
       generalData += (0, gameModel.round, gameModel.totalRound, gameModel.win, gameModel.gameRunning, getPlayerIndex(gameModel.players, gameModel.winningPlayer), gameModel.allPlayerStuck, gameModel.WINNING_ROUND),
 
-      players ++= playersSeq,
       tickets ++= ticketsSeq,
-      stuckPlayers += (0, false, gameModel.stuckPlayers.contains(gameModel.players(1).asInstanceOf[Detective]), gameModel.stuckPlayers.contains(gameModel.players(2).asInstanceOf[Detective]), gameModel.stuckPlayers.contains(gameModel.players(3).asInstanceOf[Detective]), gameModel.stuckPlayers.contains(gameModel.players(4).asInstanceOf[Detective]), gameModel.stuckPlayers.contains(gameModel.players(5).asInstanceOf[Detective]), gameModel.stuckPlayers.contains(gameModel.players(6).asInstanceOf[Detective]))
+      players ++= playersSeq,
 
       // Equivalent SQL code:
       // insert into SUPPLIERS(SUP_ID, SUP_NAME, STREET, CITY, STATE, ZIP) values (?,?,?,?,?,?)
     )
 
-    val setupFuture = db.run(setup)
+    db.run(setup)
     true
   }
 
