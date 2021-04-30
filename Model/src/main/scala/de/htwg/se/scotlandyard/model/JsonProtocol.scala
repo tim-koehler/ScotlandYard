@@ -189,7 +189,6 @@ object JsonProtocol extends DefaultJsonProtocol {
         "win",
         "gameRunning",
         "winningPlayer",
-        "stuckPlayers",
         "allPlayerStuck",
         "winningRound",
         "mrxVisibleRounds",
@@ -201,7 +200,6 @@ object JsonProtocol extends DefaultJsonProtocol {
         JsBoolean(win),
         JsBoolean(gameRunning),
         winningPlayer,
-        stuckPlayers,
         JsBoolean(allPlayerStuck),
         JsNumber(winningRound),
         mrxVisibleRounds) =>
