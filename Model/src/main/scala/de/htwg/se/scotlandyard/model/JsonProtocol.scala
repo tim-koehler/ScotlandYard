@@ -128,7 +128,7 @@ object JsonProtocol extends DefaultJsonProtocol {
       "name" -> JsString(detective.name),
       "color" -> JsString(String.format("#%02x%02x%02x", detective.color.getRed, detective.color.getGreen, detective.color.getBlue)),
       "tickets" -> detective.tickets.toJson,
-      "isStuck" -> detective.isStuck.toJson,
+      "isStuck" -> JsBoolean(detective.isStuck),
       "playerType" -> detective.playerType.get.toString.toJson)
 
     def read(value: JsValue): Detective = {
