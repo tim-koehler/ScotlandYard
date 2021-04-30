@@ -26,8 +26,11 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
     gameModelTmp = updateMrXVisibility(gameModelTmp)
     gameModelTmp = gameModelTmp.updateRound(gameModelTmp, incrementValue)
     if (!checkIfPlayerIsAbleToMove(gameModelTmp)) {
-      gameModelTmp.players(gameModelTmp.getCurrentPlayerIndex(gameModelTmp.players, gameModelTmp.round)).asInstanceOf[Detective].copy(isStuck = true)
-      if (gameModelTmp.getDetectives(gameModelTmp.players).count(p => p.isStuck) == gameModelTmp.players.size - 1) {
+      val newPlayer = gameModelTmp.getCurrentPlayer(gameModelTmp.players, gameModelTmp.round).asInstanceOf[Detective].copy(isStuck = true)
+      gameModelTmp = gameModelTmp.copy(
+        players = gameModelTmp.players.updated(gameModelTmp.getCurrentPlayerIndex(gameModelTmp.players, gameModelTmp.round), newPlayer)
+      )
+      if (gameModelTmp.getDetectives(gameModelTmp.players).count(p => p.isStuck) == gameModelTmp.getDetectives(gameModelTmp.players).size) {
         gameModelTmp = gameModelTmp.setAllPlayersStuck(gameModelTmp)
       } else {
         gameModelTmp = nextRound(gameModelTmp)
