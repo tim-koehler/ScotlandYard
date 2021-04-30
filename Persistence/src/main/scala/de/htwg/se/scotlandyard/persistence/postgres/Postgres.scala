@@ -5,17 +5,24 @@ import de.htwg.se.scotlandyard.model.{GameModel, Station}
 import de.htwg.se.scotlandyard.persistence.PersistenceInterface
 import slick.dbio.DBIO
 import slick.jdbc.JdbcBackend.{Database, _}
-import de.htwg.se.scotlandyard.persistence.postgres.Schemas._
-
+import slick.jdbc.PostgresProfile.api._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class Postgres extends PersistenceInterface {
 
+  val db = Database.forURL("jdbc:postgresql://postgres/scotlandyard", user = "postgres", password = "scotty4life", driver = "org.postgresql.Driver")
+
+  val setup = DBIO.seq(
+    Schemas.generalData.schema.createIfNotExists,
+    //Schemas.stations.schema.createIfNotExists,
+    Schemas.tickets.schema.createIfNotExists,
+    Schemas.players.schema.createIfNotExists,
+  )
+  db.run(setup)
+
   override def load(): GameModel = ???
 
   override def save(gameModel: GameModel): Boolean = {
-    val db = Database.forURL("jdbc:postgresql://postgres/scotlandyard", user = "postgres", password = "scotty4life", driver = "org.postgresql.Driver")
-
     var playersSeq: Seq[(Int, Int, String, String, String, Boolean)] = Seq()
     var ticketsSeq: Seq[(Int, Int, Int, Int, Int)] = Seq()
 
@@ -27,19 +34,14 @@ class Postgres extends PersistenceInterface {
       ticketsSeq = ticketsSeq ++ Seq((index, p.tickets.taxiTickets, p.tickets.busTickets, p.tickets.undergroundTickets, p.tickets.blackTickets))
     }
 
-    val setup = DBIO.seq(
-      Schema.generalData.schema.createIfNotExists,
-      //stations.schema.create,
-      Schema.tickets.schema.createIfNotExists,
-      Schema.players.schema.createIfNotExists,
+    val insert = DBIO.seq(
+      Schemas.generalData += (0, gameModel.round, gameModel.totalRound, gameModel.win, gameModel.gameRunning, getPlayerIndex(gameModel.players, gameModel.winningPlayer), gameModel.allPlayerStuck, gameModel.WINNING_ROUND),
 
-      Schema.generalData += (0, gameModel.round, gameModel.totalRound, gameModel.win, gameModel.gameRunning, getPlayerIndex(gameModel.players, gameModel.winningPlayer), gameModel.allPlayerStuck, gameModel.WINNING_ROUND),
-
-      Schema.tickets ++= ticketsSeq,
-      Schema.players ++= playersSeq,
+      Schemas.tickets ++= ticketsSeq,
+      Schemas.players ++= playersSeq,
     )
 
-    db.run(setup)
+    db.run(insert)
     true
   }
 

@@ -7,7 +7,6 @@ import slick.jdbc.PostgresProfile.Table
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import slick.lifted.{TableQuery, Tag}
-import slick.jdbc.PostgresProfile.api._
 
 object Schemas {
   class Stations(tag: Tag) extends Table[(Int, Boolean, Int, Int, Int, Int)](tag, "Stations") {
