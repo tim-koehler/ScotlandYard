@@ -28,7 +28,7 @@ object Schemas {
 
   val stations = TableQuery[Stations]
 
-  class GeneralData(tag: Tag) extends Table[(Int, Int, Int, Boolean, Boolean, Int, Boolean, Int)](tag, "Genera") {
+  class General(tag: Tag) extends Table[(Int, Int, Int, Boolean, Boolean, Int, Boolean, Int)](tag, "General") {
     def id = column[Int]("id", O.PrimaryKey)
 
     def round = column[Int]("round")
@@ -48,7 +48,7 @@ object Schemas {
     def * = (id, round, totalRound, win, gameRunning, winningPlayer, allPlayerStuck, winningRound)
   }
 
-  val generalData = TableQuery[GeneralData]
+  val general = TableQuery[General]
 
   class Tickets(tag: Tag) extends Table[(Int, Int, Int, Int, Int)](tag, "Tickets") {
     def id = column[Int]("ID", O.PrimaryKey)
@@ -66,8 +66,10 @@ object Schemas {
 
   val tickets = TableQuery[Tickets]
 
-  class Players(tag: Tag) extends Table[(Int, Int, String, String, String, Boolean)](tag, "Players") {
+  class Players(tag: Tag) extends Table[(Int, Int, Int, String, String, String, Boolean)](tag, "Players") {
     def id = column[Int]("id")
+
+    def ticketsId = column[Int]("tickets_id")
 
     def station = column[Int]("station")
 
@@ -79,9 +81,9 @@ object Schemas {
 
     def isStuck = column[Boolean]("is_stuck")
 
-    def * = (id, station, name, color, playerType, isStuck)
+    def * = (id, ticketsId, station, name, color, playerType, isStuck )
 
-    def playerTickets = foreignKey("tickets_fk", id, tickets)(_.id)
+    def playerTickets = foreignKey("tickets_fk", ticketsId, tickets)(_.id)
   }
   val players = TableQuery[Players]
 

@@ -13,7 +13,7 @@ class Postgres extends PersistenceInterface {
   val db = Database.forURL("jdbc:postgresql://postgres/scotlandyard", user = "postgres", password = "scotty4life", driver = "org.postgresql.Driver")
 
   val setup = DBIO.seq(
-    Schemas.generalData.schema.createIfNotExists,
+    Schemas.general.schema.createIfNotExists,
     //Schemas.stations.schema.createIfNotExists,
     Schemas.tickets.schema.createIfNotExists,
     Schemas.players.schema.createIfNotExists,
@@ -23,11 +23,11 @@ class Postgres extends PersistenceInterface {
   override def load(): GameModel = ???
 
   override def save(gameModel: GameModel): Boolean = {
-    var playersSeq: Seq[(Int, Int, String, String, String, Boolean)] = Seq()
+    var playersSeq: Seq[(Int, Int, Int, String, String, String, Boolean)] = Seq()
     var ticketsSeq: Seq[(Int, Int, Int, Int, Int)] = Seq()
 
     for ((p, index) <- gameModel.players.zipWithIndex) {
-      playersSeq = playersSeq ++ Seq((index, p.station.number, p.name, String.format("#%02x%02x%02x", p.color.getRed, p.color.getGreen, p.color.getBlue), p.playerType.get.toString, false))
+      playersSeq = playersSeq ++ Seq((index, index, p.station.number, p.name, String.format("#%02x%02x%02x", p.color.getRed, p.color.getGreen, p.color.getBlue), p.playerType.get.toString, false))
     }
 
     for ((p, index) <- gameModel.players.zipWithIndex) {
@@ -35,8 +35,7 @@ class Postgres extends PersistenceInterface {
     }
 
     val insert = DBIO.seq(
-      Schemas.generalData += (0, gameModel.round, gameModel.totalRound, gameModel.win, gameModel.gameRunning, getPlayerIndex(gameModel.players, gameModel.winningPlayer), gameModel.allPlayerStuck, gameModel.WINNING_ROUND),
-
+      Schemas.general += (0, gameModel.round, gameModel.totalRound, gameModel.win, gameModel.gameRunning, getPlayerIndex(gameModel.players, gameModel.winningPlayer), gameModel.allPlayerStuck, gameModel.WINNING_ROUND),
       Schemas.tickets ++= ticketsSeq,
       Schemas.players ++= playersSeq,
     )
