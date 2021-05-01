@@ -86,12 +86,14 @@ object Schemas {
   val general = TableQuery[General]
 
   class GeneralPlayers(tag: Tag) extends Table[(Int, Int)](tag, "General_Players") {
-    def general_id = column[Int]("id", O.PrimaryKey)
 
-    def players_id = column[Int]("round", O.PrimaryKey)
+    def general_id = column[Int]("general_id")
 
+    def players_id = column[Int]("players_id")
 
     def * = (general_id, players_id)
+
+    def pk = primaryKey("pk_general_players", (general_id, players_id))
   }
 
   val generalPlayers = TableQuery[GeneralPlayers]
