@@ -36,17 +36,17 @@ class Postgres extends PersistenceInterface {
       if (index == 0) {
         blackTickets = p.asInstanceOf[MrX].tickets.blackTickets
       }
-      playersSeq = playersSeq ++ Seq((index, index, p.station.number, p.tickets.taxiTickets, p.tickets.busTickets, p.tickets.undergroundTickets, blackTickets, p.name, String.format("#%02x%02x%02x", p.color.getRed, p.color.getGreen, p.color.getBlue), p.playerType.get.toString, false))
+      playersSeq = playersSeq :+ (index, index, p.station.number, p.tickets.taxiTickets, p.tickets.busTickets, p.tickets.undergroundTickets, blackTickets, p.name, String.format("#%02x%02x%02x", p.color.getRed, p.color.getGreen, p.color.getBlue), p.playerType.get.toString, false)
     }
 
     // Insert general and players mapping
     for ((p, index) <- gameModel.players.zipWithIndex) {
-      generalPlayersSeq = generalPlayersSeq ++ Seq((0, index))
+      generalPlayersSeq = generalPlayersSeq :+ (0, index)
     }
 
     // Insert stations
     for (s <- gameModel.stations) {
-      stationsSeq = stationsSeq ++ Seq((s.number, s.blackStation, neighboursToString(s.neighbourTaxis), neighboursToString(s.neighbourBuses), neighboursToString(s.neighbourUndergrounds), neighboursToString(Set(0,1,2)), s.tuiCoordinates.x, s.tuiCoordinates.y, s.guiCoordinates.x, s.guiCoordinates.y))
+      stationsSeq = stationsSeq :+ (s.number, s.blackStation, neighboursToString(s.neighbourTaxis), neighboursToString(s.neighbourBuses), neighboursToString(s.neighbourUndergrounds), neighboursToString(Set(0,1,2)), s.tuiCoordinates.x, s.tuiCoordinates.y, s.guiCoordinates.x, s.guiCoordinates.y)
     }
 
     val insert = DBIO.seq(
@@ -58,7 +58,26 @@ class Postgres extends PersistenceInterface {
       Schemas.stations ++= stationsSeq,
     )
 
+    val insertGeneralPlayers = DBIO.sequence( generalPlayersSeq.map(current => {
+      Schemas.generalPlayers += current
+      })
+    )
+
+    val insertPlayers = DBIO.sequence( playersSeq.map(current => {
+      Schemas.players += current
+    })
+    )
+
+    val insertStations = DBIO.sequence( stationsSeq.map(current => {
+      Schemas.stations += current
+    })
+    )
+
     db.run(insert)
+    db.run(insertGeneralPlayers)
+    db.run(insertPlayers)
+    db.run(insertStations)
+
     true
   }
 
