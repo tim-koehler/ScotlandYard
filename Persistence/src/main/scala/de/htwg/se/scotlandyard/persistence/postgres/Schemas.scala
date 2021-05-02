@@ -1,6 +1,7 @@
 package de.htwg.se.scotlandyard.persistence.postgres
 
 
+import de.htwg.se.scotlandyard.model.players.MrX
 import slick.ast.ScalaBaseType.{booleanType, intType, stringType}
 import slick.lifted.{TableQuery, Tag}
 import slick.jdbc.PostgresProfile.Table
@@ -9,8 +10,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import slick.lifted.{TableQuery, Tag}
 
 object Schemas {
-  class Stations(tag: Tag) extends Table[(Int, Boolean, String, String, String, String, Int, Int, Int, Int)](tag, "Stations") {
+  class Stations(tag: Tag) extends Table[(Int, String, Boolean, String, String, String, String, Int, Int, Int, Int)](tag, "Stations") {
     def number = column[Int]("station_number", O.PrimaryKey) // This is the primary key column
+
+    def stationType = column[String]("station_type")
 
     def blackStation = column[Boolean]("black_station")
 
@@ -31,15 +34,12 @@ object Schemas {
     def guiY = column[Int]("gui_y")
 
     // Every table needs a * projection with the same type as the table's type parameter
-    def * = (number, blackStation, taxiNeighbours, busNeighbours, undergroundNeighbours, blackNeighbours, tuiX, tuiY, guiX, guiY)
+    def * = (number, stationType, blackStation, taxiNeighbours, busNeighbours, undergroundNeighbours, blackNeighbours, tuiX, tuiY, guiX, guiY)
   }
-
   val stations = TableQuery[Stations]
 
-  class Players(tag: Tag) extends Table[(Int, Int, Int, Int, Int, Int, Int, String, String, String, Boolean)](tag, "Players") {
+  class Players(tag: Tag) extends Table[(Int, Int, Int, Int, Int, Int, String, String, Boolean, String, String, String, Boolean)](tag, "Players") {
     def id = column[Int]("id", O.PrimaryKey)
-
-    def index = column[Int]("index")
 
     def station = column[Int]("station")
 
@@ -55,15 +55,21 @@ object Schemas {
 
     def color = column[String]("color")
 
+    def isVisible = column[Boolean]("is_visible")
+
+    def lastSeen = column[String]("last_seen")
+
+    def history = column[String]("history")
+
     def playerType = column[String]("player_type")
 
     def isStuck = column[Boolean]("is_stuck")
 
-    def * = (id, index, station, taxiTickets, busTickets, undergorundTickets, blackTickets, name, color, playerType, isStuck )
+    def * = (id, station, taxiTickets, busTickets, undergorundTickets, blackTickets, name, color, isVisible, lastSeen, history, playerType, isStuck )
   }
   val players = TableQuery[Players]
 
-  class General(tag: Tag) extends Table[(Int, Int, Int, Boolean, Boolean, Int, Boolean, Int)](tag, "General") {
+  class General(tag: Tag) extends Table[(Int, Int, Int, Boolean, Boolean, Int, Boolean, Int, String)](tag, "General") {
     def id = column[Int]("id", O.PrimaryKey)
 
     def round = column[Int]("round")
@@ -80,22 +86,9 @@ object Schemas {
 
     def winningRound = column[Int]("winning_round")
 
-    def * = (id, round, totalRound, win, gameRunning, winningPlayer, allPlayerStuck, winningRound)
-  }
+    def mrxVisibleRounds = column[String]("mrx_visible_rounds")
 
+    def * = (id, round, totalRound, win, gameRunning, winningPlayer, allPlayerStuck, winningRound, mrxVisibleRounds)
+  }
   val general = TableQuery[General]
-
-  class GeneralPlayers(tag: Tag) extends Table[(Int, Int)](tag, "General_Players") {
-
-    def general_id = column[Int]("general_id")
-
-    def players_id = column[Int]("players_id")
-
-    def * = (general_id, players_id)
-
-    def pk = primaryKey("pk_general_players", (general_id, players_id))
-  }
-
-  val generalPlayers = TableQuery[GeneralPlayers]
-
 }
