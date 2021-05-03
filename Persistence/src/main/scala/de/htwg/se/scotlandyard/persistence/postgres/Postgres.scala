@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.persistence.postgres
 
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
+import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player, PlayerTypes}
 import de.htwg.se.scotlandyard.model.{Coordinate, GameModel, Station, StationType, TicketType, Tickets}
 import de.htwg.se.scotlandyard.persistence.PersistenceInterface
 import slick.dbio.DBIO
@@ -9,6 +9,7 @@ import slick.jdbc.JdbcBackend.{Database, _}
 import slick.jdbc.PostgresProfile.api._
 
 import java.awt.Color
+import scala.:+
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 
@@ -52,7 +53,7 @@ class Postgres extends PersistenceInterface {
 
     var players: Vector[Player] = Vector()
     for (p <- playersSeq) {
-      if (p._1 == 0) {
+      if (p._12 == (PlayerTypes.MRX.toString)) {
         var history: List[TicketType] = List()
         if (!p._11.isEmpty) {
           history = p._11.split(",").map(TicketType.parse(_)).toList
@@ -85,9 +86,12 @@ class Postgres extends PersistenceInterface {
     var playersSeq: Seq[(Int, Int, Int, Int, Int, Int, String, String, Boolean, String, String, String, Boolean)] = Seq()
     var stationsSeq: Seq[(Int, String, Boolean, String, String, String, String, Int, Int, Int, Int)] = Seq()
 
+    Await.result(db.run(Schemas.players.delete), Duration.Inf)
+    Await.result(db.run(Schemas.general.delete), Duration.Inf)
+    Await.result(db.run(Schemas.stations.delete), Duration.Inf)
+
     // Insert Players
     for ((p, index) <- gameModel.players.zipWithIndex) {
-      var blackTickets = 0
       if (index == 0) {
         val mrx = p.asInstanceOf[MrX]
         playersSeq = playersSeq :+ (index, mrx.station.number, mrx.tickets.taxiTickets, mrx.tickets.busTickets, mrx.tickets.undergroundTickets, mrx.tickets.blackTickets, mrx.name, String.format("#%02x%02x%02x", mrx.color.getRed, mrx.color.getGreen, mrx.color.getBlue), mrx.isVisible, mrx.lastSeen, mrx.history.mkString(","), p.playerType.get.toString, false)
@@ -98,16 +102,12 @@ class Postgres extends PersistenceInterface {
 
     // Insert stations
     for (s <- gameModel.stations) {
-      stationsSeq = stationsSeq :+ (s.number, s.stationType.toString, s.blackStation, neighboursToString(s.neighbourTaxis), neighboursToString(s.neighbourBuses), neighboursToString(s.neighbourUndergrounds), neighboursToString(Set(0,1,2)), s.tuiCoordinates.x, s.tuiCoordinates.y, s.guiCoordinates.x, s.guiCoordinates.y)
+      stationsSeq = stationsSeq :+ (s.number, s.stationType.toString, s.blackStation, s.neighbourTaxis.mkString(","), s.neighbourBuses.mkString(","), s.neighbourUndergrounds.mkString(","), Set().mkString(","), s.tuiCoordinates.x, s.tuiCoordinates.y, s.guiCoordinates.x, s.guiCoordinates.y)
     }
 
     val insert = DBIO.seq(
-      // Insert general
       Schemas.general += (0, gameModel.round, gameModel.totalRound, gameModel.win, gameModel.gameRunning, getPlayerIndex(gameModel.players, gameModel.winningPlayer), gameModel.allPlayerStuck, gameModel.WINNING_ROUND, gameModel.MRX_VISIBLE_ROUNDS.mkString(",")),
-      Schemas.players ++= playersSeq,
-      Schemas.stations ++= stationsSeq,
     )
-
 
     val insertPlayers = DBIO.sequence( playersSeq.map(current => {
       Schemas.players += current
@@ -133,19 +133,5 @@ class Postgres extends PersistenceInterface {
       }
     }
     -1
-  }
-
-  private def neighboursToString(neighbours: Set[Int]): String = {
-    neighbours.mkString(",")
-  }
-
-  private def stringToNeighboursSet(neighboursString: String): Set[Int] = {
-    val neighbours = neighboursString.split(",")
-    var neighboursSet: Set[Int] = Set()
-
-    for (n <- neighbours) {
-      neighboursSet += n.toInt
-    }
-    neighboursSet
   }
 }

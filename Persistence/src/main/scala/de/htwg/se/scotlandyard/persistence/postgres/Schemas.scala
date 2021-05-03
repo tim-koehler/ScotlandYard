@@ -1,12 +1,8 @@
 package de.htwg.se.scotlandyard.persistence.postgres
 
-
-import de.htwg.se.scotlandyard.model.players.MrX
 import slick.ast.ScalaBaseType.{booleanType, intType, stringType}
-import slick.lifted.{TableQuery, Tag}
 import slick.jdbc.PostgresProfile.Table
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import slick.lifted.{TableQuery, Tag}
 
 object Schemas {
