@@ -41,7 +41,7 @@ class GameInitializer() extends GameInitializerInterface {
 
   override def initialize(nPlayers: Int = 3, stationsSource: String): GameModel = {
     val stations = initStations(stationsSource)
-    GameModel(stations = stations, players = initPlayers(nPlayers, stations), stuckPlayers = Set[Detective]())
+    GameModel(stations = stations, players = initPlayers(nPlayers, stations))
   }
   
   def getColorList(): Vector[Color] = {
@@ -57,7 +57,7 @@ class GameInitializer() extends GameInitializerInterface {
     val mrX = MrX(history = List(), station = stations(drawMisterXPosition()), tickets = Tickets(99, 99, 99, 5))
     var players = List[Player](mrX)
     for(i <- 1 until nPlayer) {
-      val detective = Detective(station = stations(drawDetectivePosition()), name = "Dt" + i, color = colorList(i), Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
+      val detective = Detective(station = stations(drawDetectivePosition()), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
       players = players ::: List(detective)
     }
     players.toVector

@@ -1,8 +1,9 @@
-package de.htwg.se.scotlandyard.fileio
+package de.htwg.se.scotlandyard.persistence
 
 import de.htwg.se.scotlandyard.model.GameModel
 
-trait FileIOInterface {
+trait PersistenceInterface {
   def load(): GameModel
+
   def save(gameModel: GameModel): Boolean
 }

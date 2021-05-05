@@ -1,6 +1,6 @@
-package de.htwg.se.scotlandyard.fileio
+package de.htwg.se.scotlandyard.persistence.fileio
 
-import de.htwg.se.scotlandyard.fileio.fileIOXmlImpl.FileIO
+import de.htwg.se.scotlandyard.persistence.fileio.fileIOXmlImpl.FileIO
 import de.htwg.se.scotlandyard.model.GameModel
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX}
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}

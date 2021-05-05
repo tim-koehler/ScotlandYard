@@ -31,8 +31,8 @@ lazy val modelProject = (project in file("Model")).settings(
   name := "modelProject",
 )
 
-lazy val fileIoProject = (project in file("FileIO")).settings(
-  name := "fileIoProject",
+lazy val persistenceProject = (project in file("Persistence")).settings(
+  name := "persistenceProject",
 )
 lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "modelProject")
 lazy val scotlandYardBase = (project in file(".")).dependsOn(model).aggregate(model).settings(
