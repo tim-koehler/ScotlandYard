@@ -39,11 +39,21 @@ services:
     volumes:
       - "../.ScottyDB:/data"
 
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: scotty4life
+    ports:
+      - 27017:27017
+    volumes:
+      - "../.ScottyDB_MongoDB:/data"
+
   main:
     build: "."
     restart: "on-failure"
     ports:
-      - "8080:8080"
+      - 8080:8080
     depends_on:
       - gameinitializer
       - persistence

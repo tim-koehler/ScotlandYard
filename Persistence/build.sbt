@@ -19,6 +19,7 @@ val commonDependencies = Seq(
   "org.slf4j" % "slf4j-nop" % "1.6.4",
   "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3",
   "org.postgresql" % "postgresql" % "42.2.14",
+  "org.mongodb.scala" %% "mongo-scala-driver" % "4.2.3"
 )
 
 lazy val model = ProjectRef(uri("https://github.com/tim-koehler/ScotlandYard.git"), "modelProject")
