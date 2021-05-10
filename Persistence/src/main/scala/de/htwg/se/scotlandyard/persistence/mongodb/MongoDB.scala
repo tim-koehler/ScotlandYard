@@ -36,6 +36,7 @@ class MongoDB extends PersistenceInterface{
   }
 
   override def delete(): Boolean = {
-    collection.deleteMany(new BasicDBObject()).results().isEmpty
+    collection.deleteMany(new BasicDBObject()).results()
+    true
   }
 }

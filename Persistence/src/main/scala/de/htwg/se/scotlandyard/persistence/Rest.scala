@@ -52,7 +52,7 @@ object Rest {
         },
         path("delete") {
           post {
-            complete(persistence.delete())
+            complete(persistence.delete().toString)
           }
         },
         path("health") {
