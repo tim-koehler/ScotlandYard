@@ -12,6 +12,7 @@ import java.awt.Color
 import scala.:+
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
+import scala.util.{Failure, Success, Try}
 
 
 class Postgres extends PersistenceInterface {
@@ -136,7 +137,10 @@ class Postgres extends PersistenceInterface {
       Schemas.stations.delete,
       Schemas.players.delete,
     )
-    db.run(delete).isCompleted
+    Try{Await.result(db.run(delete), Duration.Inf)} match {
+      case Success(res) => true
+      case Failure(e) => false
+    }
   }
 
   private def getPlayerIndex(players: Vector[Player], player: Player): Int = {

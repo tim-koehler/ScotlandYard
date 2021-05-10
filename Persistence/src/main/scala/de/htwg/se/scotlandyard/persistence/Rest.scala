@@ -3,7 +3,7 @@ package de.htwg.se.scotlandyard.persistence
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.server.Directives.{as, complete, concat, entity, get, path, post}
+import akka.http.scaladsl.server.Directives.{as, complete, concat, entity, get, path, post, delete}
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import com.google.inject.{Guice, Injector}
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
@@ -51,7 +51,7 @@ object Rest {
           }
         },
         path("delete") {
-          post {
+          delete {
             complete(persistence.delete().toString)
           }
         },
