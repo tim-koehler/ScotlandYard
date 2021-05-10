@@ -6,4 +6,8 @@ trait PersistenceInterface {
   def load(): GameModel
 
   def save(gameModel: GameModel): Boolean
+
+  def update(gameModel: GameModel): Boolean
+
+  def delete(): Boolean
 }

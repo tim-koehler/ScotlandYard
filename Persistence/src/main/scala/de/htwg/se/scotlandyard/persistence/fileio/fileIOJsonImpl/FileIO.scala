@@ -34,4 +34,16 @@ class FileIO() extends PersistenceInterface {
       case Failure(e) => false
     }
   }
+
+  override def update(gameModel: GameModel): Boolean = {
+    save(gameModel)
+  }
+
+  override def delete(): Boolean = {
+      val fileTemp = new File(pathname)
+      if (fileTemp.exists) {
+        fileTemp.delete()
+      }
+    true
+  }
 }

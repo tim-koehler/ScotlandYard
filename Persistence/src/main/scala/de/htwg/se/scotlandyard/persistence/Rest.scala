@@ -38,9 +38,21 @@ object Rest {
             }
           }
         },
+        post {
+          path("update") {
+            entity(as[GameModel]) { gameModel =>
+              complete(persistence.update(gameModel).toString)
+            }
+          }
+        },
         path("load") {
           get {
             complete(persistence.load())
+          }
+        },
+        path("delete") {
+          post {
+            complete(persistence.delete())
           }
         },
         path("health") {

@@ -30,4 +30,12 @@ class MongoDB extends PersistenceInterface{
     collection.deleteMany(new BasicDBObject()).results()
     collection.insertOne(Document(json = gameModel.toJson.toString())).results().nonEmpty
   }
+
+  override def update(gameModel: GameModel): Boolean = {
+    save(gameModel)
+  }
+
+  override def delete(): Boolean = {
+    collection.deleteMany(new BasicDBObject()).results().isEmpty
+  }
 }

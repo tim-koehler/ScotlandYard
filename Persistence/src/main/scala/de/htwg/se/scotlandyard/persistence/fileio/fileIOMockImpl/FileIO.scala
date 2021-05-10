@@ -8,4 +8,8 @@ class FileIO() extends PersistenceInterface{
   override def load(): GameModel = GameModel()
 
   override def save(gameModel: GameModel): Boolean = true
+
+  override def update(gameModel: GameModel): Boolean = true
+
+  override def delete(): Boolean = true
 }

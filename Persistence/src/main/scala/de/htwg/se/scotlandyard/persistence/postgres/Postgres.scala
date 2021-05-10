@@ -126,6 +126,19 @@ class Postgres extends PersistenceInterface {
     true
   }
 
+  override def update(gameModel: GameModel): Boolean = {
+    save(gameModel)
+  }
+
+  override def delete(): Boolean = {
+    val delete = DBIO.seq(
+      Schemas.general.delete,
+      Schemas.stations.delete,
+      Schemas.players.delete,
+    )
+    db.run(delete).isCompleted
+  }
+
   private def getPlayerIndex(players: Vector[Player], player: Player): Int = {
     for ((p, index) <- players.zipWithIndex) {
       if (p.name == player.name) {
