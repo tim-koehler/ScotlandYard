@@ -2,9 +2,7 @@ package de.htwg.se.scotlandyard.controller
 
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.controllerBaseImpl.Controller
-import de.htwg.se.scotlandyard.fileio.fileIOMockImpl.FileIO
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType}
-import de.htwg.se.scotlandyard.gameinitializer.gameInitializerMockImpl.GameInitializer
 import org.scalatest._
 
 import java.awt.Color
@@ -12,7 +10,7 @@ import scala.io.Source
 
 class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester with BeforeAndAfterEach {
 
-  val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
+  /*val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
   val gameInitializer = new GameInitializer()
   val controller = new Controller(gameInitializer, new FileIO())
   controller.initializeStations(stationsSource)
@@ -141,5 +139,5 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
         controller.save() should be(true)
       }
     }
-  }
+  }*/
 }

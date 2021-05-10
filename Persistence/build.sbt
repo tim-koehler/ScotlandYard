@@ -30,4 +30,11 @@ lazy val persistence = (project in file(".")).dependsOn(model).aggregate(model).
   scalaVersion  := "2.13.0",
   resolvers     ++= resolver,
   libraryDependencies ++= commonDependencies,
+  assemblyMergeStrategy in assembly := {
+    case PathList("reference.conf") => MergeStrategy.concat
+    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+    case x => MergeStrategy.first
+  },
+  assemblyJarName in assembly := "ScotlandYard-Persistence.jar",
+  mainClass in assembly := Some("de.htwg.se.scotlandyard.persistence.Rest")
 )
