@@ -19,4 +19,11 @@ lazy val gameInitializer = (project in file(".")).dependsOn(model).aggregate(mod
   version       := "0.1.0",
   scalaVersion  := "2.13.0",
   libraryDependencies ++= commonDependencies,
+  assemblyMergeStrategy in assembly := {
+    case PathList("reference.conf") => MergeStrategy.concat
+    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+    case x => MergeStrategy.first
+  },
+  assemblyJarName in assembly := "ScotlandYard-GameInitializer.jar",
+  mainClass in assembly := Some("de.htwg.se.scotlandyard.gameinitializer.Rest")
 )

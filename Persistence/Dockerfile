@@ -1,5 +1,6 @@
-FROM openjdk:11
+FROM openjdk:11 as build-stage
 ARG SBT_VERSION=1.3.7
+WORKDIR /build
 
 # Install sbt
 RUN \
@@ -9,7 +10,11 @@ RUN \
   apt-get update && \
   apt-get install -y sbt libxrender1 libxtst6 libxi6
 
+ADD . /build
+RUN sbt assembly
+
+FROM openjdk:11
+WORKDIR /app
+COPY --from=build-stage /build/target/scala-2.13/ScotlandYard-Persistence.jar ./
 EXPOSE 8080
-WORKDIR /Sources
-ADD . /Sources
-CMD sbt run
+CMD java -jar /app/ScotlandYard-Persistence.jar
