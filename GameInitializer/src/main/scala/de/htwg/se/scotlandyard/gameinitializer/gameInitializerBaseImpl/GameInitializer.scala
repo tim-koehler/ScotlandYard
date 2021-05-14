@@ -54,10 +54,22 @@ class GameInitializer() extends GameInitializerInterface {
   }
 
   private def initPlayers(nPlayer: Int, stations: Vector[Station]): Vector[Player] = {
+    /*
+    * Commented out, to get always the same starting positions for performance testing
+    *
     val mrX = MrX(history = List(), station = stations(drawMisterXPosition()), tickets = Tickets(99, 99, 99, 5))
     var players = List[Player](mrX)
     for(i <- 1 until nPlayer) {
       val detective = Detective(station = stations(drawDetectivePosition()), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
+      players = players ::: List(detective)
+    }
+    players.toVector
+     */
+
+    val mrX = MrX(history = List(), station = stations(35), tickets = Tickets(99, 99, 99, 5))
+    var players = List[Player](mrX)
+    for(i <- 1 until nPlayer) {
+      val detective = Detective(station = stations(detectiveStartPositions(i - 1)), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
       players = players ::: List(detective)
     }
     players.toVector

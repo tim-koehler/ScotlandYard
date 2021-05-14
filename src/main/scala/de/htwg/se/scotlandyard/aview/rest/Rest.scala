@@ -12,7 +12,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
-import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, vectorFormat}
+import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, StringJsonFormat, vectorFormat}
 import spray.json.enrichAny
 
 import scala.io.{Source, StdIn}
@@ -116,7 +116,8 @@ object Rest {
         post {
           path("setPlayerColor") {
             parameters("newColor", "index") { (newColor, index) => {
-              complete(controller.setPlayerName(newColor, index.toInt).toJson)
+              val color = controller.setPlayerColor(newColor, index.toInt)
+              complete(String.format("#%02x%02x%02x", color.getRed, color.getGreen, color.getBlue).toJson)
             }
             }
           }
