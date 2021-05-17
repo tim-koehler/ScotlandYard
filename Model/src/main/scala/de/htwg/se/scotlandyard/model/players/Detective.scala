@@ -4,7 +4,7 @@ import de.htwg.se.scotlandyard.model.{Station, Tickets}
 
 import java.awt.Color
 
-case class Detective(override val station: Station = Station(),
+case class Detective(override val station: Int = 0,
                      override val name: String = "DtX",
                      override val color: Color = Color.LIGHT_GRAY,
                      isStuck: Boolean = false,
@@ -29,7 +29,7 @@ case class Detective(override val station: Station = Station(),
     player.asInstanceOf[Detective].copy(color = newColor)
   }
 
-  override def setPlayerStation(player: Player, newStation: Station): Player = {
+  override def setPlayerStation(player: Player, newStation: Int): Player = {
     player.asInstanceOf[Detective].copy(station = newStation)
   }
 
@@ -38,7 +38,7 @@ case class Detective(override val station: Station = Station(),
   }
 
   override def toString(): String = {
-    val stationString = station.number + " (" + station.stationType.toString.toUpperCase + ")"
+    val stationString = station
     val taxiString = "T: " + tickets.taxiTickets
     val busString = ", B: " + tickets.busTickets
     val undergroundString = ", U: " + tickets.undergroundTickets

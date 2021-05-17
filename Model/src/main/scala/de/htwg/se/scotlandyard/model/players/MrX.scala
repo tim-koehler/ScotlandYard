@@ -4,7 +4,7 @@ import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.{Station, Tickets}
 import java.awt.Color
 
-case class MrX(override val station: Station = Station(),
+case class MrX(override val station: Int = 0,
                override val tickets: Tickets = Tickets(99, 99, 99, 5),
                override val name: String = "MrX",
                override val color: Color = Color.BLACK,
@@ -47,7 +47,7 @@ case class MrX(override val station: Station = Station(),
   }
 
 
-  override def setPlayerStation(player: Player, newStation: Station): Player = {
+  override def setPlayerStation(player: Player, newStation: Int): Player = {
     player.asInstanceOf[MrX].copy(station = newStation)
   }
 
@@ -58,7 +58,7 @@ case class MrX(override val station: Station = Station(),
   override def toString(): String = {
     val ticketsString = " - BLACKTICKETS: " + tickets.blackTickets
     if(isVisible) {
-      name + " is at " + station.number + ticketsString
+      name + " is at " + station + ticketsString
     } else {
       name + " (hidden) was" + " Last seen: " + lastSeen + ticketsString
     }
