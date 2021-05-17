@@ -86,4 +86,8 @@ case class GameModel(
         gameModel.copy(players = gameModel.players.updated(gameModel.getCurrentPlayerIndex(gameModel.players, gameModel.round), newPlayer))
     }
   }
+
+  def toPersistenceGameModel: PersistenceGameModel = {
+    PersistenceGameModel(players, round, totalRound, win, gameRunning, winningPlayer, allPlayerStuck, WINNING_ROUND, MRX_VISIBLE_ROUNDS)
+  }
 }

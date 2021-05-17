@@ -217,5 +217,54 @@ object JsonProtocol extends DefaultJsonProtocol {
         case _ => throw DeserializationException("GameModel expected")
       }
     }
+
+    implicit object PersistenceGameModelJsonFormat extends RootJsonFormat[PersistenceGameModel] {
+      def write(gameModel: PersistenceGameModel): JsObject = JsObject(
+        "players" -> gameModel.players.toJson,
+        "round" -> JsNumber(gameModel.round),
+        "totalRound" -> JsNumber(gameModel.totalRound),
+        "win" -> JsBoolean(gameModel.win),
+        "gameRunning" -> JsBoolean(gameModel.gameRunning),
+        "winningPlayer" -> gameModel.winningPlayer.toJson,
+        "allPlayerStuck" -> JsBoolean(gameModel.allPlayerStuck),
+        "winningRound" -> JsNumber(gameModel.WINNING_ROUND),
+        "mrxVisibleRounds" -> gameModel.MRX_VISIBLE_ROUNDS.toJson)
+
+      def read(value: JsValue): PersistenceGameModel = {
+        value.asJsObject.getFields(
+          "players",
+          "round",
+          "totalRound",
+          "win",
+          "gameRunning",
+          "winningPlayer",
+          "allPlayerStuck",
+          "winningRound",
+          "mrxVisibleRounds",
+        ) match {
+          case Seq(
+          players,
+          JsNumber(round),
+          JsNumber(totalRound),
+          JsBoolean(win),
+          JsBoolean(gameRunning),
+          winningPlayer,
+          JsBoolean(allPlayerStuck),
+          JsNumber(winningRound),
+          mrxVisibleRounds) =>
+            PersistenceGameModel(
+              players.convertTo[Vector[Player]],
+              round.toInt,
+              totalRound.toInt,
+              win,
+              gameRunning,
+              winningPlayer.convertTo[Player],
+              allPlayerStuck,
+              WINNING_ROUND = winningRound.toInt,
+              MRX_VISIBLE_ROUNDS = mrxVisibleRounds.convertTo[Vector[Int]])
+          case _ => throw DeserializationException("PersistenceGameModel expected")
+        }
+      }
+    }
   }
 }
