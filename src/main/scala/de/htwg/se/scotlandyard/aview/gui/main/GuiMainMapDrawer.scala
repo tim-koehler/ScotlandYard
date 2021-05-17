@@ -28,7 +28,7 @@ class GuiMainMapDrawer(controller: ControllerInterface) {
 
     for (p <- controller.getDetectives) {
       g.setColor(p.color)
-      g.drawOval(controller.getStationOfPlayer(mrx).guiCoordinates.x - (r / 2), controller.getStationOfPlayer(mrx).guiCoordinates.y - (r / 2), r, r)
+      g.drawOval(controller.getStationOfPlayer(p).guiCoordinates.x - (r / 2), controller.getStationOfPlayer(p).guiCoordinates.y - (r / 2), r, r)
     }
   }
 }
