@@ -70,9 +70,9 @@ class Postgres extends PersistenceInterface {
     for ((p, index) <- persistenceGameModel.players.zipWithIndex) {
       if (index == 0) {
         val mrx = p.asInstanceOf[MrX]
-        playersSeq = playersSeq :+ (index, mrx.station.number, mrx.tickets.taxiTickets, mrx.tickets.busTickets, mrx.tickets.undergroundTickets, mrx.tickets.blackTickets, mrx.name, String.format("#%02x%02x%02x", mrx.color.getRed, mrx.color.getGreen, mrx.color.getBlue), mrx.isVisible, mrx.lastSeen, mrx.history.mkString(","), p.playerType.get.toString, false)
+        playersSeq = playersSeq :+ (index, mrx.station, mrx.tickets.taxiTickets, mrx.tickets.busTickets, mrx.tickets.undergroundTickets, mrx.tickets.blackTickets, mrx.name, String.format("#%02x%02x%02x", mrx.color.getRed, mrx.color.getGreen, mrx.color.getBlue), mrx.isVisible, mrx.lastSeen, mrx.history.mkString(","), p.playerType.get.toString, false)
       } else {
-        playersSeq = playersSeq :+ (index, p.station.number, p.tickets.taxiTickets, p.tickets.busTickets, p.tickets.undergroundTickets, p.tickets.blackTickets, p.name, String.format("#%02x%02x%02x", p.color.getRed, p.color.getGreen, p.color.getBlue), false, "", "", p.playerType.get.toString, false)
+        playersSeq = playersSeq :+ (index, p.station, p.tickets.taxiTickets, p.tickets.busTickets, p.tickets.undergroundTickets, p.tickets.blackTickets, p.name, String.format("#%02x%02x%02x", p.color.getRed, p.color.getGreen, p.color.getBlue), false, "", "", p.playerType.get.toString, false)
       }
     }
 

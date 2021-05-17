@@ -7,6 +7,7 @@ import akka.http.scaladsl.server.Directives.{as, complete, concat, delete, entit
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import com.google.inject.{Guice, Injector}
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
 import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel}
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 
