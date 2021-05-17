@@ -69,7 +69,7 @@ class TuiMap extends TuiMapInterface {
   private def setPlayerPositions(controller: ControllerInterface): mutable.Map[Player, Int] = {
     val players: Vector[Player] = Vector(controller.getMrX).asInstanceOf[Vector[Player]] ++ controller.getDetectives
     for (p <- players){
-      playerPositions += (p -> p.station.number)
+      playerPositions += (p -> p.station)
     }
     playerPositions
   }
@@ -85,9 +85,9 @@ class TuiMap extends TuiMapInterface {
     val players: Vector[Player] = Vector(controller.getMrX).asInstanceOf[Vector[Player]] ++ controller.getDetectives
     for(p <- players) {
       if(!p.name.equals("MrX")) {
-        map = Some(map.get.updated(p.station.tuiCoordinates.y - 1, map.get(p.station.tuiCoordinates.y - 1).updated(p.station.tuiCoordinates.x - 1, p.name(0))))
-        map = Some(map.get.updated(p.station.tuiCoordinates.y - 1, map.get(p.station.tuiCoordinates.y - 1).updated(p.station.tuiCoordinates.x, p.name(1))))
-        map = Some(map.get.updated(p.station.tuiCoordinates.y - 1, map.get(p.station.tuiCoordinates.y - 1).updated(p.station.tuiCoordinates.x + 1, p.name(2))))
+        map = Some(map.get.updated(controller.getStationOfPlayer(p).tuiCoordinates.y - 1, map.get(controller.getStationOfPlayer(p).tuiCoordinates.y - 1).updated(controller.getStationOfPlayer(p).tuiCoordinates.x - 1, p.name(0))))
+        map = Some(map.get.updated(controller.getStationOfPlayer(p).tuiCoordinates.y - 1, map.get(controller.getStationOfPlayer(p).tuiCoordinates.y - 1).updated(controller.getStationOfPlayer(p).tuiCoordinates.x, p.name(1))))
+        map = Some(map.get.updated(controller.getStationOfPlayer(p).tuiCoordinates.y - 1, map.get(controller.getStationOfPlayer(p).tuiCoordinates.y - 1).updated(controller.getStationOfPlayer(p).tuiCoordinates.x + 1, p.name(2))))
       }
     }
     map

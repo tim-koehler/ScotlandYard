@@ -25,6 +25,7 @@ trait ControllerInterface extends Publisher {
   def getTotalRound(): Int
   def getWin(): Boolean
   def getWinningPlayer(): Player
+  def getStationOfPlayer(player: Player): Station
   def setPlayerName(inputName: String, index: Int): Boolean
   def setPlayerColor(newColor: String, index: Int): Color
   def updateLobby(): Boolean

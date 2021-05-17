@@ -96,7 +96,7 @@ class Controller extends ControllerInterface with Publisher {
 
   private def checkDetectiveWin(): Boolean = {
     for (dt <- gameModel.getDetectives(gameModel.players)) {
-      if (dt.station.number == gameModel.getMrX(gameModel.players).station.number) {
+      if (dt.station == gameModel.getMrX(gameModel.players).station) {
         return true
       }
     }
@@ -112,7 +112,7 @@ class Controller extends ControllerInterface with Publisher {
       return this.gameModel
     }
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
-    this.gameModel = undoManager.doStep(new MoveCommand(currentPlayer.station.number, newPosition, ticketType), this.gameModel)
+    this.gameModel = undoManager.doStep(new MoveCommand(currentPlayer.station, newPosition, ticketType), this.gameModel)
     publish(new PlayerMoved)
 
     if (gameModel.allPlayerStuck) winGame(gameModel.getMrX(gameModel.players))
@@ -148,7 +148,7 @@ class Controller extends ControllerInterface with Publisher {
   private def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
     if (!isTargetStationInBounds(newPosition)) return false
-    if (currentPlayer.station.number == newPosition) return false
+    if (currentPlayer.station == newPosition) return false
     if (!isMeanOfTransportValid(currentPlayer, newPosition, ticketType)) return false
     if (!isTargetStationEmpty(currentPlayer, newPosition)) return false
     true
@@ -161,13 +161,13 @@ class Controller extends ControllerInterface with Publisher {
   private def isMeanOfTransportValid(player: Player, newPosition: Integer, ticketType: TicketType): Boolean = {
     ticketType match {
       case TicketType.Taxi =>
-        isTransportMoveValid(newPosition)(player.tickets.taxiTickets, player.station.neighbourTaxis)
+        isTransportMoveValid(newPosition)(player.tickets.taxiTickets, gameModel.stations(player.station).neighbourTaxis)
       case TicketType.Bus =>
-        if (player.station.stationType == StationType.Taxi) return false
-        isTransportMoveValid(newPosition)(player.tickets.busTickets, player.station.neighbourBuses)
+        if (gameModel.stations(player.station).stationType == StationType.Taxi) return false
+        isTransportMoveValid(newPosition)(player.tickets.busTickets, gameModel.stations(player.station).neighbourBuses)
       case TicketType.Underground =>
-        if (player.station.stationType != StationType.Underground) return false
-        isTransportMoveValid(newPosition)(player.tickets.undergroundTickets, player.station.neighbourUndergrounds)
+        if (gameModel.stations(player.station).stationType != StationType.Underground) return false
+        isTransportMoveValid(newPosition)(player.tickets.undergroundTickets, gameModel.stations(player.station).neighbourUndergrounds)
       case _ =>
         if (!player.equals(gameModel.players.head)) return false
         isBlackMoveValid(player, newPosition)
@@ -178,7 +178,7 @@ class Controller extends ControllerInterface with Publisher {
     for ((p, index) <- gameModel.players.zipWithIndex) {
       breakable {
         if (index == 0 && !player.equals(gameModel.getMrX(gameModel.players))) break
-        if (p.station.number == newPosition) return false
+        if (p.station == newPosition) return false
       }
     }
     true
@@ -191,18 +191,22 @@ class Controller extends ControllerInterface with Publisher {
 
   private def isBlackMoveValid(currentPlayer: Player, newPosition: Int): Boolean = {
     if (currentPlayer.asInstanceOf[MrX].tickets.blackTickets <= 0) return false
-    if (gameModel.stations(newPosition).blackStation && currentPlayer.station.blackStation) {
+    if (gameModel.stations(newPosition).blackStation && gameModel.stations(currentPlayer.station).blackStation) {
       true
     } else {
-      currentPlayer.station.neighbourTaxis.contains(newPosition) ||
-        currentPlayer.station.neighbourBuses.contains(newPosition) ||
-        currentPlayer.station.neighbourUndergrounds.contains(newPosition)
+      gameModel.stations(currentPlayer.station).neighbourTaxis.contains(newPosition) ||
+        gameModel.stations(currentPlayer.station).neighbourBuses.contains(newPosition) ||
+        gameModel.stations(currentPlayer.station).neighbourUndergrounds.contains(newPosition)
     }
   }
 
   // Getters and Setters
   def getCurrentPlayer: Player = {
     gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+  }
+
+  def getStationOfPlayer(player: Player): Station = {
+    gameModel.stations(player.station)
   }
 
   def getMrX: MrX = {
