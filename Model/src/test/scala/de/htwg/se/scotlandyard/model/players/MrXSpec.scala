@@ -6,13 +6,10 @@ import org.scalatest.{Matchers, WordSpec}
 class MrXSpec extends WordSpec with Matchers {
   "MrX" when {
     "created" should {
-      var mrX = MrX(station = Station(1, StationType.Underground))
+      var mrX = MrX(station = 1)
 
       "have a station number" in {
-        mrX.station.number should be (1)
-      }
-      "have a station Type" in {
-        mrX.station.stationType should be (StationType.Underground)
+        mrX.station should be (1)
       }
       "have a nice String representation when visible" in {
         mrX = MrX(isVisible = true)

@@ -18,9 +18,9 @@ class DetectiveSpec extends WordSpec with Matchers {
         detective.tickets.undergroundTickets should be (3)
       }
 
-      detective = detective.setPlayerStation(detective, Station(1, StationType.Taxi)).asInstanceOf[Detective]
+      detective = detective.setPlayerStation(detective, 1).asInstanceOf[Detective]
       "have the correct station" in {
-        detective.station.number should be (1)
+        detective.station should be (1)
       }
 
       "have a nice to String" in {
