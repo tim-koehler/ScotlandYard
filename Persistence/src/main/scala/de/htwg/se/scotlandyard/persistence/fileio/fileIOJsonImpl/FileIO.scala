@@ -5,9 +5,10 @@ import java.io._
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
-import de.htwg.se.scotlandyard.model.{GameModel, TicketType, Tickets}
+import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, TicketType, Tickets}
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
 import de.htwg.se.scotlandyard.persistence.PersistenceInterface
 import spray.json.enrichAny
 import spray.json._
@@ -18,15 +19,15 @@ import scala.util.{Failure, Success, Try}
 class FileIO() extends PersistenceInterface {
   var pathname = "ScotlandYard.json"
 
-  override def load(): GameModel = {
+  override def load(): PersistenceGameModel = {
     val source: String = Source.fromFile(pathname).getLines.mkString
-    source.parseJson.convertTo[GameModel]
+    source.parseJson.convertTo[PersistenceGameModel]
   }
 
-  override def save(gameModel: GameModel): Boolean = {
+  override def save(persistenceGameModel: PersistenceGameModel): Boolean = {
     Try {
       val pw = new PrintWriter(new File(pathname))
-      pw.write(gameModel.toJson.prettyPrint)
+      pw.write(persistenceGameModel.toJson.prettyPrint)
       pw.close()
     } match
     {
@@ -35,8 +36,8 @@ class FileIO() extends PersistenceInterface {
     }
   }
 
-  override def update(gameModel: GameModel): Boolean = {
-    save(gameModel)
+  override def update(persistenceGameModel: PersistenceGameModel): Boolean = {
+    save(persistenceGameModel)
   }
 
   override def delete(): Boolean = {

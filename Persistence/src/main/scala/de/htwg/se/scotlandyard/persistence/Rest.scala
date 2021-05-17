@@ -3,11 +3,11 @@ package de.htwg.se.scotlandyard.persistence
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.server.Directives.{as, complete, concat, entity, get, path, post, delete}
+import akka.http.scaladsl.server.Directives.{as, complete, concat, delete, entity, get, path, post}
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import com.google.inject.{Guice, Injector}
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
-import de.htwg.se.scotlandyard.model.GameModel
+import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel}
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 
 object Rest {
@@ -33,15 +33,15 @@ object Rest {
       concat(
         post {
           path("save") {
-            entity(as[GameModel]) { gameModel =>
-              complete(persistence.save(gameModel).toString)
+            entity(as[PersistenceGameModel]) { persistenceGameModel =>
+              complete(persistence.save(persistenceGameModel).toString)
             }
           }
         },
         post {
           path("update") {
-            entity(as[GameModel]) { gameModel =>
-              complete(persistence.update(gameModel).toString)
+            entity(as[PersistenceGameModel]) { persistenceGameModel =>
+              complete(persistence.update(persistenceGameModel).toString)
             }
           }
         },

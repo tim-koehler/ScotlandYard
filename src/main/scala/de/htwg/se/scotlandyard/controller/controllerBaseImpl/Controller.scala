@@ -5,7 +5,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
+import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import akka.http.scaladsl.Http
@@ -22,6 +22,7 @@ import spray.json.enrichAny
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.unmarshalling.Unmarshal
+import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
 
 import scala.concurrent.duration.DurationInt
 
@@ -69,7 +70,7 @@ class Controller extends ControllerInterface with Publisher {
       case _: Exception =>
         return None
     }
-    this.gameModel = Unmarshal(response).to[GameModel].value.get.get
+    this.gameModel = Unmarshal(response).to[PersistenceGameModel].value.get.get.toGameModel(this.gameModel.stations)
     Some(this.gameModel)
   }
 
@@ -82,7 +83,7 @@ class Controller extends ControllerInterface with Publisher {
       response = Await.result(Http().singleRequest(HttpRequest(
         uri = "http://persistence:8080/save",
         method = HttpMethods.POST,
-        entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toJson.toString)
+        entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toPersistenceGameModel.toJson.toString())
       )), 5.seconds)
     } catch {
       case _: Exception =>

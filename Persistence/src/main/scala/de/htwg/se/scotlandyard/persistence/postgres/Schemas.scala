@@ -6,34 +6,6 @@ import slick.jdbc.PostgresProfile.Table
 import slick.lifted.{TableQuery, Tag}
 
 object Schemas {
-  class Stations(tag: Tag) extends Table[(Int, String, Boolean, String, String, String, String, Int, Int, Int, Int)](tag, "Stations") {
-    def number = column[Int]("station_number", O.PrimaryKey) // This is the primary key column
-
-    def stationType = column[String]("station_type")
-
-    def blackStation = column[Boolean]("black_station")
-
-    def taxiNeighbours = column[String]("taxi_neighbours")
-
-    def busNeighbours = column[String]("bus_neighbours")
-
-    def undergroundNeighbours = column[String]("underground_neighbours")
-
-    def blackNeighbours = column[String]("black_neighbours")
-
-    def tuiX = column[Int]("tui_x")
-
-    def tuiY = column[Int]("tui_y")
-
-    def guiX = column[Int]("gui_x")
-
-    def guiY = column[Int]("gui_y")
-
-    // Every table needs a * projection with the same type as the table's type parameter
-    def * = (number, stationType, blackStation, taxiNeighbours, busNeighbours, undergroundNeighbours, blackNeighbours, tuiX, tuiY, guiX, guiY)
-  }
-  val stations = TableQuery[Stations]
-
   class Players(tag: Tag) extends Table[(Int, Int, Int, Int, Int, Int, String, String, Boolean, String, String, String, Boolean)](tag, "Players") {
     def id = column[Int]("id", O.PrimaryKey)
 
