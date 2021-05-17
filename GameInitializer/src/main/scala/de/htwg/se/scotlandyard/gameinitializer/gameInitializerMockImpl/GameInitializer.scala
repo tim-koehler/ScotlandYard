@@ -41,9 +41,9 @@ class GameInitializer() extends GameInitializerInterface{
     station5 = station5.copy(neighbourTaxis = Set(1, 2, 3, 4), neighbourBuses = Set(1, 4), neighbourUndergrounds = Set(1))
     val stations: Vector[Station] = Vector(station0, station1, station2, station3, station4, station5)
 
-    val player1 = MrX(station = station1)
-    val player2 = Detective(station = station2, tickets = Tickets(11, 8, 4))
-    val player3 = Detective(station = station3, tickets = Tickets(11, 8, 4))
+    val player1 = MrX(station = 1)
+    val player2 = Detective(station = 2, tickets = Tickets(11, 8, 4))
+    val player3 = Detective(station = 2, tickets = Tickets(11, 8, 4))
 
     val players: Vector[Player] = Vector(player1, player2, player3)
 

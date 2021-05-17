@@ -60,10 +60,10 @@ class GameInitializer() extends GameInitializerInterface {
     players.toVector
      */
 
-    val mrX = MrX(history = List(), station = stations(35), tickets = Tickets(99, 99, 99, 5))
+    val mrX = MrX(history = List(), station = 35, tickets = Tickets(99, 99, 99, 5))
     var players = List[Player](mrX)
     for(i <- 1 until nPlayer) {
-      val detective = Detective(station = stations(detectiveStartPositions(i - 1)), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
+      val detective = Detective(station = detectiveStartPositions(i - 1), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
       players = players ::: List(detective)
     }
     players.toVector
