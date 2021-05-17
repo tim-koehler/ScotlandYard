@@ -26,7 +26,7 @@ trait GameInitializerInterface {
   val numberOfUndergroundTickets: Int
   val r = scala.util.Random
 
-  def initialize(nPlayer: Int, stationsSource: String): GameModel
+  def initialize(nPlayer: Int, stations: Vector[Station]): GameModel
 
   def getColorList(): Vector[Color]
 }

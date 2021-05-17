@@ -29,7 +29,7 @@ class GameInitializer() extends GameInitializerInterface{
 
   val colorList = Vector(MRX_COLOR, DT1_COLOR, DT2_COLOR, DT3_COLOR, DT4_COLOR, DT5_COLOR, DT6_COLOR)
 
-  override def initialize(nPlayers: Int, stationsSource: String): GameModel = {
+  override def initialize(nPlayers: Int, statios: Vector[Station]): GameModel = {
     val station0 = Station(0)
     var station1 = Station(1, StationType.Underground, blackStation = false, Set(), Set(), Set())
     var station2 = Station(2, StationType.Taxi, blackStation = false, Set(1), Set(), Set())

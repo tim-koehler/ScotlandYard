@@ -39,18 +39,12 @@ class GameInitializer() extends GameInitializerInterface {
   override var MAX_DETECTIVE_LIST_INDEX: Int = detectiveStartPositions.length - 1
   override var MAX_MISTERX_LIST_INDEX: Int = misterXStartPositions.length - 1
 
-  override def initialize(nPlayers: Int = 3, stationsSource: String): GameModel = {
-    val stations = initStations(stationsSource)
+  override def initialize(nPlayers: Int = 3, stations: Vector[Station]): GameModel = {
     GameModel(stations = stations, players = initPlayers(nPlayers, stations))
   }
   
   def getColorList(): Vector[Color] = {
     this.colorList
-  }
-
-  private def initStations(stationsSource: String): Vector[Station] = {
-    val stations = stationsSource.parseJson.convertTo[Vector[Station]]
-    stations.sortWith((s: Station, t: Station) => s.number < t.number)
   }
 
   private def initPlayers(nPlayer: Int, stations: Vector[Station]): Vector[Player] = {

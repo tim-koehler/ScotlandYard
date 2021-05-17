@@ -54,9 +54,6 @@ services:
     restart: "on-failure"
     ports:
       - 8080:8080
-    depends_on:
-      - gameinitializer
-      - persistence
     environment:
       DISPLAY: unix$DISPLAY
     volumes:

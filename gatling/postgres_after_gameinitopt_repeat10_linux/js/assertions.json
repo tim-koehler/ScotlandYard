@@ -1,0 +1,10 @@
+{
+  "simulation": "RecordedSimulation",
+  "simulationId": "recordedsimulation",
+  "start": 1621188401089,
+  "description": "postgres_after_gameinitopt_repeat10_linux",
+  "scenarios": ["RecordedSimulation"],
+  "assertions": [
+
+  ]
+}
