@@ -44,11 +44,6 @@ class GameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
         gameModel.getCurrentPlayerIndex(gameModel.players, 2) should be(1)
       }
     }
-    "addStuckPlayer is called" should {
-      "return a gamemodel with the stuck player added" in {
-        gameModel.addStuckPlayer(gameModel, Detective(name = "Ulf")).stuckPlayers.head.name should be ("Ulf")
-      }
-    }
     "setAllPlayerStuck is called" should {
       "return a gamemodel with all player stuck" in {
         gameModel.setAllPlayersStuck(gameModel).allPlayerStuck should be (true)
