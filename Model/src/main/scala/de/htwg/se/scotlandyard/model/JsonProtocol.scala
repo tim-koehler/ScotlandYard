@@ -89,7 +89,7 @@ object JsonProtocol extends DefaultJsonProtocol {
 
   implicit object MrXJsonFormat extends RootJsonFormat[MrX] {
     def write(mrx: MrX): JsObject = JsObject(
-      "station" -> mrx.station.toJson,
+      "station" -> JsNumber(mrx.station),
       "tickets" -> mrx.tickets.toJson,
       "name" -> JsString(mrx.name),
       "color" -> JsString(String.format("#%02x%02x%02x", mrx.color.getRed, mrx.color.getGreen, mrx.color.getBlue)),
@@ -109,14 +109,14 @@ object JsonProtocol extends DefaultJsonProtocol {
         "history",
       ) match {
         case Seq(
-        station,
+        JsNumber(station),
         tickets,
         JsString(name),
         JsString(color),
         JsBoolean(isVisible),
         JsString(lastSeen),
         JsArray(history)) =>
-          MrX(station.convertTo[Station], tickets.convertTo[Tickets], name, Color.decode(color), isVisible, lastSeen, history.map(e => TicketType.parse(e.convertTo[String])).toList)
+          MrX(station.toInt, tickets.convertTo[Tickets], name, Color.decode(color), isVisible, lastSeen, history.map(e => TicketType.parse(e.convertTo[String])).toList)
         case _ => throw DeserializationException("MrX expected")
       }
     }
@@ -124,7 +124,7 @@ object JsonProtocol extends DefaultJsonProtocol {
 
   implicit object DetectiveJsonFormat extends RootJsonFormat[Detective] {
     def write(detective: Detective): JsObject = JsObject(
-      "station" -> detective.station.toJson,
+      "station" -> JsNumber(detective.station),
       "name" -> JsString(detective.name),
       "color" -> JsString(String.format("#%02x%02x%02x", detective.color.getRed, detective.color.getGreen, detective.color.getBlue)),
       "tickets" -> detective.tickets.toJson,
@@ -139,12 +139,12 @@ object JsonProtocol extends DefaultJsonProtocol {
         "tickets",
         "isStuck"
       ) match {
-        case Seq(station,
+        case Seq(JsNumber(station),
         JsString(name),
         JsString(color),
         tickets,
         JsBoolean(isStuck)) =>
-          Detective(station.convertTo[Station], name, Color.decode(color), isStuck, tickets.convertTo[Tickets])
+          Detective(station.toInt, name, Color.decode(color), isStuck, tickets.convertTo[Tickets])
         case _ => throw DeserializationException("Detective expected")
       }
     }
