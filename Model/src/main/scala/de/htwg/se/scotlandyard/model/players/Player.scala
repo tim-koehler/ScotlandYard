@@ -6,7 +6,7 @@ import de.htwg.se.scotlandyard.model.{Station, Tickets}
 import java.awt.Color
 
 abstract class Player(
-                       val station: Station = Station(),
+                       val station: Int = 0,
                        val name: String = "Dtx",
                        val color: Color = Color.GRAY,
                        val tickets: Tickets = Tickets(),
@@ -15,6 +15,6 @@ abstract class Player(
   def setPlayerName(player: Player, newName: String): Player
   def setPlayerColor(player: Player, newColor: String): Player
   def setPlayerColor(player: Player, newColor: Color): Player
-  def setPlayerStation(player: Player, newStation: Station): Player
+  def setPlayerStation(player: Player, newStation: Int): Player
   def setPlayerTickets(player: Player, newTickets: Tickets): Player
 }
