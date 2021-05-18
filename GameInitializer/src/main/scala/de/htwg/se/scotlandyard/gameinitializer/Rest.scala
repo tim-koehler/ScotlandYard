@@ -12,6 +12,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
+import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
 import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, vectorFormat}
 import spray.json.enrichAny
 import spray.json._
@@ -44,9 +45,12 @@ object Rest {
         // GET REQUESTS
         path("initialize") {
           parameters("nPlayer") { (nPlayer) => {
-            complete(gameInitializer.initialize(nPlayer.toInt, stations).toJson)
+            complete(gameInitializer.initialize(nPlayer.toInt).toJson)
           }
           }
+        },
+        path("stations") {
+          complete(stations.toJson)
         },
         path("health") {
           println("Healtcheck hit")
