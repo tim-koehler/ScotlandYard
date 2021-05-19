@@ -2,7 +2,7 @@ package de.htwg.se.scotlandyard.gameinitializer
 
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{MrX, Player}
-import de.htwg.se.scotlandyard.model.{GameModel, Station, Tickets}
+import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, Tickets}
 
 import java.awt.Color
 
@@ -26,7 +26,7 @@ trait GameInitializerInterface {
   val numberOfUndergroundTickets: Int
   val r = scala.util.Random
 
-  def initialize(nPlayer: Int, stationsSource: String): GameModel
+  def initialize(nPlayer: Int): PersistenceGameModel
 
   def getColorList(): Vector[Color]
 }

@@ -3,9 +3,10 @@ package de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl
 import java.awt.Color
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
+import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, StationType, Tickets}
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.io.Source
@@ -39,25 +40,31 @@ class GameInitializer() extends GameInitializerInterface {
   override var MAX_DETECTIVE_LIST_INDEX: Int = detectiveStartPositions.length - 1
   override var MAX_MISTERX_LIST_INDEX: Int = misterXStartPositions.length - 1
 
-  override def initialize(nPlayers: Int = 3, stationsSource: String): GameModel = {
-    val stations = initStations(stationsSource)
-    GameModel(stations = stations, players = initPlayers(nPlayers, stations))
+  override def initialize(nPlayers: Int = 3): PersistenceGameModel = {
+    PersistenceGameModel(players = initPlayers(nPlayers))
   }
   
   def getColorList(): Vector[Color] = {
     this.colorList
   }
 
-  private def initStations(stationsSource: String): Vector[Station] = {
-    val stations = stationsSource.parseJson.convertTo[Vector[Station]]
-    stations.sortWith((s: Station, t: Station) => s.number < t.number)
-  }
-
-  private def initPlayers(nPlayer: Int, stations: Vector[Station]): Vector[Player] = {
+  private def initPlayers(nPlayer: Int): Vector[Player] = {
+    /*
+    * Commented out, to get always the same starting positions for performance testing
+    *
     val mrX = MrX(history = List(), station = stations(drawMisterXPosition()), tickets = Tickets(99, 99, 99, 5))
     var players = List[Player](mrX)
     for(i <- 1 until nPlayer) {
       val detective = Detective(station = stations(drawDetectivePosition()), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
+      players = players ::: List(detective)
+    }
+    players.toVector
+     */
+
+    val mrX = MrX(history = List(), station = 35, tickets = Tickets(99, 99, 99, 5))
+    var players = List[Player](mrX)
+    for(i <- 1 until nPlayer) {
+      val detective = Detective(station = detectiveStartPositions(i - 1), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
       players = players ::: List(detective)
     }
     players.toVector

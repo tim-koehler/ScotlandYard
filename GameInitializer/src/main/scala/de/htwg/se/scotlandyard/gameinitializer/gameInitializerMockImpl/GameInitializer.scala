@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.gameinitializer.gameInitializerMockImpl
 
 import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, Tickets}
+import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, StationType, Tickets}
 
 import java.awt.Color
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
@@ -29,7 +29,7 @@ class GameInitializer() extends GameInitializerInterface{
 
   val colorList = Vector(MRX_COLOR, DT1_COLOR, DT2_COLOR, DT3_COLOR, DT4_COLOR, DT5_COLOR, DT6_COLOR)
 
-  override def initialize(nPlayers: Int, stationsSource: String): GameModel = {
+  override def initialize(nPlayers: Int): PersistenceGameModel = {
     val station0 = Station(0)
     var station1 = Station(1, StationType.Underground, blackStation = false, Set(), Set(), Set())
     var station2 = Station(2, StationType.Taxi, blackStation = false, Set(1), Set(), Set())
@@ -41,13 +41,13 @@ class GameInitializer() extends GameInitializerInterface{
     station5 = station5.copy(neighbourTaxis = Set(1, 2, 3, 4), neighbourBuses = Set(1, 4), neighbourUndergrounds = Set(1))
     val stations: Vector[Station] = Vector(station0, station1, station2, station3, station4, station5)
 
-    val player1 = MrX(station = station1)
-    val player2 = Detective(station = station2, tickets = Tickets(11, 8, 4))
-    val player3 = Detective(station = station3, tickets = Tickets(11, 8, 4))
+    val player1 = MrX(station = 1)
+    val player2 = Detective(station = 2, tickets = Tickets(11, 8, 4))
+    val player3 = Detective(station = 2, tickets = Tickets(11, 8, 4))
 
     val players: Vector[Player] = Vector(player1, player2, player3)
 
-    GameModel(stations = stations, players = players)
+    PersistenceGameModel(players = players)
   }
 
   override var MAX_DETECTIVE_LIST_INDEX: Int = 0

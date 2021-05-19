@@ -21,7 +21,7 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
 
   "GameInitializer" when {
     val gameInitializer = new GameInitializer()
-    "initialize" should {
+    /*"initialize" should {
       "return an initialized gameModel" in {
         val gameModel = gameInitializer.initialize(3, stationsSource)
         gameModel.stations(89).number should be (89)
@@ -34,6 +34,6 @@ class GameInitializerSpec extends WordSpec with Matchers with PrivateMethodTeste
         gameInitializer.getColorList()(0) should be(gameInitializer.MRX_COLOR)
         gameInitializer.getColorList()(1) should be(gameInitializer.DT1_COLOR)
       }
-    }
+    }*/
   }
 }

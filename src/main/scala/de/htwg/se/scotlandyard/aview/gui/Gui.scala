@@ -47,15 +47,15 @@ class Gui(controller: ControllerInterface) extends Frame {
     contents = initGamePanel()
     centerOnScreen()
     Dialog.showMessage(this, "Be Ready, MrX Position will now be revealed!", "MrX Starting Position")
-    Dialog.showMessage(this, "MrX is at Station: " + controller.getMrX.station.number, "MrX Position")
+    Dialog.showMessage(this, "MrX is at Station: " + controller.getMrX.station, "MrX Position")
   }
 
   def showWinningDialog(): Unit = {
     var winningMessage = ""
     if (controller.getWinningPlayer().name.equals("MrX")) {
-      winningMessage = "MrX was at Station " + controller.getWinningPlayer().station.number + " !!!"
+      winningMessage = "MrX was at Station " + controller.getWinningPlayer().station + " !!!"
     } else {
-      winningMessage = controller.getWinningPlayer().name + " has caught MrX at Station " + controller.getWinningPlayer().station.number + " !!!"
+      winningMessage = controller.getWinningPlayer().name + " has caught MrX at Station " + controller.getWinningPlayer().station + " !!!"
     }
     Dialog.showMessage(this, winningMessage, "WIN")
     this.dispose()

@@ -15,6 +15,6 @@ object ScotlandYard {
   def main(args: Array[String]): Unit = {
     controller.initialize(3)
     Rest.startRestService(controller)
-    new Gui(controller)
+    //new Gui(controller)
   }
 }

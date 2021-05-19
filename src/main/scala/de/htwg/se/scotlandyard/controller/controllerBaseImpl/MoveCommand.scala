@@ -43,14 +43,14 @@ class MoveCommand(currentPosition: Int, newPosition: Int, ticketType: TicketType
   private def updateMrXVisibility(gameModel: GameModel): GameModel = {
     var mrX = gameModel.getMrX(gameModel.players).updateVisibility(gameModel.getMrX(gameModel.players), gameModel.MRX_VISIBLE_ROUNDS.contains(gameModel.totalRound))
     if (mrX.isVisible) {
-      mrX = mrX.updateLastSeen(mrX, gameModel.players.head.station.number.toString)
+      mrX = mrX.updateLastSeen(mrX, gameModel.players.head.station.toString)
     }
     gameModel.copy(players = gameModel.players.updated(0, mrX))
   }
 
   private def checkIfPlayerIsAbleToMove(gameModel: GameModel): Boolean = {
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
-    currentPlayer.station.stationType match {
+    gameModel.stations(currentPlayer.station).stationType match {
       case StationType.Taxi =>
         currentPlayer.tickets.taxiTickets > 0
       case model.StationType.Bus =>

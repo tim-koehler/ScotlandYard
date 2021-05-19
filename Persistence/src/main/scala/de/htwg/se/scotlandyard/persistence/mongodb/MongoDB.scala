@@ -2,7 +2,8 @@ package de.htwg.se.scotlandyard.persistence.mongodb
 
 import com.mongodb.BasicDBObject
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat
-import de.htwg.se.scotlandyard.model.GameModel
+import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
+import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel}
 import de.htwg.se.scotlandyard.persistence.PersistenceInterface
 import spray.json.enrichAny
 import spray.json._
@@ -21,18 +22,18 @@ class MongoDB extends PersistenceInterface{
   }
   val collection: MongoCollection[Document] = database.getCollection("savegame")
 
-  override def load(): GameModel = {
+  override def load(): PersistenceGameModel = {
     val doc = collection.find().projection(excludeId()).results().head
-    doc.toJson().parseJson.convertTo[GameModel]
+    doc.toJson().parseJson.convertTo[PersistenceGameModel]
   }
 
-  override def save(gameModel: GameModel): Boolean = {
+  override def save(persistenceGameModel: PersistenceGameModel): Boolean = {
     collection.deleteMany(new BasicDBObject()).results()
-    collection.insertOne(Document(json = gameModel.toJson.toString())).results().nonEmpty
+    collection.insertOne(Document(json = persistenceGameModel.toJson.toString())).results().nonEmpty
   }
 
-  override def update(gameModel: GameModel): Boolean = {
-    save(gameModel)
+  override def update(persistenceGameModel: PersistenceGameModel): Boolean = {
+    save(persistenceGameModel)
   }
 
   override def delete(): Boolean = {

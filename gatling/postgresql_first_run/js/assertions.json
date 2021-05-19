@@ -1,0 +1,10 @@
+{
+  "simulation": "RecordedSimulation",
+  "simulationId": "recordedsimulation",
+  "start": 1621010070934,
+  "description": "First run with postgresql",
+  "scenarios": ["RecordedSimulation"],
+  "assertions": [
+
+  ]
+}

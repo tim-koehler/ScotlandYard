@@ -5,7 +5,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType, TicketType}
+import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import akka.http.scaladsl.Http
@@ -22,6 +22,7 @@ import spray.json.enrichAny
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.unmarshalling.Unmarshal
+import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
 
 import scala.concurrent.duration.DurationInt
 
@@ -31,6 +32,22 @@ class Controller extends ControllerInterface with Publisher {
   private var stationsSource: String = ""
   private var gameModel: GameModel = _
   private val undoManager = new UndoManager()
+
+  private val fetchedStations = {
+    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
+    implicit val executionContext = system.executionContext
+    var response = HttpResponse()
+    try {
+      response = Await.result(Http().singleRequest(HttpRequest(
+        uri = "http://gameinitializer:8080/stations")),
+        5.seconds)
+    } catch {
+      case _: Exception =>
+        println("\n\n!!!GameInitializer service unavailable!!!\n\n")
+        Runtime.getRuntime().halt(-1)
+    }
+    Unmarshal(response).to[Vector[Station]].value.get.get
+  }
 
   def initializeStations(stationsSource: String): Boolean = {
     this.stationsSource = stationsSource
@@ -51,8 +68,9 @@ class Controller extends ControllerInterface with Publisher {
         println("\n\n!!!GameInitializer service unavailable!!!\n\n")
         Runtime.getRuntime().halt(-1)
     }
-    this.gameModel = Unmarshal(response).to[GameModel].value.get.get
+    val minimalGameModel = Unmarshal(response).to[PersistenceGameModel].value.get.get
     publish(new NumberOfPlayersChanged)
+    this.gameModel = minimalGameModel.toGameModel(fetchedStations)
     this.gameModel
   }
 
@@ -69,7 +87,7 @@ class Controller extends ControllerInterface with Publisher {
       case _: Exception =>
         return None
     }
-    this.gameModel = Unmarshal(response).to[GameModel].value.get.get
+    this.gameModel = Unmarshal(response).to[PersistenceGameModel].value.get.get.toGameModel(this.gameModel.stations)
     Some(this.gameModel)
   }
 
@@ -82,7 +100,7 @@ class Controller extends ControllerInterface with Publisher {
       response = Await.result(Http().singleRequest(HttpRequest(
         uri = "http://persistence:8080/save",
         method = HttpMethods.POST,
-        entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toJson.toString)
+        entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toPersistenceGameModel.toJson.toString())
       )), 5.seconds)
     } catch {
       case _: Exception =>
@@ -95,7 +113,7 @@ class Controller extends ControllerInterface with Publisher {
 
   private def checkDetectiveWin(): Boolean = {
     for (dt <- gameModel.getDetectives(gameModel.players)) {
-      if (dt.station.number == gameModel.getMrX(gameModel.players).station.number) {
+      if (dt.station == gameModel.getMrX(gameModel.players).station) {
         return true
       }
     }
@@ -111,7 +129,7 @@ class Controller extends ControllerInterface with Publisher {
       return this.gameModel
     }
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
-    this.gameModel = undoManager.doStep(new MoveCommand(currentPlayer.station.number, newPosition, ticketType), this.gameModel)
+    this.gameModel = undoManager.doStep(new MoveCommand(currentPlayer.station, newPosition, ticketType), this.gameModel)
     publish(new PlayerMoved)
 
     if (gameModel.allPlayerStuck) winGame(gameModel.getMrX(gameModel.players))
@@ -147,7 +165,7 @@ class Controller extends ControllerInterface with Publisher {
   private def validateMove(newPosition: Int, ticketType: TicketType): Boolean = {
     val currentPlayer = gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
     if (!isTargetStationInBounds(newPosition)) return false
-    if (currentPlayer.station.number == newPosition) return false
+    if (currentPlayer.station == newPosition) return false
     if (!isMeanOfTransportValid(currentPlayer, newPosition, ticketType)) return false
     if (!isTargetStationEmpty(currentPlayer, newPosition)) return false
     true
@@ -160,13 +178,13 @@ class Controller extends ControllerInterface with Publisher {
   private def isMeanOfTransportValid(player: Player, newPosition: Integer, ticketType: TicketType): Boolean = {
     ticketType match {
       case TicketType.Taxi =>
-        isTransportMoveValid(newPosition)(player.tickets.taxiTickets, player.station.neighbourTaxis)
+        isTransportMoveValid(newPosition)(player.tickets.taxiTickets, gameModel.stations(player.station).neighbourTaxis)
       case TicketType.Bus =>
-        if (player.station.stationType == StationType.Taxi) return false
-        isTransportMoveValid(newPosition)(player.tickets.busTickets, player.station.neighbourBuses)
+        if (gameModel.stations(player.station).stationType == StationType.Taxi) return false
+        isTransportMoveValid(newPosition)(player.tickets.busTickets, gameModel.stations(player.station).neighbourBuses)
       case TicketType.Underground =>
-        if (player.station.stationType != StationType.Underground) return false
-        isTransportMoveValid(newPosition)(player.tickets.undergroundTickets, player.station.neighbourUndergrounds)
+        if (gameModel.stations(player.station).stationType != StationType.Underground) return false
+        isTransportMoveValid(newPosition)(player.tickets.undergroundTickets, gameModel.stations(player.station).neighbourUndergrounds)
       case _ =>
         if (!player.equals(gameModel.players.head)) return false
         isBlackMoveValid(player, newPosition)
@@ -177,7 +195,7 @@ class Controller extends ControllerInterface with Publisher {
     for ((p, index) <- gameModel.players.zipWithIndex) {
       breakable {
         if (index == 0 && !player.equals(gameModel.getMrX(gameModel.players))) break
-        if (p.station.number == newPosition) return false
+        if (p.station == newPosition) return false
       }
     }
     true
@@ -190,18 +208,22 @@ class Controller extends ControllerInterface with Publisher {
 
   private def isBlackMoveValid(currentPlayer: Player, newPosition: Int): Boolean = {
     if (currentPlayer.asInstanceOf[MrX].tickets.blackTickets <= 0) return false
-    if (gameModel.stations(newPosition).blackStation && currentPlayer.station.blackStation) {
+    if (gameModel.stations(newPosition).blackStation && gameModel.stations(currentPlayer.station).blackStation) {
       true
     } else {
-      currentPlayer.station.neighbourTaxis.contains(newPosition) ||
-        currentPlayer.station.neighbourBuses.contains(newPosition) ||
-        currentPlayer.station.neighbourUndergrounds.contains(newPosition)
+      gameModel.stations(currentPlayer.station).neighbourTaxis.contains(newPosition) ||
+        gameModel.stations(currentPlayer.station).neighbourBuses.contains(newPosition) ||
+        gameModel.stations(currentPlayer.station).neighbourUndergrounds.contains(newPosition)
     }
   }
 
   // Getters and Setters
   def getCurrentPlayer: Player = {
     gameModel.getCurrentPlayer(gameModel.players, gameModel.round)
+  }
+
+  def getStationOfPlayer(player: Player): Station = {
+    gameModel.stations(player.station)
   }
 
   def getMrX: MrX = {

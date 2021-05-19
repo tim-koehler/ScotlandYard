@@ -164,7 +164,7 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
   }
 
   def getMrXStartingPositionString(): String = {
-    "MrX is at Station: " + controller.getCurrentPlayer.station.number + "\n\n\n\n\n"
+    "MrX is at Station: " + controller.getCurrentPlayer.station + "\n\n\n\n\n"
   }
 
   def buildOutputStringForChooseNameMenu(): String = {
@@ -181,12 +181,12 @@ class Tui(controller: ControllerInterface, tuiMap: TuiMapInterface) extends Reac
     if (controller.getWinningPlayer().name.equals("MrX")) {
       mrXWinningBanner + "\n\n" +
         controller.getMrX.name +
-        " was at Station " + controller.getWinningPlayer().station.number + " !!!\n\n" +
+        " was at Station " + controller.getWinningPlayer().station + " !!!\n\n" +
         "Enter any key to exit..."
     } else {
       detectiveWinningBanner + "\n\n" +
         controller.getWinningPlayer().name + " has caught " + controller.getMrX.name +
-        " at Station " + controller.getWinningPlayer().station.number + " !!!\n\n" +
+        " at Station " + controller.getWinningPlayer().station + " !!!\n\n" +
         "Enter any key to exit..."
     }
   }

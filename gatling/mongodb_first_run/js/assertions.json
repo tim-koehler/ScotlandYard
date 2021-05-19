@@ -1,0 +1,10 @@
+{
+  "simulation": "RecordedSimulation",
+  "simulationId": "recordedsimulation",
+  "start": 1621007820999,
+  "description": "First Run with mongoDB",
+  "scenarios": ["RecordedSimulation"],
+  "assertions": [
+
+  ]
+}

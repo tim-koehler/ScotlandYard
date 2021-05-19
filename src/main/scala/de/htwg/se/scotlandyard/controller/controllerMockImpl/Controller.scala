@@ -36,6 +36,8 @@ class Controller extends ControllerInterface with Publisher {
 
   override def getGameRunning(): Boolean = false
 
+  override def getStationOfPlayer(player: Player): Station = Station()
+
   override def getWinningPlayer(): Player = Detective()
 
   override def setPlayerName(inputName: String, index: Int): Boolean = {

@@ -1,13 +1,13 @@
 package de.htwg.se.scotlandyard.persistence
 
-import de.htwg.se.scotlandyard.model.GameModel
+import de.htwg.se.scotlandyard.model.PersistenceGameModel
 
 trait PersistenceInterface {
-  def load(): GameModel
+  def load(): PersistenceGameModel
 
-  def save(gameModel: GameModel): Boolean
+  def save(persistenceGameModel: PersistenceGameModel): Boolean
 
-  def update(gameModel: GameModel): Boolean
+  def update(persistenceGameModel: PersistenceGameModel): Boolean
 
   def delete(): Boolean
 }
