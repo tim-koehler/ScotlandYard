@@ -4,7 +4,7 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import com.google.inject.Inject
 import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
-import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
+import de.htwg.se.scotlandyard.controller.{ControllerInterface, GameLoaded, GameNotLoaded, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
@@ -54,24 +54,26 @@ class Controller extends ControllerInterface with Publisher {
     true
   }
 
-  def initialize(nPlayers: Int = 3): GameModel = {
+  def initialize(nPlayers: Int = 3): Unit = {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
-    var response = HttpResponse()
-    try {
-      response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://gameinitializer:8080/initialize?nPlayer=" + nPlayers)),
-        5.seconds)
-    } catch {
-      case _: Exception =>
-        println("\n\n!!!GameInitializer service unavailable!!!\n\n")
-        Runtime.getRuntime().halt(-1)
+    val stationsFuture = Http().singleRequest(HttpRequest(
+      uri = "http://gameinitializer:8080/stations"))
+    val gameModelFuture = Http().singleRequest(HttpRequest(
+      uri = "http://gameinitializer:8080/initialize?nPlayer=" + nPlayers))
+
+    val aggFut = for{
+      f1Result <- stationsFuture
+      f2Result <- gameModelFuture
+    } yield (f1Result, f2Result)
+    aggFut.onComplete {
+      case Success(response) =>
+        val stations = Unmarshal(response._1).to[Vector[Station]].value.get.get
+        val minimalGameModel = Unmarshal(response._2).to[PersistenceGameModel].value.get.get
+        publish(new NumberOfPlayersChanged)
+        this.gameModel = minimalGameModel.toGameModel(stations)
     }
-    val minimalGameModel = Unmarshal(response).to[PersistenceGameModel].value.get.get
-    publish(new NumberOfPlayersChanged)
-    this.gameModel = minimalGameModel.toGameModel(fetchedStations)
-    this.gameModel
   }
 
   def load(): Option[GameModel] = {
@@ -95,19 +97,20 @@ class Controller extends ControllerInterface with Publisher {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
-    var response = HttpResponse()
-    try {
-      response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://persistence:8080/save",
-        method = HttpMethods.POST,
-        entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toPersistenceGameModel.toJson.toString())
-      )), 5.seconds)
-    } catch {
-      case _: Exception =>
-        return false
-    }
-    if(!Unmarshal(response).to[String].value.get.get.equalsIgnoreCase("true"))
-      return false
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(
+      uri = "http://persistence:8080/save",
+      method = HttpMethods.POST,
+      entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toPersistenceGameModel.toJson.toString())))
+
+    responseFuture
+      .onComplete {
+        case Success(response) =>
+          if(!Unmarshal(response).to[String].value.get.get.equalsIgnoreCase("true")) {
+            return false
+          }
+          true
+        case Failure(_)   => return false
+      }
     true
   }
 

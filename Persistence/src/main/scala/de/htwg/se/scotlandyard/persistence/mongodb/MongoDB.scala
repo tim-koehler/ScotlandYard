@@ -1,5 +1,5 @@
 package de.htwg.se.scotlandyard.persistence.mongodb
-
+import com.mongodb.client.result.DeleteResult
 import com.mongodb.BasicDBObject
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
@@ -10,6 +10,8 @@ import spray.json._
 import de.htwg.se.scotlandyard.persistence.mongodb.Helpers.GenericObservable
 import org.mongodb.scala._
 import org.mongodb.scala.model.Projections.excludeId
+
+import scala.concurrent.Future
 
 class MongoDB extends PersistenceInterface{
   val client: MongoClient = MongoClient("mongodb://root:scotty4life@mongodb")
@@ -22,22 +24,22 @@ class MongoDB extends PersistenceInterface{
   }
   val collection: MongoCollection[Document] = database.getCollection("savegame")
 
-  override def load(): PersistenceGameModel = {
+  override def load(): Future[PersistenceGameModel] = {
     val doc = collection.find().projection(excludeId()).results().head
-    doc.toJson().parseJson.convertTo[PersistenceGameModel]
+    Future.successful(doc.toJson().parseJson.convertTo[PersistenceGameModel])
   }
 
-  override def save(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def save(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
     collection.deleteMany(new BasicDBObject()).results()
-    collection.insertOne(Document(json = persistenceGameModel.toJson.toString())).results().nonEmpty
+    Future.successful(collection.insertOne(Document(json = persistenceGameModel.toJson.toString())).results().nonEmpty)
   }
 
-  override def update(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def update(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
     save(persistenceGameModel)
   }
 
-  override def delete(): Boolean = {
+  override def delete(): Future[Boolean] = {
     collection.deleteMany(new BasicDBObject()).results()
-    true
+    Future.successful(true)
   }
 }
