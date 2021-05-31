@@ -5,11 +5,12 @@ import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 
 import java.awt.Color
+import scala.concurrent.Future
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
   def initializeStations(stationsSource: String): Boolean
-  def initialize(nPlayer: Int = 3): Unit
+  def initialize(nPlayer: Int = 3): Future[GameModel]
   def load(): Option[GameModel]
   def save(): Boolean
   def move(newPosition: Int, ticketType: TicketType): GameModel

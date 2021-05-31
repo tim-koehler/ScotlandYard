@@ -11,6 +11,8 @@ import de.htwg.se.scotlandyard.persistence.mongodb.Helpers.GenericObservable
 import org.mongodb.scala._
 import org.mongodb.scala.model.Projections.excludeId
 
+import scala.concurrent.Future
+
 class MongoDB extends PersistenceInterface{
   val client: MongoClient = MongoClient("mongodb://root:scotty4life@mongodb")
   val database: MongoDatabase = client.getDatabase("scotlandyard")
@@ -27,17 +29,16 @@ class MongoDB extends PersistenceInterface{
     doc.toJson().parseJson.convertTo[PersistenceGameModel]
   }
 
-  override def save(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def save(persistenceGameModel: PersistenceGameModel): Future[Any] = {
     collection.deleteMany(new BasicDBObject()).results()
     collection.insertOne(Document(json = persistenceGameModel.toJson.toString())).results().nonEmpty
   }
 
-  override def update(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def update(persistenceGameModel: PersistenceGameModel): Future[Any] = {
     save(persistenceGameModel)
   }
 
-  override def delete(): Boolean = {
+  override def delete(): Future[Any] = {
     collection.deleteMany(new BasicDBObject()).results()
-    true
   }
 }

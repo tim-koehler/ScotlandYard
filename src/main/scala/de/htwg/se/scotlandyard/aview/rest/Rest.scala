@@ -16,6 +16,7 @@ import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, StringJ
 import spray.json.enrichAny
 
 import scala.io.{Source, StdIn}
+import scala.util.{Failure, Success}
 
 object Rest {
 
@@ -100,7 +101,13 @@ object Rest {
         post {
           path("initialize") {
             parameters("numberOfPlayer") { (numberOfPlayer) => {
-              complete(controller.initialize(numberOfPlayer.toInt))
+              controller.initialize(numberOfPlayer.toInt).onComplete {
+                case Success(response) =>
+                  complete(response)
+                case Failure(_) =>
+                  println("\n\n!!!GameInitializer service unavailable!!!\n\n")
+                  Runtime.getRuntime().halt(-1)
+              }
             }
             }
           }

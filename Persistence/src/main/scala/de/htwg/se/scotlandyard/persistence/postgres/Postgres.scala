@@ -60,7 +60,7 @@ class Postgres extends PersistenceInterface {
     )
   }
 
-  override def save(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def save(persistenceGameModel: PersistenceGameModel): Future[Any] = {
     var playersSeq: Seq[(Int, Int, Int, Int, Int, Int, String, String, Boolean, String, String, String, Boolean)] = Seq()
 
     Await.result(db.run(Schemas.players.delete), Duration.Inf)
@@ -87,23 +87,18 @@ class Postgres extends PersistenceInterface {
 
     db.run(insert)
     db.run(insertPlayers)
-
-    true
   }
 
-  override def update(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def update(persistenceGameModel: PersistenceGameModel): Future[Any] = {
     save(persistenceGameModel)
   }
 
-  override def delete(): Boolean = {
+  override def delete(): Future[Any] = {
     val delete = DBIO.seq(
       Schemas.general.delete,
       Schemas.players.delete,
     )
-    Try{Await.result(db.run(delete), Duration.Inf)} match {
-      case Success(res) => true
-      case Failure(e) => false
-    }
+    db.run(delete)
   }
 
   private def getPlayerIndex(players: Vector[Player], player: Player): Int = {
