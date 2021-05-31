@@ -40,3 +40,5 @@ class PlayerMoved extends Event
 class PlayerWin extends Event
 class StartGame extends Event
 class LobbyChange extends Event
+class GameLoaded extends Event
+class GameNotLoaded extends Event

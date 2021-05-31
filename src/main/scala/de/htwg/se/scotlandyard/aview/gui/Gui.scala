@@ -62,6 +62,15 @@ class Gui(controller: ControllerInterface) extends Frame {
     Runtime.getRuntime().halt(0)
   }
 
+  def gameLoaded(): Unit = {
+    Dialog.showMessage(this, "Game successfully Loaded!", "Load");
+    controller.startGame()
+  }
+
+  def gameNotLoaded(): Unit = {
+    Dialog.showMessage(this, "An Error occured! The game was not loaded!\nIs the Persistence service running?", "Load", Dialog.Message.Error);
+  }
+
   contents = initSettingsPanel()
   visible = true
 
@@ -71,5 +80,7 @@ class Gui(controller: ControllerInterface) extends Frame {
     case event: PlayerMoved => updateGame()
     case event: StartGame => changeToGamePanel()
     case event: PlayerWin => showWinningDialog()
+    case event: GameLoaded => gameLoaded()
+    case event: GameNotLoaded => gameNotLoaded()
   }
 }
