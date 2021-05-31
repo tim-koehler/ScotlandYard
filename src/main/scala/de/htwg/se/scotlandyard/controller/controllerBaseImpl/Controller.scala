@@ -39,14 +39,7 @@ class Controller extends ControllerInterface with Publisher {
 
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(
       uri = "http://gameinitializer:8080/stations"))
-
     responseFuture
-      .onComplete {
-        case Success(response) => Unmarshal(response).to[Vector[Station]].value.get.get
-        case Failure(_)   =>
-          println("\n\n!!!GameInitializer service unavailable!!!\n\n")
-          Runtime.getRuntime().halt(-1)
-      }
   }
 
   def initializeStations(stationsSource: String): Boolean = {
@@ -54,7 +47,7 @@ class Controller extends ControllerInterface with Publisher {
     true
   }
 
-  def initialize(nPlayers: Int = 3): GameModel = {
+  def initialize(nPlayers: Int = 3): Unit = {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
@@ -66,9 +59,15 @@ class Controller extends ControllerInterface with Publisher {
         case Success(response) =>
           val minimalGameModel = Unmarshal(response).to[PersistenceGameModel].value.get.get
           publish(new NumberOfPlayersChanged)
-          this.gameModel = minimalGameModel.toGameModel(fetchedStations)
-          // only for testing
-          this.gameModel
+
+            fetchedStations.onComplete {
+              case Success(response) =>
+                val stationsFuture = Unmarshal(response).to[Vector[Station]].value.get.get
+                this.gameModel = minimalGameModel.toGameModel(stationsFuture)
+              case Failure(_)   =>
+                println("\n\n!!!GameInitializer service unavailable!!!\n\n")
+                Runtime.getRuntime().halt(-1)
+            }
         case Failure(_)   =>
           println("\n\n!!!GameInitializer service unavailable!!!\n\n")
           Runtime.getRuntime().halt(-1)
@@ -89,7 +88,7 @@ class Controller extends ControllerInterface with Publisher {
           publish(new GameLoaded)
         case Failure(_)   => publish(new GameNotLoaded)
       }
-    
+
   }
 
   def save(): Boolean = {
