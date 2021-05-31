@@ -31,8 +31,8 @@ class MongoDB extends PersistenceInterface{
 
   override def save(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
     collection.deleteMany(new BasicDBObject()).results()
-    val boolFuture = collection.insertOne(Document(json = persistenceGameModel.toJson.toString())).results().nonEmpty
-    Future(boolFuture)
+    val result: Future[Boolean] = collection.insertOne(Document(json = persistenceGameModel.toJson.toString())).results().nonEmpty
+    result
   }
 
   override def update(persistenceGameModel: PersistenceGameModel): Future[Any] = {
