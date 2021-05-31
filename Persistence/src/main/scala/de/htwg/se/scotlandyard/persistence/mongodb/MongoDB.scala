@@ -1,5 +1,5 @@
 package de.htwg.se.scotlandyard.persistence.mongodb
-
+import com.mongodb.client.result.DeleteResult
 import com.mongodb.BasicDBObject
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
