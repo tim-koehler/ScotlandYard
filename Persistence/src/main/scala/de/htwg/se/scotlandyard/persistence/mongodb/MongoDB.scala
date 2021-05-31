@@ -31,14 +31,14 @@ class MongoDB extends PersistenceInterface{
 
   override def save(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
     collection.deleteMany(new BasicDBObject()).results()
-    collection.insertOne(Document(json = persistenceGameModel.toJson.toString())).results().nonEmpty
+    collection.insertOne(Document(json = persistenceGameModel.toJson.toString())).results().nonEmpty.future
   }
 
   override def update(persistenceGameModel: PersistenceGameModel): Future[Any] = {
     save(persistenceGameModel)
   }
 
-  override def delete(): Future[Seq] = {
+  override def delete(): Future[Seq[Any]] = {
     collection.deleteMany(new BasicDBObject()).results()
   }
 }
