@@ -38,7 +38,8 @@ class MongoDB extends PersistenceInterface{
     save(persistenceGameModel)
   }
 
-  override def delete(): Future[Seq[DeleteResult]] = {
-    Future.successful(collection.deleteMany(new BasicDBObject()).results())
+  override def delete(): Future[Boolean] = {
+    collection.deleteMany(new BasicDBObject()).results()
+    Future.successful(true)
   }
 }
