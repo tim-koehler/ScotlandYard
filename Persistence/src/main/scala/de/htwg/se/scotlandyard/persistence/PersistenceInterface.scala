@@ -2,12 +2,14 @@ package de.htwg.se.scotlandyard.persistence
 
 import de.htwg.se.scotlandyard.model.PersistenceGameModel
 
+import scala.concurrent.Future
+
 trait PersistenceInterface {
-  def load(): PersistenceGameModel
+  def load(): Future[PersistenceGameModel]
 
-  def save(persistenceGameModel: PersistenceGameModel): Boolean
+  def save(persistenceGameModel: PersistenceGameModel): Future[Boolean]
 
-  def update(persistenceGameModel: PersistenceGameModel): Boolean
+  def update(persistenceGameModel: PersistenceGameModel): Future[Boolean]
 
-  def delete(): Boolean
+  def delete(): Future[Boolean]
 }

@@ -24,9 +24,9 @@ class MongoDB extends PersistenceInterface{
   }
   val collection: MongoCollection[Document] = database.getCollection("savegame")
 
-  override def load(): PersistenceGameModel = {
+  override def load(): Future[PersistenceGameModel] = {
     val doc = collection.find().projection(excludeId()).results().head
-    doc.toJson().parseJson.convertTo[PersistenceGameModel]
+    Future.successful(doc.toJson().parseJson.convertTo[PersistenceGameModel])
   }
 
   override def save(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
@@ -34,7 +34,7 @@ class MongoDB extends PersistenceInterface{
     Future.successful(collection.insertOne(Document(json = persistenceGameModel.toJson.toString())).results().nonEmpty)
   }
 
-  override def update(persistenceGameModel: PersistenceGameModel): Future[Any] = {
+  override def update(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
     save(persistenceGameModel)
   }
 
