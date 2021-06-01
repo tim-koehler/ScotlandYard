@@ -101,13 +101,7 @@ object Rest {
         post {
           path("initialize") {
             parameters("numberOfPlayer") { (numberOfPlayer) => {
-              controller.initialize(numberOfPlayer.toInt).onComplete {
-                case Success(response) =>
-                  complete(response)
-                case Failure(_) =>
-                  println("\n\n!!!GameInitializer service unavailable!!!\n\n")
-                  Runtime.getRuntime().halt(-1)
-              }
+              controller.initialize(numberOfPlayer.toInt)
               complete(GameModel())
             }
             }
