@@ -54,41 +54,43 @@ class Controller extends ControllerInterface with Publisher {
     true
   }
 
-  def initialize(nPlayers: Int = 3): Future[GameModel] = {
+  def initialize(nPlayers: Int = 3): Unit = {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
-    var response = HttpResponse()
-    try {
-      response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://gameinitializer:8080/initialize?nPlayer=" + nPlayers)),
-        5.seconds)
-    } catch {
-      case _: Exception =>
-        println("\n\n!!!GameInitializer service unavailable!!!\n\n")
-        Runtime.getRuntime().halt(-1)
+    val stationsFuture = Http().singleRequest(HttpRequest(
+      uri = "http://gameinitializer:8080/stations"))
+    val gameModelFuture = Http().singleRequest(HttpRequest(
+      uri = "http://gameinitializer:8080/initialize?nPlayer=" + nPlayers))
+
+    val aggFut = for{
+      f1Result <- stationsFuture
+      f2Result <- gameModelFuture
+    } yield (f1Result, f2Result)
+    aggFut.onComplete {
+      case Success(response) =>
+        val stations = Unmarshal(response._1).to[Vector[Station]].value.get.get
+        val minimalGameModel = Unmarshal(response._2).to[PersistenceGameModel].value.get.get
+        publish(new NumberOfPlayersChanged)
+        this.gameModel = minimalGameModel.toGameModel(stations)
     }
-    val minimalGameModel = Unmarshal(response).to[PersistenceGameModel].value.get.get
-    publish(new NumberOfPlayersChanged)
-    this.gameModel = minimalGameModel.toGameModel(fetchedStations)
-    Future(this.gameModel)
   }
 
   def load(): Option[GameModel] = {
     implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext = system.executionContext
 
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(
-      uri = "http://persistence:8080/load"))
-
-    responseFuture
-      .onComplete {
-        case Success(response) =>
-          this.gameModel = Unmarshal(response).to[PersistenceGameModel].value.get.get.toGameModel(this.gameModel.stations)
-          publish(new GameLoaded)
-        case Failure(_)   => publish(new GameNotLoaded)
-      }
-
+    var response = HttpResponse()
+    try {
+      response = Await.result(Http().singleRequest(HttpRequest(
+        uri = "http://persistence:8080/load")),
+        5.seconds)
+    } catch {
+      case _: Exception =>
+        return None
+    }
+    this.gameModel = Unmarshal(response).to[PersistenceGameModel].value.get.get.toGameModel(this.gameModel.stations)
+    Some(this.gameModel)
   }
 
   def save(): Boolean = {

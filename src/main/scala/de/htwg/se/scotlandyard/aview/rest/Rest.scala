@@ -4,7 +4,7 @@ import akka.http.scaladsl.server.Directives.{complete, concat, parameters, path,
 import de.htwg.se.scotlandyard.ScotlandYard.{injector, stationsJsonFilePath}
 import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.JsonProtocol.{DetectiveJsonFormat, GameModelJsonFormat, MrXJsonFormat, PlayerJsonFormat, StationJsonFormat}
-import de.htwg.se.scotlandyard.model.TicketType
+import de.htwg.se.scotlandyard.model.{GameModel, TicketType}
 import de.htwg.se.scotlandyard.model.players.Player
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
@@ -108,6 +108,7 @@ object Rest {
                   println("\n\n!!!GameInitializer service unavailable!!!\n\n")
                   Runtime.getRuntime().halt(-1)
               }
+              complete(GameModel())
             }
             }
           }

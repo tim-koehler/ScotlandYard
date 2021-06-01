@@ -12,7 +12,7 @@ import scala.swing.Publisher
 class Controller extends ControllerInterface with Publisher {
   override def initializeStations(stationsSource: String): Boolean = true
 
-  override def initialize(nPlayer: Int): GameModel = GameModel()
+  override def initialize(nPlayer: Int): Unit = Unit
 
   override def load(): Option[GameModel] = Some(GameModel())
 
