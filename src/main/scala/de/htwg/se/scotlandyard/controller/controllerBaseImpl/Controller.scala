@@ -71,8 +71,8 @@ class Controller extends ControllerInterface with Publisher {
       case Success(response) =>
         val stations = Unmarshal(response._1).to[Vector[Station]].value.get.get
         val minimalGameModel = Unmarshal(response._2).to[PersistenceGameModel].value.get.get
-        publish(new NumberOfPlayersChanged)
         this.gameModel = minimalGameModel.toGameModel(stations)
+        publish(new NumberOfPlayersChanged)
     }
   }
 
