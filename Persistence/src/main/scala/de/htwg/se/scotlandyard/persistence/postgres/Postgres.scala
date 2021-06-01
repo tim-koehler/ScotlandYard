@@ -25,7 +25,7 @@ class Postgres extends PersistenceInterface {
   )
   db.run(setup)
 
-  override def load(): PersistenceGameModel = {
+  override def load(): Future[PersistenceGameModel] = {
     val playersSeq = Await.result(db.run(Schemas.players.result), Duration.Inf)
     val generalSeq = Await.result(db.run(Schemas.general.result), Duration.Inf)
 
