@@ -33,22 +33,6 @@ class Controller extends ControllerInterface with Publisher {
   private var gameModel: GameModel = _
   private val undoManager = new UndoManager()
 
-  private val fetchedStations = {
-    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
-    implicit val executionContext = system.executionContext
-    var response = HttpResponse()
-    try {
-      response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://gameinitializer:8080/stations")),
-        5.seconds)
-    } catch {
-      case _: Exception =>
-        println("\n\n!!!GameInitializer service unavailable!!!\n\n")
-        Runtime.getRuntime().halt(-1)
-    }
-    Unmarshal(response).to[Vector[Station]].value.get.get
-  }
-
   def initializeStations(stationsSource: String): Boolean = {
     this.stationsSource = stationsSource
     true
@@ -105,10 +89,10 @@ class Controller extends ControllerInterface with Publisher {
     responseFuture
       .onComplete {
         case Success(response) =>
-          if(!Unmarshal(response).to[String].value.get.get.equalsIgnoreCase("true")) {
-            return false
+          if(response.entity.toString.equalsIgnoreCase("true")) {
+            return true
           }
-          true
+          false
         case Failure(_)   => return false
       }
     true

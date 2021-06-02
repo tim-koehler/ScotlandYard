@@ -39,6 +39,6 @@ class MongoDB extends PersistenceInterface{
   }
 
   override def delete(): Future[Boolean] = {
-    Future.successful(  collection.deleteMany(new BasicDBObject()).results().nonEmpty)
+    Future.successful(collection.deleteMany(new BasicDBObject()).results().nonEmpty)
   }
 }
