@@ -25,7 +25,7 @@ class Postgres extends PersistenceInterface {
   )
   db.run(setup)
 
-  override def load(): PersistenceGameModel = {
+  override def load(): Future[PersistenceGameModel] = {
     val playersSeq = Await.result(db.run(Schemas.players.result), Duration.Inf)
     val generalSeq = Await.result(db.run(Schemas.general.result), Duration.Inf)
 
@@ -47,7 +47,7 @@ class Postgres extends PersistenceInterface {
       winningPlayer = players(generalSeq.head._6)
     }
 
-    PersistenceGameModel(
+    Future.successful(PersistenceGameModel(
       players = players,
       round = generalSeq.head._2,
       totalRound = generalSeq.head._3,
@@ -57,10 +57,10 @@ class Postgres extends PersistenceInterface {
       allPlayerStuck = generalSeq.head._7,
       WINNING_ROUND = generalSeq.head._8,
       MRX_VISIBLE_ROUNDS = generalSeq.head._9.split(",").map(x => x.toInt).toVector
-    )
+    ))
   }
 
-  override def save(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def save(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
     var playersSeq: Seq[(Int, Int, Int, Int, Int, Int, String, String, Boolean, String, String, String, Boolean)] = Seq()
 
     Await.result(db.run(Schemas.players.delete), Duration.Inf)
@@ -87,23 +87,20 @@ class Postgres extends PersistenceInterface {
 
     db.run(insert)
     db.run(insertPlayers)
-
-    true
+    Future.successful(true)
   }
 
-  override def update(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def update(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
     save(persistenceGameModel)
   }
 
-  override def delete(): Boolean = {
+  override def delete(): Future[Boolean] = {
     val delete = DBIO.seq(
       Schemas.general.delete,
       Schemas.players.delete,
     )
-    Try{Await.result(db.run(delete), Duration.Inf)} match {
-      case Success(res) => true
-      case Failure(e) => false
-    }
+    db.run(delete)
+    Future.successful(true)
   }
 
   private def getPlayerIndex(players: Vector[Player], player: Player): Int = {

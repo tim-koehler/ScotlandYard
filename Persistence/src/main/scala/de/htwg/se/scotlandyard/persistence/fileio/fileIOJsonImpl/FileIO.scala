@@ -13,38 +13,39 @@ import de.htwg.se.scotlandyard.persistence.PersistenceInterface
 import spray.json.enrichAny
 import spray.json._
 
+import scala.concurrent.Future
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
 class FileIO() extends PersistenceInterface {
   var pathname = "ScotlandYard.json"
 
-  override def load(): PersistenceGameModel = {
+  override def load(): Future[PersistenceGameModel] = {
     val source: String = Source.fromFile(pathname).getLines.mkString
-    source.parseJson.convertTo[PersistenceGameModel]
+    Future.successful(source.parseJson.convertTo[PersistenceGameModel])
   }
 
-  override def save(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def save(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
     Try {
       val pw = new PrintWriter(new File(pathname))
       pw.write(persistenceGameModel.toJson.prettyPrint)
       pw.close()
     } match
     {
-      case Success(v) => true
-      case Failure(e) => false
+      case Success(v) => Future.successful(true)
+      case Failure(e) => Future.successful(false)
     }
   }
 
-  override def update(persistenceGameModel: PersistenceGameModel): Boolean = {
+  override def update(persistenceGameModel: PersistenceGameModel): Future[Boolean] = {
     save(persistenceGameModel)
   }
 
-  override def delete(): Boolean = {
+  override def delete(): Future[Boolean] = {
       val fileTemp = new File(pathname)
       if (fileTemp.exists) {
         fileTemp.delete()
       }
-    true
+    Future.successful(true)
   }
 }

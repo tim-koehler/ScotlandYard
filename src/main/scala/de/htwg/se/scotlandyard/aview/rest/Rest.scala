@@ -4,7 +4,7 @@ import akka.http.scaladsl.server.Directives.{complete, concat, parameters, path,
 import de.htwg.se.scotlandyard.ScotlandYard.{injector, stationsJsonFilePath}
 import de.htwg.se.scotlandyard.controller.ControllerInterface
 import de.htwg.se.scotlandyard.model.JsonProtocol.{DetectiveJsonFormat, GameModelJsonFormat, MrXJsonFormat, PlayerJsonFormat, StationJsonFormat}
-import de.htwg.se.scotlandyard.model.TicketType
+import de.htwg.se.scotlandyard.model.{GameModel, TicketType}
 import de.htwg.se.scotlandyard.model.players.Player
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
@@ -16,6 +16,7 @@ import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, StringJ
 import spray.json.enrichAny
 
 import scala.io.{Source, StdIn}
+import scala.util.{Failure, Success}
 
 object Rest {
 
@@ -100,7 +101,8 @@ object Rest {
         post {
           path("initialize") {
             parameters("numberOfPlayer") { (numberOfPlayer) => {
-              complete(controller.initialize(numberOfPlayer.toInt))
+              controller.initialize(numberOfPlayer.toInt)
+              complete(GameModel())
             }
             }
           }

@@ -11,6 +11,10 @@ import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.Persistenc
 import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel}
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 
+import scala.concurrent.Await
+import scala.concurrent.duration.DurationInt
+import scala.util.{Failure, Success}
+
 object Rest {
   def main(args: Array[String]): Unit = {
     val injector: Injector = Guice.createInjector(new PersistenceModule)
@@ -34,15 +38,18 @@ object Rest {
       concat(
         post {
           path("save") {
+
             entity(as[PersistenceGameModel]) { persistenceGameModel =>
-              complete(persistence.save(persistenceGameModel).toString)
+              val response = Await.result(persistence.save(persistenceGameModel), 5.seconds)
+              complete(response.toString)
             }
           }
         },
         post {
           path("update") {
             entity(as[PersistenceGameModel]) { persistenceGameModel =>
-              complete(persistence.update(persistenceGameModel).toString)
+              val response = Await.result(persistence.save(persistenceGameModel), 5.seconds)
+              complete(response.toString)
             }
           }
         },
@@ -53,7 +60,8 @@ object Rest {
         },
         path("delete") {
           delete {
-            complete(persistence.delete().toString)
+            val response = Await.result(persistence.delete(), 5.seconds)
+            complete(response.toString)
           }
         },
         path("health") {
