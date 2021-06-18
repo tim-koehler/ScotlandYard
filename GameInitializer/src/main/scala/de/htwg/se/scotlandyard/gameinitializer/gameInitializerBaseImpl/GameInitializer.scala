@@ -36,7 +36,6 @@ class GameInitializer() extends GameInitializerInterface {
   val numberOfBusTickets = 8
   val numberOfUndergroundTickets = 4
 
-  //TODO: error when list size is 1 or less
   override var MAX_DETECTIVE_LIST_INDEX: Int = detectiveStartPositions.length - 1
   override var MAX_MISTERX_LIST_INDEX: Int = misterXStartPositions.length - 1
 
@@ -49,22 +48,10 @@ class GameInitializer() extends GameInitializerInterface {
   }
 
   private def initPlayers(nPlayer: Int): Vector[Player] = {
-    /*
-    * Commented out, to get always the same starting positions for performance testing
-    *
-    val mrX = MrX(history = List(), station = stations(drawMisterXPosition()), tickets = Tickets(99, 99, 99, 5))
+    val mrX = MrX(history = List(), station = drawMisterXPosition(), tickets = Tickets(99, 99, 99, 5))
     var players = List[Player](mrX)
     for(i <- 1 until nPlayer) {
-      val detective = Detective(station = stations(drawDetectivePosition()), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
-      players = players ::: List(detective)
-    }
-    players.toVector
-     */
-
-    val mrX = MrX(history = List(), station = 35, tickets = Tickets(99, 99, 99, 5))
-    var players = List[Player](mrX)
-    for(i <- 1 until nPlayer) {
-      val detective = Detective(station = detectiveStartPositions(i - 1), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
+      val detective = Detective(station = drawDetectivePosition(), name = "Dt" + i, color = colorList(i), false, Tickets(numberOfTaxiTickets, numberOfBusTickets, numberOfUndergroundTickets))
       players = players ::: List(detective)
     }
     players.toVector

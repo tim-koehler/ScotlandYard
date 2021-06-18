@@ -1,10 +1,8 @@
 package de.htwg.se.scotlandyard.gameinitializer
 
 import akka.http.scaladsl.server.Directives.{complete, concat, parameters, path, post}
-import de.htwg.se.scotlandyard.model.JsonProtocol.{DetectiveJsonFormat, GameModelJsonFormat, MrXJsonFormat, PlayerJsonFormat, StationJsonFormat}
+import de.htwg.se.scotlandyard.model.JsonProtocol.{StationJsonFormat}
 import de.htwg.se.scotlandyard.model.{Station, TicketType}
-import de.htwg.se.scotlandyard.model.players.Player
-import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
 import de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl.GameInitializer
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
@@ -20,6 +18,8 @@ import spray.json._
 import scala.io.{Source, StdIn}
 
 object Rest {
+
+  var route: Route = _
 
   def main(args: Array[String]): Unit = {
     val gameInitializer = new GameInitializer()
@@ -40,7 +40,14 @@ object Rest {
           complete("server shit its pants, big time")
       }
 
-    val route = Route.seal(
+    route = createRoutes(gameInitializer, stations)
+
+    Http().newServerAt("0.0.0.0", 8080).bind(route)
+    println(s"Server online at http://localhost:8080/")
+  }
+
+  def createRoutes(gameInitializer: GameInitializer, stations: Vector[Station]): Route = {
+    Route.seal(
       concat(
         // GET REQUESTS
         path("initialize") {
@@ -58,9 +65,5 @@ object Rest {
         }
       )
     )
-
-
-    Http().newServerAt("0.0.0.0", 8080).bind(route)
-    println(s"Server online at http://localhost:8080/")
   }
 }
