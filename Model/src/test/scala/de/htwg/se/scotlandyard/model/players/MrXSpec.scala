@@ -40,6 +40,10 @@ class MrXSpec extends WordSpec with Matchers {
         mrX = mrX.copy(history = List())
         mrX.removeFromHistory(mrX).history.size should be(0)
       }
+      "updateVisibility should update visibility" in {
+        mrX = mrX.copy(history = List())
+        mrX.updateVisibility(mrX, true).isVisible should be (true)
+      }
     }
   }
 }

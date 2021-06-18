@@ -49,5 +49,37 @@ class GameModelSpec extends WordSpec with Matchers with PrivateMethodTester {
         gameModel.setAllPlayersStuck(gameModel).allPlayerStuck should be (true)
       }
     }
+    "winGame is called" should {
+      "return a gamemodel with all player stuck" in {
+        gameModel.winGame(gameModel, gameModel.players(0)).win should be (true)
+        gameModel.winGame(gameModel, gameModel.players(0)).gameRunning should be (false)
+      }
+    }
+    "updateTickets is called" should {
+      def decrementValue(x: Int): Int = {x - 1}
+      "return a gamemodel with updated Taxi Tickets" in {
+        gameModel.updateTickets(gameModel, TicketType.Taxi)(decrementValue).getCurrentPlayer(gameModel.players,gameModel.round).tickets.taxiTickets should be(99)
+      }
+      "return a gamemodel with updated Bus Tickets" in {
+        gameModel.updateTickets(gameModel, TicketType.Bus)(decrementValue).getCurrentPlayer(gameModel.players,gameModel.round).tickets.taxiTickets should be(99)
+      }
+      "return a gamemodel with updated Underground Tickets" in {
+        gameModel.updateTickets(gameModel, TicketType.Underground)(decrementValue).getCurrentPlayer(gameModel.players,gameModel.round).tickets.taxiTickets should be(99)
+      }
+      "return a gamemodel with updated Black Tickets" in {
+        gameModel.updateTickets(gameModel, TicketType.Black)(decrementValue).getCurrentPlayer(gameModel.players,gameModel.round).tickets.taxiTickets should be(99)
+      }
+    }
+    "updatePlayerPosition is called" should {
+      "return a gamemodel with updated Player Position" in {
+        gameModel.updatePlayerPosition(gameModel, 1).getCurrentPlayer(gameModel.players,gameModel.round).station should be(1)
+      }
+    }
+    "updateRound is called" should {
+      def decrementValue(x: Int): Int = {x + 1}
+      "return a gamemodel with updated Round" in {
+        gameModel.updateRound(gameModel, decrementValue).round should be(2)
+      }
+    }
   }
 }
