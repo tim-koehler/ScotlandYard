@@ -22,16 +22,20 @@ import spray.json.enrichAny
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.unmarshalling.Unmarshal
+import de.htwg.se.scotlandyard.controller.controllerBaseImpl.rest.RestInterface
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
 
 import scala.concurrent.duration.DurationInt
 
 
-class Controller extends ControllerInterface with Publisher {
+class Controller(rest: RestInterface) extends ControllerInterface with Publisher {
 
   private var stationsSource: String = ""
   private var gameModel: GameModel = _
   private val undoManager = new UndoManager()
+
+  implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
+  implicit val executionContext = system.executionContext
 
   def initializeStations(stationsSource: String): Boolean = {
     this.stationsSource = stationsSource
@@ -39,17 +43,9 @@ class Controller extends ControllerInterface with Publisher {
   }
 
   def initialize(nPlayers: Int = 3): Unit = {
-    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
-    implicit val executionContext = system.executionContext
-
-    val stationsFuture = Http().singleRequest(HttpRequest(
-      uri = "http://gameinitializer:8080/stations"))
-    val gameModelFuture = Http().singleRequest(HttpRequest(
-      uri = "http://gameinitializer:8080/initialize?nPlayer=" + nPlayers))
-
     val aggFut = for{
-      f1Result <- stationsFuture
-      f2Result <- gameModelFuture
+      f1Result <- rest.callStations()
+      f2Result <- rest.callInitialize(nPlayers)
     } yield (f1Result, f2Result)
     aggFut.onComplete {
       case Success(response) =>
@@ -61,13 +57,9 @@ class Controller extends ControllerInterface with Publisher {
   }
 
   def load(): Option[GameModel] = {
-    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
-    implicit val executionContext = system.executionContext
-
     var response = HttpResponse()
     try {
-      response = Await.result(Http().singleRequest(HttpRequest(
-        uri = "http://persistence:8080/load")),
+      response = Await.result(rest.callLoad(),
         5.seconds)
     } catch {
       case _: Exception =>
@@ -78,14 +70,7 @@ class Controller extends ControllerInterface with Publisher {
   }
 
   def save(): Boolean = {
-    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
-    implicit val executionContext = system.executionContext
-
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(
-      uri = "http://persistence:8080/save",
-      method = HttpMethods.POST,
-      entity = HttpEntity(ContentTypes.`application/json`, this.gameModel.toPersistenceGameModel.toJson.toString())))
-
+    val responseFuture = rest.callSave(this.gameModel)
     responseFuture
       .onComplete {
         case Success(response) =>
