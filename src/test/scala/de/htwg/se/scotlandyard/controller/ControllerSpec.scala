@@ -14,7 +14,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
 
   override def beforeEach(): Unit = {
     controller.initialize(3)
-    Thread.sleep(150)
+    Thread.sleep(250)
   }
 
   "Controller" when {
