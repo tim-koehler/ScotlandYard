@@ -1,6 +1,6 @@
 # Scotland Yard (board game)
 
-[![Build Status](https://travis-ci.org/tim-koehler/ScotlandYard.svg?branch=master)](https://travis-ci.org/tim-koehler/ScotlandYard)
+[![Build Status](https://travis-ci.com/tim-koehler/ScotlandYard.svg?branch=master)](https://travis-ci.com/tim-koehler/ScotlandYard)
 [![Coverage Status](https://coveralls.io/repos/github/tim-koehler/ScotlandYard/badge.svg?branch=master)](https://coveralls.io/github/tim-koehler/ScotlandYard?branch=master)
 
 ## About
