@@ -14,7 +14,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
 
   override def beforeEach(): Unit = {
     controller.initialize(3)
-    Thread.sleep(100)
+    Thread.sleep(150)
   }
 
   "Controller" when {
@@ -86,6 +86,9 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
     "get" should {
       "return currentPlayer from getCurrentPlayer" in {
         controller.getCurrentPlayer.name shouldBe "MrX"
+      }
+      "return current player Station from getStationOfPlayer" in {
+        controller.getStationOfPlayer(controller.getDetectives.head).number shouldBe (2)
       }
       "getMrX" in {
         controller.getMrX.station should be(1)

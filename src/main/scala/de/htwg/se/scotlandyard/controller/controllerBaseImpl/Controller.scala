@@ -42,8 +42,6 @@ class Controller(rest: RestInterface) extends ControllerInterface with Publisher
         val minimalGameModel = Unmarshal(response._2).to[PersistenceGameModel].value.get.get
         this.gameModel = minimalGameModel.toGameModel(stations)
         publish(new NumberOfPlayersChanged)
-      case Failure(exception) =>
-        println(exception)
     }
   }
 

@@ -13,11 +13,13 @@ import scala.concurrent.Future
 
 class Rest extends RestInterface{
   val station0 = Station(0)
-  var station1 = Station(1, StationType.Underground, blackStation = false, Set(), Set(), Set())
+  var station1 = Station(1, StationType.Underground, blackStation = false, Set(6), Set(), Set())
   var station2 = Station(2, StationType.Taxi, blackStation = false, Set(1), Set(), Set())
   val station3 = Station(3, StationType.Taxi, blackStation = false, Set(1), Set(), Set())
   val station4 = Station(4, StationType.Bus, blackStation = false, Set(1), Set(), Set())
   var station5 = Station(5, StationType.Underground, blackStation = false, Set(1, 2), Set(), Set())
+  val station6 = Station(6, StationType.Underground, blackStation = true, Set(7), Set(), Set())
+  var station7 = Station(7, StationType.Underground, blackStation = true, Set(6, 2), Set(), Set())
   station1 = station1.copy(neighbourTaxis = Set(2, 3, 4, 5), neighbourBuses = Set(5, 4), neighbourUndergrounds = Set(5))
   station2 = station2.copy(neighbourTaxis = Set(2, 3, 4, 5), neighbourBuses = Set(5, 4), neighbourUndergrounds = Set(5))
   station5 = station5.copy(neighbourTaxis = Set(1, 2, 3, 4), neighbourBuses = Set(1, 4), neighbourUndergrounds = Set(1))
