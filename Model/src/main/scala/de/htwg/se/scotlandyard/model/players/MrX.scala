@@ -1,7 +1,8 @@
 package de.htwg.se.scotlandyard.model.players
 
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.{Station, Tickets}
+import de.htwg.se.scotlandyard.model.Tickets
+
 import java.awt.Color
 
 case class MrX(override val station: Int = 0,

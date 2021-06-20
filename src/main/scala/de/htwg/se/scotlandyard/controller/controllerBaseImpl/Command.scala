@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
-import de.htwg.se.scotlandyard.model.{GameModel, Station}
+import de.htwg.se.scotlandyard.model.GameModel
 
 trait Command {
   def doStep(gameModel: GameModel): GameModel

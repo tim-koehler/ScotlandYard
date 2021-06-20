@@ -1,7 +1,7 @@
 package de.htwg.se.scotlandyard.model.players
 
+import de.htwg.se.scotlandyard.model.Tickets
 import de.htwg.se.scotlandyard.model.players.PlayerTypes.PlayerTypes
-import de.htwg.se.scotlandyard.model.{Station, Tickets}
 
 import java.awt.Color
 

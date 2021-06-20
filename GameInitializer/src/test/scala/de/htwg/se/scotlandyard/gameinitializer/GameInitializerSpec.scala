@@ -1,9 +1,8 @@
 package de.htwg.se.scotlandyard.gameinitializer
 
-import akka.http.scaladsl.client.RequestBuilding.{Get, WithTransformation}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl.GameInitializer
-import de.htwg.se.scotlandyard.model.{Station, StationType, Tickets}
+import de.htwg.se.scotlandyard.model.{Station, StationType}
 import org.scalatest.{Matchers, PrivateMethodTester, WordSpec}
 
 

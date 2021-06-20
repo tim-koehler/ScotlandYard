@@ -1,6 +1,6 @@
 package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
-import de.htwg.se.scotlandyard.model.{GameModel, Station}
+import de.htwg.se.scotlandyard.model.GameModel
 
 class UndoManager() {
   private var undoStack: List[Command]= Nil

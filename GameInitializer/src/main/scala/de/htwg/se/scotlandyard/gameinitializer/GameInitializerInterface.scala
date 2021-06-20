@@ -1,8 +1,6 @@
 package de.htwg.se.scotlandyard.gameinitializer
 
-import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.players.{MrX, Player}
-import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, Tickets}
+import de.htwg.se.scotlandyard.model.{PersistenceGameModel}
 
 import java.awt.Color
 

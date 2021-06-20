@@ -2,25 +2,24 @@ package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
-import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
-import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, StationType, TicketType}
-import de.htwg.se.scotlandyard.model.TicketType.TicketType
-import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
-import akka.http.scaladsl.model.{HttpResponse}
-
-import java.awt.Color
-import scala.concurrent.{Await}
-import scala.swing.Publisher
-import scala.util.{Failure, Success}
-import scala.util.control.Breaks.{break, breakable}
-import spray.json.DefaultJsonProtocol.{vectorFormat}
-import de.htwg.se.scotlandyard.model.JsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+import akka.http.scaladsl.model.HttpResponse
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import de.htwg.se.scotlandyard.controller.controllerBaseImpl.rest.RestInterface
+import de.htwg.se.scotlandyard.controller._
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
+import de.htwg.se.scotlandyard.model.JsonProtocol._
+import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
+import de.htwg.se.scotlandyard.model._
+import spray.json.DefaultJsonProtocol.vectorFormat
 
+import java.awt.Color
+import scala.concurrent.Await
 import scala.concurrent.duration.DurationInt
+import scala.swing.Publisher
+import scala.util.control.Breaks.{break, breakable}
+import scala.util.{Failure, Success}
 
 
 class Controller(rest: RestInterface) extends ControllerInterface with Publisher {

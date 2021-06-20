@@ -2,8 +2,6 @@ package de.htwg.se.scotlandyard.model
 
 import de.htwg.se.scotlandyard.model.StationType.StationType
 
-import scala.swing.Point
-
 case class Station(number: Integer = -1,
                    stationType: StationType = StationType.Taxi,
                    blackStation: Boolean = false,

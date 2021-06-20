@@ -1,19 +1,9 @@
 package de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl
 
 import java.awt.Color
-import com.google.inject.{Guice, Inject}
 import de.htwg.se.scotlandyard.gameinitializer.GameInitializerInterface
-import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, StationType, Tickets}
+import de.htwg.se.scotlandyard.model.{PersistenceGameModel, Tickets}
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
-import de.htwg.se.scotlandyard.model.TicketType.TicketType
-
-import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
-import scala.io.Source
-import scala.swing.Point
-import spray.json._
-import de.htwg.se.scotlandyard.model.JsonProtocol._
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 
 class GameInitializer() extends GameInitializerInterface {
   val stationsJsonFilePath = "./resources/stations.json"

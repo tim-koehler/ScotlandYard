@@ -1,8 +1,8 @@
 package de.htwg.se.scotlandyard.gameinitializer
 
-import akka.http.scaladsl.server.Directives.{complete, concat, parameters, path, post}
+import akka.http.scaladsl.server.Directives.{complete, concat, parameters, path}
 import de.htwg.se.scotlandyard.model.JsonProtocol.{StationJsonFormat}
-import de.htwg.se.scotlandyard.model.{Station, TicketType}
+import de.htwg.se.scotlandyard.model.{Station}
 import de.htwg.se.scotlandyard.gameinitializer.gameInitializerBaseImpl.GameInitializer
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
@@ -11,11 +11,11 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
-import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, vectorFormat}
+import spray.json.DefaultJsonProtocol.{vectorFormat}
 import spray.json.enrichAny
 import spray.json._
 
-import scala.io.{Source, StdIn}
+import scala.io.{Source}
 
 object Rest {
 

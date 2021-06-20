@@ -1,13 +1,11 @@
 package de.htwg.se.scotlandyard.controller.controllerMockImpl
 
-import com.google.inject.Inject
 import de.htwg.se.scotlandyard.controller.ControllerInterface
-import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
-import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
+import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
+import de.htwg.se.scotlandyard.model.{GameModel, Station, StationType}
 
 import java.awt.Color
-import scala.concurrent.Future
 import scala.swing.Publisher
 
 class Controller extends ControllerInterface with Publisher {
@@ -41,7 +39,7 @@ class Controller extends ControllerInterface with Publisher {
   override def getWinningPlayer(): Player = Detective()
 
   override def setPlayerName(inputName: String, index: Int): Boolean = {
-    if(inputName.length < 3) return false
+    if (inputName.length < 3) return false
     true
   }
 
