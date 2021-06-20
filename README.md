@@ -25,5 +25,18 @@ and the execute
 sbt run
 ```
 
+#### 3.Run with docker-compose
+```
+git clone https://github.com/tim-koehler/ScotlandYard.git
+```
+then run the following to make the gui work (only works on linux):
+```
+xhost +local:$(id -un)
+```
+and finally
+```
+docker-compose up
+```
+
 ## Background
 This is a project build during the "Software Engeneering" lecture at the HTWG Konstanz
