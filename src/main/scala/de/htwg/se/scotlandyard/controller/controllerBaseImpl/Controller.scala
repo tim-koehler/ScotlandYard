@@ -5,6 +5,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.model.HttpResponse
 import akka.http.scaladsl.unmarshalling.Unmarshal
+import com.google.inject.Inject
 import de.htwg.se.scotlandyard.controller.controllerBaseImpl.rest.RestInterface
 import de.htwg.se.scotlandyard.controller._
 import de.htwg.se.scotlandyard.model.JsonProtocol.GameModelJsonFormat.PersistenceGameModelJsonFormat
@@ -22,7 +23,7 @@ import scala.util.control.Breaks.{break, breakable}
 import scala.util.{Failure, Success}
 
 
-class Controller(rest: RestInterface) extends ControllerInterface with Publisher {
+class Controller @Inject()(rest: RestInterface) extends ControllerInterface with Publisher {
 
   private var gameModel: GameModel = _
   private val undoManager = new UndoManager()
