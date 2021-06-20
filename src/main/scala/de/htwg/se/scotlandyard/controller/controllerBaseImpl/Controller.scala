@@ -2,23 +2,18 @@ package de.htwg.se.scotlandyard.controller.controllerBaseImpl
 
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
-import com.google.inject.Inject
-import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
-import de.htwg.se.scotlandyard.controller.{ControllerInterface, GameLoaded, GameNotLoaded, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
+import de.htwg.se.scotlandyard.controller.{ControllerInterface, LobbyChange, NumberOfPlayersChanged, PlayerColorChanged, PlayerMoved, PlayerNameChanged, PlayerWin, StartGame}
 import de.htwg.se.scotlandyard.model.{GameModel, PersistenceGameModel, Station, StationType, TicketType}
 import de.htwg.se.scotlandyard.model.TicketType.TicketType
 import de.htwg.se.scotlandyard.model.players.{Detective, MrX, Player}
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethod, HttpMethods, HttpRequest, HttpResponse}
-import akka.http.scaladsl.server.Directives.as
+import akka.http.scaladsl.model.{HttpResponse}
 
 import java.awt.Color
-import scala.concurrent.{Await, Future}
+import scala.concurrent.{Await}
 import scala.swing.Publisher
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 import scala.util.control.Breaks.{break, breakable}
-import spray.json.DefaultJsonProtocol.{BooleanJsonFormat, IntJsonFormat, vectorFormat}
-import spray.json.enrichAny
+import spray.json.DefaultJsonProtocol.{vectorFormat}
 import de.htwg.se.scotlandyard.model.JsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.unmarshalling.Unmarshal
@@ -30,17 +25,11 @@ import scala.concurrent.duration.DurationInt
 
 class Controller(rest: RestInterface) extends ControllerInterface with Publisher {
 
-  private var stationsSource: String = ""
   private var gameModel: GameModel = _
   private val undoManager = new UndoManager()
 
   implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
   implicit val executionContext = system.executionContext
-
-  def initializeStations(stationsSource: String): Boolean = {
-    this.stationsSource = stationsSource
-    true
-  }
 
   def initialize(nPlayers: Int = 3): Unit = {
     val aggFut = for{
@@ -53,6 +42,8 @@ class Controller(rest: RestInterface) extends ControllerInterface with Publisher
         val minimalGameModel = Unmarshal(response._2).to[PersistenceGameModel].value.get.get
         this.gameModel = minimalGameModel.toGameModel(stations)
         publish(new NumberOfPlayersChanged)
+      case Failure(exception) =>
+        println(exception)
     }
   }
 

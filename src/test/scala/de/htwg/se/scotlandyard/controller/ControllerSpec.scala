@@ -1,62 +1,54 @@
 package de.htwg.se.scotlandyard.controller
 
-import de.htwg.se.scotlandyard.ScotlandYard.stationsJsonFilePath
 import de.htwg.se.scotlandyard.controller.controllerBaseImpl.Controller
+import de.htwg.se.scotlandyard.controller.controllerBaseImpl.rest.restMockImpl.Rest
 import de.htwg.se.scotlandyard.model.{GameModel, TicketType}
 import org.scalatest._
 
 import java.awt.Color
-import scala.io.Source
 
 class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester with BeforeAndAfterEach {
 
-  /*val stationsSource: String = Source.fromFile(stationsJsonFilePath).getLines.mkString
-  val gameInitializer = new GameInitializer()
-  val controller = new Controller(gameInitializer, new FileIO())
-  controller.initializeStations(stationsSource)
-  var gameModel = GameModel()
+  val rest: Rest = new Rest()
+  val controller = new Controller(rest)
 
   override def beforeEach(): Unit = {
-    gameModel = controller.initialize(3)
+    controller.initialize(3)
+    Thread.sleep(100)
   }
 
   "Controller" when {
-    "initialize" should {
-      "return a gameModel" in {
-        controller.initialize(3).players.length should be(3)
-      }
-    }
     "move" should {
       "validate mrx taxi move" in {
-        controller.move(5, TicketType.Taxi).players(0).station.number should be(5)
+        controller.move(5, TicketType.Taxi).players(0).station should be(5)
       }
       "validate mrx bus move" in {
-        controller.move(4, TicketType.Bus).players(0).station.number should be(4)
+        controller.move(4, TicketType.Bus).players(0).station should be(4)
       }
       "validate mrx underground move" in {
-        controller.move(5, TicketType.Underground).players(0).station.number should be(5)
+        controller.move(5, TicketType.Underground).players(0).station should be(5)
       }
       "validate mrx black (taxi) move" in {
-        controller.move(5, TicketType.Black).players(0).station.number should be(5)
+        controller.move(5, TicketType.Black).players(0).station should be(5)
       }
       "validate mrx black (bus) move" in {
-        controller.move(4, TicketType.Black).players(0).station.number should be(4)
+        controller.move(4, TicketType.Black).players(0).station should be(4)
       }
       "validate mrx black (underground) move" in {
-        controller.move(5, TicketType.Black).players(0).station.number should be(5)
+        controller.move(5, TicketType.Black).players(0).station should be(5)
       }
       "not validate mrx taxi move to a not empty station" in {
-        controller.move(8, TicketType.Taxi).players(0).station.number should be(1)
+        controller.move(8, TicketType.Taxi).players(0).station should be(1)
       }
       "not validate mrx taxi move to station not in bounds" in {
-        controller.move(69, TicketType.Taxi).players(0).station.number should be(1)
+        controller.move(69, TicketType.Taxi).players(0).station should be(1)
       }
       "not validate mrx taxi move to the same station" in {
-        controller.move(1, TicketType.Taxi).players(0).station.number should be(1)
+        controller.move(1, TicketType.Taxi).players(0).station should be(1)
         controller.move(1, TicketType.Taxi).players(0).tickets.taxiTickets should be(99)
       }
       "win detectives" in {
-        controller.move(4, TicketType.Taxi).players(0).station.number should be(4)
+        controller.move(4, TicketType.Taxi).players(0).station should be(4)
         controller.move(1, TicketType.Taxi)
         val gameModel = controller.move(4, TicketType.Taxi)
         gameModel.round should be(3)
@@ -66,14 +58,14 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
 
     "winGame" should {
       "return true" in {
-        controller.winGame(gameModel.players(0)) should be(true)
+        controller.winGame(controller.getMrX) should be(true)
       }
     }
 
     "undoMove" should {
       "undo" in {
         controller.move(9, TicketType.Taxi)
-        controller.undoMove().players(0).station.number should be(1)
+        controller.undoMove().players(0).station should be(1)
       }
     }
 
@@ -81,7 +73,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
       "undo" in {
         controller.move(5, TicketType.Taxi)
         controller.undoMove()
-        controller.redoMove().players(0).station.number should be(5)
+        controller.redoMove().players(0).station should be(5)
       }
     }
 
@@ -96,7 +88,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
         controller.getCurrentPlayer.name shouldBe "MrX"
       }
       "getMrX" in {
-        controller.getMrX should be(gameModel.getMrX(gameModel.players))
+        controller.getMrX.station should be(1)
       }
       "return 3 from getPlayerList method" in {
         controller.getDetectives.length shouldBe 2
@@ -105,7 +97,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
         controller.getStations().length shouldBe 6
       }
       "and getTotalRound" in {
-        controller.getTotalRound() should be(gameModel.totalRound)
+        controller.getTotalRound() should be(1)
       }
       "and getWin" in {
         controller.getWin() should be(false)
@@ -115,7 +107,7 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
         controller.getGameRunning() should be(true)
       }
       "and getWinningPlayer" in {
-        controller.getWinningPlayer() should be(gameModel.winningPlayer)
+        controller.getWinningPlayer().station should be(0)
       }
       "return true from setPlayerName" in {
         controller.setPlayerName("Tim", 1) shouldBe true
@@ -129,8 +121,8 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
     }
     "load" should {
       "return true" in {
-        controller.load().round should be(1)
-        controller.load().totalRound should be(1)
+        controller.load().get.round should be(1)
+        controller.load().get.totalRound should be(1)
       }
     }
 
@@ -139,5 +131,5 @@ class ControllerSpec extends WordSpec with Matchers with PrivateMethodTester wit
         controller.save() should be(true)
       }
     }
-  }*/
+  }
 }

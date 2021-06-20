@@ -9,7 +9,6 @@ import scala.concurrent.Future
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
-  def initializeStations(stationsSource: String): Boolean
   def initialize(nPlayer: Int = 3): Unit
   def load(): Option[GameModel]
   def save(): Boolean
