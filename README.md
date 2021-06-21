@@ -11,21 +11,6 @@ Scotland Yard is a board game in which a team of players, as police, cooperate t
 
 ## Installation
 
-#### 1. Run with docker
-The most simple way to run Scotland Yard is by using the docker image:<br>
-[How to run Scotland Yard with docker](https://github.com/tim-koehler/ScotlandYard/packages)
-
-#### 2. Compile it yourself
-If you have sbt installed you just have to clone the repository
-```
-git clone https://github.com/tim-koehler/ScotlandYard.git
-```
-and the execute
-```
-sbt run
-```
-
-#### 3.Run with docker-compose
 ```
 git clone https://github.com/tim-koehler/ScotlandYard.git
 ```
@@ -35,7 +20,7 @@ xhost +local:$(id -un)
 ```
 and finally
 ```
-docker-compose up
+docker-compose up -d
 ```
 
 ## Background
